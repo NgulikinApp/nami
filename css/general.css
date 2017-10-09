@@ -1,0 +1,11 @@
+@charset "utf-8";
+body{
+	font-family:OpenSans-Semibold;
+	font-size:14px;
+	line-height:1.42857;
+	color:#333333;
+	background-color:#fff;
+	margin:0
+}
+
+
