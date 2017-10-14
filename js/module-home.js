@@ -22,20 +22,6 @@ function initHome(){
 	});
 				
 	$("#cslide-slides").cslide();
-	
-	$.getJSON("http://http-1761326392.ap-southeast-1.elb.amazonaws.com/category", function( data ) {
-	    var listcategory = '';
-        $.each( data, function( key, val ) {
-            var nameCategory = (val.name).toLowerCase();
-            listcategory += '<li class="grid-listmiddle-cont8" id="'+nameCategory+'" style="background-image:url('+val.thumbnail_url+')">';
-            listcategory += '<span>';
-            listcategory += '   <p>ngulikin</p>';
-            listcategory += '   <p>'+nameCategory+'</p>';
-            listcategory += '</span>';
-            listcategory += '</li>';
-        });
-        $(".grid-list-cont8").html(listcategory)
-    });
     
     $(".grid-sub-cont9-body-list .col-md-9").mouseover(function(){
         $(this).children('.grid-sub-cont9-body-list-hover').show();

@@ -8,10 +8,6 @@
                         Category
                         <a><div class="arrow"></div></a>
                         <ul class="menu-category-sub-menu">
-                            <li><a>Furniture</a></li>
-                            <li><a>Fashion</a></li>
-                            <li><a>Kuliner</a></li>
-                            <li><a>Teknologi</a></li>
                         </ul>
                     </li>
                 </ul>

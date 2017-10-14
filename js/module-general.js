@@ -170,6 +170,24 @@ function initGeneral(){
 	    }
 	});
 	
+	$.getJSON("http://http-1761326392.ap-southeast-1.elb.amazonaws.com/category", function( data ) {
+	    var listcategory = '';
+	    var listcategoryMain = '';
+        $.each( data, function( key, val ) {
+            var nameCategory = (val.name).toLowerCase();
+            listcategory += '<li class="grid-listmiddle-cont8" id="'+nameCategory+'" style="background-image:url('+val.thumbnail_url+')">';
+            listcategory += '<span>';
+            listcategory += '   <p>ngulikin</p>';
+            listcategory += '   <p>'+nameCategory+'</p>';
+            listcategory += '</span>';
+            listcategory += '</li>';
+            
+            listcategoryMain += '<li><a>'+val.name+'</a></li>';
+        });
+        $(".grid-list-cont8").html(listcategory);
+        $(".menu-category-sub-menu").html(listcategoryMain);
+    });
+	
 	/*var categoryProductStorage = localStorage.getItem("categoryProduct");
 	if(categoryProductStorage === null){
 	    var data = {};
