@@ -28,3 +28,5 @@
 <script src="../../js/library/FlameViewportScale.js?jsr=<?php echo $jsversionstring; ?>"></script>
 <script src="../../js/library/jquery.tosrus.all.min.js?jsr=<?php echo $jsversionstring; ?>"></script>
 <script src="../../js/library/jquery.notify.min.js?jsr=<?php echo $jsversionstring; ?>"></script>
+<script src="../../js/library/jquery.twbsPagination.js?jsr=<?php echo $jsversionstring; ?>"></script>
+

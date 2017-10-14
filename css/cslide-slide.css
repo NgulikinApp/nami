@@ -16,7 +16,7 @@
 
 .cslide-slide {
   float: left;
-  padding: 0px 30px 30px 30px; }
+  padding: 0px 30px 70px 30px; }
 .cslide-slide h2,
 .cslide-slide p {
   color: #fff; }
@@ -36,7 +36,6 @@
 .cslide-prev, .cslide-next {
   display: inline-block;
   color: #fff;
-  padding: 10px 20px;
   cursor: pointer; }
   
 .cslide-prev{
@@ -45,13 +44,6 @@
 .cslide-next{
     float:right;
 }
-.cslide-prev:hover,
-.cslide-next:hover {
-  background: #38678f; }
-
-.cslide-prev.cslide-disabled:hover,
-.cslide-next.cslide-disabled:hover {
-  background: steelblue; }
 
 .cslide-disabled {
   opacity: 0.3; }

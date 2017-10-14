@@ -35,7 +35,7 @@
                     <ul class="list-socmed">
                         <li><a class="socmed-follow socmed-follow-facebook" datainternal-id="https://web.facebook.com/Ngulikincom-1901044953474837">FACEBOOK</a></li>
                         <li><a class="socmed-follow socmed-follow-instagram" datainternal-id="https://www.instagram.com/ngulikin">INSTAGRAM</a></li>
-                        <li><a class="socmed-follow socmed-follow-youtube" datainternal-id="">YOUTUBE</a></li>
+                        <li><a class="socmed-follow socmed-follow-twitter" datainternal-id="">TWITTER</a></li>
                     </ul>
                     <ul class="list-socmed">
                         <li><a datainternal-id="terms">Ketentuan</a></li>

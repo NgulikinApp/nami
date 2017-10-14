@@ -19,4 +19,20 @@ function initProfile(){
         $('#accordionMyprofile h3').css('background-image','url(/img/arrow_down.png)');
         $(this).css('background-image','url(/img/arrow_up.png)');
     });
+    
+    $("#filesPrivate").change(function(){
+        readURL(this);
+    });
+}
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $("#previewImagePrivate").attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
 }

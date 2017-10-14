@@ -12,10 +12,6 @@
 		<?php include $_SERVER['DOCUMENT_ROOT'].'/web/nav/footerMenu.php';?>
 		<?php include 'web/body/general/init_questioner.php';?>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
-		<script>
-			$( document ).ready(function() {
-			    initGeneral();
-			});
-		</script>
+		<script src="js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>
 </html>

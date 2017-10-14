@@ -111,30 +111,30 @@
     <section class="container store">
         <div class="grid-cont4">
             <div class="grid-chapter-cont4">
-                <img src="https://www.mallinternet.id/images/vendor/Header-Rekomendasi-Toko.jpg">
+                <img src="img/shopterbaru.png">
             </div>
             <div class="grid-list-cont4">
                 <div class="grid-list-cont4-item">
                     <center>
-                        <img src="img/logo_ngulikin.png">
+                        <img src="img/icontext.png" width="160" height="60">
                     </center>
                     <input type="hidden" class="shopTitle" value="Massom-Store"/>
                 </div>
                 <div class="grid-list-cont4-item">
                     <center>
-                        <img src="img/logo_ngulikin.png">
+                        <img src="img/icontext.png" width="160" height="60">
                     </center>
                     <input type="hidden" class="shopTitle" value="Panda-Store"/>
                 </div>
                 <div class="grid-list-cont4-item">
                     <center>
-                        <img src="img/logo_ngulikin.png">
+                        <img src="img/icontext.png" width="160" height="60">
                     </center>
                     <input type="hidden" class="shopTitle" value="Obeliks-Store"/>
                 </div>
                 <div class="grid-list-cont4-item">
                     <center>
-                        <img src="img/logo_ngulikin.png">
+                        <img src="img/icontext.png" width="160" height="60">
                     </center>
                     <input type="hidden" class="shopTitle" value="Anime-Store"/>
                 </div>
@@ -143,44 +143,7 @@
     </section>
     <section class="container category">
         <div class="grid-cont8">
-            <ul class="grid-list-cont8">
-                <li class="grid-listmiddle-cont8" id="furniture">
-                    <span>
-                        <p>ngulikin</p>
-                        <p>furniture</p>
-                    </span>
-                </li>
-                <li class="grid-listmiddle-cont8" id="culinary">
-                    <span>
-                        <p>ngulikin</p>
-                        <p>kuliner</p>
-                    </span>
-                </li>
-                <li class="grid-listmiddle-cont8" id="idea">
-                    <span>
-                        <p>ngulikin</p>
-                        <p>ide</p>
-                    </span>
-                </li>
-                <li class="grid-listmiddle-cont8" id="music">
-                    <span
-                        <p>ngulikin</p>
-                        <p>musik</p>
-                    </span>
-                </li>
-                <li class="grid-listmiddle-cont8" id="fashion">
-                    <span>
-                        <p>ngulikin</p>
-                        <p>fashion</p>
-                    </span>
-                </li>
-                <li class="grid-listmiddle-cont8" id="technology">
-                    <span>
-                        <p>ngulikin</p>
-                        <p>teknologi</p>
-                    </span>
-                </li>
-            </ul>
+            <ul class="grid-list-cont8"></ul>
         </div>
     </section>
     <section class="container product">
@@ -194,14 +157,54 @@
                 </div>
                 <div class="grid-sub-cont9-body">
                     <div class="grid-sub-cont9-body-list" id="promo">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="fashion~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="technology~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="furniture~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="fashion~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="technology~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="furniture~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="fashion~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="technology~Olive-Wood-Chair">
+                        <div class="col-md-9">
+                            <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg">
+                            <div class="grid-sub-cont9-body-list-hover" >
+                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <div datainternal-id="fashion~Olive-Wood-Chair">Lihat</div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg">
+                            <div class="grid-sub-cont9-body-list-hover">
+                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <div datainternal-id="fashion~Olive-Wood-Chair">Lihat</div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg">
+                            <div class="grid-sub-cont9-body-list-hover">
+                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <div datainternal-id="fashion~Olive-Wood-Chair">Lihat</div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg">
+                            <div class="grid-sub-cont9-body-list-hover">
+                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <div datainternal-id="fashion~Olive-Wood-Chair">Lihat</div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg">
+                            <div class="grid-sub-cont9-body-list-hover">
+                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <div datainternal-id="fashion~Olive-Wood-Chair">Lihat</div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg">
+                            <div class="grid-sub-cont9-body-list-hover">
+                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <div datainternal-id="fashion~Olive-Wood-Chair">Lihat</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -216,14 +219,54 @@
                 </div>
                 <div class="grid-sub-cont9-body">
                     <div class="grid-sub-cont9-body-list" id="best-selling">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="fashion~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="technology~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="furniture~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="fashion~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="technology~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="furniture~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="fashion~Olive-Wood-Chair">
-                        <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg" datainternal-id="technology~Olive-Wood-Chair">
+                        <div class="col-md-9">
+                            <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg">
+                            <div class="grid-sub-cont9-body-list-hover">
+                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <div datainternal-id="fashion~Olive-Wood-Chair">Lihat</div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg">
+                            <div class="grid-sub-cont9-body-list-hover">
+                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <div datainternal-id="fashion~Olive-Wood-Chair">Lihat</div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg">
+                            <div class="grid-sub-cont9-body-list-hover">
+                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <div datainternal-id="fashion~Olive-Wood-Chair">Lihat</div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg">
+                            <div class="grid-sub-cont9-body-list-hover">
+                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <div datainternal-id="fashion~Olive-Wood-Chair">Lihat</div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg">
+                            <div class="grid-sub-cont9-body-list-hover">
+                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <div datainternal-id="fashion~Olive-Wood-Chair">Lihat</div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg">
+                            <div class="grid-sub-cont9-body-list-hover">
+                                <i class="fa fa-shopping-cart"></i>
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <div datainternal-id="fashion~Olive-Wood-Chair">Lihat</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -233,8 +276,8 @@
         <div id="cslide-slides" class="grid-cont5 cslide-slides-master">
             <div class="grid-header-cont5">
                 KISAH SUKSES
-                <span class="cslide-prev"><</span>
-                <span class="cslide-next">></span>
+                <span class="cslide-prev"><img src="img/arrow-left.png" height="25" width="25"/></span>
+                <span class="cslide-next"><img src="img/arrow-right.png" height="25" width="25"/></span>
             </div>
             <div class="grid_chapter cslide-slides-container" id="success-story">
                 <div class="cslide-slide">

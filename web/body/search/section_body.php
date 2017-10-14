@@ -134,7 +134,9 @@
     			        </div>
     		        </div>
     		    </div>
-    	    <div class="result-content-paging"></div>
+    	    <div class="result-content-paging">
+    	        <ul class="pagination" id="pagingSearch"></ul>
+    	    </div>
     	</div>
 	</section>
 </div>

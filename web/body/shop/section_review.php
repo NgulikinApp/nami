@@ -11,6 +11,7 @@
 	       </div>
 	   </div>
     </div>
+    <ul class="pagination" id="pagingShopReview"></ul>
     <div class="grid-shop-body-content-inputComment">
         <div>
             <input type="text" id="commentDiscussShop" placeholder="Kirim Pesan disini"/>

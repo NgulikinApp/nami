@@ -50,4 +50,18 @@ function initProduct(){
             template: '<div class="notify"><div class="notify-text"></div></div>'
         });
 	});
+	
+	$.tosrus.defaults.media.image = {
+		filterAnchors: function( $anchor ) {
+			return $anchor.attr( 'href' ).indexOf( 's2.bukalapak.com' ) > -1;
+		}
+	};
+				
+	$('.listimage a').tosrus({
+		buttons: 'inline',
+		pagination	: {
+			add			: true,
+			type		: 'thumbnails'
+		}
+	});
 }

@@ -19,11 +19,6 @@
 		<?php include 'web/body/general/init_questioner.php';?>
 		<script src="../../js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="../../js/module-shop.js?jsr=<?php echo $jsversionstring; ?>"></script>
-		<script>
-			$( document ).ready(function() {
-			    initGeneral();
-			    initShop();
-			});
-		</script>
+		<script src="../../js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>
 </html>

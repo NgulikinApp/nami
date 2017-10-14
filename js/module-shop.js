@@ -35,4 +35,34 @@ function initShop(){
 	}else{
 	    $('.grid-shop-body .grid-shop-body-content .grid-shop-body-content-inputComment').hide();
 	}
+	
+	$('#pagingShopProduct').twbsPagination({
+        totalPages: 35,
+        visiblePages: 10,
+        onPageClick: function (event, page) {
+            console.info(page + ' (from options)');
+        }
+    }).on('page', function (event, page) {
+            console.info(page + ' (from event listening)');
+    });
+    
+    $('#pagingShopDiscuss').twbsPagination({
+        totalPages: 35,
+        visiblePages: 10,
+        onPageClick: function (event, page) {
+            console.info(page + ' (from options)');
+        }
+    }).on('page', function (event, page) {
+            console.info(page + ' (from event listening)');
+    });
+    
+    $('#pagingShopReview').twbsPagination({
+        totalPages: 35,
+        visiblePages: 10,
+        onPageClick: function (event, page) {
+            console.info(page + ' (from options)');
+        }
+    }).on('page', function (event, page) {
+            console.info(page + ' (from event listening)');
+    });
 }

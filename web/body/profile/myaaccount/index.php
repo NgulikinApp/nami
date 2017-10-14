@@ -3,12 +3,7 @@
     <div id="accordionMyprofile">
         <h3 style="background-image: url(/img/arrow_up.png);">Data Pribadi</h3>
          <div>
-            <p>
-            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
-            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
-            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
-            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-            </p>
+            <?php include 'section_private.php'; ?>
         </div>
         <h3>Data Akademis</h3>
         <div>

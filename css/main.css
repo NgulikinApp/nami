@@ -65,7 +65,7 @@ body{
    padding:0;
    font-family: proxima_nova;
    overflow: auto;
-   background:#F1F1F1;;
+   background:#F1F1F1;
 }
 ul{
     list-style:none;
@@ -105,7 +105,7 @@ ul{
     border-top: 3px dashed #F5F5F5;
 }
 .container.successtory{
-    background-color: #00BFFF;
+    background-color: #3FC3FF;
 }
 .container.grid-sec{
     height:100%;
@@ -131,15 +131,15 @@ ul{
    margin:auto;
 }
 .leftHeader{
-    margin-top: 11px;
-    margin-left: 25px;
-    background-image: url(/img/logo_ngulikin.png);
+    margin-top: 7px;
+    margin-left: 10px;
+    background-image: url(/img/icontext.png);
     background-repeat: no-repeat;
-    width: 111px;
-    height: 77px;
+    width: 160px;
+    height: 60px;
     float: left;
     cursor: pointer;
-    background-size: 100px;
+    background-size: contain;
     display: inline-block;
 }
 .menu-category-clearfix {
@@ -150,8 +150,8 @@ ul{
     display: inline-block;
     margin-left: 15px;
     margin-top: 26px;
-    background-color: #00BFFF;
-    font-family: OpenSans-Light;
+    background-color: #3FC3FF;
+    font-family: proxima_nova;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 25px;
@@ -162,6 +162,7 @@ ul{
 }
 .menu-category {
     margin:0px auto;
+    font-family: proxima_nova_ltthin;
 }
 .menu-category li {
     margin:0px;
@@ -207,7 +208,7 @@ ul{
     opacity:0;
     transition:opacity linear 0.15s;
     box-shadow:0px 2px 3px rgba(0,0,0,0.2);
-    background:#00BFFF;
+    background:#3FC3FF;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
@@ -236,9 +237,9 @@ ul{
 }
 .menu-category-search{
     display: inline-block;
-    font-family: OpenSans-Light;
+    font-family: proxima_nova;
     height: 100%;
-    width: calc(100% - 701px);
+    width: calc(100% - 727px);
     vertical-align: top;
     margin-left: 15px;
     margin-top: 7px;
@@ -302,7 +303,7 @@ ul{
    display: inline-block;
    cursor:pointer;
    color:#666666;
-   font-family: OpenSans-Light;
+   font-family: proxima_nova;
 }
 .textHeader div{
     display: inline-block;
@@ -317,7 +318,7 @@ ul{
     padding-right: 50px;
     color: #FFFFFF;
     font-weight: bold;
-    background-color: #00BFFF;
+    background-color: #3FC3FF;
     border-radius: 15px;
     box-shadow: 3px 3px 5px #888888;
     overflow:hidden;
@@ -448,7 +449,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 	padding:3px;
 	width: 100%;
 	outline: none;
-	font-family: OpenSans-Light;
+	font-family: proxima_nova;
     color: black;
 }
 #descQuestion{
@@ -536,7 +537,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 /*Home Content*/
 .grid-cont1{
     height: 400px;
-    background-color: #00BFFF;
+    background-color: #3FC3FF;
 }
 .grid-cont1 .grid_chapter{
     height: inherit;
@@ -607,15 +608,15 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 }
 .grid-cont2{
    width: 100%;
-   font-family: OpenSans-Light;
+   font-family: proxima_nova;
 }
 .grid-body1-cont2,.grid-body2-cont2,.grid-body3-cont2,.grid-cart-header,.grid-cart-body,.grid-favorite-header,.grid-favorite-body,.grid-footer-cont5{
     width:100%;
 }
 .grid-body3-cont2{
-    padding: 5px 20px 20px 20px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    padding: 5px 20px 50px 20px;
+    overflow: hidden;
+    font-family: proxima_nova_ltsemibold;
 }
 .grid-body-sub-left-cont2, .grid-body-sub-right-cont2{
     width: 6%;
@@ -689,7 +690,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     margin: 20px !important;
     float: left;
     color: #999999;
-    font-size: 8px;
+    font-size: 11px;
 }
 .grid-body3-icon-cont2 li[data-internalid='1']{
     background-image: url(/img/ngulikin_value_1.png);
@@ -704,9 +705,8 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     background-image: url(/img/ngulikin_value_4.png);
 }
 .grid-body3-icon-cont2 li span{
-    bottom: 0px;
+    bottom: -45px;
     position: absolute;
-    padding: 30px;
     text-align: center;
 }
 .grid-cont3{
@@ -722,7 +722,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 .grid-cont3-left{
     width:25%;
     float:left;
-    background-color:#026AA7;
+    background-color:#004E82;
     height: 100%;
     padding: 70px 25px 70px 25px;
     letter-spacing: 1px;
@@ -763,8 +763,9 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 .grid-cont4{
    width: 100%;
    background-color: #f2f2f2;
-   font-family: OpenSans-Light;
-   overflow: auto;
+   font-family: proxima_nova;
+   overflow-y: auto;
+   overflow-x: hidden;
    height:180px;
 }
 .grid-chapter-cont4{
@@ -791,18 +792,18 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 }
 .grid-list-cont4-item:hover{
     background: #ffffff; /* Old browsers */
-background: -moz-radial-gradient(center, ellipse cover, #ffffff 0%, #e5e5e5 100%); /* FF3.6-15 */
-background: -webkit-radial-gradient(center, ellipse cover, #ffffff 0%,#e5e5e5 100%); /* Chrome10-25,Safari5.1-6 */
-background: radial-gradient(ellipse at center, #ffffff 0%,#e5e5e5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background: -moz-radial-gradient(center, ellipse cover, #ffffff 0%, #e5e5e5 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, #ffffff 0%,#e5e5e5 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, #ffffff 0%,#e5e5e5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 .grid-list-cont4-item center img{
-    top: 25%;
+    top: 30%;
     position: absolute;
-    left: 18%;
+    left: 10%;
 }
 .grid-header-cont2{
-    color:#026AA7;
+    color:#004E82;
     text-align:center;
     width:100%;
     font-size:32px;
@@ -860,7 +861,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 .grid-cont5{
    width: 100%;
-   font-family: OpenSans-Light;
+   font-family: proxima_nova;
    padding:10px;
 }
 .grid-cont5 .grid_chapter .grid_sub_chapter{
@@ -872,9 +873,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
     margin: 5px;font-family: proxima_nova_ltthin;
     letter-spacing: 1px;
     font-weight: bold;
+    position: relative;
 }
 .grid_rightsub_chapter{
    margin-top: 7px;
+   position: absolute;
 }
 .grid_rightsub_chapter_left{
     float: left;
@@ -887,7 +890,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .grid_rightsub_chapter_right{
     float: left;
     margin-left: 15px;
-    margin-top: 30px;
+    margin-top: 40px;
     letter-spacing: 1px;
 }
 .grid_rightsub_chapter_right span{
@@ -901,7 +904,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
    height: 170px;
    background-color: #f2f2f2;
    font-size: 24px;
-   font-family: OpenSans-Light;
+   font-family: proxima_nova;
 }
 .grid-sub-cont6{
    position: absolute;
@@ -921,7 +924,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
    width: 100%;
    height: 150px;
    font-size: 24px;
-   font-family: OpenSans-Light;
+   font-family: proxima_nova;
 }
 .grid-sub-cont7{
    position: absolute;
@@ -947,6 +950,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
     position:relative;
     text-transform:uppercase;
     cursor:pointer;
+    background-size: contain;
 }
 .grid-list-cont8 li:hover{
     opacity:0.7;
@@ -965,27 +969,27 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
     margin:0px 20px 20px 20px;
     border-radius: 15px;
 }
-.grid-listmiddle-cont8#culinary{
-    background-color:#F23030;
+.grid-listmiddle-cont8#kuliner{
+    background-color:#FBBD33;
 }
-.grid-listmiddle-cont8#fashion{
-    background-color:#EBC50C;
+.grid-listmiddle-cont8#teknologi{
+    background-color:#E5EAED;
 }
 .grid-listmiddle-cont8#furniture{
-    background-color:#00CC44;
+    background-color:#3FC3FF;
 }
-.grid-listmiddle-cont8#idea{
-    background-color:#49C8F2;
+.grid-listmiddle-cont8#seni{
+    background-color:#F97C64;
 }
-.grid-listmiddle-cont8#music{
-    background-color:#7961F2;
+.grid-listmiddle-cont8#musik{
+    background-color:#74C5FC;
 }
-.grid-listmiddle-cont8#technology{
-    background-color:#0FC0C5;
+.grid-listmiddle-cont8#fashion{
+    background-color:#F4B8D1;
 }
 .grid-cont9{
     width: 100%;
-    height: 470px;
+    height: 550px;
     font-size: 10pt;
     font-family: proxima_nova_ltthin;
     font-weight: bold;
@@ -994,6 +998,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .grid-sub-cont9{
     background-color: #fbbd33;
     height: 100%;
+    background-image: url(/img/backgroundPromo.png);
+    background-repeat: no-repeat;
+    background-position: 100% 45px;
 }
 .product-cont9-header{
     text-transform:uppercase;
@@ -1006,7 +1013,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
     display:inherit;
 }
 .grid-sub-cont9-header span:first-child{
-    background-color: #00BFFF;
+    background-color: #3FC3FF;
     width: 230px;
     line-height: 60px;
     font-size: 30px;
@@ -1022,9 +1029,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
     letter-spacing: 1px;
 }
 .grid-sub-cont9-body{
-    height: 270px;
+    height: 300px;
     background-color: #FFFFFF;
-    margin: -28px 60px;
+    margin: 15px 60px;
     width: 750px;
     box-shadow: 3px 3px 10px #888888;
     padding: 15px;
@@ -1032,13 +1039,62 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .grid-sub-cont9-body-nav{
     width: 100%;
     height: 20%;
-    color:#00BFFF;
+    color:#3FC3FF;
     font-size: 50px;
 }
 .grid-sub-cont9-body-list img{
     width: 230px;
-    height: 250px;
+    height: 275px;
     cursor:pointer;
+}
+.grid-sub-cont9-body-list-hover{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(58, 58, 58, 0.85);
+    text-align: center;
+    margin: 0px 0px 0px 15px;
+    color:#3FC3FF;
+    font-size:25px;
+}
+.grid-sub-cont9-body-list-hover i{
+    font-size: 25px;
+    margin: 5px;
+    cursor:pointer;
+    height: 25px;
+    position: absolute;
+    top: 50%;
+    margin-top: -19px;
+}
+.grid-sub-cont9-body-list-hover i.fa-shopping-cart{
+    margin-left: -25px;
+}
+.grid-sub-cont9-body-list-hover i.fa-thumbs-o-up{
+    margin-left: 15px;
+}
+.grid-sub-cont9-body-list-hover div{
+    background-color: #3FC3FF;
+    color: #FFF;
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
+    height: 22px;
+    width: 55px;
+    text-align: left;
+    top: 0;
+    position: absolute;
+    font-size: 15px;
+    margin-top: 15px;
+    padding-left: 5px;
+    cursor:pointer;
+}
+.grid-sub-cont9-body-list-hover i:hover{
+    color:#004E82;
+}
+.grid-sub-cont9-body-list-hover div:hover{
+    background-color: #004E82;
 }
 .container div div ul{
     list-style-type: none;
@@ -1047,16 +1103,27 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
     cursor: pointer;
     width: 100%;
 }
+
+.grid-sub-cont9-body-list .col-md-9{
+    width: 240px;
+}
 .container div div ul li{
     margin: 0px;
     cursor: pointer;
     position: relative;
 }
+
+.pagination{
+    text-align: center
+}
+.pagination li{
+    display: inline-block;
+}
 /*End of Home Content*/
 
 /*Footer Menu*/
 footer, footer div{
-    background-color: #026AA7 !important;
+    background-color: #004E82 !important;
 }
 .footer{
    width: 100%;
@@ -1064,7 +1131,7 @@ footer, footer div{
    font-size: 25px;
    padding: 25px;
    color:#FFF;
-   font-family:OpenSans-Light;
+   font-family:proxima_nova;
 }
 .footer-header{
     width: 100%;
@@ -1399,7 +1466,7 @@ section div h1{
     padding-bottom:40px;
 }
 .signinBodySub span{
-    font-family: OpenSans-Light;
+    font-family: proxima_nova;
     color:#808080;
     font-size: 8px;
     float:left;
@@ -1410,7 +1477,7 @@ section div h1{
     margin-top: 10px;
 }
 .signinBodySub span{
-    font-family: OpenSans-Light;
+    font-family: proxima_nova;
     color:#808080;
 }
 .signinBodySub.line{
@@ -1422,7 +1489,7 @@ section div h1{
     padding-top: 5px;
     height:0px;
     text-align: center;
-    font-family: OpenSans-Light;
+    font-family: proxima_nova;
     font-size: 15px;
     cursor:pointer;
 }
@@ -1431,7 +1498,7 @@ section div h1{
     padding-top: 15px;
     height:0px;
     text-align: center;
-    font-family: OpenSans-Light;
+    font-family: proxima_nova;
     font-size: 15px;
     cursor:pointer;
 }
@@ -1459,7 +1526,7 @@ section div h1{
     padding-left: 25px;
     outline: none;
     font-size: 10px;
-    font-family: OpenSans-Light;
+    font-family: proxima_nova;
 }
 .inputSignin::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 	color: darkgrey;
@@ -1505,12 +1572,12 @@ section div h1{
     padding: 7px 30px;
     border-radius: 25px 25px 25px 25px;
     cursor: pointer;
-    color: #00BFFF;
+    color: #3FC3FF;
     font-family: proxima_nova_ltsemibold;
     box-shadow: 2px 2px 5px #888888;
 }
 .signupBanner-footer div:nth-child(2):hover{
-    background:#026AA7;
+    background:#004E82;
     color:#FFFFFF;
 }
 .grid-signup-header,.grid-signup-body,.grid-signin-header,.grid-signin-body{
@@ -1563,7 +1630,7 @@ section div h1{
 }
 .signupBodySub span{
     font-size: 11px;
-    color:#00BFFF;
+    color:#3FC3FF;
     float:left;
 }
 .signupBodySub .signupBodySubDate{
@@ -1603,7 +1670,7 @@ section div h1{
 	position: absolute;
 	left: 8px;
 	top: 28px;
-	color: #026AA7;
+	color: #004E82;
 }
 .signupBodySub .fa {
 	position: absolute;
@@ -1626,7 +1693,7 @@ section div h1{
 #alertSignIn,#alertSignUp{
     display:none;
     color:red;
-    font-family: OpenSans-Light;
+    font-family: proxima_nova;
 }
 .regisOrForgotText{
 	float:right;
@@ -1644,14 +1711,14 @@ section div h1{
     margin-right: 5px;
 }
 .grid-signup-header-icon{
-    background-image: url(/img/logo_ngulikin.png);
+    background-image: url(/img/icon.png);
     background-repeat: no-repeat;
-    width: 80px;
-    height: 60px;
-    background-size: contain;
+    width: 170px;
+    height: 100px;
+    background-size: 170px;
     font-family: proxima_nova;
     margin: auto;
-    margin-top: 20px;
+    background-position: center;
 }
 .grid-signup-header h1,.grid-signin-header h1{
     font-size: 12px;
@@ -1659,7 +1726,7 @@ section div h1{
     margin:0px;
 }
 #buttonSignIn,#buttonSignup,#buttonReset{
-	background-color: #00BFFF;
+	background-color: #3FC3FF;
 	border-radius: 3px;
 	border: none;
 	color: #FFFFFF;
@@ -1797,7 +1864,7 @@ hr{
 }
 .grid-aboutus-body .title{
     font-family: proxima_nova_ltsemibold;
-    border-left: 5px solid #00BFFF;
+    border-left: 5px solid #3FC3FF;
     padding-left: 15px;
     margin-left: 30px;
 }
@@ -1845,7 +1912,7 @@ hr{
     background-image: url("/img/keranjang.png");
 }
 .grid-cart-footer,.grid-favorite-footer{
-    font-family:OpenSans-Light;
+    font-family:proxima_nova;
     text-align:center;
     color:#999999;
     display: inline-block;
@@ -1906,7 +1973,7 @@ hr{
     border-top: 1px solid #F5F5F5;
 }
 .detail-shopping-body-title #detail-shopping-sellername{
-    background-color:#00BFFF;
+    background-color:#3FC3FF;
     font-size: 12px;
 }
 
@@ -2015,7 +2082,7 @@ hr{
     font-family: proxima_nova_altbold;
 }
 .detail-summary-footer{
-    background-color: #00BFFF;
+    background-color: #3FC3FF;
     color: #FFF;
     text-align: center;
     padding: 5px;
@@ -2068,7 +2135,7 @@ hr{
     background-image: url("/img/favorit.png");
 }
 .grid-favorite-header .favoriteButton{
-    background-color: #00BFFF;
+    background-color: #3FC3FF;
     width: 260px;
     padding: 10px 50px;
     border-radius: 5px;
@@ -2089,11 +2156,11 @@ hr{
 #favoriteListShopButton{
     margin-left: 10px;
 }
-#grid-favorite-listdatashop{
+#grid-favorite-shop{
     display:none;
 }
 .grid-favorite-footer div{
-    width:70%;
+    width:100%;
     margin:auto;
     font-size: 20px;
     line-height: 40px;
@@ -2108,7 +2175,7 @@ hr{
 .grid-favorite-footer.filled .result-content-paging{
     width:100%;
     text-align:center;
-    height:10px;
+    overflow: auto;
 }
 .grid-favorite-footer.filled div .result-content-list-data{
     float:left;
@@ -2133,7 +2200,7 @@ hr{
     border-top-right-radius: 5px;
 }
 .grid-favorite-footer.filled div .result-content-list-data .result-content-list-data-head .result-content-list-data-head-new{
-    background-color: #00BFFF;
+    background-color: #3FC3FF;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
     color: #FFF;
@@ -2175,7 +2242,7 @@ hr{
     width: 300px;
     margin: auto;
     color: #808080;
-    font-family: OpenSans-Light;
+    font-family: proxima_nova;
     box-shadow: 3px 5px 5px #888888;
     border-radius: 5px;
     width:500px;
@@ -2183,7 +2250,7 @@ hr{
     padding-bottom:15px;
 }
 .grid-signin-body .signBodyRegis{
-    color: #00BFFF;
+    color: #3FC3FF;
     margin: 10px 80px 15px 0px;
     float:right;
     letter-spacing: 1px;
@@ -2197,14 +2264,14 @@ hr{
 }
 #layer-signin-cont{
     text-align:center;
-    height: 623px;
+    height: 500px;
 }
 #layer-signin-cont{
     font-size:10px;
 }
 #layer-signin-header{
     color:#808080;
-    font-family: OpenSans-Light;
+    font-family: proxima_nova;
 }
 #layer-signin-header h1{
     color:#4d4d4d;
@@ -2227,7 +2294,7 @@ hr{
     color: #999999;
 }
 .filter-content{
-    height:625px;
+    height:655px;
 }
 .result-content{
     margin-left: 30px;
@@ -2318,7 +2385,7 @@ hr{
     border-top-right-radius: 5px;
 }
 .result-content .result-content-list .result-content-list-data .result-content-list-data-head .result-content-list-data-head-new{
-    background-color: #00BFFF;
+    background-color: #3FC3FF;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
     color: #FFF;
@@ -2335,7 +2402,7 @@ hr{
 .result-content .result-content-paging{
     width:100%;
     text-align:center;
-    height:10px;
+    overflow:auto;
 }
 .result-content hr{
     border-top:2px solid #F5F5F5;
@@ -2381,7 +2448,7 @@ hr{
     cursor: auto;
 }
 .grid-rules-body .content .con-content .body font{
-    color:#026AA7;
+    color:#004E82;
 }
 .grid-rules-body .content .con-content .body span#title{
     padding-top: 10px;
@@ -2420,7 +2487,7 @@ hr{
 }
 .grid-rules-body .menu ul li:hover{
     background-color:#00001a;
-    color:#00BFFF;
+    color:#3FC3FF;
 }
 
 /* End of rules page */
@@ -2530,7 +2597,7 @@ hr{
 .grid-shop-body .grid-shop-body-head div:first-child{
     border-top-left-radius: 5px;
     background-color: rgb(60, 60, 60);
-    color:#00BFFF;
+    color:#3FC3FF;
 }
 .grid-shop-body .grid-shop-body-head div:nth-child(2){
     border-left: 1px solid #DCDCDC;
@@ -2596,7 +2663,7 @@ hr{
 }
 .grid-shop-body .grid-shop-body-content .grid-shop-body-content-listComment .grid-shop-body-content-listComment-content:last-child .body div span #replySellerShop{
     border-left: 2px solid #808080;
-    color: #00BFFF;
+    color: #3FC3FF;
     padding-left: 10px;
 }
 .grid-shop-body .grid-shop-body-content .grid-shop-body-content-listComment .grid-shop-body-content-listComment-content img{
@@ -2628,7 +2695,7 @@ hr{
     border-radius: 5px;
 }
 .grid-shop-body .grid-shop-body-content .grid-shop-body-content-inputComment div #buttonDiscussShop{
-    background-color: #00BFFF;
+    background-color: #3FC3FF;
     color:#FFFFFF;
     border: 0;
     float: right;
@@ -2720,7 +2787,7 @@ Product page
 .grid-product-container .content .top span #btnCart,.grid-product-container .content .top span #btnFavorite{
     background-color: #00001a;
     border: 0;
-    color: #00BFFF;
+    color: #3FC3FF;
     padding: 5px 20px;
     border-radius: 5px;
     margin: 5px;
@@ -2805,7 +2872,7 @@ Product page
 }
 .menuProfile ul li:hover{
     color:#FFF;
-    background-color:#00BFFF;
+    background-color:#3FC3FF;
 }
 .contentProfile{
     width:calc(100% - 250px);
@@ -2861,4 +2928,45 @@ Product page
     width: 70%;
     border-radius:5px;
     border: 2px solid #F5F5F5;
+}
+.privateLeft,.privateRight{
+    float:left;
+}
+.privateLeft{
+    width:calc(100% - 200px);
+    padding: 0px;
+}
+.privateRight{
+    width:200px;
+    padding-top: 25px;
+    text-align: center;
+}
+.privateLeft div{
+    overflow: auto;
+    margin: 10px;
+}
+.privateLeft div input[type="text"]{
+    float:right;
+    border: 2px solid #F5F5F5;
+    border-radius: 5px;
+    padding: 3px;
+    width: calc(100% - 220px);
+}
+.privateLeft div #sexCon{
+    float: right;
+    margin-right: 310px;
+}
+.privateRight div input{
+    visibility:hidden;
+    width:100px;
+}
+.privateRight div label{
+    background-color: #3FC3FF;
+    padding: 3px;
+    color: #FFF;
+    border-radius: 5px;
+    width: 150px;
+    text-align: center;
+    margin-top: 15px;
+    cursor: pointer;
 }

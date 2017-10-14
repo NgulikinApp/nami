@@ -1,6 +1,6 @@
 function initGeneral(){
-    var url = 'http://init.ngulikin.com';
-    var urlAPI 	= 'http://api.ngulikin.com/v1/';
+    var url = 'http://init.ngulikin.com',
+        urlAPI 	= 'http://api.ngulikin.com/v1/';
     
     $('.leftHeader,#backHomeSignup,#backHomeSignin').on( 'click', function( e ){
 	    location.href = url;
@@ -209,41 +209,6 @@ function initGeneral(){
 	$('.footer-body-mid2 ul li:last-child').on('click', function (e) {
 	    location.href = url+"/signin";
 	});
-	
-    $('#buttonSigninFb').on('click', function (e) {
-        FB.init({
-    		appId      : '1757942561184229',
-    		xfbml      : true,
-    		version    : 'v2.8'
-    	});
-    	//do the login
-    	FB.login(function(response) {
-    		if (response.authResponse) {
-    			//user just authorized your app
-    			getUserData();
-    		}
-    	}, {scope: 'email,public_profile', return_scopes: true});
-    });
-    $('.grid-list-cont4 .grid-list-cont4-item').on('click', function (e) {
-        var shopTitle = $(this).find('.shopTitle').val();
-        location.href = url+"/shop/"+shopTitle;
-    });
-    
-    $('.grid-listmiddle-cont8').on('click', function (e) {
-        var productTitle = $(this).attr('id');
-        location.href = url+"/search/"+productTitle;
-    });
-    
-    $('.grid_chapter_subcon').on('click', function (e) {
-        var productTitle = $(this).find('.productTitle').val();
-        var productCategory = $(this).find('.productCategory').val();
-        location.href = url+"/product/"+productCategory+'/'+productTitle;
-    });
-    
-    $('.grid-sub-cont9-body-list img').on('click', function (e) {
-        var datainternal = $(this).attr('datainternal-id').split("~");
-        location.href = url+"/product/"+datainternal[0]+'/'+datainternal[1];
-    });
     
     $('#iconProfile').on( 'click', function( e ){
         location.href = url+"/profile/"+localStorage.getItem('emailNgulikin');
@@ -274,59 +239,6 @@ function categoryProduct(product){
     
     //$('.list-product-sidebar').html(sideBarMenuContainer);
     $('.grid-body-cont4').html(homeContainer);
-}
-
-var CLIENT_ID = '279558050364-cp3evjt1fi39uh82cl304vq5orqob038.apps.googleusercontent.com';
-var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"];
-var SCOPES = 'https://www.googleapis.com/auth/userinfo.profile';
-            
-function handleClientLoad() {
-    gapi.load('client:auth2', initClient);
-}
-        
-function initClient() {
-    gapi.client.init({
-        discoveryDocs: DISCOVERY_DOCS,
-        clientId: CLIENT_ID,
-        scope: SCOPES
-    }).then(function () {
-        var authorizeButton = document.getElementById('buttonSigninGplus');
-        authorizeButton.onclick = handleAuthClick;
-    });
-}
-        
-function updateSigninStatus(isSignedIn) {
-    if (isSignedIn) {
-        listLabels();
-    }
-}
-        
-function handleAuthClick(event) {
-    gapi.auth2.getAuthInstance().signIn();
-    gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-        
-    updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-}
-        
-function listLabels() {
-    gapi.client.load('plus','v1', function(){
-        var request = gapi.client.plus.people.get({
-        	'userId': 'me'
-        });
-        request.execute(function(resp) {
-        	localStorage.setItem('emailNgulikin', resp.emails[0].value);
-        	location.href = "http://init.ngulikin.com";
-        			     
-        	gapi.auth2.getAuthInstance().signOut();
-        });
-    });
-}
-
-function getUserData() {
-	FB.api('/me?fields=name,email', function(response) {
-		localStorage.setItem('emailNgulikin', response.email);
-        location.href = "http://init.ngulikin.com";
-	});
 }
  
 /*window.fbAsyncInit = function() {

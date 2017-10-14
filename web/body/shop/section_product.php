@@ -5,4 +5,5 @@
         <div><img src="https://id-live-01.slatic.net/p/7/duomo-sepatu-kets-slip-on-tasel-putih-1490053380-70857351-7a94cd5f4c75e60b4a8662dfd7f9d890-catalog_233.jpg"/></div>
         <div><img src="http://id-live-03.slatic.net/p/7/snta-sepatu-gununghiking-sepatu-outdoor-467-hijau-orange-1472799922-7596209-401a9d2fe1eade132893e2d6bc1c9400-catalog_233.jpg"/></div>
     </div>
+    <ul class="pagination" id="pagingShopProduct"></ul>
 </div>
