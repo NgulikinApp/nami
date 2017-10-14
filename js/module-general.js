@@ -1,6 +1,12 @@
 function initGeneral(){
     var url = 'http://init.ngulikin.com',
-        urlAPI 	= 'http://api.ngulikin.com/v1/';
+        urlAPI 	= 'http://api.ngulikin.com/v1/',
+        widthMedia = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+        heightMedia = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    
+    $('body .header').css('width',widthMedia+'px');
+    $('.home_container').css('width',(widthMedia-17)+'px');
+    $('footer').css('width',(widthMedia-17)+'px');
     
     $('.leftHeader,#backHomeSignup,#backHomeSignin').on( 'click', function( e ){
 	    location.href = url;

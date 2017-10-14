@@ -764,8 +764,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
    width: 100%;
    background-color: #f2f2f2;
    font-family: proxima_nova;
-   overflow-y: auto;
-   overflow-x: hidden;
+   overflow: auto;
    height:180px;
 }
 .grid-chapter-cont4{
