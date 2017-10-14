@@ -1,18 +1,20 @@
 function initCart(){
     var cartNgulikin = localStorage.getItem('cartNgulikin'),
         productPrice = "1000000";
+        
         cartNgulikin = parseInt(cartNgulikin);
         
     var productPriceCalc = numberFormat(productPrice);
     $('.productPriceCart').html(productPriceCalc);
         
-    if(cartNgulikin !== null){
+    if(cartNgulikin !== null && cartNgulikin){
         $('#cart-filledlist').show();
         $('#cart-emptylist').hide();
         $('.container').addClass('cart');
         
         $('#sumProductCart').val(cartNgulikin);
     }else{
+        localStorage.removeItem('cartNgulikin');
         $('#cart-filledlist').hide();
         $('#cart-emptylist').show();
         $('.container').removeClass('cart');
