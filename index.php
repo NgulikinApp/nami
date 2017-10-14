@@ -1,3 +1,4 @@
+<?php include 'web/system/minify.php';?>
 <!DOCTYPE html>
 <html class="qp-ui">
     <head>
@@ -17,35 +18,6 @@
 		<script src="js/module-home.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/custom-file-input.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="https://apis.google.com/js/api.js"></script>
-		<script>
-			$( document ).ready(function() {
-			    initGeneral();
-				initHome();
-				
-				$.tosrus.defaults.media.image = {
-					filterAnchors: function( $anchor ) {
-						return $anchor.attr( 'href' ).indexOf( 'www.zaskiasungkarhijab.com' ) > -1;
-					}
-				};
-				
-				$('#promo').tosrus({
-					infinite	: true,
-					slides		: {
-						visible		: 3
-					}
-				});
-				
-				$('#best-selling').tosrus({
-					infinite	: true,
-					slides		: {
-						visible		: 3
-					}
-				});
-				
-				$("#cslide-slides").cslide();
-				
-				handleClientLoad();
-			});
-		</script>
+		<script src="js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>
 </html>

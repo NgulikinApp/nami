@@ -1,9 +1,10 @@
+<?php include 'web/system/minify.php';?>
 <!DOCTYPE html>
 <html class="qp-ui">
     <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1, width=device-width">
-		<title>Sign In | Ngulikin</title>
+		<title>Lupa Password | Ngulikin</title>
 		<?php include $_SERVER['DOCUMENT_ROOT'].'/web/library.php';?>
     </head>
     <body>

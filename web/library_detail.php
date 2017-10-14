@@ -1,4 +1,3 @@
-<?php include 'system/minify.php';?>
 <?php include 'system/crossFrame.php';?>
 <?php include 'system/checkDevice.php';?>
 <?php include 'system/getUrl.php';?>
