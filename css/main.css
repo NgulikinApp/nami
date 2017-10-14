@@ -769,6 +769,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 }
 .grid-chapter-cont4{
     width:30%;
+    height:180px;
     float:left;
 }
 .grid-chapter-cont4 img{
@@ -2968,4 +2969,13 @@ Product page
     text-align: center;
     margin-top: 15px;
     cursor: pointer;
+}
+
+@media screen and (max-width:1277px){
+    body .header{
+        width:1277px;
+    }
+    .home_container,footer{
+        width:1260px;
+    }
 }
