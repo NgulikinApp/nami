@@ -2979,3 +2979,13 @@ Product page
         width:1260px;
     }
 }
+@media (min-width: 992px){ 
+    .container {
+        width:1260px !important;
+    }
+}
+@media (min-width: 768px){ 
+    .container {
+        width:1260px !important;
+    }
+}
