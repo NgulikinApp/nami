@@ -81,33 +81,6 @@ function initHome(){
             listproduct += '   <div class="grid-sub-cont9-body-list-hover">';
             listproduct += '       <i class="fa fa-shopping-cart"></i>';
             listproduct += '       <i class="fa fa-thumbs-o-up"></i>';
-            listproduct += '       <div datainternal-id="'+val.id+'~'+val.id+'">Lihat</div>';
-            listproduct += '   </div>';
-            listproduct += '</div>';
-            
-        });
-        $("#best-selling").html(listproduct);
-        
-        $('#best-selling').tosrus({
-    		infinite	: true,
-    		slides		: {
-    			visible		: 3
-    		}
-    	});
-    	
-    	$(".tos-next").css('right','5px');
-    	
-    	mousetosrushome(url);
-    });
-    
-    $.getJSON("http://http-1761326392.ap-southeast-1.elb.amazonaws.com/product?tag=bestseller", function( data ) {
-	    var listproduct = '';
-        $.each( data, function( key, val ) {
-            listproduct += '<div class="col-md-9">';
-            listproduct += '   <img src="http://www.zaskiasungkarhijab.com/img/product_thumb/669_2.jpg">';
-            listproduct += '   <div class="grid-sub-cont9-body-list-hover">';
-            listproduct += '       <i class="fa fa-shopping-cart"></i>';
-            listproduct += '       <i class="fa fa-thumbs-o-up"></i>';
             listproduct += '       <div datainternal-id="'+val.id+'"~"'+val.id+'">Lihat</div>';
             listproduct += '   </div>';
             listproduct += '</div>';
