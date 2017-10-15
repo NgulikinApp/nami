@@ -176,11 +176,11 @@ ul{
     text-decoration:none;
 }
 .menu-category .arrow {
-    background-image: url(/img/category-header.png);
+    background-image: url(/img/arrowcategory.png);
     background-repeat: no-repeat;
     width: 30px;
     height: 13px;
-    background-size: contain;
+    background-size: 100%;
 }
 .menu-category > ul > li {
     display:inline-block;
