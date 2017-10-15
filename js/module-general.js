@@ -231,6 +231,14 @@ function initGeneral(){
     $('#iconProfile').on( 'click', function( e ){
         location.href = url+"/profile/"+localStorage.getItem('emailNgulikin');
     });
+    
+    /*$('.menu-category-wrap').mouseover(function() {
+        $('.cover-popup').show();
+    });
+    
+    $('.menu-category-wrap').mouseout(function() {
+        //$('.cover-popup').hide();
+    });*/
 }
 
 /* content for sidebar menu and category product on home menu*/

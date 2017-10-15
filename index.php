@@ -10,7 +10,6 @@
     <body>
 		<?php include 'web/nav/mainMenu.php';?>
 		<?php include 'web/body/home.php';?>
-		<?php include 'web/popup/signin.php';?>
 		<?php include 'web/nav/footerMenu.php';?>
 		<?php include 'web/body/general/init_questioner.php';?>
 		

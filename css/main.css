@@ -208,7 +208,7 @@ ul{
     opacity:0;
     transition:opacity linear 0.15s;
     box-shadow:0px 2px 3px rgba(0,0,0,0.2);
-    background:#3FC3FF;
+    background:#FFF;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
@@ -221,8 +221,8 @@ ul{
 .menu-category-sub-menu li a {
     padding: 2px 5px;
     display: block;
-    font-size: 10px;
-    color: #FFF;
+    color:#333;
+    font-size:12px;
 }
 .menu-category-sub-menu li a:first-child {
     border-top-right-radius: 3px;
@@ -232,8 +232,8 @@ ul{
     border-bottom-left-radius: 3px;
 }
 .menu-category-sub-menu li a:hover, .menu-category-sub-menu .current-item a {
-    background:#004f7f;
     cursor:pointer;
+    color:red;
 }
 .menu-category-search{
     display: inline-block;
@@ -1034,7 +1034,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     margin: 15px 60px;
     width: 750px;
     box-shadow: 3px 3px 10px #888888;
-    padding: 15px;
+    padding: 15px 15px 15px 0px;
 }
 .grid-sub-cont9-body-nav{
     width: 100%;
@@ -1105,7 +1105,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 }
 
 .grid-sub-cont9-body-list .col-md-9{
-    width: 240px;
+    width: 245px;
 }
 .container div div ul li{
     margin: 0px;
@@ -2983,9 +2983,15 @@ Product page
     .container {
         width:1260px !important;
     }
+    .container.announ {
+        width: 100% !important;
+    }
 }
 @media (min-width: 768px){ 
     .container {
         width:1260px !important;
+    }
+    .container.announ {
+        width: 100% !important;
     }
 }

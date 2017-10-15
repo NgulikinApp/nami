@@ -36,3 +36,4 @@
         </div>
     </header>
 </div>
+<div class="cover-popup"></div>
