@@ -28,9 +28,7 @@
 	            </div>
 	            <div class="right">
 	                <span>
-	                    <?php
-                            echo strtoupper($title); 
-		                ?>
+	                    OLIVE WOOD CHAIR
 	                </span>
 	                <span>
 	                    IDR 176.675

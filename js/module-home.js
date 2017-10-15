@@ -35,7 +35,7 @@ function initHome(){
                 listproduct += '        </div>';
                 listproduct += '    </div>';
                 listproduct += '        <input type="hidden" class="productCategory" value="furniture"/>';
-                listproduct += '        <input type="hidden" class="productTitle" value="'+val.id+'~'+val.id+'"/>';
+                listproduct += '        <input type="hidden" class="productTitle" value="'+val.id+'"/>';
                 listproduct += '</div>';
             }
         });
