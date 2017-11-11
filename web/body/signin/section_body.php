@@ -20,6 +20,7 @@
             		<input type="password" id="passwordSignin" class="inputSignin" placeholder="Password"/>
             		<i class="fa fa-lock"></i>
             	</div>
+            	<span class="error_message"></span>
             	<span class="signBodyRegis">
             		Belum punya akun ngulikin? 
             		<font id="regisPopUpSignin">Register disini</font>
@@ -28,7 +29,7 @@
                     <input type="button" id="buttonSignIn" value="MASUK"/>
             	</p>
             	<p>
-            		<span class="signinBodyForgot">Lupa Password</span>
+            		<span class="signinBodyForgot">Lupa Password?</span>
             	</p>
             	<div class="signinBodySub line">
             		<hr />

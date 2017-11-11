@@ -85,6 +85,7 @@
 	                        </div>
 	                    </div>
 	                    <div class="title">Rating</div>
+	                    <div class="rateyo"></div>
 	                </div>
 	            </div>
 	        </div>

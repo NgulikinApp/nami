@@ -11,6 +11,10 @@ $( document ).ready(function() {
 	if (typeof initShop != 'undefined')checkFunction(initShop);
 	if (typeof initSignup != 'undefined')checkFunction(initSignup);
 	if (typeof initSearch != 'undefined')checkFunction(initSearch);
+	if (typeof initForgotPassword != 'undefined')checkFunction(initForgotPassword);
+	if (typeof initNotifications != 'undefined')checkFunction(initNotifications);
+	if (typeof initInvoice != 'undefined')checkFunction(initInvoice);
+	if (typeof initPayment != 'undefined')checkFunction(initPayment);
 });
 
 function checkFunction(name){

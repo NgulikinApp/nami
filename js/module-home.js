@@ -1,11 +1,37 @@
 function initHome(){
-    var url = 'http://init.ngulikin.com';
+    var url = 'http://init.ngulikin.com',
+        logoutsession = sessionStorage.getItem('logoutNgulikin'),
+        loginsession = sessionStorage.getItem('loginNgulikin'),
+        paymentfailedsession = sessionStorage.getItem('paymentFailedNgulikin'),
+        emailsession = localStorage.getItem('emailNgulikin');
+    
+    if(logoutsession !== null){
+        notif("info","Anda telah logout","center","center");
+        sessionStorage.removeItem('logoutNgulikin');
+    }
+    
+    if(loginsession !== null && emailsession !== null){
+        notif("info","Anda telah login sebagai "+emailsession,"center","center");
+        sessionStorage.removeItem('loginNgulikin');
+    }
+    
+    if(paymentfailedsession !== null){
+        notif("info","Halaman tidak ditemukan","center","center");
+        sessionStorage.removeItem('paymentFailedNgulikin');
+    }
     
 	$.tosrus.defaults.media.image = {
 		filterAnchors: function( $anchor ) {
 			return $anchor.attr( 'href' ).indexOf( 'www.zaskiasungkarhijab.com' ) > -1;
 		}
 	};
+	
+	$('.slider').anyslider({
+        animation: 'fade',
+        interval: 3000,
+        showControls: false,
+        startSlide: 1
+    });
     
     $('.grid-list-cont4 .grid-list-cont4-item').on('click', function (e) {
         var shopTitle = $(this).find('.shopTitle').val();
@@ -18,6 +44,11 @@ function initHome(){
     });
     
     $('.fa-shopping-cart').on('click', function (e) {
+        notif("success","Produk ditambah ke keranjang","center","top");
+    });
+    
+    $('.fa-thumbs-o-up').on('click', function (e) {
+         notif("success","Produk ditambah ke daftar favorit","center","top");
     });
     
     $.getJSON("http://http-1761326392.ap-southeast-1.elb.amazonaws.com/product?tag=uptodate", function( data ) {
@@ -103,7 +134,7 @@ function initHome(){
 	$("#cslide-slides").cslide();
 }
 
-/* Funtion for showing background promo and best-seller product in home */
+/* Funtion for showing background promo and best-seller product*/
 function mousetosrushome(url){
     $(".tos-slide .col-md-9").mouseover(function(){
         $(this).children('.grid-sub-cont9-body-list-hover').show();

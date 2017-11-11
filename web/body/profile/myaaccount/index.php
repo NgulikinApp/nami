@@ -1,18 +1,9 @@
-<div class="myprofile">
+<div class="myprofile active" id="myaccount">
     <div class="headerMyprofile">Akun Saya</div>
     <div id="accordionMyprofile">
         <h3 style="background-image: url(/img/arrow_up.png);">Data Pribadi</h3>
-         <div>
-            <?php include 'section_private.php'; ?>
-        </div>
-        <h3>Data Akademis</h3>
         <div>
-            <p>
-            Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
-            purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
-            velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
-            suscipit faucibus urna.
-            </p>
+            <?php include 'section_private.php'; ?>
         </div>
         <h3>Alamat dan kontak detail</h3>
         <div class="addressmyprofile">

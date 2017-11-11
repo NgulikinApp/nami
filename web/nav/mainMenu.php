@@ -14,12 +14,15 @@
             </nav>
         </div>
         <div class="menu-category-search">
-            <input type="text" id="search-general" placeholder="Search"/>
+            <input type="text" id="search-general" placeholder="Cari Produk atau Toko"/>
             <div id="search-header"></div>
         </div>
         <div class="rightHeader">
             <div class="iconHeader tooltip" id="iconCartHeader">
                 <span class="tooltiptext tooltip-bottom">Keranjang Belanja</span>
+            </div>
+            <div class="iconHeader tooltip" id="iconNotifHeader">
+                <span class="tooltiptext tooltip-bottom">Notifikasi</span>
             </div>
             <div class="iconHeader tooltip" id="iconFavoritHeader">
                 <span class="tooltiptext tooltip-bottom">Favorit Belanja</span>

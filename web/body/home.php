@@ -1,39 +1,17 @@
 <div class="home_container">
-    <!--<section class="container">
-        <div class="grid-cont1">
-        </div>
-            <div class="grid_chapter">
-                <div class="chapter-content">
-                    <div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:1300px;height:640px;overflow:hidden;visibility:hidden;">
-    					<div data-u="loading" class="jssor_loading">
-    						<div class="jssor_loading_container"></div>
-    						<div class="jssor_loading_nextcontainer"></div>
-    					</div>
-    					<div data-u="slides" class="slides">
-    						<div>
-    							<img data-u="image" src="img/banner1_resized.jpg"/>
-    						</div>
-    						<div>
-    							<img data-u="image" src="img/banner2_resized.jpg"/>
-    						</div>
-    					</div>
-    					<div data-u="navigator" class="jssorb05" data-autocenter="1">
-    						<div data-u="prototype"></div>
-    					</div>
-    					<!--<span data-u="arrowleft" class="jssora22l" data-autocenter="2"></span>
-    					<span data-u="arrowright" class="jssora22r" data-autocenter="2"></span>
-    				</div>
-               </div>
-            </div>
-        </div>
-    </section>-->
-    <section class="container announ">
-        <div class="grid-cont1">
+    <section class="container announ slider-wrapper">
+        <div class="grid-cont1 slider">
             <div class="grid_chapter">
                 <div class="grid_chapter_con" id="grid_chapter_con_left">
                     <span>produk terbaru</span>
                 </div>
                 <div class="grid_chapter_con"></div>
+            </div>
+            <div class="grid_chapter">
+                <img src="img/banner1_resized.jpg" height="405"/>
+            </div>
+            <div class="grid_chapter">
+                <img src="img/banner2_resized.jpg" height="405"/>
             </div>
         </div>
     </section>

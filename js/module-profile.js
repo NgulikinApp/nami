@@ -6,13 +6,21 @@ function initProfile(){
     if(emailsession === null){
         location.href = url;
     }
-    $('#logout').on( 'click', function( e ){
+    
+    $('#logouttab').on( 'click', function( e ){
         localStorage.removeItem('emailNgulikin');
+        sessionStorage.setItem("logoutNgulikin", 1);
         location.href = url;
     });
     
-    $('#myprofile').on( 'click', function( e ){
-         $('.myprofile').show();
+    $('#myaccounttab').on( 'click', function( e ){
+        $('.myprofile').removeClass('active');
+        $('#myaccount').addClass('active');
+    });
+    
+    $('#changepasswordtab').on( 'click', function( e ){
+        $('.myprofile').removeClass('active');
+        $('#changepassword').addClass('active');
     });
     
     $('#accordionMyprofile h3').on( 'click', function( e ){

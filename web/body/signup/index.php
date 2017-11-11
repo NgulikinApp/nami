@@ -14,11 +14,14 @@
         <script src="js/library/jquery.mobile.datepicker.js?jsr=<?php echo $jsversionstring; ?>"></script>
     </head>
     <body>
-        <?php include 'web/nav/mainMenu.php';?>
-		<?php include 'section_body.php';?>
-		<?php include 'web/nav/footerMenu.php';?>
-		<?php include 'web/body/general/init_questioner.php';?>
+        <?php 
+            include 'web/nav/mainMenu.php';
+            include 'section_body.php';
+            include 'web/nav/footerMenu.php';
+            include 'web/body/general/init_questioner.php';
+        ?>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
+		<script src="js/custom-file-input.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-signup.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>

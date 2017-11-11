@@ -3,13 +3,13 @@
         <div class="filter-content">
     	    <div class="content">
     	        <span>Urutkan</span>
-    			<select>
+    			<select id="sortingSearch">
     			            <option>Terbaru</option>
     			            <option>Termurah</option>
     			            <option>Terlama</option>
     			</select>
     			<span>Lokasi</span>
-    			<select>
+    			<select id="locSearch">
     			    <option>- Pilih Lokasi -</option>
     			    <option>Aceh</option>
     			            <option>Bali</option>
@@ -49,94 +49,70 @@
     			 </select>
     		</div>
     		<div class="content price">
-    			        <span>Harga</span>
-    			        <input type="text" class="content-search" placeholder="Harga Minimum"/>
-    			        <input type="text" class="content-search" placeholder="Harga Maksimum"/>
-    			    </div>
-    			</div>
-    			<div class="result-content">
-    			    <div class="result-content-tab">
-    			        Search Result For
-    			    </div>
-    			    <hr/>
-    			    <div class="result-content-list">
-    			        <div class="result-content-list-data">
-    			            <div class="result-content-list-data-head">
-    			                <span class="result-content-list-data-head-new">New</span>
-    			                <img src="https://s2.bukalapak.com/img/7152242631/w-300/Kunci_Gembok_SCHONE_GERMANY_Pengaman_Sepeda_Motor___Kunci_An.JPG"/>
-    			            </div>
-    			            <div class="result-content-list-data-body">
-    			                <span>Olive Wood Chair</span>
-    			                <span>IDR 325.000</span>
-    			            </div>
-    			        </div>
-    			        <div class="result-content-list-data">
-    			            <div class="result-content-list-data-head">
-    			                <img src="https://s2.bukalapak.com/img/7152242631/w-300/Kunci_Gembok_SCHONE_GERMANY_Pengaman_Sepeda_Motor___Kunci_An.JPG"/>
-    			            </div>
-    			            <div class="result-content-list-data-body">
-    			                <span>Olive Wood Chair</span>
-    			                <span>IDR 325.000</span>
-    			            </div>
-    			        </div>
-    			        <div class="result-content-list-data">
-    			            <div class="result-content-list-data-head">
-    			                <img src="https://s2.bukalapak.com/img/7152242631/w-300/Kunci_Gembok_SCHONE_GERMANY_Pengaman_Sepeda_Motor___Kunci_An.JPG"/>
-    			            </div>
-    			            <div class="result-content-list-data-body">
-    			                <span>Olive Wood Chair</span>
-    			                <span>IDR 325.000</span>
-    			            </div>
-    			        </div>
-    			        <div class="result-content-list-data">
-    			            <div class="result-content-list-data-head">
-    			                <img src="https://s2.bukalapak.com/img/7152242631/w-300/Kunci_Gembok_SCHONE_GERMANY_Pengaman_Sepeda_Motor___Kunci_An.JPG"/>
-    			            </div>
-    			            <div class="result-content-list-data-body">
-    			            <span>Olive Wood Chair</span>
-    			            <span>IDR 325.000</span>
-    			        </div>
-    			    </div>
-    			    <div class="result-content-list-data">
-    			        <div class="result-content-list-data-head">
-    			            <img src="https://s2.bukalapak.com/img/7152242631/w-300/Kunci_Gembok_SCHONE_GERMANY_Pengaman_Sepeda_Motor___Kunci_An.JPG"/>
-    			        </div>
-    			        <div class="result-content-list-data-body">
-    			            <span>Olive Wood Chair</span>
-    			            <span>IDR 325.000</span>
-    			        </div>
-    			    </div>
-    			    <div class="result-content-list-data">
-    			        <div class="result-content-list-data-head">
-    			            <img src="https://s2.bukalapak.com/img/7152242631/w-300/Kunci_Gembok_SCHONE_GERMANY_Pengaman_Sepeda_Motor___Kunci_An.JPG"/>
-    			        </div>
-    			        <div class="result-content-list-data-body">
-    			            <span>Olive Wood Chair</span>
-    			            <span>IDR 325.000</span>
-    			        </div>
-    			    </div>
-    			    <div class="result-content-list-data">
-    			        <div class="result-content-list-data-head">
-    			            <img src="https://s2.bukalapak.com/img/7152242631/w-300/Kunci_Gembok_SCHONE_GERMANY_Pengaman_Sepeda_Motor___Kunci_An.JPG"/>
-    			        </div>
-    			        <div class="result-content-list-data-body">
-    			            <span>Olive Wood Chair</span>
-    			            <span>IDR 325.000</span>
-    			        </div>
-    			    </div>
-    			    <div class="result-content-list-data">
-    			        <div class="result-content-list-data-head">
-    			            <img src="https://s2.bukalapak.com/img/7152242631/w-300/Kunci_Gembok_SCHONE_GERMANY_Pengaman_Sepeda_Motor___Kunci_An.JPG"/>
-    			        </div>
-    			        <div class="result-content-list-data-body">
-    			            <span>Olive Wood Chair</span>
-    			            <span>IDR 325.000</span>
-    			        </div>
-    		        </div>
-    		    </div>
-    	    <div class="result-content-paging">
-    	        <ul class="pagination" id="pagingSearch"></ul>
+    			<span>Harga</span>
+    			<input type="text" id="minPriceSearch" class="content-search" placeholder="Harga Minimum"/>
+    			<input type="text" id="maxPriceSearch" class="content-search" placeholder="Harga Maksimum"/>
+    	    </div>
+    	    <div class="content rate">
+    	        <span>Rating</span>
+    	        <ul>
+    	            <li>
+    	                <label>
+    	                    <input type="checkbox" name="rt" value="0"/>
+    	                    <span class="star_0"></span>
+    	                </label>
+    	            </li>
+    	            <li>
+    	                <label>
+    	                    <input type="checkbox" name="rt" value="1"/>
+    	                    <span class="star_1"></span>
+    	                </label>
+    	            </li>
+    	            <li>
+    	                <label>
+    	                    <input type="checkbox" name="rt" value="2"/>
+    	                    <span class="star_2"></span>
+    	                </label>
+    	            </li>
+    	            <li>
+    	                <label>
+    	                    <input type="checkbox" name="rt" value="3"/>
+    	                    <span class="star_3"></span>
+    	                </label>
+    	            </li>
+    	            <li>
+    	                <label>
+    	                    <input type="checkbox" name="rt" value="4"/>
+    	                    <span class="star_4"></span>
+    	                </label>
+    	            </li>
+    	            <li>
+    	                <label>
+    	                    <input type="checkbox" name="rt" value="5"/>
+    	                    <span class="star_5"></span>
+    	                </label>
+    	            </li>
+    	        </ul>
     	    </div>
     	</div>
+    	<div class="result-content">
+    	    <div class="result-content-tab">
+                <div class="tab active tooltip" id="product">
+                    <i class="tab-icons icon-product active"></i>
+                    Produk
+                    <span class="tooltiptext tooltip-bottom">Pencarian bersadarkan Produk</span>
+                </div>
+                <div class="tab tooltip" id="shop">
+                    <i class="tab-icons icon-shop"></i>
+                    Toko
+                    <span class="tooltiptext tooltip-bottom">Pencarian bersadarkan Nama Toko</span>
+                </div>
+            </div>
+    	    <?php 
+    	        include 'section_product.php';
+    	        include 'section_shop.php';
+    	        include 'section_notfound.php';
+    	    ?>
+        </div>
 	</section>
 </div>

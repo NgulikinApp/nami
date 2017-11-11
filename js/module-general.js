@@ -21,7 +21,9 @@ function initGeneral(){
 	$('#iconFavoritHeader').on( 'click', function( e ){
 	    location.href = url+"/favorite";
 	});
-	
+	$('#iconNotifHeader').on( 'click', function( e ){
+	    location.href = url+"/notifications";
+	});
 	$('#forgotPopUpSignin').on( 'click', function( e ){
 	    location.href = url+"/resetpassword";
 	});
@@ -29,35 +31,16 @@ function initGeneral(){
 	    location.href = url+"/resend_request_email";
 	});
 	
-	/*signin sidebar menu action*/
-	$('#buttonSignIn').on( 'click', function( e ){
-	   var email = $('#emailSignin').val();
-	   var pass = $('#passwordSignin').val();
-	   localStorage.setItem('emailNgulikin',email);
-	   location.href = url;
-	   //var pass = (SHA256($('#passwordSignin').val())).toUpperCase();
-	   //var signFlag = $('.signFlag').val();
-	   //ajax_auth(urlAPI+'user/signin',email+':'+pass,url+"/signin",signFlag);
-	});
-    
-    $('#buttonSignIn').on( 'click', function( e ){
-	   var email = $('#emailSignin').val();
-	   var pass = $('#passwordSignin').val();
-	   localStorage.setItem('emailNgulikin',email);
-	   location.href = url;
-	   //var pass = (SHA256($('#passwordSignin').val())).toUpperCase();
-	   //var signFlag = $('.signFlag').val();
-	   //ajax_auth(urlAPI+'user/signin',email+':'+pass,url+"/signin",signFlag);
-	});
-	
-	$('#emailSignin,#passwordSignin').keypress(function(e) {
-	    if(e.which == 13) {
-    	    var email = $('#emailSignin').val();
-	        var pass = $('#passwordSignin').val();
-	        localStorage.setItem('emailNgulikin',email);
-	        location.href = url;
-	    }
-	});
+	var emailsession = localStorage.getItem('emailNgulikin');
+    if(emailsession !== null){
+        $('#menuLogin').hide();
+    	$('#iconProfile').show();
+    	$('#iconNotifHeader').show();
+    	$('.footer-body-mid2 ul li:last-child').hide();
+    }else{
+    	$('.footer-body-mid2 ul li:last-child').show();
+    	$('#iconNotifHeader').hide();
+    }
 	
 	/*signin button on header menu action*/
 	$('#menuLogin,.signupBanner-footer div:nth-child(2)').on( 'click', function( e ){
@@ -65,57 +48,6 @@ function initGeneral(){
 	});
 	$('#closeSignin').on( 'click', function( e ){
 	   $('.cover-popup').hide();
-	});
-	
-	/*signup button on header menu action*/
-	$('#menuRegister,#regisPopUpSignin').on( 'click', function( e ){
-	   location.href = url+"/signup";
-	});
-	$('#buttonSignup').on( 'click', function( e ){
-	   var nameSignUp = $('#nameSignUp').val();
-	   var emailSignUp = $('#emailSignUp').val();
-	   var sexSignUp = $('input:radio[name=sexSignUp]').val();
-	   var usernameSignUp = $('#usernameSignUp').val();
-	   var passSignUp = (SHA256($('#passSignUp').val())).toUpperCase();
-	   var dataSignUp = { 
-	                        "name": nameSignUp, 
-	                        "email": emailSignUp, 
-	                        "username": usernameSignUp, 
-	                        "password": passSignUp, 
-	                        "gender": sexSignUp, 
-	                        "manual": true, 
-	                        "source" : "web", 
-	                        "socmed" : "ngulikin", 
-	                        "id_socmed": "ngulikin"
-	                    };
-	   var responseSignUp = ajax_json('POST',urlAPI+'user/signup',dataSignUp);
-	   if(responseSignUp.success){
-	       $('#alertSignUp').css('color','green').show();
-	   }
-	});
-	$('#nameSignUp,#emailSignUp,#usernameSignUp,#passSignUp').keypress(function(e) {
-	    if(e.which == 13) {
-    	   var nameSignUp = $('#nameSignUp').val();
-    	   var emailSignUp = $('#emailSignUp').val();
-    	   var sexSignUp = $('input:radio[name=sexSignUp]').val();
-    	   var usernameSignUp = $('#usernameSignUp').val();
-    	   var passSignUp = (SHA256($('#passSignUp').val())).toUpperCase();
-    	   var dataSignUp = { 
-	                        "name": nameSignUp, 
-	                        "email": emailSignUp, 
-	                        "username": usernameSignUp, 
-	                        "password": passSignUp, 
-	                        "gender": sexSignUp, 
-	                        "manual": true, 
-	                        "source" : "web", 
-	                        "socmed" : "ngulikin", 
-	                        "id_socmed": "ngulikin"
-	                    };
-    	   var responseSignUp = ajax_json('POST',urlAPI+'user/signup',dataSignUp);
-    	   if(responseSignUp.success){
-	            $('#alertSignUp').css('color','green').show();
-	       }
-	    }
 	});
 	
 	/*Questioner Action*/
@@ -135,36 +67,19 @@ function initGeneral(){
 	        fileQuestioner = $('#fileQuestioner')[0].files[0],
 	        data = new FormData();
 	        
-            data.append('name', nameQuestion);
+	    if(nameQuestion === '' || emailQuestion === '' || descQuestion === ''){
+	        notif("error","Nama, email, dan pertanyaan harus diisi","right","bottom");
+	    }else{
+	        data.append('name', nameQuestion);
             data.append('email', emailQuestion);
             data.append('question', descQuestion);
             // Attach file
             data.append('file', fileQuestioner); 
 
-	    var emailSend = ajax('POST',urlAPI+'mail/send',data);
-	    if(emailSend !== ''){
-	        notify({
-                type: "success", //alert | success | error | warning | info
-                title: "Ngulikin",
-                message: "Email has been sent",
-                position: {
-                    x: "right", //right | left | center
-                    y: "top" //top | bottom | center
-                },
-                icon: '<img src="img/logo_button_home.png" />', //<i>
-                size: "normal", //normal | full | small
-                overlay: false, //true | false
-                closeBtn: true, //true | false
-                overflowHide: false, //true | false
-                spacing: 20, //number px
-                theme: "default", //default | dark-theme
-                autoHide: true, //true | false
-                delay: 2500, //number ms
-                onShow: null, //function
-                onClick: null, //function
-                onHide: null, //function
-                template: '<div class="notify"><div class="notify-text"></div></div>'
-            });
+    	    var emailSend = ajax('POST',urlAPI+'mail/send',data);
+    	    if(emailSend !== ''){
+    	        notif("info","Pertanyaan sudah terkirim","right","top");
+    	    }
 	    }
 	});
 	
@@ -197,13 +112,18 @@ function initGeneral(){
         categoryProduct(JSON.parse(categoryProductStorage));
 	}*/
 	
+	$('.menu-category-sub-menu li a').on( 'click', function( e ){
+	   var searchVal = $(this).text();
+	   location.href = url+"/search/"+searchVal;
+	});
 	$('#search-header').on( 'click', function( e ){
-	   location.href = url+"/search";
+	   var searchVal = $('#search-general').val();
+	   location.href = url+"/search?keywords="+searchVal;
 	});
 	
 	$('#search-general').on('keydown', function (e) {
 	    if (e.which == 13) {
-	        location.href = url+"/search";
+	        $('#search-header').trigger('click');
 	    }
 	});
 	
@@ -216,7 +136,7 @@ function initGeneral(){
 	$('.list-socmed li a[datainternal-id="faq"]').on('click', function (e) {
 	    location.href = url+"/faq";
 	});
-	var emailsession = localStorage.getItem('emailNgulikin');
+    var emailsession = localStorage.getItem('emailNgulikin');
 	if(emailsession !== null){
 	    $('#menuLogin').hide();
 	    $('#iconProfile').show();
@@ -266,15 +186,6 @@ function categoryProduct(product){
     //$('.list-product-sidebar').html(sideBarMenuContainer);
     $('.grid-body-cont4').html(homeContainer);
 }
- 
-/*window.fbAsyncInit = function() {
-	FB.getLoginStatus(function(response) {
-		if (response.status === 'connected') {
-			getUserData();
-		} else {
-		}
-	});
-};*/
 
 //ajax base function
 function ajax(method,url,data){
@@ -308,38 +219,50 @@ function ajax_json(method,url,data){
     });
     return resultStore;
 }
-
-function ajax_auth(url,data,loc,flag){
-    $.ajax({
-        type: 'POST',
-        data: JSON.stringify({ manual: 1 }),
-        crossDomain: true,
-        async: true,
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization', 'Basic ' + btoa(data)),
-            xhr.withCredentials = true;
-        },
-        url: url,
-        contentType: "application/json",
-        dataType: "json",
-        success: function(result) {
-            if(result.success){
-               alert('ok');
-            }else{
-                if(flag == '0'){
-                    var emailSession = data.split(':')[0];
-                    sessionStorage.setItem('signinEmailNgulikin', emailSession);
-                    location.href = loc;   
-                }else{
-                    $('#alertSignIn').show();
-                }
-            }
-            
-        }
-    });
-}
 //End of ajax base function
 
 function numberFormat(val){
     return 'Rp ' + (val).replace(/(\d)(?=(\d{3})+$)/g, "$1.");
+}
+
+function notif(type,message,x,y){
+    notify({
+        type: type, //alert | success | error | warning | info
+        title: "Ngulikin",
+        message: message,
+        position: {
+                    x: x, //right | left | center
+                    y: y //top | bottom | center
+        },
+        icon: '<img src="/img/icon.png" />', //<i>
+        size: "normal", //normal | full | small
+        overlay: false, //true | false
+        closeBtn: false, //true | false
+        overflowHide: false, //true | false
+        spacing: 20, //number px
+        theme: "default", //default | dark-theme
+        autoHide: true, //true | false
+        delay: 2500, //number ms
+        onShow: null, //function
+        onClick: null, //function
+        onHide: null, //function
+        template: '<div class="notify"><div class="notify-text"></div></div>'
+    });
+}
+
+//random color function
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+//get value parameter from url
+function getUrlParam(param){
+    var url = new URL(window.location.href);
+    var val = url.searchParams.get(param);
+    return val;
 }

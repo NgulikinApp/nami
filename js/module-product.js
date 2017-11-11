@@ -1,54 +1,19 @@
 function initProduct(){
+    var emailsession = localStorage.getItem('emailNgulikin');
+     
     $('#btnCart').on( 'click', function( e ){
         var sumProduct = $('#sumProduct').val();
 	    localStorage.setItem('cartNgulikin',sumProduct);
-        notify({
-            type: "success", //alert | success | error | warning | info
-            title: "Ngulikin",
-            message: "Product Ditambah ke keranjang",
-            position: {
-                        x: "right", //right | left | center
-                        y: "top" //top | bottom | center
-            },
-            icon: '<img src="../../img/paper_plane.png" />', //<i>
-            size: "normal", //normal | full | small
-            overlay: false, //true | false
-            closeBtn: true, //true | false
-            overflowHide: false, //true | false
-            spacing: 20, //number px
-            theme: "default", //default | dark-theme
-            autoHide: true, //true | false
-            delay: 2500, //number ms
-            onShow: null, //function
-            onClick: null, //function
-            onHide: null, //function
-            template: '<div class="notify"><div class="notify-text"></div></div>'
-        });
+        
+        notif("info","Product Ditambah ke keranjang","right","top");
 	});
 	
 	$('#btnFavorite').on( 'click', function( e ){
-	    notify({
-            type: "success", //alert | success | error | warning | info
-            title: "Ngulikin",
-            message: "Product Ditambah ke daftar favorit",
-            position: {
-                        x: "right", //right | left | center
-                        y: "top" //top | bottom | center
-            },
-            icon: '<img src="../../img/paper_plane.png" />', //<i>
-            size: "normal", //normal | full | small
-            overlay: false, //true | false
-            closeBtn: true, //true | false
-            overflowHide: false, //true | false
-            spacing: 20, //number px
-            theme: "default", //default | dark-theme
-            autoHide: true, //true | false
-            delay: 2500, //number ms
-            onShow: null, //function
-            onClick: null, //function
-            onHide: null, //function
-            template: '<div class="notify"><div class="notify-text"></div></div>'
-        });
+	    if(emailsession === null){
+	        notif("error","Harap login terlebih dahulu","right","top");
+	    }else{
+            notif("info","Product Ditambah ke daftar favorit","right","top");
+	    }
 	});
 	
 	$.tosrus.defaults.media.image = {
@@ -64,4 +29,8 @@ function initProduct(){
 			type		: 'thumbnails'
 		}
 	});
+	
+	$(".rateyo").rateYo({fullStar: true}).on("rateyo.change", function (e, data) {
+         console.log(data.rating);
+    });
 }

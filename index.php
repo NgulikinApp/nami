@@ -8,11 +8,12 @@
 		<?php include 'web/library.php';?>
     </head>
     <body>
-		<?php include 'web/nav/mainMenu.php';?>
-		<?php include 'web/body/home.php';?>
-		<?php include 'web/nav/footerMenu.php';?>
-		<?php include 'web/body/general/init_questioner.php';?>
-		
+		<?php 
+		      include 'web/nav/mainMenu.php';
+		      include 'web/body/home.php';
+		      include 'web/nav/footerMenu.php';
+		      include 'web/body/general/init_questioner.php';
+		?>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-home.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/custom-file-input.js?jsr=<?php echo $jsversionstring; ?>"></script>

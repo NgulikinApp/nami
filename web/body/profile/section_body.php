@@ -2,16 +2,18 @@
 	<section class="container profile">
 	    <div class="menuProfile">
 	        <ul>
-	            <li id="myprofile">Akun Saya</li>
-	            <li id="processorder">Proses Pesanan</li>
-	            <li id="changepassword">Ubah Kata Sandi</li>
-	            <li id="history">History</li>
-	            <li id="listShop">Daftar Toko</li>
-	            <li id="logout">Keluar</li>
+	            <li id="myaccounttab">Akun Saya</li>
+	            <li id="processordertab">Proses Pesanan</li>
+	            <li id="changepasswordtab">Ubah Kata Sandi</li>
+	            <li id="historytab">History</li>
+	            <li id="logouttab">Keluar</li>
 	        </ul>
 	    </div>
 	    <div class="contentProfile">
-	        <?php include 'myaaccount/index.php';?>
+	        <?php 
+	            include 'myaaccount/index.php';
+	            include 'section_changepassword.php';
+	        ?>
 	    </div>
 	</section>
 </div>

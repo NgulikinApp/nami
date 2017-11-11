@@ -57,13 +57,35 @@
             </div>
         </div>
         <div id="detail-shoppingaccount">
-            <div class="detail-shoppingaccount-header">
-                Beli Tanpa Daftar
-            </div>
-            <div class="detail-shoppingaccount-body">
-                <input class="inputShoppingAccountCart" placeholder="Nama Lengkap">
-                <input class="inputShoppingAccountCart" placeholder="Email">
-                <input class="inputShoppingAccountCart" placeholder="Telepon/Handphone">
+            <div id="RegisOrNotCart">
+                <h3 class="detail-shoppingaccount-header">
+                    Login
+                </h3>
+                <div class="detail-shoppingaccount-body">
+                    <input class="inputShoppingAccountCart" id="emailSigninCart" placeholder="Username atau Email">
+                    <input class="inputShoppingAccountCart" id="passSigninCart" placeholder="Password">
+                    <input type="button" id="buttonSignInCart" value="Login"/>
+                    <div class="socmedCart" id="signinFbCart">
+                        <div>
+                           <span id="iconSigninFb" class="iconSigninSocmed"></span>
+                           <font>Login Facebook</font> 
+                        </div>
+                    </div>
+                    <div class="socmedCart" id="signinGPlusCart">
+                        <div>
+                            <span id="iconSigninGplus" class="iconSigninSocmed"></span>
+                            <font>Login Google</font>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="detail-shoppingaccount-header">
+                    Beli Tanpa Daftar
+                </h3>
+                <div class="detail-shoppingaccount-body">
+                    <input class="inputShoppingAccountCart" placeholder="Nama Lengkap">
+                    <input class="inputShoppingAccountCart" placeholder="Email">
+                    <input class="inputShoppingAccountCart" placeholder="Telepon/Handphone">
+                </div>
             </div>
             <div class="detail-shoppingaccount-footer">
                 <div class="title">

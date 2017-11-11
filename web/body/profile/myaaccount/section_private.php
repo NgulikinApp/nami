@@ -1,18 +1,26 @@
 <div class="privateLeft">
     <div>
         <span>Nama Lengkap</span>
+    </div>
+    <div>
         <input type="text" class="inputPrivate"/>
     </div>
     <div>
         <span>Tanggal Lahir</span>
+    </div>
+    <div>
         <input type="text" class="inputPrivate"/>
     </div>
     <div>
         <span>Username</span>
+    </div>
+    <div>
         <input type="text" class="inputPrivate"/>
     </div>
     <div>
         <span>Jenis Kelamin</span>
+    </div>
+    <div>
         <span id="sexCon">
             <input type="radio" name="sexPrivate" id="malePrivate"/>
             <span>Laki - laki</span>
@@ -22,10 +30,14 @@
     </div>
     <div>
         <span>Nomor Telepon</span>
+    </div>
+    <div>
         <input type="text" class="inputPrivate"/>
     </div>
     <div>
         <span>Email</span>
+    </div>
+    <div>
         <input type="text" class="inputPrivate"/>
     </div>
 </div>
