@@ -1,34 +1,15 @@
 function initSignin(){
     var signinSessionEmail = sessionStorage.getItem('signinEmailNgulikin'),
-        emailsession = localStorage.getItem('emailNgulikin'),
+        emailsession = sessionStorage.getItem('emailNgulikin'),
         url = 'http://init.ngulikin.com',
-        urlAPI 	= 'http://api.ngulikin.com/v1/',
-        loginsession = sessionStorage.getItem('loginNgulikin');
+        urlAPI 	= 'http://api.ngulikin.com/v1/';
         
 	if(signinSessionEmail !== null){
 	    $('#emailSignin').val(signinSessionEmail);
 	}
     
     $('#buttonSignIn').on( 'click', function( e ){
-	   var email = $('#emailSignin').val();
-	   var pass = $('#passwordSignin').val();
-	   if(email === '' || pass === ''){
-	       $('.error_message').removeClass('show');
-	       $('.error_message').addClass('show').html('Username dan password harus diisi');
-	   }else if(email !== 'admin'){
-	       $('.error_message').removeClass('show');
-	       $('.error_message').addClass('show').html('Username yang dimasukan tidak ada');
-	   }else if(pass !== 'admin'){
-	       $('.error_message').removeClass('show');
-	       $('.error_message').addClass('show').html('Password yang dimasukan salah');
-	   }else{
-	       sessionStorage.setItem('loginNgulikin',1);
-    	   localStorage.setItem('emailNgulikin',email);
-    	   location.href = url;
-    	   //var pass = (SHA256($('#passwordSignin').val())).toUpperCase();
-    	   //var signFlag = $('.signFlag').val();
-    	   //ajax_auth(urlAPI+'user/signin',email+':'+pass,url+"/signin",signFlag);
-	   }
+	   ajax_auth();
 	});
 	
 	$('#emailSignin,#passwordSignin').keypress(function(e) {
@@ -61,34 +42,47 @@ function initSignin(){
 	});
 }
 
-function ajax_auth(url,data,loc,flag){
-    $.ajax({
-        type: 'POST',
-        data: JSON.stringify({ manual: 1 }),
-        crossDomain: true,
-        async: true,
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization', 'Basic ' + btoa(data)),
-            xhr.withCredentials = true;
-        },
-        url: url,
-        contentType: "application/json",
-        dataType: "json",
-        success: function(result) {
-            if(result.success){
-               alert('ok');
-            }else{
-                if(flag == '0'){
-                    var emailSession = data.split(':')[0];
-                    sessionStorage.setItem('signinEmailNgulikin', emailSession);
-                    location.href = loc;   
-                }else{
-                    $('#alertSignIn').show();
+function ajax_auth(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(ajax_auth);
+    }else{
+        var email = $('#emailSignin').val(),
+	        pass = (SHA256($('#passwordSignin').val())).toUpperCase();
+	    
+	    if(email === '' || pass === ''){
+	       $('.error_message').removeClass('show');
+	       $('.error_message').addClass('show').html('Username dan password harus diisi');
+	    }else{
+    	   $.ajax({
+                type: 'POST',
+                data: JSON.stringify({ manual: 1,token: sessionStorage.getItem('tokenNgulikin')}),
+                crossDomain: true,
+                async: true,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Basic ' + btoa(email+':'+pass)),
+                    xhr.withCredentials = true;
+                },
+                url: SIGNIN_API,
+                contentType: "application/json",
+                dataType: "json",
+                success: function(result) {
+                    if(result.message == 'Invalid credential' || result.message == 'Token expired'){
+                        generateToken(ajax_auth);
+                    }else if(result.message ==  'Email or password is wrong'){
+                        $('.error_message').removeClass('show');
+	                    $('.error_message').addClass('show').html('Username atau password salah');
+                    }else if(result.message ==  'Account has not activated, check your email'){
+                        $('.error_message').removeClass('show');
+	                    $('.error_message').addClass('show').html('Akun belum aktif, cek email anda.');
+                    }else{
+                        sessionStorage.setItem('loginNgulikin',1);
+                        localStorage.setItem('emailNgulikin', email);
+                        location.href = 'http://init.ngulikin.com';
+                    }
                 }
-            }
-            
-        }
-    });
+            });
+	   }
+    }
 }
 
 var CLIENT_ID = '279558050364-cp3evjt1fi39uh82cl304vq5orqob038.apps.googleusercontent.com';

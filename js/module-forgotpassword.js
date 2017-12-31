@@ -19,10 +19,15 @@ function initForgotPassword(){
 	   }else{
 	       $('.error_message').removeClass('show');
 	       $('.error_message').addClass('show').addClass('green').html('Cek email anda, dan masukan kode yang terlampir didalamnya');
-	       $('.signinBodySub').addClass('hide');
-	       $('.signinBodySub.codeVerification').removeClass('hide').addClass('show');
-	       $('#codeForgotPass').attr('autofocus','autofocus');
+	       var codeVerificationElem = '<input type="text" id="codeForgotPass" class="inputSignin" placeholder="Masukan kode"/>';
+	           codeVerificationElem += '<i class="fa fa-user"></i>';
+	       $('.grid-signin-body .signinBodySub:first-child').html(codeVerificationElem);
+	       
+	       var buttonElem = '<input type="button" id="buttonForgotVerified" value="Masukan"/>';
+	       $('.signinBodySub.signupButton').html(buttonElem);
 	       $('.grid-signin-header.forgotpassword h1:last-child').html('');
+	       
+	       buttonverified();
 	   }
     });
     
@@ -31,7 +36,9 @@ function initForgotPassword(){
     	    $('#buttonForgotSend').trigger('click');
 	    }
 	});
-    
+}
+
+function buttonverified(){
     $('#buttonForgotVerified').on( 'click', function( e ){
         var code = $('#codeForgotPass').val();
         if(code === ''){
@@ -42,10 +49,14 @@ function initForgotPassword(){
             $('.error_message').html('Kode yang dimasukan tidak benar');
         }else{
             $('.error_message').removeClass('show');
-            $('.signinBodySub.codeVerification').removeClass('show');
-            $('.signinBodySub.resetPass').addClass('show');
-            $('#passNewForgot').attr('autofocus','autofocus');
-            $('#codeForgotPass').removeAttr('autofocus','autofocus');
+            var resetPassElem = '<input type="password" id="passNewForgot" class="inputSignin" placeholder="Masukan password baru"/>';
+	            resetPassElem += '<i class="fa fa-lock"></i>';
+	           $('.grid-signin-body .signinBodySub:first-child').html(resetPassElem);
+	        
+	        var buttonElem = '<input type="button" id="buttonForgotChange" value="Ganti"/>';
+	        $('.signinBodySub.signupButton').html(buttonElem);
+	        
+	        buttonnewpass();
         }
     });
     
@@ -54,19 +65,16 @@ function initForgotPassword(){
     	    $('#buttonForgotVerified').trigger('click');
 	    }
 	});
-    
+}
+
+function buttonnewpass(){
     $('#buttonForgotChange').on( 'click', function( e ){
         var pass = $('#passNewForgot').val();
-        var passNew = $('#passNewVerifiedForgot').val();
         
-        if(pass === '' || passNew === ''){
+        if(pass === ''){
             $('.error_message').removeClass('show').removeClass('green');
             $('.error_message').addClass('show');
             $('.error_message').html('Password baru harus diisi');
-        }else if(pass !== passNew){
-            $('.error_message').removeClass('show').removeClass('green');
-            $('.error_message').addClass('show');
-            $('.error_message').html('Password baru yang dimasukan kembali salah');
         }else{
             $('.error_message').removeClass('show').addClass('show').addClass('green');
             $('.error_message').html('Password telah diubah, silahkan login kembali');

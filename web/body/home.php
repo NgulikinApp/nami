@@ -38,32 +38,7 @@
             <div class="grid-chapter-cont4">
                 <img src="img/shopterbaru.png">
             </div>
-            <div class="grid-list-cont4">
-                <div class="grid-list-cont4-item">
-                    <center>
-                        <img src="img/icontext.png" width="160" height="60">
-                    </center>
-                    <input type="hidden" class="shopTitle" value="Massom-Store"/>
-                </div>
-                <div class="grid-list-cont4-item">
-                    <center>
-                        <img src="img/icontext.png" width="160" height="60">
-                    </center>
-                    <input type="hidden" class="shopTitle" value="Panda-Store"/>
-                </div>
-                <div class="grid-list-cont4-item">
-                    <center>
-                        <img src="img/icontext.png" width="160" height="60">
-                    </center>
-                    <input type="hidden" class="shopTitle" value="Obeliks-Store"/>
-                </div>
-                <div class="grid-list-cont4-item">
-                    <center>
-                        <img src="img/icontext.png" width="160" height="60">
-                    </center>
-                    <input type="hidden" class="shopTitle" value="Anime-Store"/>
-                </div>
-            </div>
+            <div class="grid-list-cont4" id="shoplist"></div>
         </div>
     </section>
     <section class="container category">
@@ -114,7 +89,7 @@
                         </div>
                         <div class="grid_rightsub_chapter">
                             <div class="grid_rightsub_chapter_left">
-                                <img src="https://scontent.fcgk3-1.fna.fbcdn.net/v/t1.0-1/p100x100/16472974_10208482547443706_4718047265869220728_n.jpg?_nc_eui2=v1%3AAeG-pza6KEQ0FXhmk9PaO35XAV9KvNQSEOZ3HfWgL28nSgZll4z8yMv6guvWkZekVaPEsxlb4sVGe6xhMQgS2yPOYc5sB9HUNMmKRH187NhZZ4IhFGbUdgg0TLbcnkmrxY4&oh=9d9c654cc1cba7477eb3135b24233106&oe=5A444A7E" width="100" height="100">
+                                <img src="https://scontent-sit4-1.xx.fbcdn.net/v/t1.0-1/p160x160/16472974_10208482547443706_4718047265869220728_n.jpg?oh=04316199791ead0ef22e368066f5a071&oe=5ABE5879" width="100" height="100">
                             </div>
                             <div class="grid_rightsub_chapter_right">
                                 <span>Andhika Adhitama Gama</span>

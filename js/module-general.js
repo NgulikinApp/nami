@@ -1,11 +1,27 @@
 function initGeneral(){
     var url = 'http://init.ngulikin.com',
-        urlAPI 	= 'http://api.ngulikin.com/v1/';
+        emailsession = localStorage.getItem('emailNgulikin');
     
     $('.leftHeader,#backHomeSignup,#backHomeSignin').on( 'click', function( e ){
 	    location.href = url;
 	    sessionStorage.removeItem('signinEmailNgulikin');
 	});
+	
+	if(sessionStorage.getItem('tokenNgulikin') === null){
+        $.getJSON(TOKEN_API, function( data ) {
+	    sessionStorage.setItem('tokenNgulikin',data.result);
+	    });
+	}
+	
+	if(emailsession !== null){
+        $('#menuLogin').hide();
+    	$('#iconProfile').show();
+    	$('#iconNotifHeader').show();
+    	$('.footer-body-mid2 ul li:last-child').hide();
+    }else{
+    	$('.footer-body-mid2 ul li:last-child').show();
+    	$('#iconNotifHeader').hide();
+    }
 	
     /*socmed footer menu action*/
 	$('.socmed-follow').on( 'click', function( e ){
@@ -31,17 +47,6 @@ function initGeneral(){
 	    location.href = url+"/resend_request_email";
 	});
 	
-	var emailsession = localStorage.getItem('emailNgulikin');
-    if(emailsession !== null){
-        $('#menuLogin').hide();
-    	$('#iconProfile').show();
-    	$('#iconNotifHeader').show();
-    	$('.footer-body-mid2 ul li:last-child').hide();
-    }else{
-    	$('.footer-body-mid2 ul li:last-child').show();
-    	$('#iconNotifHeader').hide();
-    }
-	
 	/*signin button on header menu action*/
 	$('#menuLogin,.signupBanner-footer div:nth-child(2)').on( 'click', function( e ){
 	   location.href = url+"/signin";
@@ -61,45 +66,10 @@ function initGeneral(){
 	   $('.questionerContainer').hide("fade");
 	});
 	$('#buttonQuestionerSend').on( 'click', function( e ){
-	    var nameQuestion = $('#nameQuestion').val(),
-	        emailQuestion = $('#emailQuestion').val(),
-	        descQuestion = $('#descQuestion').val(),
-	        fileQuestioner = $('#fileQuestioner')[0].files[0],
-	        data = new FormData();
-	        
-	    if(nameQuestion === '' || emailQuestion === '' || descQuestion === ''){
-	        notif("error","Nama, email, dan pertanyaan harus diisi","right","bottom");
-	    }else{
-	        data.append('name', nameQuestion);
-            data.append('email', emailQuestion);
-            data.append('question', descQuestion);
-            // Attach file
-            data.append('file', fileQuestioner); 
-
-    	    var emailSend = ajax('POST',urlAPI+'mail/send',data);
-    	    if(emailSend !== ''){
-    	        notif("info","Pertanyaan sudah terkirim","right","top");
-    	    }
-	    }
+	    asking();
 	});
 	
-	$.getJSON("http://http-1761326392.ap-southeast-1.elb.amazonaws.com/category", function( data ) {
-	    var listcategory = '';
-	    var listcategoryMain = '';
-        $.each( data, function( key, val ) {
-            var nameCategory = (val.name).toLowerCase();
-            listcategory += '<li class="grid-listmiddle-cont8" id="'+nameCategory+'" style="background-image:url('+val.thumbnail_url+')">';
-            listcategory += '<span>';
-            listcategory += '   <p>ngulikin</p>';
-            listcategory += '   <p>'+nameCategory+'</p>';
-            listcategory += '</span>';
-            listcategory += '</li>';
-            
-            listcategoryMain += '<li><a>'+val.name+'</a></li>';
-        });
-        $(".grid-list-cont8").html(listcategory);
-        $(".menu-category-sub-menu").html(listcategoryMain);
-    });
+	categoryProduct();
 	
 	/*var categoryProductStorage = localStorage.getItem("categoryProduct");
 	if(categoryProductStorage === null){
@@ -136,14 +106,6 @@ function initGeneral(){
 	$('.list-socmed li a[datainternal-id="faq"]').on('click', function (e) {
 	    location.href = url+"/faq";
 	});
-    var emailsession = localStorage.getItem('emailNgulikin');
-	if(emailsession !== null){
-	    $('#menuLogin').hide();
-	    $('#iconProfile').show();
-	    $('.footer-body-mid2 ul li:last-child').hide();
-	}else{
-	    $('.footer-body-mid2 ul li:last-child').show();
-	}
 	$('.footer-body-mid2 ul li:last-child').on('click', function (e) {
 	    location.href = url+"/signin";
 	});
@@ -161,31 +123,116 @@ function initGeneral(){
     });*/
 }
 
-/* content for sidebar menu and category product on home menu*/
-function categoryProduct(product){
-    var productListArray = [],
-        sideBarMenuContainer = '',
-	    homeContainer = '';
-	    
-    $.each(product, function(k, v) {
-        sideBarMenuContainer += '<a class="w3-bar-item w3-button w3-button-hover">'+v.name+'</a>';
-            
-        var img_url = v.img_url;
-            img_url = img_url.replace(/\\/g , '');
-        var img_hover_url = v.img_hover_url;
-            img_hover_url = img_hover_url.replace(/\\/g , '');
-        homeContainer += '<div class="grid-body-list-cont4" datainternal-id="'+img_hover_url+'~'+img_url+'" style="background-image:url('+img_url+');">';
-        homeContainer +=    '<div class="grid-body-list-label-cont4">'+v.name+'</div>';
-        homeContainer += '</div>';
-        
-        productListArray.push({"name":v.name,"img_url":img_url,"img_hover_url":img_hover_url});
-    });
-    
-    localStorage.setItem("categoryProduct", JSON.stringify(productListArray));
-    
-    //$('.list-product-sidebar').html(sideBarMenuContainer);
-    $('.grid-body-cont4').html(homeContainer);
+function generateToken(name){
+    $.getJSON(TOKEN_API, function( data ) {
+	    sessionStorage.setItem('tokenNgulikin',data.result);
+	    eval("name()");
+	});
 }
+
+function asking(){
+    var nameQuestion = $('#nameQuestion').val(),
+	    emailQuestion = $('#emailQuestion').val(),
+	    descQuestion = $('#descQuestion').val(),
+	    fileQuestioner = $('#fileQuestioner')[0].files[0],
+	    data = new FormData();
+	        
+	if(nameQuestion === '' || emailQuestion === '' || descQuestion === ''){
+	    notif("error","Nama, email, dan pertanyaan harus diisi","right","bottom");
+	}else if(!validateEmail(emailQuestion)){
+	    notif("error","Format email tidak benar","right","bottom");
+	}else{
+	    data.append('name', nameQuestion);
+        data.append('email', emailQuestion);
+        data.append('question', descQuestion);
+        // Attach file
+        data.append('file', fileQuestioner); 
+        
+        if(sessionStorage.getItem('tokenNgulikin') === null){
+            generateToken(asking);
+        }else{
+            $.ajax({
+                type: 'POST',
+                url: ASKING_API,
+                data: data,
+                async: true,
+                contentType: false, 
+                processData: false,
+                dataType: 'json',
+                success: function(result){
+                    var message_email = result.message;
+                    var status_email = (result.status == "OK")? "info" : "error";
+                    notif(status_email,message_email,"right","bottom");
+                }
+            });
+        }
+	}
+}
+
+function categoryProduct(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(categoryProduct);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: PRODUCT_CATEGORY_API,
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var listcategory = '';
+                	var listcategoryMain = '';
+                    $.each( data.result, function( key, val ) {
+                        var nameCategory = val.category_name;
+                        listcategory += '<li class="grid-listmiddle-cont8" id="'+nameCategory+'" style="background-image:url('+val.category_url+')">';
+                        listcategory += '<span>';
+                        listcategory += '   <p>ngulikin</p>';
+                        listcategory += '   <p>'+nameCategory+'</p>';
+                        listcategory += '</span>';
+                        listcategory += '</li>';
+                            
+                        listcategoryMain += '<li><a>'+nameCategory+'</a></li>';
+                    });
+                    $(".grid-list-cont8").html(listcategory);
+                    $(".menu-category-sub-menu").html(listcategoryMain);
+                }else{
+                        generateToken(categoryProduct);
+                }
+            } 
+        });
+    }
+}
+
+/* content for sidebar menu and category product on home menu*/
+/*function categoryProduct(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(categoryProduct);
+    }else{
+        $.getJSON(PRODUCT_CATEGORY_API+'?token='+sessionStorage.getItem('tokenNgulikin'), function( data ) {
+            if(data.status == "OK"){
+                var listcategory = '';
+        	    var listcategoryMain = '';
+                $.each( data.result, function( key, val ) {
+                    var nameCategory = val.category_name;
+                    listcategory += '<li class="grid-listmiddle-cont8" id="'+nameCategory+'" style="background-image:url('+val.category_url+')">';
+                    listcategory += '<span>';
+                    listcategory += '   <p>ngulikin</p>';
+                    listcategory += '   <p>'+nameCategory+'</p>';
+                    listcategory += '</span>';
+                    listcategory += '</li>';
+                    
+                    listcategoryMain += '<li><a>'+nameCategory+'</a></li>';
+                });
+                $(".grid-list-cont8").html(listcategory);
+                $(".menu-category-sub-menu").html(listcategoryMain);
+            }else{
+                generateToken(categoryProduct);
+            }
+        });
+    }
+}*/
 
 //ajax base function
 function ajax(method,url,data){
@@ -265,4 +312,10 @@ function getUrlParam(param){
     var url = new URL(window.location.href);
     var val = url.searchParams.get(param);
     return val;
+}
+
+//regex email format
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email.toLowerCase());
 }
