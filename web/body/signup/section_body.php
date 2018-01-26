@@ -49,12 +49,15 @@
         		<div class="signupBodySubSex">
         			<span id="sextextSignUp">Jenis Kelamin</span>
         			<select id="sexSignup">
-        			    <option value="M">Laki-laki</option>
-        			    <option value="F">Wanita</option>
+        			    <option value="male">Laki-laki</option>
+        			    <option value="female">Wanita</option>
         			</select>
         		</div>
         	</div>
         	<div class="signupBodySub signupButton">
+        	    <input type="hidden" id="socmedSignUp" value="ngulikin"/>
+        	    <input type="hidden" id="idsocmedSignUp" value=""/>
+        	    <div id="signup_message" class="green"></div>
         		<button type="button" id="buttonSignup">DAFTAR</button> 
         	</div>
         	<div class="signupBodySub">

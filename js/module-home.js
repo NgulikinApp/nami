@@ -1,9 +1,12 @@
+var favoriteData = new Object();
+
 function initHome(){
     var url = 'http://init.ngulikin.com',
         logoutsession = sessionStorage.getItem('logoutNgulikin'),
         paymentfailedsession = sessionStorage.getItem('paymentFailedNgulikin'),
         loginsession = sessionStorage.getItem('loginNgulikin'),
-        emailsession = localStorage.getItem('emailNgulikin');
+        emailsession = localStorage.getItem('emailNgulikin'),
+        authsession = localStorage.getItem('authNgulikin');
     
     if(loginsession !== null && emailsession !== null){
         notif("info","Anda telah login sebagai "+emailsession,"center","center");
@@ -33,22 +36,9 @@ function initHome(){
         startSlide: 1
     });
     
-    $('.grid-list-cont4 .grid-list-cont4-item').on('click', function (e) {
-        var shopTitle = $(this).find('.shopTitle').val();
-        location.href = url+"/shop/"+shopTitle;
-    });
-    
     $('.grid-listmiddle-cont8').on('click', function (e) {
         var productTitle = $(this).attr('id');
         location.href = url+"/search/"+productTitle;
-    });
-    
-    $('.fa-shopping-cart').on('click', function (e) {
-        notif("success","Produk ditambah ke keranjang","center","top");
-    });
-    
-    $('.fa-thumbs-o-up').on('click', function (e) {
-         notif("success","Produk ditambah ke daftar favorit","center","top");
     });
     
     uptodate();
@@ -86,6 +76,11 @@ function shop(){
                         
                     });
                     $("#shoplist").html(listshop);
+                    
+                    $('.grid-list-cont4 .grid-list-cont4-item').on('click', function (e) {
+                        var shopTitle = $(this).find('.shopTitle').val();
+                        location.href = url+"/shop/"+shopTitle;
+                    });
                 }else{
                     generateToken(shop);
                 }
@@ -122,16 +117,15 @@ function uptodate(){
                             listproduct += '        </div>';
                             listproduct += '    </div>';
                             listproduct += '        <input type="hidden" class="productCategory" value="furniture"/>';
-                            listproduct += '        <input type="hidden" class="productTitle" value="'+val.product_id+'"/>';
+                            listproduct += '        <input type="hidden" class="productId" value="'+val.product_id+'"/>';
                             listproduct += '</div>';
                         }
                     });
                     $(".grid_chapter .grid_chapter_con:last-child").html(listproduct);
                     
                     $('.grid_chapter_subcon').on('click', function (e) {
-                        var productTitle = $(this).find('.productTitle').val();
-                        var productCategory = $(this).find('.productCategory').val();
-                        location.href = "http://init.ngulikin.com/product/"+productCategory+'/'+productTitle;
+                        var productId = $(this).find('.productId').val();
+                        location.href = url+"/product/"+productId;
                     });
                 }else{
                     generateToken(uptodate);
@@ -145,10 +139,14 @@ function bestseller(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(bestseller);
     }else{
+        var user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '';
         $.ajax({
             type: 'GET',
             url: PRODUCT_FEED_API,
-            data: { filter: "bestseller"},
+            data: { 
+                    filter: "bestseller",
+                    user_id : user_id
+            },
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
                 xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
@@ -160,9 +158,9 @@ function bestseller(){
                         listproduct += '<div class="col-md-9">';
                         listproduct += '   <img src="'+val.product_image+'">';
                         listproduct += '   <div class="grid-sub-cont9-body-list-hover">';
-                        listproduct += '       <i class="fa fa-shopping-cart"></i>';
-                        listproduct += '       <i class="fa fa-thumbs-o-up"></i>';
-                        listproduct += '       <div datainternal-id="'+val.product_id+'">Lihat</div>';
+                        listproduct += '       <i class="fa fa-shopping-cart bestseller-cart"></i>';
+                        listproduct += '       <i class="fa fa-thumbs-o-up bestseller-like"></i>';
+                        listproduct += '       <div datainternal-id="'+val.product_id+'~'+val.product_isfavorite+'">Lihat</div>';
                         listproduct += '   </div>';
                         listproduct += '</div>';
                         
@@ -178,7 +176,24 @@ function bestseller(){
                 	
                 	$(".tos-next").css('right','5px');
                 	
-                	mousetosrushome('http://init.ngulikin.com');
+                	$('.bestseller-cart').on('click', function (e) {
+                        notif("success","Produk ditambah ke keranjang","center","top");
+                    });
+                                    
+                    $('.bestseller-like').on('click', function (e) {
+                        var productArray = ($(this).next('div').attr('datainternal-id')).split("~");
+                        
+                        if(user_id === ''){
+                    	   notif("error","Harap login terlebih dahulu","right","top");
+                    	}else if(parseInt(productArray[1]) == 1){
+                    	        notif("error","Anda sudah menyimpan produk ini","top");
+                        }else{
+                            favoriteData.product_id = parseInt(productArray[0]);
+                            favoriteProduct();
+                        }
+                    });
+                	
+                	mousetosrushome(url);
                 }else{
                     generateToken(bestseller);
                 }
@@ -191,10 +206,14 @@ function promo(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(promo);
     }else{
+        var user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '';
         $.ajax({
             type: 'GET',
             url: PRODUCT_FEED_API,
-            data: { filter: "promo"},
+            data: { 
+                    filter: "promo",
+                    user_id : user_id
+            },
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
                 xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
@@ -206,9 +225,9 @@ function promo(){
                         listproduct += '<div class="col-md-9">';
                         listproduct += '   <img src="'+val.product_image+'">';
                         listproduct += '   <div class="grid-sub-cont9-body-list-hover">';
-                        listproduct += '       <i class="fa fa-shopping-cart"></i>';
-                        listproduct += '       <i class="fa fa-thumbs-o-up"></i>';
-                        listproduct += '       <div datainternal-id="'+val.product_id+'">Lihat</div>';
+                        listproduct += '       <i class="fa fa-shopping-cart promo-cart"></i>';
+                        listproduct += '       <i class="fa fa-thumbs-o-up promo-like"></i>';
+                        listproduct += '       <div datainternal-id="'+val.product_id+'~'+val.product_isfavorite+'">Lihat</div>';
                         listproduct += '   </div>';
                         listproduct += '</div>';
                         
@@ -222,11 +241,66 @@ function promo(){
                 		}
                 	});
                 	
-                	mousetosrushome('http://init.ngulikin.com');
+                	$('.promo-cart').on('click', function (e) {
+                        notif("success","Produk ditambah ke keranjang","center","top");
+                    });
+                                    
+                    $('.promo-like').on('click', function (e) {
+                        var productArray = ($(this).next('div').attr('datainternal-id')).split("~");
+                        
+                        if(user_id === ''){
+                        	notif("error","Harap login terlebih dahulu","right","top");
+                        }else if(parseInt(productArray[1]) == 1){
+                    	        notif("error","Anda sudah menyimpan produk ini","top");
+                        }else{
+                            favoriteData.product_id = parseInt(productArray[0]);
+                            favoriteProduct();
+                        }
+                    });
+                	
+                	mousetosrushome(url);
                 }else{
                     generateToken(promo);
                 }
             } 
+        });
+    }
+}
+
+function favoriteProduct(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(favoriteProduct);
+    }else{
+        var product_id = favoriteData.product_id,
+            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
+            key = authData.data !== ''? JSON.parse(authData.data).key : '';
+        $.ajax({
+            type: 'POST',
+            url: PRODUCT_FAVORITE_API,
+            data:JSON.stringify({ 
+                    product_id: product_id,
+                    user_id: user_id,
+                    key : key
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                        generateToken(favoriteProduct);
+                }else if(data.message == 'Invalid key'){
+                    localStorage.removeItem('emailNgulikin');
+                    sessionStorage.setItem("logoutNgulikin", 1);
+                    sessionStorage.removeItem('authNgulikin');
+                    location.href = url;
+                }else if(data.message == 'You have saved this item'){
+                    notif("error","Anda sudah menyimpan produk ini","top");
+                }else{
+                    $('.tabelList #like').html(data.result.product_count_favorite);
+                    notif("info","Product ditambah ke daftar favorit","right","top");
+                }
+            }
         });
     }
 }
@@ -240,7 +314,7 @@ function mousetosrushome(url){
         $(this).children('.grid-sub-cont9-body-list-hover').hide();
     });
     $('.grid-sub-cont9-body-list-hover div').on('click', function (e) {
-        var datainternal = $(this).attr('datainternal-id');
-        location.href = url+"/product/"+datainternal;
+        var datainternal = $(this).attr('datainternal-id').split("~");
+        location.href = url+"/product/"+datainternal[0];
     });
 }

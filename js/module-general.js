@@ -1,6 +1,12 @@
+var url = 'http://init.ngulikin.com',
+    authData = new Object();
+
 function initGeneral(){
-    var url = 'http://init.ngulikin.com',
-        emailsession = localStorage.getItem('emailNgulikin');
+    var emailsession = localStorage.getItem('emailNgulikin'),
+        authsession = localStorage.getItem('authNgulikin'),
+        key = '';
+        
+    authsession !== null ? authData.data = authsession : authData.data = '';  
     
     $('.leftHeader,#backHomeSignup,#backHomeSignin').on( 'click', function( e ){
 	    location.href = url;
@@ -18,6 +24,7 @@ function initGeneral(){
     	$('#iconProfile').show();
     	$('#iconNotifHeader').show();
     	$('.footer-body-mid2 ul li:last-child').hide();
+    	key = JSON.parse(localStorage.getItem('authNgulikin')).key;
     }else{
     	$('.footer-body-mid2 ul li:last-child').show();
     	$('#iconNotifHeader').hide();
@@ -319,3 +326,60 @@ function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email.toLowerCase());
 }
+
+/*
+    Date validation
+    Value parameter - required. All other parameters are optional.
+*/
+function isDate(value, sepVal, dayIdx, monthIdx, yearIdx) {
+    try {
+        //Change the below values to determine which format of date you wish to check. It is set to dd/mm/yyyy by default.
+        var DayIndex = dayIdx !== undefined ? dayIdx : 0; 
+        var MonthIndex = monthIdx !== undefined ? monthIdx : 0;
+        var YearIndex = yearIdx !== undefined ? yearIdx : 0;
+ 
+        value = value.replace(/-/g, "/").replace(/\./g, "/"); 
+        var SplitValue = value.split(sepVal || "/");
+        var OK = true;
+        if (!(SplitValue[DayIndex].length == 1 || SplitValue[DayIndex].length == 2)) {
+            OK = false;
+        }
+        if (OK && !(SplitValue[MonthIndex].length == 1 || SplitValue[MonthIndex].length == 2)) {
+            OK = false;
+        }
+        if (OK && SplitValue[YearIndex].length != 4) {
+            OK = false;
+        }
+        if (OK) {
+            var Day = parseInt(SplitValue[DayIndex], 10);
+            var Month = parseInt(SplitValue[MonthIndex], 10);
+            var Year = parseInt(SplitValue[YearIndex], 10);
+ 
+            if (OK = ((Year > 1900) && (Year < new Date().getFullYear()))) {
+                if (OK = (Month <= 12 && Month > 0)) {
+
+                    var LeapYear = (((Year % 4) == 0) && ((Year % 100) != 0) || ((Year % 400) == 0));   
+                    
+                    if(OK = Day > 0)
+                    {
+                        if (Month == 2) {  
+                            OK = LeapYear ? Day <= 29 : Day <= 28;
+                        } 
+                        else {
+                            if ((Month == 4) || (Month == 6) || (Month == 9) || (Month == 11)) {
+                                OK = Day <= 30;
+                            }
+                            else {
+                                OK = Day <= 31;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return OK;
+    }
+    catch (e) {
+        return false;
+    }
+} 

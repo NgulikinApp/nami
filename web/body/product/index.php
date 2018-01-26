@@ -5,9 +5,6 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1, width=device-width">
 		<?php include $_SERVER['DOCUMENT_ROOT'].'/web/library_detail.php';?>
-		<title>
-		    OLIVE WOOD CHAIR | Ngulikin
-		</title>
     </head>
     <body>
 		<?php 

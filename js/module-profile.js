@@ -10,6 +10,7 @@ function initProfile(){
     $('#logouttab').on( 'click', function( e ){
         localStorage.removeItem('emailNgulikin');
         sessionStorage.setItem("logoutNgulikin", 1);
+        sessionStorage.removeItem('authNgulikin');
         location.href = url;
     });
     

@@ -1,8 +1,14 @@
+var authSigin = new Object();
+
 function initSignin(){
     var signinSessionEmail = sessionStorage.getItem('signinEmailNgulikin'),
-        emailsession = sessionStorage.getItem('emailNgulikin'),
-        url = 'http://init.ngulikin.com',
-        urlAPI 	= 'http://api.ngulikin.com/v1/';
+        emailsession = sessionStorage.getItem('emailNgulikin');
+    
+    if(authData.data !== ''){
+        sessionStorage.setItem('loginNgulikin',1);
+        localStorage.setItem('emailNgulikin', JSON.parse(authData.data).username);
+        location.href = url;
+    }
         
 	if(signinSessionEmail !== null){
 	    $('#emailSignin').val(signinSessionEmail);
@@ -47,13 +53,14 @@ function ajax_auth(){
         generateToken(ajax_auth);
     }else{
         var email = $('#emailSignin').val(),
-	        pass = (SHA256($('#passwordSignin').val())).toUpperCase();
+	        pass = $('#passwordSignin').val();
 	    
 	    if(email === '' || pass === ''){
 	       $('.error_message').removeClass('show');
 	       $('.error_message').addClass('show').html('Username dan password harus diisi');
 	    }else{
-    	   $.ajax({
+	        pass = (SHA256(pass)).toUpperCase();
+    	    $.ajax({
                 type: 'POST',
                 data: JSON.stringify({ manual: 1,token: sessionStorage.getItem('tokenNgulikin')}),
                 crossDomain: true,
@@ -68,6 +75,9 @@ function ajax_auth(){
                 success: function(result) {
                     if(result.message == 'Invalid credential' || result.message == 'Token expired'){
                         generateToken(ajax_auth);
+                    }else if(result.message ==  'Account is not exist'){
+                        $('.error_message').removeClass('show');
+	                    $('.error_message').addClass('show').html('Akun belum terdaftar');
                     }else if(result.message ==  'Email or password is wrong'){
                         $('.error_message').removeClass('show');
 	                    $('.error_message').addClass('show').html('Username atau password salah');
@@ -76,12 +86,56 @@ function ajax_auth(){
 	                    $('.error_message').addClass('show').html('Akun belum aktif, cek email anda.');
                     }else{
                         sessionStorage.setItem('loginNgulikin',1);
-                        localStorage.setItem('emailNgulikin', email);
-                        location.href = 'http://init.ngulikin.com';
+                        localStorage.setItem('emailNgulikin', result.result.username);
+                        localStorage.setItem('authNgulikin', JSON.stringify(result.result));
+                        location.href = url;
                     }
                 }
             });
 	   }
+    }
+}
+
+function ajax_auth_socmed(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(ajax_auth_socmed);
+    }else{
+        var authEmail = authSigin.email,
+            authPass = authSigin.pass,
+            authSocmed = authSigin.socmed,
+            authIdSocmed = authSigin.id_socmed;
+            
+	    $.ajax({
+            type: 'POST',
+            data: JSON.stringify({ manual: 0,token: sessionStorage.getItem('tokenNgulikin'),socmed:authSocmed,id_socmed:authIdSocmed}),
+            crossDomain: true,
+            async: true,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Basic ' + btoa(authEmail+':'+authPass)),
+                xhr.withCredentials = true;
+            },
+            url: SIGNIN_API,
+            contentType: "application/json",
+            dataType: "json",
+            success: function(result) {
+                    if(result.message == 'Invalid credential' || result.message == 'Token expired'){
+                        generateToken(ajax_auth);
+                    }else if(result.message ==  'Account is not exist'){
+                        sessionStorage.setItem('signinEmailNgulikin',authEmail);
+                        sessionStorage.setItem('signinSocmedNgulikin',authSocmed);
+                        sessionStorage.setItem('signinIdSocmedNgulikin',authIdSocmed);
+                        location.href = url+'/signup';
+                    }else if(result.message ==  'Email or password is wrong'){
+                        $('.error_message').removeClass('show');
+	                    $('.error_message').addClass('show').html('Username atau password salah');
+                    }else{
+                        sessionStorage.setItem('loginNgulikin',1);
+                        localStorage.setItem('emailNgulikin', result.result.username);
+                        localStorage.setItem('authNgulikin', JSON.stringify(result.result));
+                        location.href = url;
+                    }
+            }
+        });
     }
 }
 
@@ -123,9 +177,11 @@ function listLabels() {
         	'userId': 'me'
         });
         request.execute(function(resp) {
-        	localStorage.setItem('emailNgulikin', resp.emails[0].value);
-        	sessionStorage.setItem('loginNgulikin',1);
-        	location.href = "http://init.ngulikin.com";
+            authSigin.pass = (SHA256("GooglePlus_Ngulikin")).toUpperCase();
+            authSigin.email = resp.emails[0].value;
+            authSigin.id_socmed = resp.id;
+            authSigin.socmed = 'googleplus';
+            ajax_auth_socmed();
         			     
         	gapi.auth2.getAuthInstance().signOut();
         });
@@ -134,8 +190,10 @@ function listLabels() {
 
 function getUserData() {
 	FB.api('/me?fields=name,email', function(response) {
-		localStorage.setItem('emailNgulikin', response.email);
-		sessionStorage.setItem('loginNgulikin',1);
-        location.href = "http://init.ngulikin.com";
+		authSigin.pass = (SHA256("Facebook_Ngulikin")).toUpperCase();
+        authSigin.email = response.email;
+        authSigin.id_socmed = response.id;
+        authSigin.socmed = 'facebook';
+        ajax_auth_socmed();
 	});
 }

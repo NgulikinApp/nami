@@ -1,19 +1,19 @@
+var search = new Object();
+
 function initSearch(){
-    var url = 'http://init.ngulikin.com',
-        urlAPI 	= 'http://api.ngulikin.com/v1/';
-    
     /*
         Get value from url parameter.
         location function : js/module-general.js
     */
     var keywords = getUrlParam("keywords");
-    if(keywords === ''){
-        $('.result-content #searchNotFound').addClass('active');
-        $('.result-content .list-search').removeClass('active');
-    }else{
-        $('.result-content #searchNotFound').removeClass('active');
-        $('.result-content .list-search').addClass('active');
-    }
+    search.keywords = keywords;
+    search.type = 'product';
+    search.selsort = '1';
+    search.rate = '';
+    search.pricemax = '';
+    search.pricemin = '';
+    
+    searchItem();
     
     $(".star_0").rateYo({rating: 0,readOnly: true,starWidth : "15px"});
     $(".star_1").rateYo({rating: 1,readOnly: true,starWidth : "15px"});
@@ -23,36 +23,13 @@ function initSearch(){
     $(".star_5").rateYo({rating: 5,readOnly: true,starWidth : "15px"});
     
     /*
-	    Paging jquery for product tab 
-	*/    
-    $('#pagingSearchProduct').twbsPagination({
-        totalPages: 35,
-        visiblePages: 10,
-        onPageClick: function (event, page) {
-            console.info(page + ' (from options)');
-        }
-    }).on('page', function (event, page) {
-            console.info(page + ' (from event listening)');
-    });
-    
-    /*
-	    Paging jquery for shop tab 
-	*/
-    $('#pagingSearchShop').twbsPagination({
-        totalPages: 35,
-        visiblePages: 10,
-        onPageClick: function (event, page) {
-            console.info(page + ' (from options)');
-        }
-    }).on('page', function (event, page) {
-            console.info(page + ' (from event listening)');
-    });
-    
-    /*
 	    Action for triggering ajax search by change value of minimum price field or and maximum price field and click enter from keyboard 
 	*/
     $('#minPriceSearch,#maxPriceSearch').on('keydown', function (e) {
 	    if (e.which == 13) {
+	        search.pricemin = $('#minPriceSearch').val();
+	        search.pricemax = $('#maxPriceSearch').val();
+	        searchItem();
 	    }
 	});
 	
@@ -60,7 +37,24 @@ function initSearch(){
 	    Action for triggering ajax search by change sorting select box or location select box 
 	*/
 	$('#sortingSearch,#locSearch').on('change', function (e) {
-	    $('#minPriceSearch').trigger('keydown');
+	    search.selsort = $('#sortingSearch').val();
+	    searchItem();
+	});
+	
+	$('input[name="rt"]').on('click', function (e) {
+	    search.rate = '';
+	    $('input[name="rt"]').each(function() {
+            if ($(this).is(':checked')) {
+                if(search.rate === ''){
+                    search.rate += $(this).val();
+                }else{
+                    search.rate += ',';
+                    search.rate += $(this).val();
+                }
+            }
+        });
+        
+        searchItem();
 	});
 	
 	/*
@@ -86,30 +80,108 @@ function initSearch(){
 	    $('.result-content .result-content-tab .tab').removeClass('active');
 	    $(this).addClass('active');
 	    
-	    //product tab clicked and keywords parameter on url is not empty
-	    if($(this).attr('id') == 'product' && keywords !== ''){
-	        $('.result-content .list-search#list-search-product').addClass('active');
-	        $('.result-content .list-search#list-search-shop').removeClass('active');
+	    //product tab clicked
+	    if($(this).attr('id') == 'product'){
 	        $('.result-content .result-content-tab .tab .icon-product').addClass('active');
 	        $('.result-content .result-content-tab .tab .icon-shop').removeClass('active');
-	        $('.filter-content .content.price').removeClass('hide');
-	        $('.filter-content .content.rate').removeClass('hide');
-	    //shop tab clicked and keywords parameter on url is not empty
-	    }else if($(this).attr('id') == 'shop' && keywords !== ''){
-	        $('.result-content .list-search#list-search-product').removeClass('active');
-	        $('.result-content .list-search#list-search-shop').addClass('active');
+	        
+	        $('.content:first-child span:first-child,#sortingSearch').show();
+	        $('.content.price,.content.rate').show();
+	        
+	        search.type = 'product';
+    
+            searchItem();
+	    //shop tab clicked
+	    }else{
 	        $('.result-content .result-content-tab .tab .icon-product').removeClass('active');
 	        $('.result-content .result-content-tab .tab .icon-shop').addClass('active');
-	        $('.filter-content .content.price').addClass('hide');
-	        $('.filter-content .content.rate').addClass('hide');
-	    //product tab clicked and keywords parameter on url is empty
-	    }else if($(this).attr('id') == 'product'){
-	        $('.filter-content .content.price').removeClass('hide');
-	        $('.filter-content .content.rate').removeClass('hide');
-	    //shop tab clicked and keywords parameter on url is empty
-	    }else{
-	        $('.filter-content .content.price').addClass('hide');
-	        $('.filter-content .content.rate').addClass('hide');
+	        
+	        $('.content:first-child span:first-child,#sortingSearch').hide();
+	        $('.content.price,.content.rate').hide();
+	        
+	        search.type = 'shop';
+    
+            searchItem();
 	    }
 	});
+}
+
+function searchItem(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(searchItem);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: SEARCH_API,
+            data:{
+                    name : search.keywords,
+                    selsort : search.selsort,
+                    type : search.type,
+                    rate : search.rate,
+                    pricemax : search.pricemax,
+                    pricemin : search.pricemin,
+                    page : 0,
+                    pagesize : 8
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var response = data.response;
+                    if(response.length > 0){
+                        var listElement = '';
+                        $.each( response, function( key, val ) {
+                            if(search.type == 'shop'){
+                                listElement += '<div class="result-content-list-data" datainternal-id="'+val.shop_id+'">';
+                                listElement += '   <div class="result-content-list-data-head">';
+                                if(val.shop_difdate <= 1){
+                                    listElement += '   <span class="result-content-list-data-head-new">New</span>';
+                                }
+                                listElement += '       <img src="'+val.shop_icon+'"/>';
+                                listElement += '   </div>';
+                                listElement += '   <div class="result-content-list-data-body">';
+                                listElement += '       <span>'+val.shop_name+'</span>';
+                                listElement += '   </div>';
+                                listElement += '</div>';
+                            }else{
+                                listElement += '<div class="result-content-list-data" datainternal-id="'+val.product_id+'">';
+                                listElement += '   <div class="result-content-list-data-head">';
+                                if(val.product_difdate <= 1){
+                                    listElement += '   <span class="result-content-list-data-head-new">New</span>';
+                                }
+                                listElement += '       <img src="'+val.product_image+'"/>';
+                                listElement += '   </div>';
+                                listElement += '   <div class="result-content-list-data-body">';
+                                listElement += '       <span>'+val.product_name+'</span>';
+                                listElement += '       <span>'+val.product_price+'</span>';
+                                listElement += '   </div>';
+                                listElement += '</div>';
+                            }
+                        });
+                        $(".list-search .result-content-list").html(listElement);
+                        
+                        $('.pagination').twbsPagination({
+                            totalPages: data.total,
+                            visiblePages: 10,
+                            onPageClick: function (event, page) {
+                                console.info(page + ' (from options)');
+                            }
+                        }).on('page', function (event, page) {
+                                console.info(page + ' (from event listening)');
+                        });
+                        
+                        $('.result-content #searchNotFound').removeClass('active');
+                        $('.result-content .list-search').addClass('active');
+                    }else{
+                        $('.result-content #searchNotFound').addClass('active');
+                        $('.result-content .list-search').removeClass('active');
+                    }
+                }else{
+                    generateToken(searchItem);
+                }
+            } 
+        });
+    }
 }

@@ -4,9 +4,10 @@
     	    <div class="content">
     	        <span>Urutkan</span>
     			<select id="sortingSearch">
-    			            <option>Terbaru</option>
-    			            <option>Termurah</option>
-    			            <option>Terlama</option>
+    			    <option value="1">Terbaru</option>
+    			    <option value="2">Termurah</option>
+    			    <option value="3">Terlama</option>
+    			    <option value="4">Termahal</option>
     			</select>
     			<span>Lokasi</span>
     			<select id="locSearch">
@@ -109,8 +110,7 @@
                 </div>
             </div>
     	    <?php 
-    	        include 'section_product.php';
-    	        include 'section_shop.php';
+    	        include 'section_item.php';
     	        include 'section_notfound.php';
     	    ?>
         </div>
