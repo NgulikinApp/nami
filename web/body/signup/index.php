@@ -9,7 +9,6 @@
 		<link href="css/jquery.mobile.datepicker.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
         <link href="css/jquery.mobile.datepicker.theme.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
         
-        <script src="js/library/datepicker.js?jsr=<?php echo $jsversionstring; ?>"></script>
         <script src="js/library/jquery.mobile-git.js?jsr=<?php echo $jsversionstring; ?>"></script> 
         <script src="js/library/jquery.mobile.datepicker.js?jsr=<?php echo $jsversionstring; ?>"></script>
     </head>

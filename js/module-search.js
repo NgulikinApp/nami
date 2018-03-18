@@ -1,12 +1,16 @@
-var search = new Object();
+var search = new Object(),
+    searchPage = new Object();
 
 function initSearch(){
     /*
         Get value from url parameter.
         location function : js/module-general.js
     */
-    var keywords = getUrlParam("keywords");
-    search.keywords = keywords;
+    var keywords = getUrlParam("keywords"),
+        category = getUrlParam("c");
+        
+    search.keywords = (keywords === null)?'':keywords;
+    search.category = (category === null)?'':category;
     search.type = 'product';
     search.selsort = '1';
     search.rate = '';
@@ -110,18 +114,31 @@ function searchItem(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(searchItem);
     }else{
+        $('.result-content #searchNotFound').removeClass('active');
+        $('.result-content .list-search').addClass('active');
+        $(".list-search .result-content-list").empty();
+        $(".list-search .result-content-paging .pagination").empty();
+        $('.list-search .result-content-paging .pagination').removeData("twbs-pagination");
+        $('.list-search .result-content-paging .pagination').unbind("page");
+        $('.loaderImg').removeClass('hidden');
+        
+        if (typeof searchPage.page === 'undefined') {
+            searchPage.page = 1;
+        }
+        
         $.ajax({
             type: 'GET',
             url: SEARCH_API,
             data:{
                     name : search.keywords,
+                    category : search.category,
                     selsort : search.selsort,
                     type : search.type,
                     rate : search.rate,
                     pricemax : search.pricemax,
                     pricemin : search.pricemin,
-                    page : 0,
-                    pagesize : 8
+                    page : searchPage.page-1,
+                    pagesize : 20
             },
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -163,21 +180,19 @@ function searchItem(){
                         $(".list-search .result-content-list").html(listElement);
                         
                         $('.pagination').twbsPagination({
-                            totalPages: data.total,
+                            totalPages: data.total_page,
                             visiblePages: 10,
-                            onPageClick: function (event, page) {
-                                console.info(page + ' (from options)');
-                            }
+                            startPage: searchPage.page
                         }).on('page', function (event, page) {
-                                console.info(page + ' (from event listening)');
+                            searchPage.page = page;
+                            searchItem();
                         });
-                        
-                        $('.result-content #searchNotFound').removeClass('active');
-                        $('.result-content .list-search').addClass('active');
                     }else{
+                        searchPage.page = 1;
                         $('.result-content #searchNotFound').addClass('active');
                         $('.result-content .list-search').removeClass('active');
                     }
+                    $('.loaderImg').addClass('hidden');
                 }else{
                     generateToken(searchItem);
                 }

@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" media="all" href="../../css/jquery.lightbox-0.5.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="../../css/jquery.tosrus.all.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="../../css/jquery.rateyo.min.css?jsr=<?php echo $jsversionstring; ?>">
+<link rel="stylesheet" type="text/css" media="all" href="../../css/milestones.css?jsr=<?php echo $jsversionstring; ?>">
 <!--CSS Main-->
 <link href="../../css/main.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
         
@@ -30,6 +31,8 @@
 <script src="../../js/library/jquery.notify.min.js?jsr=<?php echo $jsversionstring; ?>"></script>
 <script src="../../js/library/jquery.twbsPagination.js?jsr=<?php echo $jsversionstring; ?>"></script>
 <script src="../../js/library/jquery.rateyo.js?jsr=<?php echo $jsversionstring; ?>"></script>
+<script src="../../js/library/bootstrap.min.js?jsr=<?php echo $jsversionstring; ?>"></script>
+<script src="../../js/library/milestones.js?jsr=<?php echo $jsversionstring; ?>"></script>
 <script src="../../js/general-api.js?jsr=<?php echo $jsversionstring; ?>"></script>
 <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

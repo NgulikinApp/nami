@@ -1,44 +1,44 @@
 <div class="privateLeft">
-    <div>
+    <div id="fullnameLabel">
         <span>Nama Lengkap</span>
     </div>
-    <div>
-        <input type="text" class="inputPrivate"/>
+    <div id="fullnameField">
+        <input type="text" id="fullnamePrivate" class="inputPrivate"/>
     </div>
-    <div>
+    <div id="dobLabel">
         <span>Tanggal Lahir</span>
     </div>
-    <div>
-        <input type="text" class="inputPrivate"/>
+    <div id="dobField">
+        <input type="text" id="dobPrivate" class="inputPrivate" data-inline="false" data-role="date"/>
     </div>
-    <div>
+    <div id="usernameLabel">
         <span>Username</span>
     </div>
-    <div>
-        <input type="text" class="inputPrivate"/>
+    <div id="usernameField">
+        <input type="text" id="usernamePrivate" class="inputPrivate"/>
     </div>
-    <div>
+    <div id="genderLabel">
         <span>Jenis Kelamin</span>
     </div>
-    <div>
+    <div id="genderField">
         <span id="sexCon">
-            <input type="radio" name="sexPrivate" id="malePrivate"/>
+            <input type="radio" name="sexPrivate" id="malePrivate" value="male"/>
             <span>Laki - laki</span>
-            <input type="radio" name="sexPrivate" id="femalePrivate"/>
+            <input type="radio" name="sexPrivate" id="femalePrivate" value="female"/>
             <span>Perempuan</span>
         </span>
     </div>
-    <div>
+    <div id="phoneLabel">
         <span>Nomor Telepon</span>
     </div>
-    <div>
-        <input type="text" class="inputPrivate"/>
+    <div id="phoneField">
+        <input type="text"  id="phonePrivate" class="inputPrivate"/>
     </div>
-    <div>
+    <div id="emailLabel">
         <span>Email</span>
     </div>
-    <div>
-        <input type="text" class="inputPrivate"/>
+    <div id="emailField">
+        <input type="text"  id="emailPrivate" class="inputPrivate"/>
     </div>
 </div>
 <div class="privateRight">

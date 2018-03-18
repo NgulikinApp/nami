@@ -2,7 +2,7 @@
     <div class="headerMyprofile">Akun Saya</div>
     <div id="accordionMyprofile">
         <h3 style="background-image: url(/img/arrow_up.png);">Data Pribadi</h3>
-        <div>
+        <div id="privateProfile">
             <?php include 'section_private.php'; ?>
         </div>
         <h3>Alamat dan kontak detail</h3>
@@ -25,6 +25,6 @@
         </div>
     </div>
     <div class="footerMyprofile">
-        <button id="btnSubmitMyprofile">Submit</button>
+        <button id="btnSubmitMyprofile">Update</button>
     </div>
 </div>

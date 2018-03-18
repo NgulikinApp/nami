@@ -16,7 +16,7 @@
 	// Re-routing if Authorized
 	//-----------------------------------------------------------------------------------
 	
-	switch ($routes[0]) {
+	switch (@$routes[0]) {
 		case 'aboutus':
 			include('web/body/about/index.php');
 		break;
@@ -60,7 +60,22 @@
 			include('web/body/search/index.php');
 		break;
 		case 'shop':
-			include('web/body/shop/index.php');
+		    switch ($routes[1]) {
+		        case 'i':
+		            include('web/body/shop/myincome/index.php');
+		        break;
+		        case 'p':
+		            include('web/body/shop/myproduct/index.php');
+		        break;
+		        case 's':
+		            include('web/body/shop/mysales/index.php');
+		        break;
+		        case 't':
+		            include('web/body/shop/setting/index.php');
+		        break;
+		        default : 
+		            include('web/body/shop/detail/index.php');
+		    }
 		break;
 		case 'signin':
 			include('web/body/signin/index.php');

@@ -38,11 +38,14 @@
             <div class="grid-chapter-cont4">
                 <img src="img/shopterbaru.png">
             </div>
-            <div class="grid-list-cont4" id="shoplist"></div>
+            <div class="grid-list-cont4" id="shoplist">
+                <img src="img/loader.gif" class="loaderImg" id="loaderHomeShop"/>
+            </div>
         </div>
     </section>
     <section class="container category">
         <div class="grid-cont8">
+            <img src="img/loader.gif" class="loaderImg" id="loaderHomeCategory"/>
             <ul class="grid-list-cont8"></ul>
         </div>
     </section>
@@ -56,6 +59,7 @@
                     </div>
                 </div>
                 <div class="grid-sub-cont9-body">
+                    <img src="img/loader.gif" class="loaderImg" id="loaderHomeProductPromo"/>
                     <div class="grid-sub-cont9-body-list" id="promo"></div>
                 </div>
             </div>
@@ -69,6 +73,7 @@
                     </div>
                 </div>
                 <div class="grid-sub-cont9-body">
+                    <img src="img/loader.gif" class="loaderImg" id="loaderHomeProductBest"/>
                     <div class="grid-sub-cont9-body-list" id="best-selling"></div>
                 </div>
             </div>

@@ -24,7 +24,9 @@ function detail(){
             },
             success: function(data, status) {
                 if(data.status == "OK"){
-                    if($.isEmptyObject(data.result) === false){
+                    if(data.result.product_id !== null){
+                        var isfavorite = data.result.product_isfavorite;
+                        
                         var product = '<div class="content">';
                             product += '    <div class="left">';
                             product += '        <div class="image">';
@@ -121,7 +123,7 @@ function detail(){
                         $(".rateyo").rateYo({fullStar: true}).on("rateyo.set", function (e, data) {
                             if(user_id === ''){
                     	        notif("error","Harap login terlebih dahulu","right","top");
-                            }else if(data.result.product_israte == 1){
+                            }else if(isfavorite == 1){
                     	        notif("error","Anda sudah memberikan penilaian produk ini","top");
                     	    }else{
                     	        rateData.value = data.rating;
@@ -162,6 +164,7 @@ function detail(){
                         
                         $('.grid-product-container:first-child').html(product);
                     }
+                    $('.loaderProgress').addClass('hidden');
                 }else{
                     generateToken(detail);
                 }

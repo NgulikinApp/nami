@@ -9,7 +9,27 @@ function initHome(){
         authsession = localStorage.getItem('authNgulikin');
     
     if(loginsession !== null && emailsession !== null){
-        notif("info","Anda telah login sebagai "+emailsession,"center","center");
+        var greeting = '<div class="greeting">';
+            greeting += '   <div class="greetingContainer">';
+            greeting += '       <div class="top">';
+            greeting += '           <div class="icon"></div>';
+            greeting += '           <div class="title">Hallo, '+emailsession+'</div>';
+            greeting += '           <div class="desc">Ayo segera isi keranjang dengan barang kesukaanmu sekarang juga</div>';
+            greeting += '       </div>';
+            greeting += '       <div class="bottom">';
+            greeting += '           <input type="button" value="LIHAT KERANJANG BELANJA"/>';
+            greeting += '       </div>';
+            greeting += '   </div>';
+            greeting += '</div>';
+                
+        $("body").append(greeting);
+        
+        $('.greetingContainer .bottom input').on( 'click', function( e ){
+    	    location.href = url+"/cart";
+    	});
+    	
+    	setTimeout(function(){ $(".greeting").fadeOut(); }, 3000);
+        
         sessionStorage.removeItem('loginNgulikin');
     }
     
@@ -75,6 +95,7 @@ function shop(){
                         listshop += '</div>';
                         
                     });
+                    $('#loaderHomeShop').addClass('hidden');
                     $("#shoplist").html(listshop);
                     
                     $('.grid-list-cont4 .grid-list-cont4-item').on('click', function (e) {
@@ -165,6 +186,7 @@ function bestseller(){
                         listproduct += '</div>';
                         
                     });
+                    $('#loaderHomeProductBest').addClass('hidden');
                     $("#best-selling").html(listproduct);
                     
                     $('#best-selling').tosrus({
@@ -232,6 +254,7 @@ function promo(){
                         listproduct += '</div>';
                         
                     });
+                    $('#loaderHomeProductPromo').addClass('hidden');
                     $("#promo").html(listproduct);
                     
                      $('#promo').tosrus({

@@ -4,7 +4,8 @@ var url = 'http://init.ngulikin.com',
 function initGeneral(){
     var emailsession = localStorage.getItem('emailNgulikin'),
         authsession = localStorage.getItem('authNgulikin'),
-        key = '';
+        key = '',
+        categoryFlag = false;
         
     authsession !== null ? authData.data = authsession : authData.data = '';  
     
@@ -21,11 +22,101 @@ function initGeneral(){
 	
 	if(emailsession !== null){
         $('#menuLogin').hide();
-    	$('#iconProfile').show();
+    	$('#iconProfileTemp').css('display','inline-block');
+    	$('#iconShopTemp').css('display','inline-block');
     	$('#iconNotifHeader').show();
     	$('.footer-body-mid2 ul li:last-child').hide();
-    	key = JSON.parse(localStorage.getItem('authNgulikin')).key;
+    	key = JSON.parse(authsession).key;
+    	
+    	var fullname = JSON.parse(authsession).fullname;
+    	
+    	var user_photo = JSON.parse(authData.data).user_photo;
+    	$('#iconProfile').css('background-image','url("'+user_photo+'")');
+    	
+    	var templatePopUpShop = '<div class="popover popover-bubble" role="tooltip">';
+    	    templatePopUpShop += '  <div class="arrow"></div>';
+    	    templatePopUpShop += '  <div>';
+    	    templatePopUpShop += '      <ul>';
+    	    templatePopUpShop += '          <li class="listShopMenu">'+fullname+'</li>';
+    	    templatePopUpShop += '          <li class="listShopMenu">';
+    	    templatePopUpShop += '              <a>Penjualan</a>';
+    	    templatePopUpShop += '          </li>';
+    	    templatePopUpShop += '          <li class="listShopMenu">';
+    	    templatePopUpShop += '              <a>Produkku</a>';
+    	    templatePopUpShop += '          </li>';
+    	    templatePopUpShop += '          <li class="listShopMenu">';
+    	    templatePopUpShop += '              <a>Penghasilanku</a>';
+    	    templatePopUpShop += '          </li>';
+    	    templatePopUpShop += '          <li class="listShopMenu">';
+    	    templatePopUpShop += '              <a onclick="settingShopClick()">Pengaturan Toko</a>';
+    	    templatePopUpShop += '          </li>';
+    	    templatePopUpShop += '      </ul>';
+    	    templatePopUpShop += '  </div>';
+    	    templatePopUpShop += '</div>';
+    	
+    	$('#iconShopTemp').popover({
+          placement: 'bottom',
+          template: templatePopUpShop
+        }).on('click', function(e) {
+            $('#iconNotifHeader').popover('hide');
+    	    $('#iconCartHeader').popover('hide');
+    	    $('#iconProfileTemp').popover('hide');
+        });
+        
+        var templatePopUpNotif = '<div class="popover popover-bubble" role="tooltip">';
+    	    templatePopUpNotif += '  <div class="arrow"></div>';
+    	    templatePopUpNotif += '  <div class="bubble-container">';
+    	    templatePopUpNotif += '      <div class="no-notif">';
+    	    templatePopUpNotif += '          <img src="/img/no-notif.png" width="120" height="100"/>';
+    	    templatePopUpNotif += '          <span>Tidak ada notifikasi</span>';
+    	    templatePopUpNotif += '      </div>';
+    	    templatePopUpNotif += '  </div>';
+    	    templatePopUpNotif += '</div>';
+    	
+    	$('#iconNotifHeader').popover({
+          placement: 'bottom',
+          template: templatePopUpNotif
+        }).on('click', function(e) {
+            $('#iconShopTemp').popover('hide');
+    	    $('#iconCartHeader').popover('hide');
+    	    $('#iconProfileTemp').popover('hide');
+        });
+        
+        var templatePopUpProfile = '<div class="popover popover-bubble" role="tooltip">';
+    	    templatePopUpProfile += '  <div class="arrow"></div>';
+    	    templatePopUpProfile += '  <div>';
+    	    templatePopUpProfile += '      <ul>';
+    	    templatePopUpProfile += '          <li class="listShopMenu">'+fullname+'</li>';
+    	    templatePopUpProfile += '          <li class="listShopMenu">';
+    	    templatePopUpProfile += '              <a onclick="profileClick()">Lihat Profil</a>';
+    	    templatePopUpProfile += '          </li>';
+    	    templatePopUpProfile += '          <li class="listShopMenu">';
+    	    templatePopUpProfile += '              <a>Alamat Kirim</a>';
+    	    templatePopUpProfile += '          </li>';
+    	    templatePopUpProfile += '          <li class="listShopMenu">';
+    	    templatePopUpProfile += '              <a>Toko Langganan</a>';
+    	    templatePopUpProfile += '          </li>';
+    	    templatePopUpProfile += '          <li class="listShopMenu">';
+    	    templatePopUpProfile += '              <input type="button" value="Keluar" class="logoutMainMenu" onclick="logoutClick()"/>';
+    	    templatePopUpProfile += '          </li>';
+    	    templatePopUpProfile += '      </ul>';
+    	    templatePopUpProfile += '  </div>';
+    	    templatePopUpProfile += '</div>';
+    	
+    	$('#iconProfileTemp').popover({
+          placement: 'bottom',
+          template: templatePopUpProfile
+        }).on('click', function(e) {
+            $('#iconNotifHeader').popover('hide');
+    	    $('#iconCartHeader').popover('hide');
+    	    $('#iconShopTemp').popover('hide');
+    	    
+    	    $('.popover .arrow').css({'top':'-11px','margin-left':'24px'});
+    	    $('.popover').css('left','-=34px');
+    	    $('.popover').children('div:last-child').css('width','100%');
+        });
     }else{
+        $('.menu-category-search').css('width','calc(100% - 715px)');
     	$('.footer-body-mid2 ul li:last-child').show();
     	$('#iconNotifHeader').hide();
     }
@@ -38,14 +129,33 @@ function initGeneral(){
 	$('.about-us').on( 'click', function( e ){
 	    location.href = url+"/aboutus";
 	});
-	$('#iconCartHeader').on( 'click', function( e ){
-	    location.href = url+"/cart";
-	});
+	
+	var templatePopUpCart = '<div class="popover popover-bubble" role="tooltip">';
+    	templatePopUpCart += '  <div class="arrow"></div>';
+    	templatePopUpCart += '  <div class="bubble-container">';
+    	templatePopUpCart += '      <ul class="bubble-list-cart">';
+    	templatePopUpCart += '          <li>Jumlah <div class="bubble-sum-cart">0<img src="/img/button_cart.png" width="15" height="15"/></div></li>';
+    	templatePopUpCart += '      </ul>';
+    	templatePopUpCart += '      <div class="no-cart">';
+    	templatePopUpCart += '          <img src="/img/keranjang.png" width="120" height="100"/>';
+    	templatePopUpCart += '          <span>Tidak ada produk yang ditambahkan</span>';
+    	templatePopUpCart += '      </div>';
+    	templatePopUpCart += '      <div class="bubble-cart-button">';
+    	templatePopUpCart += '          <input type="button" value="Lihat Keranjang" onclick="cartClick()"/>';
+    	templatePopUpCart += '      </div>';
+    	templatePopUpCart += '  </div>';
+    	templatePopUpCart += '</div>';
+    	
+    $('#iconCartHeader').popover({
+        placement: 'bottom',
+        template: templatePopUpCart
+    }).on('click', function(e) {
+        $('#iconShopTemp').popover('hide');
+	    $('#iconNotifHeader').popover('hide');
+	    $('#iconProfileTemp').popover('hide');
+    });
 	$('#iconFavoritHeader').on( 'click', function( e ){
 	    location.href = url+"/favorite";
-	});
-	$('#iconNotifHeader').on( 'click', function( e ){
-	    location.href = url+"/notifications";
 	});
 	$('#forgotPopUpSignin').on( 'click', function( e ){
 	    location.href = url+"/resetpassword";
@@ -76,18 +186,12 @@ function initGeneral(){
 	    asking();
 	});
 	
-	categoryProduct();
-	
-	/*var categoryProductStorage = localStorage.getItem("categoryProduct");
+	var categoryProductStorage = sessionStorage.getItem("categoryProduct");
 	if(categoryProductStorage === null){
-	    var data = {};
-	    
-	    /* ajax for list product on side bar and home menu
-	    var productList = ajax('GET',urlAPI+'menu/list',data);
-	    categoryProduct(productList.result);
+	    categoryProduct();
 	}else{
-        categoryProduct(JSON.parse(categoryProductStorage));
-	}*/
+	    bindCategoryProduct(JSON.parse(categoryProductStorage));
+	}
 	
 	$('.menu-category-sub-menu li a').on( 'click', function( e ){
 	   var searchVal = $(this).text();
@@ -117,10 +221,6 @@ function initGeneral(){
 	    location.href = url+"/signin";
 	});
     
-    $('#iconProfile').on( 'click', function( e ){
-        location.href = url+"/profile/"+localStorage.getItem('emailNgulikin');
-    });
-    
     /*$('.menu-category-wrap').mouseover(function() {
         $('.cover-popup').show();
     });
@@ -128,6 +228,29 @@ function initGeneral(){
     $('.menu-category-wrap').mouseout(function() {
         //$('.cover-popup').hide();
     });*/
+    
+    $('.menu-category-wrap').on( 'click', function( e ){
+        $('.menu-category-sub-menu').slideToggle();
+    });
+}
+
+function settingShopClick(){
+    location.href = url+"/shop/t";
+}
+
+function cartClick(){
+    location.href = url+"/cart";
+}
+
+function profileClick(){
+    location.href = url+"/profile"
+}
+
+function logoutClick(){
+    localStorage.removeItem('emailNgulikin');
+    sessionStorage.setItem("logoutNgulikin", 1);
+    localStorage.removeItem('authNgulikin');
+    location.href = url;
 }
 
 function generateToken(name){
@@ -189,21 +312,8 @@ function categoryProduct(){
             },
             success: function(data, status) {
                 if(data.status == "OK"){
-                    var listcategory = '';
-                	var listcategoryMain = '';
-                    $.each( data.result, function( key, val ) {
-                        var nameCategory = val.category_name;
-                        listcategory += '<li class="grid-listmiddle-cont8" id="'+nameCategory+'" style="background-image:url('+val.category_url+')">';
-                        listcategory += '<span>';
-                        listcategory += '   <p>ngulikin</p>';
-                        listcategory += '   <p>'+nameCategory+'</p>';
-                        listcategory += '</span>';
-                        listcategory += '</li>';
-                            
-                        listcategoryMain += '<li><a>'+nameCategory+'</a></li>';
-                    });
-                    $(".grid-list-cont8").html(listcategory);
-                    $(".menu-category-sub-menu").html(listcategoryMain);
+                	sessionStorage.setItem("categoryProduct",JSON.stringify(data.result));
+                	bindCategoryProduct(data.result);
                 }else{
                         generateToken(categoryProduct);
                 }
@@ -212,73 +322,48 @@ function categoryProduct(){
     }
 }
 
-/* content for sidebar menu and category product on home menu*/
-/*function categoryProduct(){
-    if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(categoryProduct);
-    }else{
-        $.getJSON(PRODUCT_CATEGORY_API+'?token='+sessionStorage.getItem('tokenNgulikin'), function( data ) {
-            if(data.status == "OK"){
-                var listcategory = '';
-        	    var listcategoryMain = '';
-                $.each( data.result, function( key, val ) {
-                    var nameCategory = val.category_name;
-                    listcategory += '<li class="grid-listmiddle-cont8" id="'+nameCategory+'" style="background-image:url('+val.category_url+')">';
-                    listcategory += '<span>';
-                    listcategory += '   <p>ngulikin</p>';
-                    listcategory += '   <p>'+nameCategory+'</p>';
-                    listcategory += '</span>';
-                    listcategory += '</li>';
+function bindCategoryProduct(data){
+    var listcategory = '';
+    var listcategoryMain = '<nav>';
+    
+    $.each( data , function( key, val ) {
+        var nameCategory = val.category_name;
+        listcategory += '<li class="grid-listmiddle-cont8" id="'+nameCategory+'" style="background-image:url('+val.category_url+')" data-category="'+val.category_id+'">';
+        listcategory += '<span>';
+        listcategory += '   <p>ngulikin</p>';
+        listcategory += '   <p>'+nameCategory+'</p>';
+        listcategory += '</span>';
+        listcategory += '</li>';
+                            
+        listcategoryMain += '<a class="menu-category-items">';
+        listcategoryMain += '   <div data-category="'+val.category_id+'">'+nameCategory+'</div>';
+        listcategoryMain += '</a>';
+    });
+    listcategoryMain += '<nav>';
                     
-                    listcategoryMain += '<li><a>'+nameCategory+'</a></li>';
-                });
-                $(".grid-list-cont8").html(listcategory);
-                $(".menu-category-sub-menu").html(listcategoryMain);
-            }else{
-                generateToken(categoryProduct);
-            }
-        });
-    }
-}*/
-
-//ajax base function
-function ajax(method,url,data){
-    var resultStore;
-    $.ajax({
-        method: method,
-        url: url,
-        data: data,
-        async: false,
-        contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-        processData: false, 
-        success: function(result) {
-            resultStore = result;
-      }
+    $('#loaderHomeCategory').addClass('hidden');
+    $(".grid-list-cont8").html(listcategory);
+    $(".menu-category-sub-menu").html(listcategoryMain);
+                    
+    $('.grid-listmiddle-cont8').on('click', function (e) {
+        var categoryVal = $(this).data("category");
+                            
+	   location.href = url+"/search?c="+categoryVal;
     });
-    return resultStore;
+                    
+    $('.menu-category-items div').on('click', function (e) {
+        var categoryVal = $(this).data("category");
+                            
+	    location.href = url+"/search?c="+categoryVal;
+    });
 }
 
-function ajax_json(method,url,data){
-    var resultStore;
-    $.ajax({
-        type: method,
-        url: url,
-        data: JSON.stringify(data),
-        async: false,
-        processData: false,
-        contentType: "application/json",
-        success: function(result) {
-            resultStore = result;
-      }
-    });
-    return resultStore;
-}
-//End of ajax base function
-
+//currency function
 function numberFormat(val){
     return 'Rp ' + (val).replace(/(\d)(?=(\d{3})+$)/g, "$1.");
 }
 
+//notif function
 function notif(type,message,x,y){
     notify({
         type: type, //alert | success | error | warning | info

@@ -6,7 +6,6 @@
 	            <li id="processordertab">Proses Pesanan</li>
 	            <li id="changepasswordtab">Ubah Kata Sandi</li>
 	            <li id="historytab">History</li>
-	            <li id="logouttab">Keluar</li>
 	        </ul>
 	    </div>
 	    <div class="contentProfile">

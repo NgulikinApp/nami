@@ -5,14 +5,17 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1, width=device-width">
 		<?php include $_SERVER['DOCUMENT_ROOT'].'/web/library_detail.php';?>
-		<title>
-		    <?php
-		        $currurl = substr($actual_link, strrpos($actual_link, '/') + 1);
-                echo $title = str_replace("-"," ",$currurl); 
-		    ?> | Ngulikin
-		</title>
+		<title>NOT FOUND | Ngulikin</title>
+		<link href="../../css/jquery.mobile.datepicker.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
+        <link href="../../css/jquery.mobile.datepicker.theme.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
+        
+        <script src="../../js/library/jquery.mobile-git.js?jsr=<?php echo $jsversionstring; ?>"></script> 
+        <script src="../../js/library/jquery.mobile.datepicker.js?jsr=<?php echo $jsversionstring; ?>"></script>
     </head>
     <body>
+        <div class="loaderProgress">
+            <img src="../img/loader.gif" />
+        </div>
 		<?php 
 		    include $_SERVER['DOCUMENT_ROOT'].'/web/nav/mainMenu.php';
 		    include 'section_body.php';

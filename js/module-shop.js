@@ -1,8 +1,16 @@
+var commentFlag = new Object(),
+    commentPage = new Object(),
+    shopProductPage = new Object();
+
 function initShop(){
     var emailsession = localStorage.getItem('emailNgulikin'),
         user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '';
     
+    commentFlag.type = 0;
     detail();
+    productShop();
+    discussShop();
+    reviewShop();
         
     $('.grid-shop-body .grid-shop-body-head div:first-child').on('click', function (e) {
         $(this).css({"background-color":"rgb(60, 60, 60)", "color":"#00BFFF"});
@@ -40,41 +48,6 @@ function initShop(){
 	}else{
 	    $('.grid-shop-body .grid-shop-body-content .grid-shop-body-content-inputComment').hide();
 	}
-	
-	$('#pagingShopProduct').twbsPagination({
-        totalPages: 35,
-        visiblePages: 10,
-        onPageClick: function (event, page) {
-            console.info(page + ' (from options)');
-        }
-    }).on('page', function (event, page) {
-            console.info(page + ' (from event listening)');
-    });
-    
-    $('#pagingShopDiscuss').twbsPagination({
-        totalPages: 35,
-        visiblePages: 10,
-        onPageClick: function (event, page) {
-            console.info(page + ' (from options)');
-        }
-    }).on('page', function (event, page) {
-            console.info(page + ' (from event listening)');
-    });
-    
-    $('#pagingShopReview').twbsPagination({
-        totalPages: 35,
-        visiblePages: 10,
-        onPageClick: function (event, page) {
-            console.info(page + ' (from options)');
-        }
-    }).on('page', function (event, page) {
-            console.info(page + ' (from event listening)');
-    });
-    
-    $('.grid-shop-body .grid-shop-body-content .grid-shop-body-content-list div img').on('click', function (e) {
-        var datainternal = $(this).attr('datainternal-id').split("~");
-        location.href = url+"/product/"+datainternal[0]+'/'+datainternal[1];
-    });
     
     $('#favorite-icon-shop').on( 'click', function( e ){
         var isfavorite = $(this).attr('datainternal-id');
@@ -85,6 +58,35 @@ function initShop(){
         }else{
             favoriteShop();
         }
+	});
+	
+	$('#buttonDiscussShop').on( 'click', function( e ){
+        commentDiscussShop();
+	});
+	
+	$('#buttonReviewShop').on( 'click', function( e ){
+	    if($('#commentReviewShop').val() !== ''){
+	        $('#buttonReviewShop').prop( "disabled", true );
+            commentReviewShop();
+	    }
+	});
+	
+	$('#showMoreDiscussShop').on( 'click', function( e ){
+	    commentFlag.type = 1;
+	    $('.grid-shop-listcomment-more').removeClass('hidden');
+	    $('.grid-shop-head').addClass('hidden');
+	    $('.grid-shop-banner').addClass('hidden');
+	    $('.grid-shop-body').addClass('hidden');
+	    discussShop();
+	});
+	
+	$('#showMoreReviewShop').on( 'click', function( e ){
+	    commentFlag.type = 1;
+	    $('.grid-shop-listcomment-more').removeClass('hidden');
+	    $('.grid-shop-head').addClass('hidden');
+	    $('.grid-shop-banner').addClass('hidden');
+	    $('.grid-shop-body').addClass('hidden');
+	    reviewShop();
 	});
 }
 
@@ -151,6 +153,7 @@ function detail(){
                         
                         $('.home_container .container').html(shop);
                     }
+                    $('.loaderProgress').addClass('hidden');
                 }else{
                     generateToken(detail);
                 }
@@ -185,12 +188,366 @@ function favoriteShop(){
                 }else if(data.message == 'Invalid key'){
                     localStorage.removeItem('emailNgulikin');
                     sessionStorage.setItem("logoutNgulikin", 1);
-                    sessionStorage.removeItem('authNgulikin');
+                    localStorage.removeItem('authNgulikin');
                     location.href = url;
                 }else if(data.message == 'You have saved this item'){
                     notif("error","Anda sudah menyimpan toko ini","left","top");
                 }else{
                     notif("info","Toko ditambah ke daftar favorit","left","top");
+                }
+            }
+        });
+    }
+}
+
+function productShop(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(productShop);
+    }else{
+        var urlCurr = window.location.href,
+            shop_id = urlCurr.substr(urlCurr.lastIndexOf('/') + 1),
+            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
+            key = authData.data !== ''? JSON.parse(authData.data).key : '';
+        
+        $('#pagingShopProduct').removeData("twbs-pagination");
+        $('#pagingShopProduct').unbind("page");
+        
+        $("#productShopSection .grid-shop-body-content-list").empty();
+        
+        $('#loaderShopProduct').removeClass('hidden');
+        
+        if (typeof commentPage.page === 'undefined') {
+            shopProductPage.page = 1;
+        }
+        
+        $.ajax({
+            type: 'GET',
+            url: SHOP_PRODUCT_API+'/'+shop_id,
+            data:{ 
+                    user_id: user_id,
+                    page : shopProductPage.page-1,
+                    pagesize : 8
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.status == "OK"){
+                    var response = data.response;
+                    if(response.length > 0){
+                        var listProduct = '';
+                        $.each( response, function( key, val ) {
+                            listProduct += '<div>';
+                            listProduct += '   <img src="'+val.product_image+'" datainternal-id="'+val.product_id+'" class="productShopImage"/>';
+                            listProduct += '</div>';
+                        });
+                        
+                        $('#loaderShopProduct').addClass('hidden');
+                        $("#productShopSection .grid-shop-body-content-list").html(listProduct);
+                        
+                        $('.productShopImage').on('click', function (e) {
+                            var datainternal = $(this).attr('datainternal-id');
+                            location.href = url+"/product/"+datainternal;
+                        });
+                        
+                        $('#pagingShopProduct').twbsPagination({
+                            totalPages: data.total_page,
+                            visiblePages: 10,
+                            startPage: shopProductPage.page
+                        }).on('page', function (event, page) {
+                            shopProductPage.page = page;
+                            productShop();
+                        });
+                    }
+                }else{
+                    generateToken(productShop);
+                }
+            }
+        });
+    }
+}
+
+function discussShop(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(discussShop);
+    }else{
+        var urlCurr = window.location.href,
+            shop_id = urlCurr.substr(urlCurr.lastIndexOf('/') + 1),
+            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
+            key = authData.data !== ''? JSON.parse(authData.data).key : '';
+            
+        if(commentFlag.type == 1){
+            $('.loaderProgress').removeClass('hidden');
+        }
+        
+        $('#pagingShopMore').removeData("twbs-pagination");
+        $('#pagingShopMore').unbind("page");
+            
+        if (typeof commentPage.page === 'undefined') {
+            commentPage.page = 1;
+        }
+        $.ajax({
+            type: 'GET',
+            url: SHOP_DISCUSS_API+'/'+shop_id,
+            data:{ 
+                    user_id: user_id,
+                    page : commentPage.page-1,
+                    pagesize : 8,
+                    type : commentFlag.type
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.status == "OK"){
+                    var response = data.response;
+                    if(response.length > 0){
+                        var listDiscuss = '';
+                        $.each( response, function( key, val ) {
+                            listDiscuss += '<div class="grid-shop-body-content-listComment-temp">';
+                            listDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
+                            listDiscuss += '        <img src="'+val.user_photo+'" datainternal-id="'+val.user_id+'" class="discussShopPhoto"/>';
+                            listDiscuss += '     </div>';
+                            listDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
+                            listDiscuss += '        <div class="head">';
+                            listDiscuss += '             <span>'+val.fullname+'</span>';
+                            listDiscuss += '             <span>'+val.comment_date+'</span>';
+                            listDiscuss += '             <span>'+val.shop_discuss_comment+'</span>';
+                            listDiscuss += '         </div>';
+                            listDiscuss += '        <div class="body">';
+                            listDiscuss += '             <div class="discussCommentReply">';
+                            listDiscuss += '                <div>';
+                            listDiscuss += '                    <img src="https://scontent.fcgk3-1.fna.fbcdn.net/v/t1.0-1/p100x100/16472974_10208482547443706_4718047265869220728_n.jpg?_nc_eui2=v1%3AAeG-pza6KEQ0FXhmk9PaO35XAV9KvNQSEOZ3HfWgL28nSgZll4z8yMv6guvWkZekVaPEsxlb4sVGe6xhMQgS2yPOYc5sB9HUNMmKRH187NhZZ4IhFGbUdgg0TLbcnkmrxY4&oh=9d9c654cc1cba7477eb3135b24233106&oe=5A444A7E"/>';
+                            listDiscuss += '                </div>';
+                            listDiscuss += '                <div>';
+                            listDiscuss += '                    <span>';
+                            listDiscuss += '                        <span class="title" id="name">Andhika Adhitana Gama</span>';
+                            listDiscuss += '                        <span class="title" id="replySellerShop">Penjual</span>';
+                            listDiscuss += '                    </span>';
+                            listDiscuss += '                    <span>Jumat, 15 September 2017</span>';
+                            listDiscuss += '                    <span>All size gan, masih ready stock banget, bisa langsung di order</span>';
+                            listDiscuss += '                </div>';
+                            listDiscuss += '             </div>';
+                            listDiscuss += '         </div>';
+                            listDiscuss += '     </div>';
+                            listDiscuss += '</div>';
+                        });
+                        
+                        if(commentFlag.type == 0){
+                            $('#loaderShopDiscuss').addClass('hidden');
+                            $("#discussShopSection .grid-shop-body-content-listComment").html(listDiscuss);
+                        }else{
+                            $(".grid-shop-listcomment-more .grid-shop-body-content-listComment").html(listDiscuss);
+                            
+                            $('#pagingShopMore').twbsPagination({
+                                totalPages: data.total,
+                                visiblePages: 10,
+                                startPage: commentPage.page
+                            }).on('page', function (event, page) {
+                                commentPage.page = page;
+                                reviewShop();
+                            });
+                            
+                            $('.loaderProgress').addClass('hidden');
+                        }
+                        
+                        
+                        $('.discussShopPhoto').on('click', function (e) {
+                            var datainternal = $(this).attr('datainternal-id');
+                            location.href = url+"/product/"+datainternal;
+                        });
+                    }
+                }else{
+                    generateToken(discussShop);
+                }
+            }
+        });
+    }
+}
+
+function commentDiscussShop(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(commentDiscussShop);
+    }else{
+        var url = window.location.href,
+            shop_id = url.substr(url.lastIndexOf('/') + 1),
+            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
+            key = authData.data !== ''? JSON.parse(authData.data).key : '',
+            comment = $('#commentDiscussShop').val();
+        $.ajax({
+            type: 'POST',
+            url: SHOP_DISCUSS_COMMENT_API+'/'+shop_id,
+            data:JSON.stringify({ 
+                    user_id: user_id,
+                    comment: comment,
+                    key : key
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                        generateToken(commentDiscussShop);
+                }else if(data.message == 'Invalid key'){
+                    localStorage.removeItem('emailNgulikin');
+                    sessionStorage.setItem("logoutNgulikin", 1);
+                    sessionStorage.removeItem('authNgulikin');
+                    location.href = url;
+                }else{
+                    var elemDiscuss = '<div class="grid-shop-body-content-listComment-temp">';
+                        elemDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
+                        elemDiscuss += '        <img src="'+data.result.user_photo+'" datainternal-id="'+data.result.user_id+'" class="reviewShopPhoto"/>';
+                        elemDiscuss += '     </div>';
+                        elemDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
+                        elemDiscuss += '        <div class="head">';
+                        elemDiscuss += '            <span>'+data.result.fullname+'</span>';
+                        elemDiscuss += '             <span>'+data.result.comment_date+'</span>';
+                        elemDiscuss += '             <span>'+data.result.shop_comment+'</span>';
+                        elemDiscuss += '         </div>';
+                        elemDiscuss += '     </div>';
+                        elemDiscuss += '</div>';
+                        
+                    $("#discussShopSection .grid-shop-body-content-listComment").append(elemDiscuss);
+                }
+            }
+        });
+    }
+}
+
+function reviewShop(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(reviewShop);
+    }else{
+        var urlCurr = window.location.href,
+            shop_id = urlCurr.substr(urlCurr.lastIndexOf('/') + 1),
+            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
+            key = authData.data !== ''? JSON.parse(authData.data).key : '';
+        
+        if(commentFlag.type == 1){
+            $('.loaderProgress').removeClass('hidden');
+        }
+        
+        $('#pagingShopMore').removeData("twbs-pagination");
+        $('#pagingShopMore').unbind("page");
+        
+        if (typeof commentPage.page === 'undefined') {
+            commentPage.page = 1;
+        }
+        $.ajax({
+            type: 'GET',
+            url: SHOP_REVIEW_API+'/'+shop_id,
+            data:{ 
+                    user_id: user_id,
+                    page : commentPage.page-1,
+                    pagesize : 8,
+                    type : commentFlag.type
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.status == "OK"){
+                    var response = data.response;
+                    if(response.length > 0){
+                        var listReview = '';
+                        $.each( response, function( key, val ) {
+                            listReview += '<div class="grid-shop-body-content-listComment-temp">';
+                            listReview += '     <div class="grid-shop-body-content-listComment-content">';
+                            listReview += '        <img src="'+val.user_photo+'" datainternal-id="'+val.user_id+'" class="reviewShopPhoto"/>';
+                            listReview += '     </div>';
+                            listReview += '     <div class="grid-shop-body-content-listComment-content">';
+                            listReview += '        <div class="head">';
+                            listReview += '            <span>'+val.fullname+'</span>';
+                            listReview += '             <span>'+val.comment_date+'</span>';
+                            listReview += '             <span>'+val.shop_review_comment+'</span>';
+                            listReview += '         </div>';
+                            listReview += '     </div>';
+                            listReview += '</div>';
+                        });
+                        
+                        if(commentFlag.type == 0){
+                            $('#loaderShopReview').addClass('hidden');
+                            $("#reviewShopSection .grid-shop-body-content-listComment").html(listReview);
+                        }else{
+                            $(".grid-shop-listcomment-more .grid-shop-body-content-listComment").html(listReview);
+                            
+                            $('#pagingShopMore').twbsPagination({
+                                totalPages: data.total,
+                                visiblePages: 10,
+                                startPage: commentPage.page
+                            }).on('page', function (event, page) {
+                                commentPage.page = page;
+                                reviewShop();
+                            });
+                            
+                            $('.loaderProgress').addClass('hidden');
+                        }
+                        
+                        $('.reviewShopPhoto').on('click', function (e) {
+                            var datainternal = $(this).attr('datainternal-id');
+                            location.href = url+"/product/"+datainternal;
+                        });
+                    }
+                }else{
+                    generateToken(reviewShop);
+                }
+            }
+        });
+    }
+}
+
+function commentReviewShop(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(commentReviewShop);
+    }else{
+        var url = window.location.href,
+            shop_id = url.substr(url.lastIndexOf('/') + 1),
+            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
+            key = authData.data !== ''? JSON.parse(authData.data).key : '',
+            comment = $('#commentReviewShop').val();
+        
+        $.ajax({
+            type: 'POST',
+            url: SHOP_REVIEW_COMMENT_API+'/'+shop_id,
+            data:JSON.stringify({ 
+                    user_id: user_id,
+                    comment: comment,
+                    key : key
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                        generateToken(commentReviewShop);
+                }else if(data.message == 'Invalid key'){
+                    localStorage.removeItem('emailNgulikin');
+                    sessionStorage.setItem("logoutNgulikin", 1);
+                    sessionStorage.removeItem('authNgulikin');
+                    location.href = url;
+                }else{
+                    var elemReview = '<div class="grid-shop-body-content-listComment-temp">';
+                        elemReview += '     <div class="grid-shop-body-content-listComment-content">';
+                        elemReview += '        <img src="'+data.result.user_photo+'" datainternal-id="'+data.result.user_id+'" class="reviewShopPhoto"/>';
+                        elemReview += '     </div>';
+                        elemReview += '     <div class="grid-shop-body-content-listComment-content">';
+                        elemReview += '        <div class="head">';
+                        elemReview += '            <span>'+data.result.fullname+'</span>';
+                        elemReview += '             <span>'+data.result.comment_date+'</span>';
+                        elemReview += '             <span>'+data.result.shop_comment+'</span>';
+                        elemReview += '         </div>';
+                        elemReview += '     </div>';
+                        elemReview += '</div>';
+                        
+                    $("#reviewShopSection .grid-shop-body-content-listComment").append(elemReview);
+                    
+                    $('#buttonReviewShop').prop( "disabled", false );
+                    $('#commentReviewShop').val('')
                 }
             }
         });

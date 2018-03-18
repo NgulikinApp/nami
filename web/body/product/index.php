@@ -7,6 +7,9 @@
 		<?php include $_SERVER['DOCUMENT_ROOT'].'/web/library_detail.php';?>
     </head>
     <body>
+        <div class="loaderProgress">
+            <img src="../img/loader.gif" />
+        </div>
 		<?php 
 		    include $_SERVER['DOCUMENT_ROOT'].'/web/nav/mainMenu.php';
 		    include 'section_body.php';

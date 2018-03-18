@@ -1,0 +1,123 @@
+.milestones{
+	position:relative;
+}
+.progress-bar {
+	background-color: #3FC3FF;
+}
+.forward{
+	background-color: #3FC3FF;
+}
+.past{
+	background-color: #3FC3FF;
+}
+.tick {
+	position:absolute;
+	top:-6px;
+	display:inline-block;
+	height:20px;
+	width:20px;
+	border:1px solid #D3D3D3;
+	border-radius: 25px;
+}
+.progress{
+	height:10px;
+}
+.first{
+	left:-5px;
+}
+.last{
+	right:-5px;
+}
+.tick-label {
+	display:inline-block;
+	position:absolute;
+	top:30px;
+	font-family: 'proxima_nova_altbold';
+    color: #414141;
+}
+.progress-bar{
+	height: 50%;
+}
+.tick .fa {
+	font-size: 10px;
+    margin-left: 3px;
+	margin-top: 2px;
+    vertical-align: text-top;
+}
+.checkmark{
+	background-image: -webkit-linear-gradient(top, #EEBC11 0%, #E67300 100%);
+	background-image: -o-linear-gradient(top, #EEBC11 0%, #E67300 100%);
+	background-image: linear-gradient(to bottom, #EEBC11 0%, #E67300 100%);
+	color:transparent;
+	-webkit-background-clip: text;
+	-clip: text;
+}
+.checks{
+	color:#FFF;
+}
+.alt-label span{
+	text-transform:uppercase;
+	color:black;
+}
+.alt-label{
+	display:none;
+	margin-top:65px;
+	text-align:center;
+	color:#006FA4;
+}
+@media (max-width: 765px){
+	.alt-label{
+		display:block;
+	}
+	.labels label span{
+		display:none;
+	}
+	.labels label:first-child:before {
+		content: "S";
+		position:relative;
+		left:5px;
+		font-size:18px;
+		color: #00A800;
+		font-weight: bold;
+	}
+	.labels label:nth-child(2):before {
+		content: "2";
+		position:relative;
+		left:10px;
+		font-size:18px;
+		color: #00A800;
+		font-weight: bold;
+	}
+	.labels label:nth-child(3):before {
+		content: "3";
+		position:relative;
+		left:10px;
+		font-size:18px;
+		color: #00A800;
+		font-weight: bold;
+	}
+	.labels label:nth-child(4):before {
+		content: "4";
+		position:relative;
+		left:10px;
+		font-size:18px;
+		color: #00A800;
+		font-weight: bold;
+	}
+	.labels label:nth-child(5):before {
+		content: "5";
+		position:relative;
+		left:10px;
+		font-size:18px;
+		color: #00A800;
+		font-weight: bold;
+	}
+	.labels label:last-child:before {
+		content: "F";
+		position:relative;
+		left:-5px;
+		font-size:18px;
+		color: #00A800;
+		font-weight: bold;
+	}
+}

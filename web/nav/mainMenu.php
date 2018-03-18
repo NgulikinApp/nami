@@ -6,9 +6,9 @@
                 <ul class="menu-category-clearfix">
                     <li class="current-item">
                         Category
-                        <a><div class="arrow"></div></a>
-                        <ul class="menu-category-sub-menu">
-                        </ul>
+                        <a>
+                            <div class="arrow"></div>
+                        </a>
                     </li>
                 </ul>
             </nav>
@@ -18,10 +18,11 @@
             <div id="search-header"></div>
         </div>
         <div class="rightHeader">
-            <div class="iconHeader tooltip" id="iconCartHeader">
+            <div class="iconHeader tooltip" id="iconCartHeader" data-toggle="popover" data-trigger="click" data-content="1">
                 <span class="tooltiptext tooltip-bottom">Keranjang Belanja</span>
+                <span class="sumManinMenuCart">0</span>
             </div>
-            <div class="iconHeader tooltip" id="iconNotifHeader">
+            <div class="iconHeader tooltip" id="iconNotifHeader" data-toggle="popover" data-trigger="click" data-content="1">
                 <span class="tooltiptext tooltip-bottom">Notifikasi</span>
             </div>
             <div class="iconHeader tooltip" id="iconFavoritHeader">
@@ -29,7 +30,14 @@
             </div>
             <div class="textHeader">
                 <div id="menuLogin">Login</div>
-                <div id="iconProfile" style="background-image:url('https://trello-avatars.s3.amazonaws.com/718fe86f8d8913e5cdb680ab654c1d14/170.png')"></div>
+                <div id="iconShopTemp" data-toggle="popover" data-trigger="click" data-content="1">
+                    <div id="iconShop"></div>
+                    <span class="tooltiptext tooltip-bottom">Toko</span>
+                </div>
+                <div id="iconProfileTemp" data-toggle="popover" data-trigger="click" data-content="1">
+                    <div id="iconProfile"></div>
+                    <span class="tooltiptext tooltip-bottom">Profil</span>
+                </div>
             </div>
             <!--<div class="iconBurger">
                 <div class="bar"></div>
@@ -38,5 +46,6 @@
             </div>-->
         </div>
     </header>
+    <div class="menu-category-sub-menu"></div>
 </div>
 <div class="cover-popup"></div>

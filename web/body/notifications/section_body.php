@@ -53,39 +53,11 @@
 	            </div>
 	        </div>
 	        <div class="bodyNotif-list">
-	            <ul>
-	                <li>
-	                    <div class="bodyNotif-list-left">
-	                        <div class="title">admin</div>
-	                        <div class="content">Pembayaran ditunggu untuk pembelian Olive Wood Chair</div>
-	                        <div class="date"><img src="/img/button_notif.png" width="10" height="10"/>10 Oktober 2017 12:00</div>
-	                    </div>
-	                    <div class="bodyNotif-list-right">
-	                        <img src="https://id-live-03.slatic.net/p/7/raja-clothing-jaket-parasut-simpel-logo-darkblue-1480440568-5188682-e06b304751ab35e2618eb83d00644b7c-catalog_233.jpg" width="100" height="100" datainternal-id="kuliner~87676786668"/>
-	                    </div>
-	                </li>
-	                <li>
-	                    <div class="bodyNotif-list-left">
-	                        <div class="title">admin</div>
-	                        <div class="content">Pembayaran ditunggu untuk pembelian Olive Wood Chair</div>
-	                        <div class="date"><img src="/img/button_notif.png" width="10" height="10"/>10 Oktober 2017 12:00</div>
-	                    </div>
-	                    <div class="bodyNotif-list-right">
-	                        <img src="https://id-live-03.slatic.net/p/7/raja-clothing-jaket-parasut-simpel-logo-darkblue-1480440568-5188682-e06b304751ab35e2618eb83d00644b7c-catalog_233.jpg" width="100" height="100" datainternal-id="kuliner~87676786668"/>
-	                    </div>
-	                </li>
-	                <li>
-	                    <div class="bodyNotif-list-left">
-	                        <div class="title">admin</div>
-	                        <div class="content">Pembayaran ditunggu untuk pembelian Olive Wood Chair</div>
-	                        <div class="date"><img src="/img/button_notif.png" width="10" height="10"/>10 Oktober 2017 12:00</div>
-	                    </div>
-	                    <div class="bodyNotif-list-right">
-	                        
-	                        <img src="https://id-live-03.slatic.net/p/7/raja-clothing-jaket-parasut-simpel-logo-darkblue-1480440568-5188682-e06b304751ab35e2618eb83d00644b7c-catalog_233.jpg" width="100" height="100" datainternal-id="kuliner~87676786668"/>
-	                    </div>
-	                </li>
-	            </ul>
+	            <img src="img/loader.gif" class="loaderImg" id="loaderNotif"/>
+	            <div class="no-notif" id="no-notifList">
+	                <img src="/img/no-notif.png" width="220" height="180"/>
+	                <span>Tidak ada notifikasi</span>
+	            </div>
 	        </div>
 	    </div>
 	</section>
