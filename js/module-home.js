@@ -4,16 +4,14 @@ function initHome(){
     var url = 'http://init.ngulikin.com',
         logoutsession = sessionStorage.getItem('logoutNgulikin'),
         paymentfailedsession = sessionStorage.getItem('paymentFailedNgulikin'),
-        loginsession = sessionStorage.getItem('loginNgulikin'),
-        emailsession = localStorage.getItem('emailNgulikin'),
-        authsession = localStorage.getItem('authNgulikin');
+        loginsession = sessionStorage.getItem('loginNgulikin');
     
-    if(loginsession !== null && emailsession !== null){
-        var greeting = '<div class="greeting">';
+    if(loginsession !== null){
+        var greeting = '<div class="layerPopup">';
             greeting += '   <div class="greetingContainer">';
             greeting += '       <div class="top">';
             greeting += '           <div class="icon"></div>';
-            greeting += '           <div class="title">Hallo, '+emailsession+'</div>';
+            greeting += '           <div class="title">Hallo, <font></font></div>';
             greeting += '           <div class="desc">Ayo segera isi keranjang dengan barang kesukaanmu sekarang juga</div>';
             greeting += '       </div>';
             greeting += '       <div class="bottom">';
@@ -24,11 +22,14 @@ function initHome(){
                 
         $("body").append(greeting);
         
+        var fullname_popup = $('.fullname_popup').val();
+        $('.title font').html(fullname_popup);
+        
         $('.greetingContainer .bottom input').on( 'click', function( e ){
     	    location.href = url+"/cart";
     	});
     	
-    	setTimeout(function(){ $(".greeting").fadeOut(); }, 3000);
+    	setTimeout(function(){ $(".layerPopup").fadeOut(); }, 3000);
         
         sessionStorage.removeItem('loginNgulikin');
     }
@@ -88,9 +89,7 @@ function shop(){
                     var listshop = '';
                     $.each( data.result, function( key, val ) {
                         listshop += '<div class="grid-list-cont4-item" title="'+val.shop_name+'">';
-                        listshop += '   <center>';
-                        listshop += '       <img src="'+val.shop_icon+'" width="160" height="60">';
-                        listshop += '   </center>';
+                        listshop += '   <img src="'+val.shop_icon+'" width="170"/>';
                         listshop += '   <input type="hidden" class="shopTitle" value="'+val.shop_id+'"/>';
                         listshop += '</div>';
                         
@@ -160,13 +159,11 @@ function bestseller(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(bestseller);
     }else{
-        var user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '';
         $.ajax({
             type: 'GET',
             url: PRODUCT_FEED_API,
             data: { 
-                    filter: "bestseller",
-                    user_id : user_id
+                filter: "bestseller"
             },
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -228,13 +225,11 @@ function promo(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(promo);
     }else{
-        var user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '';
         $.ajax({
             type: 'GET',
             url: PRODUCT_FEED_API,
             data: { 
-                    filter: "promo",
-                    user_id : user_id
+                    filter: "promo"
             },
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -294,16 +289,12 @@ function favoriteProduct(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(favoriteProduct);
     }else{
-        var product_id = favoriteData.product_id,
-            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
-            key = authData.data !== ''? JSON.parse(authData.data).key : '';
+        var product_id = favoriteData.product_id;
         $.ajax({
             type: 'POST',
             url: PRODUCT_FAVORITE_API,
             data:JSON.stringify({ 
-                    product_id: product_id,
-                    user_id: user_id,
-                    key : key
+                    product_id: product_id
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -312,13 +303,8 @@ function favoriteProduct(){
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
                         generateToken(favoriteProduct);
-                }else if(data.message == 'Invalid key'){
-                    localStorage.removeItem('emailNgulikin');
-                    sessionStorage.setItem("logoutNgulikin", 1);
-                    sessionStorage.removeItem('authNgulikin');
-                    location.href = url;
                 }else if(data.message == 'You have saved this item'){
-                    notif("error","Anda sudah menyimpan produk ini","top");
+                    notif("error","Anda sudah menyimpan produk ini","center","center");
                 }else{
                     $('.tabelList #like').html(data.result.product_count_favorite);
                     notif("info","Product ditambah ke daftar favorit","right","top");

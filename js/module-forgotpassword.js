@@ -1,10 +1,4 @@
 function initForgotPassword(){
-    if(authData.data !== ''){
-        sessionStorage.setItem('loginNgulikin',1);
-        localStorage.setItem('emailNgulikin', JSON.parse(authData.data).username);
-        location.href = url;
-    }
-    
     $('#backLogin').on('click', function (e) {
         location.href = url+"/signin";
     });

@@ -12,10 +12,10 @@
 	                <div id="brand-shop-seller">Brand Toko</div>
 	            </a>
 	            <a>
-	                <div id="note-shop-seller">Catatan Penjual</div>
+	                <div id="account-shop-seller">Rekening Bank</div>
 	            </a>
 	            <a>
-	                <div id="account-shop-seller">Rekening Bank</div>
+	                <div id="delivery-shop-seller">Jasa Pengiriman</div>
 	            </a>
 	        </nav>
 	    </div>
@@ -26,11 +26,11 @@
 	        <div id="brand-shop-seller-content" class="grid-shop-seller-content hidden">
 	            <?php include 'section_brand.php';?>
 	        </div>
-	        <div id="note-shop-seller-content" class="grid-shop-seller-content hidden">
-	            <?php include 'section_note.php';?>
-	        </div>
 	        <div id="account-shop-seller-content" class="grid-shop-seller-content hidden">
 	            <?php include 'section_account.php';?>
+	        </div>
+	        <div id="delivery-shop-seller-content" class="grid-shop-seller-content hidden">
+	            <?php include 'section_delivery.php';?>
 	        </div>
 	    </div>
 	</section>

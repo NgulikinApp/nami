@@ -47,11 +47,15 @@
         			<span>*Wajib diisi sesuai KTP</span>
         	    </div>
         		<div class="signupBodySubSex">
-        			<span id="sextextSignUp">Jenis Kelamin</span>
-        			<select id="sexSignup">
-        			    <option value="male">Laki-laki</option>
-        			    <option value="female">Wanita</option>
-        			</select>
+        		    <div>
+        		       <span id="sextextSignUp">Jenis Kelamin</span> 
+        		    </div>
+        			<div class="select">
+        			    <select id="sexSignup">
+            			    <option value="male">Laki-laki</option>
+            			    <option value="female">Wanita</option>
+            			</select>
+        			</div>
         		</div>
         	</div>
         	<div class="signupBodySub signupButton">

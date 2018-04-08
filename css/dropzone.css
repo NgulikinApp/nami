@@ -1,0 +1,41 @@
+
+.file_input { display: none !important; }
+
+.drop-zone {
+  cursor: pointer;
+  user-select: none;
+  color: #555;
+  font-size: 18px;
+  width: 400px;
+  padding: 50px 0;
+  margin: auto;
+  border: 2px dashed #0087F7;
+  border-radius: 5px;
+  background: white;
+  text-align:center;
+}
+
+.drop-zone.hover {
+  background: #ddd;
+  border-color: #aaa;
+}
+
+.drop-zone.error {
+  background: #faa;
+  border-color: #f00;
+}
+
+.drop-zone.drop > .title { display: none; }
+
+.preview-container canvas { width: 150px; }
+
+.file-uploader-progress-bar { margin: 0 20px; }
+
+.file-uploader-progress-bar > * {
+  background-color: #71a5f3;
+  width: 0;
+  height: 5px;
+  border-radius: 5px;
+}
+
+.wrapper.uploading .progress { background-color: #8c8c8c; }

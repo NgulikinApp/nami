@@ -2,23 +2,7 @@
     Profile Toko
 </div>
 <div class="profile">
-    <div class="profile-seller-grid1">
-        <div class="grid-shop-head">
-            <div class="grid-shop-head-left">
-                <div>
-                    <img src="/img/icontext.png">
-                </div>
-                <div>
-                    <span>Massom Store</span>
-                    <span>Menjual pakaian india dan aksesoris lainnya</span>
-                </div>
-            </div>
-            <div class="grid-shop-head-right">
-                <input type="button" value="Ganti"/>
-            </div>
-        </div>
-        <div class="grid-shop-banner"></div>
-    </div>
+    <div class="profile-seller-grid1"></div>
 </div>
 <div class="title">
     Catatan Penjual

@@ -1,14 +1,7 @@
 var authSigin = new Object();
 
 function initSignin(){
-    var signinSessionEmail = sessionStorage.getItem('signinEmailNgulikin'),
-        emailsession = sessionStorage.getItem('emailNgulikin');
-    
-    if(authData.data !== ''){
-        sessionStorage.setItem('loginNgulikin',1);
-        localStorage.setItem('emailNgulikin', JSON.parse(authData.data).username);
-        location.href = url;
-    }
+    var signinSessionEmail = sessionStorage.getItem('signinEmailNgulikin');
         
 	if(signinSessionEmail !== null){
 	    $('#emailSignin').val(signinSessionEmail);
@@ -86,8 +79,6 @@ function ajax_auth(){
 	                    $('.error_message').addClass('show').html('Akun belum aktif, cek email anda.');
                     }else{
                         sessionStorage.setItem('loginNgulikin',1);
-                        localStorage.setItem('emailNgulikin', result.result.username);
-                        localStorage.setItem('authNgulikin', JSON.stringify(result.result));
                         location.href = url;
                     }
                 }
@@ -130,8 +121,6 @@ function ajax_auth_socmed(){
 	                    $('.error_message').addClass('show').html('Username atau password salah');
                     }else{
                         sessionStorage.setItem('loginNgulikin',1);
-                        localStorage.setItem('emailNgulikin', result.result.username);
-                        localStorage.setItem('authNgulikin', JSON.stringify(result.result));
                         location.href = url;
                     }
             }

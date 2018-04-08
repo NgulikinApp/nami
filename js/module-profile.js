@@ -1,10 +1,5 @@
 function initProfile(){
-    var authsession = localStorage.getItem('authNgulikin');
-    
     $( "#accordionMyprofile" ).accordion();
-    if(authsession === null){
-        location.href = url;
-    }
     
     profile();
     
@@ -53,11 +48,10 @@ function profile(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(profile);
     }else{
-        var user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '';
         
         $.ajax({
             type: 'GET',
-            url: PROFILE_API+'/'+user_id,
+            url: PROFILE_API,
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
                 xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
@@ -104,20 +98,17 @@ function updateProfile(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(updateProfile);
     }else{
-        var user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
-            username = authData.data !== ''? JSON.parse(authData.data).username : '';
+        
         $('.loaderProgress').removeClass('hidden');
         $.ajax({
             type: 'POST',
             url: PROFILE_UPDATE_API,
             data:JSON.stringify({ 
-                    user_id: user_id,
                     fullname : $('#fullnamePrivate').val(),
                     dob : $('#dobPrivate').val(),
                     gender : $('input[name=sexPrivate]:checked').val(),
                     phone : $('#phonePrivate').val(),
-                    user_photo : $('#previewImagePrivate').attr('src'),
-                    username : username
+                    user_photo : $('#previewImagePrivate').attr('src')
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -131,9 +122,13 @@ function updateProfile(){
                     sessionStorage.setItem("logoutNgulikin", 1);
                     localStorage.removeItem('authNgulikin');
                     location.href = url;
+                    localStorage.getItem('authNgulikin')
                 }else{
                     $('.loaderProgress').addClass('hidden');
+                    $('#iconProfile').css('background-image','url('+data.result.user_photo+')');
                     notif("success","Data anda sudah diperbarui","center","top");
+                    
+                    localStorage.setItem('authNgulikin', JSON.stringify(data.result));
                 }
             } 
         });

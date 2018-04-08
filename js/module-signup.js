@@ -2,12 +2,6 @@ function initSignup(){
     var signinSessionEmail = sessionStorage.getItem('signinEmailNgulikin'),
         signinSessionSocmed = sessionStorage.getItem('signinSocmedNgulikin'),
         signinSessionIdSocmed = sessionStorage.getItem('signinIdSocmedNgulikin');
-    
-    if(authData.data !== ''){
-        sessionStorage.setItem('loginNgulikin',1);
-        localStorage.setItem('emailNgulikin', JSON.parse(authData.data).username);
-        location.href = url;
-    }
         
 	if(signinSessionEmail !== null){
 		$('#emailSignUp').val(signinSessionEmail).attr('disabled','disabled').css("background-color","rgba(153,153,153,0.75)");
@@ -149,8 +143,6 @@ function buttonSignup(){
                             $('#signup_message').html('Register berhasil, cek email untuk aktifasi akun anda');
                         }else{
                             sessionStorage.setItem('loginNgulikin',1);
-                            localStorage.setItem('emailNgulikin', result.data.username);
-                            localStorage.setItem('authNgulikin', JSON.stringify(result.data));
                             location.href = url;
                         }
                     }

@@ -187,6 +187,16 @@ function searchItem(){
                             searchPage.page = page;
                             searchItem();
                         });
+                        
+                        $('.result-content-list-data').on('click', function (e) {
+                            if(search.type == 'shop'){
+                                var shopId = $(this).attr('datainternal-id');
+                                location.href = url+"/shop/"+shopId;
+                            }else{
+                                var productId = $(this).attr('datainternal-id');
+                                location.href = url+"/product/"+productId;
+                            }
+                        });
                     }else{
                         searchPage.page = 1;
                         $('.result-content #searchNotFound').addClass('active');

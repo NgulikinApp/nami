@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    include 'web/system/minify.php';
+?>
 <!DOCTYPE html>
 <html class="qp-ui">
     <head>
@@ -14,7 +18,7 @@
 		      include 'web/body/general/init_questioner.php';
 		?>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
-		<script src="js/custom-file-input.js?jsr=<?php echo $jsversionstring; ?>"></script>
+		<script src="js/library/custom-file-input.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>
 </html>

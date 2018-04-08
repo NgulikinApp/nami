@@ -3,9 +3,6 @@ var commentFlag = new Object(),
     shopProductPage = new Object();
 
 function initShop(){
-    var emailsession = localStorage.getItem('emailNgulikin'),
-        user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '';
-    
     commentFlag.type = 0;
     detail();
     productShop();
@@ -51,9 +48,7 @@ function initShop(){
     
     $('#favorite-icon-shop').on( 'click', function( e ){
         var isfavorite = $(this).attr('datainternal-id');
-        if(user_id === ''){
-            notif("error","Harap login terlebih dahulu","left","top");
-        }else if(parseInt(isfavorite) == 1){
+        if(parseInt(isfavorite) == 1){
             notif("error","Anda sudah menyimpan toko ini","top");
         }else{
             favoriteShop();
@@ -95,13 +90,11 @@ function detail(){
         generateToken(detail);
     }else{
         var url = window.location.href,
-            shop_id = url.substr(url.lastIndexOf('/') + 1),
-            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '';
+            shop_id = url.substr(url.lastIndexOf('/') + 1);
         
         $.ajax({
             type: 'GET',
             url: SHOP_API+'/'+shop_id,
-            data:{user_id:user_id},
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
                 xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
@@ -126,7 +119,7 @@ function detail(){
                             
                             $('.home_container .container .grid-shop-head').html(shop);
                             
-                            document.title = (data.result.shop_name).toUpperCase() + '| Ngulikin';
+                            document.title = data.result.shop_name + ' | Ngulikin';
                             
                             if(data.result.university === ''){
                                 $('.grid-shop-head-right div:last-child').css('border-right','none');
@@ -167,16 +160,12 @@ function favoriteShop(){
         generateToken(favoriteShop);
     }else{
         var url = window.location.href,
-            shop_id = url.substr(url.lastIndexOf('/') + 1),
-            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
-            key = authData.data !== ''? JSON.parse(authData.data).key : '';
+            shop_id = url.substr(url.lastIndexOf('/') + 1);
         $.ajax({
             type: 'POST',
             url: SHOP_FAVORITE_API,
             data:JSON.stringify({ 
-                    shop_id: shop_id,
-                    user_id: user_id,
-                    key : key
+                    shop_id: shop_id
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -185,11 +174,6 @@ function favoriteShop(){
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
                         generateToken(favoriteShop);
-                }else if(data.message == 'Invalid key'){
-                    localStorage.removeItem('emailNgulikin');
-                    sessionStorage.setItem("logoutNgulikin", 1);
-                    localStorage.removeItem('authNgulikin');
-                    location.href = url;
                 }else if(data.message == 'You have saved this item'){
                     notif("error","Anda sudah menyimpan toko ini","left","top");
                 }else{
@@ -205,9 +189,7 @@ function productShop(){
         generateToken(productShop);
     }else{
         var urlCurr = window.location.href,
-            shop_id = urlCurr.substr(urlCurr.lastIndexOf('/') + 1),
-            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
-            key = authData.data !== ''? JSON.parse(authData.data).key : '';
+            shop_id = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
         
         $('#pagingShopProduct').removeData("twbs-pagination");
         $('#pagingShopProduct').unbind("page");
@@ -216,7 +198,7 @@ function productShop(){
         
         $('#loaderShopProduct').removeClass('hidden');
         
-        if (typeof commentPage.page === 'undefined') {
+        if (typeof shopProductPage.page === 'undefined') {
             shopProductPage.page = 1;
         }
         
@@ -224,7 +206,6 @@ function productShop(){
             type: 'GET',
             url: SHOP_PRODUCT_API+'/'+shop_id,
             data:{ 
-                    user_id: user_id,
                     page : shopProductPage.page-1,
                     pagesize : 8
             },
@@ -273,9 +254,7 @@ function discussShop(){
         generateToken(discussShop);
     }else{
         var urlCurr = window.location.href,
-            shop_id = urlCurr.substr(urlCurr.lastIndexOf('/') + 1),
-            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
-            key = authData.data !== ''? JSON.parse(authData.data).key : '';
+            shop_id = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
             
         if(commentFlag.type == 1){
             $('.loaderProgress').removeClass('hidden');
@@ -291,7 +270,6 @@ function discussShop(){
             type: 'GET',
             url: SHOP_DISCUSS_API+'/'+shop_id,
             data:{ 
-                    user_id: user_id,
                     page : commentPage.page-1,
                     pagesize : 8,
                     type : commentFlag.type
@@ -373,16 +351,13 @@ function commentDiscussShop(){
     }else{
         var url = window.location.href,
             shop_id = url.substr(url.lastIndexOf('/') + 1),
-            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
-            key = authData.data !== ''? JSON.parse(authData.data).key : '',
             comment = $('#commentDiscussShop').val();
+            
         $.ajax({
             type: 'POST',
             url: SHOP_DISCUSS_COMMENT_API+'/'+shop_id,
             data:JSON.stringify({ 
-                    user_id: user_id,
-                    comment: comment,
-                    key : key
+                    comment: comment
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -391,11 +366,6 @@ function commentDiscussShop(){
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
                         generateToken(commentDiscussShop);
-                }else if(data.message == 'Invalid key'){
-                    localStorage.removeItem('emailNgulikin');
-                    sessionStorage.setItem("logoutNgulikin", 1);
-                    sessionStorage.removeItem('authNgulikin');
-                    location.href = url;
                 }else{
                     var elemDiscuss = '<div class="grid-shop-body-content-listComment-temp">';
                         elemDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
@@ -422,9 +392,7 @@ function reviewShop(){
         generateToken(reviewShop);
     }else{
         var urlCurr = window.location.href,
-            shop_id = urlCurr.substr(urlCurr.lastIndexOf('/') + 1),
-            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
-            key = authData.data !== ''? JSON.parse(authData.data).key : '';
+            shop_id = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
         
         if(commentFlag.type == 1){
             $('.loaderProgress').removeClass('hidden');
@@ -440,7 +408,6 @@ function reviewShop(){
             type: 'GET',
             url: SHOP_REVIEW_API+'/'+shop_id,
             data:{ 
-                    user_id: user_id,
                     page : commentPage.page-1,
                     pagesize : 8,
                     type : commentFlag.type
@@ -506,17 +473,13 @@ function commentReviewShop(){
     }else{
         var url = window.location.href,
             shop_id = url.substr(url.lastIndexOf('/') + 1),
-            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
-            key = authData.data !== ''? JSON.parse(authData.data).key : '',
             comment = $('#commentReviewShop').val();
         
         $.ajax({
             type: 'POST',
             url: SHOP_REVIEW_COMMENT_API+'/'+shop_id,
             data:JSON.stringify({ 
-                    user_id: user_id,
-                    comment: comment,
-                    key : key
+                    comment: comment
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -525,11 +488,6 @@ function commentReviewShop(){
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
                         generateToken(commentReviewShop);
-                }else if(data.message == 'Invalid key'){
-                    localStorage.removeItem('emailNgulikin');
-                    sessionStorage.setItem("logoutNgulikin", 1);
-                    sessionStorage.removeItem('authNgulikin');
-                    location.href = url;
                 }else{
                     var elemReview = '<div class="grid-shop-body-content-listComment-temp">';
                         elemReview += '     <div class="grid-shop-body-content-listComment-content">';

@@ -1,8 +1,4 @@
 function initNotifications(){
-    var authsession = localStorage.getItem('authNgulikin');
-    if(authsession === null){
-        location.href = url;
-    }
     notification();
 	$('.notif-filter-sub-menu li').on('click', function (e) {
 	    $(this).children().prop( "checked", true );
@@ -28,7 +24,7 @@ function notification(){
         $('.loaderImg').removeClass('hidden');
         $.ajax({
             type: 'GET',
-            url: NOTIFICATION_API+'/'+user_id,
+            url: NOTIFICATION_API,
             data:{keyword:keyword},
             dataType: 'json',
             beforeSend: function(xhr, settings) { 

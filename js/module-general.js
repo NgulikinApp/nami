@@ -2,12 +2,9 @@ var url = 'http://init.ngulikin.com',
     authData = new Object();
 
 function initGeneral(){
-    var emailsession = localStorage.getItem('emailNgulikin'),
-        authsession = localStorage.getItem('authNgulikin'),
-        key = '',
-        categoryFlag = false;
-        
-    authsession !== null ? authData.data = authsession : authData.data = '';  
+    var categoryFlag = false,
+        fullname_popup = $('.fullname_popup').val(),
+        user_photo_popup = $('.user_photo_popup').val();
     
     $('.leftHeader,#backHomeSignup,#backHomeSignin').on( 'click', function( e ){
 	    location.href = url;
@@ -20,29 +17,16 @@ function initGeneral(){
 	    });
 	}
 	
-	if(emailsession !== null){
-        $('#menuLogin').hide();
-    	$('#iconProfileTemp').css('display','inline-block');
-    	$('#iconShopTemp').css('display','inline-block');
-    	$('#iconNotifHeader').show();
-    	$('.footer-body-mid2 ul li:last-child').hide();
-    	key = JSON.parse(authsession).key;
-    	
-    	var fullname = JSON.parse(authsession).fullname;
-    	
-    	var user_photo = JSON.parse(authData.data).user_photo;
-    	$('#iconProfile').css('background-image','url("'+user_photo+'")');
+	if(fullname_popup !== ''){
+    	$('#iconProfile').css('background-image','url("'+user_photo_popup+'")');
     	
     	var templatePopUpShop = '<div class="popover popover-bubble" role="tooltip">';
     	    templatePopUpShop += '  <div class="arrow"></div>';
     	    templatePopUpShop += '  <div>';
     	    templatePopUpShop += '      <ul>';
-    	    templatePopUpShop += '          <li class="listShopMenu">'+fullname+'</li>';
+    	    templatePopUpShop += '          <li class="listShopMenu fullname_bubble"></li>';
     	    templatePopUpShop += '          <li class="listShopMenu">';
     	    templatePopUpShop += '              <a>Penjualan</a>';
-    	    templatePopUpShop += '          </li>';
-    	    templatePopUpShop += '          <li class="listShopMenu">';
-    	    templatePopUpShop += '              <a>Produkku</a>';
     	    templatePopUpShop += '          </li>';
     	    templatePopUpShop += '          <li class="listShopMenu">';
     	    templatePopUpShop += '              <a>Penghasilanku</a>';
@@ -61,6 +45,8 @@ function initGeneral(){
             $('#iconNotifHeader').popover('hide');
     	    $('#iconCartHeader').popover('hide');
     	    $('#iconProfileTemp').popover('hide');
+    	    
+    	    $('.fullname_bubble').html(fullname_popup);
         });
         
         var templatePopUpNotif = '<div class="popover popover-bubble" role="tooltip">';
@@ -86,15 +72,9 @@ function initGeneral(){
     	    templatePopUpProfile += '  <div class="arrow"></div>';
     	    templatePopUpProfile += '  <div>';
     	    templatePopUpProfile += '      <ul>';
-    	    templatePopUpProfile += '          <li class="listShopMenu">'+fullname+'</li>';
+    	    templatePopUpProfile += '          <li class="listShopMenu fullname_bubble"></li>';
     	    templatePopUpProfile += '          <li class="listShopMenu">';
     	    templatePopUpProfile += '              <a onclick="profileClick()">Lihat Profil</a>';
-    	    templatePopUpProfile += '          </li>';
-    	    templatePopUpProfile += '          <li class="listShopMenu">';
-    	    templatePopUpProfile += '              <a>Alamat Kirim</a>';
-    	    templatePopUpProfile += '          </li>';
-    	    templatePopUpProfile += '          <li class="listShopMenu">';
-    	    templatePopUpProfile += '              <a>Toko Langganan</a>';
     	    templatePopUpProfile += '          </li>';
     	    templatePopUpProfile += '          <li class="listShopMenu">';
     	    templatePopUpProfile += '              <input type="button" value="Keluar" class="logoutMainMenu" onclick="logoutClick()"/>';
@@ -107,6 +87,7 @@ function initGeneral(){
           placement: 'bottom',
           template: templatePopUpProfile
         }).on('click', function(e) {
+    	    $('.fullname_bubble').html(fullname_popup);
             $('#iconNotifHeader').popover('hide');
     	    $('#iconCartHeader').popover('hide');
     	    $('#iconShopTemp').popover('hide');
@@ -117,8 +98,6 @@ function initGeneral(){
         });
     }else{
         $('.menu-category-search').css('width','calc(100% - 715px)');
-    	$('.footer-body-mid2 ul li:last-child').show();
-    	$('#iconNotifHeader').hide();
     }
 	
     /*socmed footer menu action*/
@@ -247,10 +226,14 @@ function profileClick(){
 }
 
 function logoutClick(){
-    localStorage.removeItem('emailNgulikin');
-    sessionStorage.setItem("logoutNgulikin", 1);
-    localStorage.removeItem('authNgulikin');
-    location.href = url;
+    $.ajax({
+        type: 'GET',
+        url: SIGNOUT_API,
+        success: function(data, res) {
+            sessionStorage.setItem("logoutNgulikin", 1);
+            location.href = url;
+        } 
+    });
 }
 
 function generateToken(name){

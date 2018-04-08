@@ -9,7 +9,7 @@ $( document ).ready(function() {
 	if (typeof initProduct != 'undefined')checkFunction(initProduct);
 	if (typeof initProfile != 'undefined')checkFunction(initProfile);
 	if (typeof initShop != 'undefined')checkFunction(initShop);
-	if (typeof initShopSeller != 'undefined')checkFunction(initShopSeller);
+	if (typeof initShopSetting != 'undefined')checkFunction(initShopSetting);
 	if (typeof initSignup != 'undefined')checkFunction(initSignup);
 	if (typeof initSearch != 'undefined')checkFunction(initSearch);
 	if (typeof initForgotPassword != 'undefined')checkFunction(initForgotPassword);

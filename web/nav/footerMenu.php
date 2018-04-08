@@ -27,7 +27,13 @@
                         <li class="about-us">Tentang Kami</li>
                         <li>Hubungi Kami</li>
                         <li>Blog</li>
+                        <?php
+                            if(!isset($_SESSION['user'])){
+                        ?>
                         <li>Login/Register</li>
+                        <?php
+                            }
+                        ?>
                     </ul>
                 </div>
                 <div class="footer-body-right">

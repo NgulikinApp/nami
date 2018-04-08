@@ -1,4 +1,7 @@
-<?php include 'web/system/minify.php';?>
+<?php
+    session_start();
+    include 'web/system/minify.php';
+?>
 <!DOCTYPE html>
 <html class="qp-ui">
     <head>

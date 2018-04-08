@@ -15,40 +15,7 @@
     </div>
 </div>
 <div class="bank">
-    <div class="list-bank">
-        <table>
-            <tr>
-                <td>
-                    <div class="list-bank-name">
-                        <div class="left"></div>
-                        <div class="right">
-                            <div>ATAS NAMA</div>
-                            <div id="account-name">Reicha Sofi</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="list-bank-com">Bank Central Asia</div>
-                </td>
-                <td>
-                    <div class="list-bank-img">
-                        <img src="../img/bca.png"/>
-                    </div>
-                </td>
-                <td>
-                    <div class="list-bank-account">
-                        <div class="account-title">NOMOR REKENING</div>
-                        <div class="no">731 3884 848</div>
-                    </div>
-                </td>
-                <td>
-                    <div class="list-bank-button">
-                        Ganti Rekening Bank
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
+    <div class="list-bank"></div>
     <div class="add-bank">
         <input type="button" class="add-bank-button" value="Tambah"/>
     </div>

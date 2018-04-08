@@ -1,8 +1,6 @@
 var rateData = new Object();
 
 function initProduct(){
-    var emailsession = localStorage.getItem('emailNgulikin');
-	
 	detail();
 }
 
@@ -11,13 +9,11 @@ function detail(){
         generateToken(detail);
     }else{
         var url = window.location.href,
-            product_id = url.substr(url.lastIndexOf('/') + 1),
-            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '';
+            product_id = url.substr(url.lastIndexOf('/') + 1);
             
         $.ajax({
             type: 'GET',
             url: PRODUCT_API+'/'+product_id,
-            data:{user_id:user_id},
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
                 xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
@@ -178,16 +174,13 @@ function favoriteProduct(){
         generateToken(favoriteProduct);
     }else{
         var url = window.location.href,
-            product_id = url.substr(url.lastIndexOf('/') + 1),
-            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
-            key = authData.data !== ''? JSON.parse(authData.data).key : '';
+            product_id = url.substr(url.lastIndexOf('/') + 1);
+            
         $.ajax({
             type: 'POST',
             url: PRODUCT_FAVORITE_API,
             data:JSON.stringify({ 
-                    product_id: product_id,
-                    user_id: user_id,
-                    key : key
+                    product_id: product_id
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -196,11 +189,6 @@ function favoriteProduct(){
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
                         generateToken(favoriteProduct);
-                }else if(data.message == 'Invalid key'){
-                    localStorage.removeItem('emailNgulikin');
-                    sessionStorage.setItem("logoutNgulikin", 1);
-                    sessionStorage.removeItem('authNgulikin');
-                    location.href = url;
                 }else if(data.message == 'You have saved this item'){
                     notif("error","Anda sudah menyimpan produk ini","top");
                 }else{
@@ -217,17 +205,14 @@ function rateProduct(){
         generateToken(rateProduct);
     }else{
         var url = window.location.href,
-            product_id = url.substr(url.lastIndexOf('/') + 1),
-            user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
-            key = authData.data !== ''? JSON.parse(authData.data).key : '';
+            product_id = url.substr(url.lastIndexOf('/') + 1);
+            
         $.ajax({
             type: 'POST',
             url: PRODUCT_RATE_API,
             data:JSON.stringify({ 
                     product_id: product_id,
-                    user_id: user_id,
-                    rate : rateData.value,
-                    key : key
+                    rate : rateData.value
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -236,11 +221,6 @@ function rateProduct(){
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
                         generateToken(rateProduct);
-                }else if(data.message == 'Invalid key'){
-                    localStorage.removeItem('emailNgulikin');
-                    sessionStorage.setItem("logoutNgulikin", 1);
-                    sessionStorage.removeItem('authNgulikin');
-                    location.href = url;
                 }else if(data.message == 'You have rated this item'){
                     notif("error","Anda sudah memberikan penilaian produk ini","top");
                 }else{

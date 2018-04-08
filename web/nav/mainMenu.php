@@ -1,3 +1,14 @@
+<?php
+    if(isset($_SESSION['user'])){
+        $fullname = $_SESSION['user']["fullname"];
+		$user_photo = $_SESSION['user']["user_photo"];
+	}else{
+		$fullname = '';
+		$user_photo= '';
+	}
+?>
+<input type="hidden" class="fullname_popup" value="<?php echo $fullname; ?>"/>
+<input type="hidden" class="user_photo_popup" value="<?php echo $user_photo; ?>"/>
 <div class="header">
     <header>
         <div class="leftHeader"></div>
@@ -22,14 +33,28 @@
                 <span class="tooltiptext tooltip-bottom">Keranjang Belanja</span>
                 <span class="sumManinMenuCart">0</span>
             </div>
-            <div class="iconHeader tooltip" id="iconNotifHeader" data-toggle="popover" data-trigger="click" data-content="1">
-                <span class="tooltiptext tooltip-bottom">Notifikasi</span>
-            </div>
+            <?php
+                if(isset($_SESSION['user'])){
+            ?>
+                <div class="iconHeader tooltip" id="iconNotifHeader" data-toggle="popover" data-trigger="click" data-content="1">
+                    <span class="tooltiptext tooltip-bottom">Notifikasi</span>
+                </div>
+            <?php
+                }
+            ?>
             <div class="iconHeader tooltip" id="iconFavoritHeader">
                 <span class="tooltiptext tooltip-bottom">Favorit Belanja</span>
             </div>
             <div class="textHeader">
+                <?php
+                    if(!isset($_SESSION['user'])){
+                ?>
                 <div id="menuLogin">Login</div>
+                <?php
+                    }
+                    
+                    if(isset($_SESSION['user'])){
+                ?>
                 <div id="iconShopTemp" data-toggle="popover" data-trigger="click" data-content="1">
                     <div id="iconShop"></div>
                     <span class="tooltiptext tooltip-bottom">Toko</span>
@@ -38,6 +63,9 @@
                     <div id="iconProfile"></div>
                     <span class="tooltiptext tooltip-bottom">Profil</span>
                 </div>
+                <?php
+                    }
+                ?>
             </div>
             <!--<div class="iconBurger">
                 <div class="bar"></div>

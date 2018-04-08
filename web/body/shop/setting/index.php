@@ -1,4 +1,10 @@
-<?php include 'web/system/minify.php';?>
+<?php
+    session_start();
+    if(!isset($_SESSION['user'])){
+        header("Location: http://init.ngulikin.com");
+    }
+    include 'web/system/minify.php';
+?>
 <!DOCTYPE html>
 <html class="qp-ui">
     <head>
@@ -10,6 +16,9 @@
 		</title>
     </head>
     <body>
+        <div class="loaderProgress">
+            <img src="../img/loader.gif" />
+        </div>
         <?php 
             include $_SERVER['DOCUMENT_ROOT'].'/web/nav/mainMenu.php';
             include 'section_body.php';
@@ -17,7 +26,7 @@
             include 'web/body/general/init_questioner.php';
         ?>
 		<script src="../../js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
-		<script src="../../js/custom-file-input.js?jsr=<?php echo $jsversionstring; ?>"></script>
+		<script src="../../js/library/custom-file-input.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="../../js/module-shop-seller.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="../../js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>
