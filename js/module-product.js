@@ -117,7 +117,7 @@ function detail(){
                     	}
                         
                         $(".rateyo").rateYo({fullStar: true}).on("rateyo.set", function (e, data) {
-                            if(user_id === ''){
+                            if($('.isSignin').val() === '1'){
                     	        notif("error","Harap login terlebih dahulu","right","top");
                             }else if(isfavorite == 1){
                     	        notif("error","Anda sudah memberikan penilaian produk ini","top");
@@ -135,7 +135,7 @@ function detail(){
                     	});
                     	
                     	$('#btnFavorite').on( 'click', function( e ){
-                    	    if(user_id === ''){
+                    	    if($('.isSignin').val() === '1'){
                     	        notif("error","Harap login terlebih dahulu","right","top");
                     	    }else if(data.result.product_isfavorite == 1){
                     	        notif("error","Anda sudah menyimpan produk ini","top");

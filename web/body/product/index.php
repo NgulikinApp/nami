@@ -18,7 +18,14 @@
 		    include 'section_body.php';
 		    include $_SERVER['DOCUMENT_ROOT'].'/web/nav/footerMenu.php';
 		    include 'web/body/general/init_questioner.php';
+		    
+		    if(isset($_SESSION['user'])){
+		        $isSignin = true;
+		    }else{
+		        $isSignin = false;
+		    }
 		?>
+		<input type="hidden" class="isSignin" value="<?php echo $isSignin;?>"/>
 		<script src="../../js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="../../js/library/custom-file-input.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	    <script src="../../js/module-product.js?jsr=<?php echo $jsversionstring; ?>"></script>

@@ -202,7 +202,7 @@ function bestseller(){
                     $('.bestseller-like').on('click', function (e) {
                         var productArray = ($(this).next('div').attr('datainternal-id')).split("~");
                         
-                        if(user_id === ''){
+                        if($('.isSignin').val() === '1'){
                     	   notif("error","Harap login terlebih dahulu","right","top");
                     	}else if(parseInt(productArray[1]) == 1){
                     	        notif("error","Anda sudah menyimpan produk ini","top");
@@ -266,7 +266,7 @@ function promo(){
                     $('.promo-like').on('click', function (e) {
                         var productArray = ($(this).next('div').attr('datainternal-id')).split("~");
                         
-                        if(user_id === ''){
+                        if($('.isSignin').val() === '1'){
                         	notif("error","Harap login terlebih dahulu","right","top");
                         }else if(parseInt(productArray[1]) == 1){
                     	        notif("error","Anda sudah menyimpan produk ini","top");
