@@ -1,4 +1,4 @@
-var url = 'http://init.ngulikin.com',
+var url = 'https://www.ngulikin.com',
     authData = new Object();
 
 function initGeneral(){
@@ -26,10 +26,10 @@ function initGeneral(){
     	    templatePopUpShop += '      <ul>';
     	    templatePopUpShop += '          <li class="listShopMenu fullname_bubble"></li>';
     	    templatePopUpShop += '          <li class="listShopMenu">';
-    	    templatePopUpShop += '              <a>Penjualan</a>';
+    	    templatePopUpShop += '              <a onclick="mysalesShopClick()">Penjualanku</a>';
     	    templatePopUpShop += '          </li>';
     	    templatePopUpShop += '          <li class="listShopMenu">';
-    	    templatePopUpShop += '              <a>Penghasilanku</a>';
+    	    templatePopUpShop += '              <a onclick="incomeShopClick()">Penghasilanku</a>';
     	    templatePopUpShop += '          </li>';
     	    templatePopUpShop += '          <li class="listShopMenu">';
     	    templatePopUpShop += '              <a onclick="settingShopClick()">Pengaturan Toko</a>';
@@ -97,7 +97,7 @@ function initGeneral(){
     	    $('.popover').children('div:last-child').css('width','100%');
         });
     }else{
-        $('.menu-category-search').css('width','calc(100% - 715px)');
+        $('.menu-category-search').css('width','calc(100% - 720px)');
     }
 	
     /*socmed footer menu action*/
@@ -211,6 +211,25 @@ function initGeneral(){
     $('.menu-category-wrap').on( 'click', function( e ){
         $('.menu-category-sub-menu').slideToggle();
     });
+    
+    $('.footerFloat span').on('click', function (e) {
+	    $('.footerFloat span').removeClass('selected');
+	    $('.footerFloat span').removeClass('bluesky');
+	    $(this).addClass('selected');
+	    $(this).addClass('bluesky');
+	});
+	
+	$('.footerFloat a:nth-child(2) span').on('click', function (e) {
+	    window.open('https://www.blog.ngulikin.com');
+	});
+}
+
+function incomeShopClick(){
+    location.href = url+"/shop/i";
+}
+
+function mysalesShopClick(){
+    location.href = url+"/shop/s";
 }
 
 function settingShopClick(){
@@ -298,7 +317,7 @@ function categoryProduct(){
                 	sessionStorage.setItem("categoryProduct",JSON.stringify(data.result));
                 	bindCategoryProduct(data.result);
                 }else{
-                        generateToken(categoryProduct);
+                    generateToken(categoryProduct);
                 }
             } 
         });

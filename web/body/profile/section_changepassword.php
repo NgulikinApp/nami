@@ -5,22 +5,22 @@
             <span>Password saat ini</span>
         </div>
         <div>
-            <input type="password"/>
+            <input type="password" id="oldpassword" class="inputChangePassword"/>
         </div>
         <div>
             <span>Password baru</span>
         </div>
         <div>
-            <input type="password"/>
+            <input type="password" id="newpassword" class="inputChangePassword"/>
         </div>
         <div>
             <span>Masukan kembali password baru</span>
         </div>
         <div>
-            <input type="password"/>
+            <input type="password" id="newpassword_confirm" class="inputChangePassword"/>
         </div>
     </div>
     <div class="footerMyprofile">
-        <button id="btnSubmitPassMyprofile">Submit</button>
+        <button id="btnSubmitPassMyprofile">Ubah</button>
     </div>
 </div>

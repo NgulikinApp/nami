@@ -1,5 +1,5 @@
-var productPage = new Object(),
-    shopPage = new Object();
+var productPage = {},
+    shopPage = {};
 
 function initFavorite(){
     var fullname_popup = $('.fullname_popup').val();
@@ -84,6 +84,16 @@ function listfavoriteProduct(){
                             var productId = $(this).attr('datainternal-id');
                             location.href = url+"/product/"+productId;
                         });
+                    }else{
+                        $('#loaderFavoriteProduct').addClass('hidden');
+                        
+                        var noData = '<div class="grid-favorite-body"></div>';
+                            noData += '     <div class="grid-favorite-footer">';
+                            noData += '         <div>';
+                            noData += '             Kamu belum menambahkan suatu produk kedalam daftar favoritmu. Simpan produk yang kamu sukai dengan menambahkannya ke daftar produk favoritmu.';
+                            noData += '         </div>';
+                            noData += '     </div>';
+                        $('#grid-favorite-listdatashop').html(noData);
                     }
                 }else{
                     generateToken(listfavoriteProduct);
@@ -150,6 +160,16 @@ function listfavoriteShop(){
                             var shopId= $(this).attr('datainternal-id');
                             location.href = url+"/shop/"+shopId;
                         });
+                    }else{
+                        $('#loaderFavoriteShop').addClass('hidden');
+                        
+                        var noData = '<div class="grid-favorite-body"></div>';
+                            noData += '     <div class="grid-favorite-footer">';
+                            noData += '         <div>';
+                            noData += '             Kamu belum menambahkan suatu toko kedalam daftar favoritmu. Simpan toko yang kamu sukai dengan menambahkannya ke daftar toko favoritmu.';
+                            noData += '         </div>';
+                            noData += '     </div>';
+                        $('#grid-favorite-listdatashop').html(noData);
                     }
                 }else{
                     generateToken(listfavoriteShop);

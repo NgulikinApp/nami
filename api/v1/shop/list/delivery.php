@@ -38,10 +38,12 @@
                 $user_id = $_SESSION['user']["user_id"];
                 $key = $_SESSION['user']["key"];
                 $shop_id = $_SESSION['user']["shop_id"];
+                $delivery_id = $_SESSION['user']["delivery_id"];
             }else{
                 $user_id = '';
                 $key = '';
                 $shop_id = '';
+                $delivery_id = '';
             }
             
             /*
@@ -51,32 +53,25 @@
                 return invalidKey();
             }
             
-            $stmt = $con->prepare("SELECT 
-                                            delivery_id,
-                                            delivery_icon,
-                                            IFNULL(
-                                                    (
-                                                        SELECT 
-                                                                shop_id 
-                                                        FROM 
-                                                                shop_delivery                   
-                                                        WHERE 
-                                                                shop_delivery.delivery_id=delivery.delivery_id 
-                                                                AND 
-                                                                shop_id = ?
-                                                    )
-                                            ,'') AS is_choose,
-                                            delivery_ismid,
-                                            delivery_name
+            $stmt = $con->query("SELECT 
+                                        delivery_id,
+                                        delivery_icon,
+                                        delivery_ismid,
+                                        delivery_name
                                     FROM 
                                         delivery");
             
-            $stmt->bind_param("i", $shop_id);
+            $stmtdel = $con->query(" SELECT
+                                            CONCAT('Terakhir diganti tanggal ',DATE_FORMAT(shop_delivery_modifydate, '%d %M %Y'),', pukul ',DATE_FORMAT(shop_delivery_modifydate, '%H.%i')) AS modify_date
+                                        FROM 
+                                            shop 
+                                        WHERE 
+                                            shop_id=".$shop_id."");
             
             /*
                 Function location in : function.php
             */
-            delivery($stmt);
+            delivery($stmt,$stmtdel,$delivery_id,$shop_id);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

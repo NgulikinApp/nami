@@ -1,4 +1,4 @@
-<div class="profile menu"></div>
+<div class="profile menu" id="brand_shop"></div>
 <div class="title">
     Brand
 </div>

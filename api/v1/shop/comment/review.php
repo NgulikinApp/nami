@@ -62,27 +62,13 @@
                 return invalidKey();
             }
             
-            $stmt = $con->prepare("INSERT INTO shop_review(shop_id,user_id,shop_review_comment) VALUES(?,?,?)");
-               
-            $stmt->bind_param("iss", $id,$user_id,$request['comment']);
-            
-            /*
-                Function location in : /model/general/functions.php
-            */
-            runQuery($stmt);
+            $con->query("INSERT INTO shop_review(shop_id,user_id,shop_review_comment) VALUES(".$id.",'".$user_id."','".$request['comment']."')");
             
             $shop_review_id = $con->insert_id;
             
-            $stmt = $con->prepare("UPDATE shop SET shop_total_review=shop_total_review+1 where shop_id=?");
-               
-            $stmt->bind_param("i", $id);
+            $con->query("UPDATE shop SET shop_total_review=shop_total_review+1 where shop_id=".$id."");
             
-            /*
-                Function location in : /model/general/functions.php
-            */
-            runQuery($stmt);
-            
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                         username,
                                         user_photo,
                                         fullname,
@@ -92,9 +78,7 @@
                                         LEFT JOIN `user` ON `user`.user_id = shop_review.user_id
                                         LEFT JOIN `shop` ON `shop`.shop_id = shop_review.shop_id
                                     WHERE
-                                        shop_review_id = ?");
-            
-            $stmt->bind_param("i", $shop_review_id);
+                                        shop_review_id = ".$shop_review_id."");
             
             comment($stmt,$shop_review_id,$id,$user_id,$request['comment']);
         }catch(Exception $e){

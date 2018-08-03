@@ -4,20 +4,16 @@
         Used for returning array data
     */
     function notification($stmt){
-        $stmt->execute();
-    
-        $stmt->bind_result($col1,$col2,$col3,$col4,$col5,$col6);
-        
         $data = array();
     
-        while ($stmt->fetch()) {
+        while ($row = $stmt->fetch_object()) {
             $data[] = array(
-                      "notification_id" => $col1,
-                      "user_id" => $col2,
-                      "notification_desc" => $col3,
-                      "notification_photo" => $col4,
-                      "notification_createdate" => $col5,
-                      "username" => $col6
+                      "notification_id" => $row->notification_id,
+                      "user_id" => $row->user_id,
+                      "notification_desc" => $row->notification_desc,
+                      "notification_photo" => $row->notification_photo,
+                      "notification_createdate" => $row->notification_createdate,
+                      "username" => $row->username
                     );
         }
         

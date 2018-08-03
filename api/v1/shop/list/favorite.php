@@ -56,7 +56,7 @@
                 return invalidKey();
             }
             
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                     shop.shop_id, 
                                     shop_name,
                                     shop_icon,
@@ -68,12 +68,10 @@
                                     LEFT JOIN shop_favorite ON shop_favorite.shop_id = shop.shop_id
                                     LEFT JOIN `user` ON `user`.user_id = shop_favorite.user_id
                                 WHERE
-                                    shop_favorite.user_id = ?
+                                    shop_favorite.user_id = '".$user_id."'
                         		ORDER BY 
                                     shop_favorite.shop_id DESC
-                        		LIMIT ?,?");
-            
-            $stmt->bind_param("sii", $user_id,$page,$pagesize);
+                        		LIMIT ".$page.",".$pagesize."");
             
             /*
                 Function location in : functions.php

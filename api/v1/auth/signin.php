@@ -49,18 +49,16 @@
                 $password = "password_socmed";
             }
             
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                     user_id,
                                     user_isactive,
-                                    ".$password.",
+                                    ".$password." AS password,
                                     socmed,
                                     id_socmed
                                 FROM 
                                     user 
                                 WHERE 
-                                    (email=? OR username=?)");
-               
-            $stmt->bind_param("ss", $auth[0],$auth[0]);
+                                    (email='".$auth[0]."' OR username='".$auth[0]."')");
                 
             /*
                 Function location in : functions.php
@@ -84,22 +82,17 @@
                     
                     $key = encrypt_hash('ngulik_'.$verified[0].date('Y-m-d H:i:s'));
                     
-                    $stmt = $con->prepare("UPDATE 
+                    $con->query("UPDATE 
                                                 user
                                             set
                                                 time_signin = NOW(),
-                                                password_socmed = ?,
-                                                socmed = ?,
-                                                id_socmed = ?,
-                                                user_key = ?
+                                                password_socmed = '".$password."',
+                                                socmed = '".$socmed."',
+                                                id_socmed = '".$idsocmed."',
+                                                user_key = '".$key."'
                                             WHERE 
-                                                user_id=?");
-                    $stmt->bind_param("sssss",$password,$socmed,$idsocmed,$verified[0],$key);
+                                                user_id='".$verified[0]."'");
                     
-                    /*
-                        Function location in : /model/general/functions.php
-                    */
-                    runQuery($stmt);
                     
                     /*
                         Function location in : functions.php
@@ -120,19 +113,13 @@
             }else{
                 $key = encrypt_hash('ngulik_'.$verified[0].date('Y-m-d H:i:s'));
                 
-                $stmt = $con->prepare("UPDATE 
+                $con->query("UPDATE 
                                             user
                                         set
                                             time_signin = NOW(),
-                                            user_key = ?
+                                            user_key = '".$key."'
                                         WHERE 
-                                            user_id=?");
-                $stmt->bind_param("ss", $key,$verified[0]);
-                
-                /*
-                    Function location in : /model/general/functions.php
-                */
-                runQuery($stmt);
+                                            user_id='".$verified[0]."'");
                 
                 /*
                     Function location in : functions.php

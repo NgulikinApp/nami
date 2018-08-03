@@ -31,11 +31,11 @@
         */
         invalidCredential();
     }else{
-        try{
+       try{
             //secretKey variabel got from : /model/jwt.php
             $exp = JWT::decode($token, $secretKey, array('HS256'));
         
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                             category_id, 
                                             category_name, 
                                             category_icon 
@@ -53,7 +53,7 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            tokenExpired();
+           tokenExpired();
         }
     }
     

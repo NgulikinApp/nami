@@ -1,7 +1,7 @@
 <?php
     session_start();
     if(isset($_SESSION['user'])){
-        header("Location: http://init.ngulikin.com");
+        header("Location: https://".$_SERVER['HTTP_HOST']);
     }
     include 'web/system/minify.php';
 ?>
@@ -23,10 +23,9 @@
             include 'web/nav/mainMenu.php';
             include 'section_body.php';
             include 'web/nav/footerMenu.php';
-            include 'web/body/general/init_questioner.php';
+            include 'web/nav/footerFloatMenu.php';
         ?>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
-		<script src="js/library/custom-file-input.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-signup.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>

@@ -40,7 +40,7 @@
         try{
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            $stmt = $con->prepare(" SELECT 
+            $stmt = $con->query(" SELECT 
                                         * 
                                     FROM (
                                         SELECT 
@@ -57,15 +57,13 @@
                                             LEFT JOIN `user` ON `user`.user_id = shop_discuss.user_id
                                             LEFT JOIN `shop` ON `shop`.shop_id = shop_discuss.shop_id
                                         WHERE
-                                            shop_discuss.shop_id = ?
+                                            shop_discuss.shop_id = ".$id."
                                         ORDER BY 
                                             shop_discuss_id DESC
-                                        LIMIT ?
+                                        LIMIT ".$pagesize."
                                     ) sub
                                     ORDER BY 
                                         shop_discuss_id ASC");
-            
-            $stmt->bind_param("ii", $id,$pagesize);
             
             /*
                 Function location in : function.php

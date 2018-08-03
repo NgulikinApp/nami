@@ -41,32 +41,41 @@
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
             if($id == "product"){
+                $type = 'product';
                 if(isset($_SESSION['user'])){
-                    $id = $_SESSION['user']["shop_id"];
+                    $id = $_SESSION['user']["brand_id"];
                 }else{
                     $id = '';
                 }
+            }else{
+                $type = 'shop';
             }
             
-            $stmt = $con->prepare("SELECT 
-                                        product.product_id,
-                                        product_name,
-                                        product_image,
-                                        username,
-                                        shop_total_product,
-                                        product_price
-                                    FROM 
-                                        shop
-                                        LEFT JOIN `user` ON `user`.user_id = shop.user_id
-                                        LEFT JOIN brand ON brand.shop_id = shop.shop_id
-                                        LEFT JOIN product ON brand.brand_id = product.brand_id
-                                    WHERE
-                                        shop.shop_id = ?
-                                    ORDER BY 
-                                        product_id DESC
-                                    LIMIT ?,?");
+            $sql = "SELECT 
+                        product.product_id,
+                        product_name,
+                        product_image,
+                        username,
+                        shop_total_product,
+                        product_price
+                    FROM 
+                        shop
+                        LEFT JOIN `user` ON `user`.user_id = shop.user_id
+                        LEFT JOIN brand ON brand.shop_id = shop.shop_id
+                        INNER JOIN product ON brand.brand_id = product.brand_id
+                    WHERE ";
             
-            $stmt->bind_param("iii", $id,$page,$pagesize);
+            if($type == "product"){
+                $sql .="product.brand_id = ".$id."";
+            }else{
+                $sql .="shop.shop_id = ".$id."";
+            }
+            
+            $sql .=" ORDER BY 
+                            product_id DESC
+                     LIMIT ".$page.",".$pagesize."";
+        
+            $stmt = $con->query($sql);
             
             /*
                 Function location in : function.php

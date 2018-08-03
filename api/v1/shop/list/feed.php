@@ -34,7 +34,7 @@
         try{
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                     shop_id, 
                                     shop_name,
                                     shop_icon,

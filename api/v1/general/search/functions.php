@@ -51,7 +51,7 @@
                         if($row[2] == ''){
                             $icon = "https://s4.bukalapak.com/img/409311077/s-194-194/TV_LED_Sharp_24__LC_24LE170i.jpg";
                         }else{
-                            $icon = 'http://'.IMAGES_URL.'/'.$row[4].'/product/'.$row[2];
+                            $icon = IMAGES_URL.'/'.urlencode(base64_encode($row[4].'/product/'.$row[2]));
                         }
                         $data[] = array(
                                     "product_id" => $row[0],
@@ -67,7 +67,7 @@
                         if($row[2] == ''){
                             $icon = "https://s4.bukalapak.com/img/409311077/s-194-194/TV_LED_Sharp_24__LC_24LE170i.jpg";
                         }else{
-                            $icon = 'http://'.IMAGES_URL.'/'.$row[3].'/shop/icon/'.$row[2];
+                            $icon = IMAGES_URL.'/'.urlencode(base64_encode($row[3].'/shop/icon/'.$row[2]));
                         }
                         
                         $data[] = array(

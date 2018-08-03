@@ -14,8 +14,8 @@
 		<?php 
 		      include 'web/nav/mainMenu.php';
 		      include 'web/body/home.php';
+		      include 'web/nav/footerFloatMenu.php';
 		      include 'web/nav/footerMenu.php';
-		      include 'web/body/general/init_questioner.php';
 		      
 		      if(isset($_SESSION['user'])){
 		          $isSignin = true;
@@ -29,8 +29,6 @@
 		<input type="hidden" class="fullname_popup" value="<?php echo $fullname; ?>"/>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-home.js?jsr=<?php echo $jsversionstring; ?>"></script>
-		<script src="js/library/custom-file-input.js?jsr=<?php echo $jsversionstring; ?>"></script>
-		<script src="https://apis.google.com/js/api.js"></script>
 		<script src="js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>
 </html>

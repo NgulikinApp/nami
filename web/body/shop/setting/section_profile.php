@@ -2,7 +2,7 @@
     Profile Toko
 </div>
 <div class="profile">
-    <div class="profile-seller-grid1"></div>
+    <div class="profile-seller-grid1" id="profile_shop"></div>
 </div>
 <div class="title">
     Catatan Penjual

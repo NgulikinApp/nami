@@ -56,24 +56,23 @@
                 return invalidKey();
             }
             
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                         product.product_id,
                                         product_name,
                                         product_image,
                                         product_price,
                                         username,
-                                        DATEDIFF(CURDATE(),CAST(product_createdate AS DATE)) AS difdate,
+                                        DATEDIFF(CURDATE(),CAST(product_createdate AS DATE)) AS product_difdate,
                                         user_product_favorites AS count_product
                                     FROM 
                                         product
                                         LEFT JOIN product_favorite ON product_favorite.product_id = product.product_id
                                         LEFT JOIN `user` ON `user`.user_id = product_favorite.user_id
                                     WHERE
-                                        product_favorite.user_id = ?
+                                        product_favorite.user_id = '".$user_id."'
                                     ORDER BY 
                                         product_favorite.product_id DESC
-                                    	LIMIT ?,?");
-            $stmt->bind_param("sii", $user_id,$page,$pagesize);
+                                    	LIMIT ".$page.",".$pagesize."");
             
             /*
                 Function location in : functions.php

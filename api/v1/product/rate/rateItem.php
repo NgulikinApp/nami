@@ -74,32 +74,16 @@
                 return userDone("rate");
             }
             
-            $stmt = $con->prepare("INSERT INTO product_rate(product_id,user_id,product_rate_value) VALUES(?,?,?)");
-               
-            $stmt->bind_param("isi", $request['product_id'],$user_id,$request['rate']);
+            $con->query("INSERT INTO product_rate(product_id,user_id,product_rate_value) VALUES(".$request['product_id'].",'".$user_id."',".$request['rate'].")");
             
-            /*
-                Function location in : /model/general/functions.php
-            */
-            runQuery($stmt);
+            $con->query("UPDATE product SET product_average_rate=(product_average_rate+".$request['rate'].")/(product_count_rate+1),product_count_rate=product_count_rate+1 where product_id=".$request['product_id']."");
             
-            $stmt = $con->prepare("UPDATE product SET product_average_rate=(product_average_rate+?)/(product_count_rate+1),product_count_rate=product_count_rate+1 where product_id=?");
-               
-            $stmt->bind_param("ii",$request['rate'], $request['product_id']);
-            
-            /*
-                Function location in : /model/general/functions.php
-            */
-            runQuery($stmt);
-            
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                         product_average_rate
                                     FROM 
                                         product 
                                     WHERE 
-                                        product_id=?");
-               
-            $stmt->bind_param("i", $request['product_id']);
+                                        product_id=".$request['product_id']."");
             
             /*
                 Function location in : /model/general/functions.php

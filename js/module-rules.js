@@ -4,7 +4,6 @@ function initRules(){
         $('#privacyMenu').hide();
         $('#faqMenu').hide();
         history.pushState(null, null, '/terms');
-            	    
     });
     $('.listTerms li[datainternal-id="privacy"]').on('click', function (e) {
         $('#termsMenu').hide();

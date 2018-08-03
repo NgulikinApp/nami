@@ -4,17 +4,13 @@
         Used for returning array data
     */
     function listcategory($stmt,$cache){
-        $stmt->execute();
-    
-        $stmt->bind_result($col1,$col2,$col3);
-        
         $data = array();
-    
-        while ($stmt->fetch()) {
+        
+        while ($row = $stmt->fetch_object()){
             $data[] = array(
-                      "category_id" => intval($col1),
-                      "category_name" => $col2,
-                      "category_url" => 'http://'.INIT_URL.'/img/category/'.$col3
+                      "category_id" => intval($row->category_id),
+                      "category_name" => $row->category_name,
+                      "category_url" => INIT_URL.'/img/category/'.$row->category_icon
                     );
         }
         
@@ -31,19 +27,16 @@
         Used for returning array data
     */
     function feed($stmt){
-        $stmt->execute();
-    
-        $stmt->bind_result($col1,$col2,$col3,$col4,$col5,$col6);
         
         $data = array();
     
-        while ($stmt->fetch()) {
+        while ($row = $stmt->fetch_object()) {
             $data[] = array(
-                      "product_id" => intval($col1),
-                      "product_name" => $col3,
-                      "product_image" => 'http://'.IMAGES_URL.'/'.$col2.'/product/'.$col4,
-                      "product_price" => number_format($col5, 0, '.', '.'),
-                      "product_isfavorite" => $col6
+                      "product_id" => $row->product_id,
+                      "product_name" => $row->product_name,
+                      "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/product/'.$row->product_image)),
+                      "product_price" => number_format($row->product_price, 0, '.', '.'),
+                      "product_isfavorite" => $row->product_isfavorite
                     );
         }
         
@@ -61,20 +54,16 @@
     */
     function favorite($stmt,$pagesize){
         
-        $stmt->execute();
-        
-        $stmt->bind_result($col1,$col2,$col3,$col4,$col5,$col6,$col7);
-        
         $data = array();
         
-        while ($stmt->fetch()) {
-                $total = $col7;
+        while ($row = $stmt->fetch_object()) {
+                $total = $row->count_product;
                 $data[] = array(
-                            "product_id" => $col1,
-                            "product_name" => $col2,
-                            "product_image" => 'http://'.IMAGES_URL.'/'.$col5.'/product/'.$col3,
-                            "product_price" =>  $col4,
-                            "product_difdate" => $col6
+                            "product_id" => $row->product_id,
+                            "product_name" => $row->product_name,
+                            "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/product/'.$row->product_image)),
+                            "product_price" =>  $row->product_price,
+                            "product_difdate" => $row->product_difdate
                             );
         }
         

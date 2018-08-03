@@ -56,7 +56,7 @@
                 return invalidKey();
             }
             
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                             fullname, 
                                             dob,
                                             username,
@@ -67,9 +67,7 @@
                                     FROM 
                                             user
                     		        WHERE
-                    		                user_id=?");
-            
-            $stmt->bind_param("s", $user_id);
+                    		                user_id='".$user_id."'");
             
             /*
                 Function location in : functions.php

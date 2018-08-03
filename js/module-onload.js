@@ -16,6 +16,7 @@ $( document ).ready(function() {
 	if (typeof initNotifications != 'undefined')checkFunction(initNotifications);
 	if (typeof initInvoice != 'undefined')checkFunction(initInvoice);
 	if (typeof initPayment != 'undefined')checkFunction(initPayment);
+	if (typeof initShopMysales != 'undefined')checkFunction(initShopMysales);
 });
 
 function checkFunction(name){

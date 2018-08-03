@@ -20,10 +20,6 @@
     */
     $con = conn();
     
-    //Parameters
-    $page = $_GET['page'];
-    $pagesize = $_GET['pagesize'];
-    
     /*
         Function location in : /model/general/get_auth.php
     */
@@ -55,28 +51,25 @@
                 return invalidKey();
             }
             
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                         brand_id,
                                         brand_name,
                                         brand_image,
                                         username,
-                                        shop_total_brand
+                                        shop_current_brand
                                     FROM 
                                         shop
                                         LEFT JOIN `user` ON `user`.user_id = shop.user_id
                                         LEFT JOIN brand ON brand.shop_id = shop.shop_id
                                     WHERE
-                                        brand.shop_id = ?
+                                        brand.shop_id = ".$shop_id."
                                     ORDER BY 
-                                        brand_id DESC
-                                    LIMIT ?,?");
-            
-            $stmt->bind_param("iii", $shop_id,$page,$pagesize);
+                                        brand_id DESC");
             
             /*
                 Function location in : function.php
             */
-            brand($stmt,$pagesize);
+            brand($stmt);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

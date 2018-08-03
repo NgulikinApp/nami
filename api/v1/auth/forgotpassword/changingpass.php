@@ -41,19 +41,13 @@
             //secretKey variabel got from : /model/jwt.php
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            $stmt = $con->prepare("UPDATE 
+            $con->query("UPDATE 
                                         user
                                     SET
-                                        password = ?
+                                        password = '".$request['password']."'
                                     WHERE 
-                                        email = ?");
-               
-            $stmt->bind_param("ss", $request['password'],$request['email']);
+                                        email = '".$request['email']."'");
             
-            /*
-                Function location in : /model/general/function.php
-            */
-            runQuery($stmt);
             
             $data = array(
             			'status' => "OK",

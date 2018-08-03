@@ -56,66 +56,59 @@
                 return invalidKey();
             }
             
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                     1
                                     FROM 
                                         product_favorite 
                                     WHERE 
-                                        product_id=? AND user_id=?");
-               
-            $stmt->bind_param("is", $request['product_id'],$user_id);
+                                        product_id=".$request['product_id']." AND user_id='".$user_id."'");
             
-             /*
+            /*
                 Function location in : /model/general/functions.php
             */
             $count_rows = count_rows($stmt);
             
             if($count_rows > 0){
-                return userDone("favorite");
+                $con->query("DELETE FROM product_favorite WHERE product_id = ".$request['product_id']." AND user_id = '".$user_id."'");
+                
+                $con->query("UPDATE product SET product_count_favorite=product_count_favorite-1 WHERE product_id=".$request['product_id']."");
+                
+                $con->query("UPDATE user SET user_product_favorites=user_product_favorites-1 WHERE user_id='".$user_id."'");
+                
+                $stmt = $con->query("SELECT 
+                                            count(1) AS product_count
+                                        FROM 
+                                            product_favorite 
+                                        WHERE 
+                                            product_id=".$request['product_id']."");
+                
+                /*
+                    Function location in : /model/general/functions.php
+                */
+                $count_val = calc_val($stmt);
+                
+                favorite($request['product_id'],$user_id,$count_val,0);
+            }else{
+                $con->query("INSERT INTO product_favorite(product_id,user_id) VALUES(".$request['product_id'].",'".$user_id."')");
+                
+                $con->query("UPDATE product SET product_count_favorite=product_count_favorite+1 where product_id=".$request['product_id']."");
+                
+                $con->query("UPDATE user SET user_product_favorites=user_product_favorites+1 where user_id='".$user_id."'");
+                
+                $stmt = $con->query("SELECT 
+                                            count(1) AS product_count
+                                        FROM 
+                                            product_favorite 
+                                        WHERE 
+                                            product_id=".$request['product_id']."");
+                
+                /*
+                    Function location in : /model/general/functions.php
+                */
+                $count_val = calc_val($stmt);
+                
+                favorite($request['product_id'],$user_id,$count_val,1);   
             }
-            
-            $stmt = $con->prepare("INSERT INTO product_favorite(product_id,user_id) VALUES(?,?)");
-               
-            $stmt->bind_param("is", $request['product_id'],$user_id);
-            
-            /*
-                Function location in : /model/general/functions.php
-            */
-            runQuery($stmt);
-            
-            $stmt = $con->prepare("UPDATE product SET product_count_favorite=product_count_favorite+1 where product_id=?");
-               
-            $stmt->bind_param("i", $request['product_id']);
-            
-            /*
-                Function location in : /model/general/functions.php
-            */
-            runQuery($stmt);
-            
-            $stmt = $con->prepare("UPDATE user SET user_product_favorites=user_product_favorites+1 where user_id=?");
-               
-            $stmt->bind_param("s", $user_id);
-            
-            /*
-                Function location in : /model/general/functions.php
-            */
-            runQuery($stmt);
-            
-            $stmt = $con->prepare("SELECT 
-                                        count(1) AS product_count
-                                    FROM 
-                                        product_favorite 
-                                    WHERE 
-                                        product_id=?");
-               
-            $stmt->bind_param("i", $request['product_id']);
-            
-            /*
-                Function location in : /model/general/functions.php
-            */
-            $count_val = calc_val($stmt);
-            
-            favorite($request['product_id'],$user_id,$count_val);
             
         }catch(Exception $e){
             /*

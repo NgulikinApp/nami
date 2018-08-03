@@ -43,7 +43,7 @@
             //secretKey variabel got from : /model/jwt.php
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                         user_id,
                                         user_isactive,
                                         email,
@@ -51,9 +51,7 @@
                                     FROM 
                                             user 
                                     WHERE 
-                                            (email=? OR username=?)");
-               
-            $stmt->bind_param("ss", $request['email'],$request['email']);
+                                            (email='".$request['email']."' OR username='".$request['email']."')");
             
             /*
                 Function location in : /model/auth/function.php
@@ -76,20 +74,17 @@
                 */
                 $code = generateRandomString();
                 
-                $stmt = $con->prepare("UPDATE 
+                $con->query("UPDATE 
                                             user
                                         SET
-                                            code_forgotpassword = ?,
+                                            code_forgotpassword = '".$code."',
                                             time_code_forgotpassword = NOW()
                                         WHERE 
-                                            user_id = ?");
-                   
-                $stmt->bind_param("ss", $code,$verified[0]);
+                                            user_id = '".$verified[0]."'");
                 
                 /*
                     Function location in : /model/general/function.php
                 */
-                runQuery($stmt);
                 $mail = new PHPMailer;
                 $mail->isSMTP();
             	$mail->Debugoutput = 'html';
@@ -97,7 +92,7 @@
             	$mail->Port = 25;
             	$mail->SMTPAuth = true;
             	$mail->Username = "ngulikin";
-            	$mail->Password = "A98dNzn33n";
+            	$mail->Password = "FD76889Ddt!";
             	$mail->setFrom("info@ngulikin.com", "Ngulikin");
             	$mail->addAddress($verified[2], $verified[3]);
             	$mail->Subject = 'Ngulikin (Forgot Password)';

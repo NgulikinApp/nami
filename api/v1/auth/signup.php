@@ -110,7 +110,7 @@
                     $passwordSocmed = encrypt_hash('GooglePlus_Ngulikin');
                 }
                 
-                $stmt = $con->prepare("INSERT INTO 
+                $con->query("INSERT INTO 
                                                     user(
                                                         user_id,
                                                         username,
@@ -127,13 +127,7 @@
                                                         user_isactive,
                                                         id_socmed
                                                     ) 
-                                                    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-               
-                $stmt->bind_param("ssssssssssssss",$user_id,$request['username'],$request['name'],$request['password'],$request['email'],$request['nohp'],$request['dob'],$request['gender'],$key,$request['source'],$request['socmed'],$passwordSocmed,$user_isactive,$request['id_socmed']);
-                /*
-                    Function location in : /model/general/functions.php
-                */
-                runQuery($stmt);
+                                                    VALUES ('".$user_id."','".$request['username']."','".$request['name']."','".$request['password']."','".$request['email']."','".$request['nohp']."','".$request['dob']."','".$request['gender']."','".$key."','".$request['source']."','".$request['socmed']."','".$passwordSocmed."','".$user_isactive."','".$request['id_socmed']."')");
                 
                 $param = base64_encode($user_id.'~'.$key);
                 
@@ -145,11 +139,11 @@
                 	$mail->Port = 25;
                 	$mail->SMTPAuth = true;
                 	$mail->Username = "ngulikin";
-                	$mail->Password = "A98dNzn33n";
+                	$mail->Password = "FD76889Ddt!";
                 	$mail->setFrom("info@ngulikin.com", "Ngulikin");
                 	$mail->addAddress($request['email'], $request['name']);
                 	$mail->Subject = 'Ngulikin (Forgot Password)';
-                	$mail->Body = "Klik tombol aktif dibawah ini, untuk mengaktifkan akun anda.<br><br><a href='http://".BEAN_URL."/v1/activeAccount?q=".$param."'><div style='background-color:#004E82;border-radius: 10px;width: 30px;font-weight: bold;padding:8px;color:#FFFFFF;'>Aktif</div></a>";
+                	$mail->Body = "Klik tombol aktif dibawah ini, untuk mengaktifkan akun anda.<br><br><a href='".INIT_URL."/v1/activeAccount?q=".$param."'><div style='background-color:#004E82;border-radius: 10px;width: 30px;font-weight: bold;padding:8px;color:#FFFFFF;'>Aktif</div></a>";
                 	$mail->AltBody = 'This is a plain-text message body';
                 	
                 	//email sended successfully
@@ -171,7 +165,9 @@
                                 "gender"=>$request['gender'],
                                 "key"=>$key,
                                 "user_photo"=>"",
-                                "shop_id"=>0
+                                "shop_id"=>0,
+                                "brand_id"=>0,
+                                "delivery_id"=>'1,2'
                             );
                 
                 $_SESSION['user'] = $result;

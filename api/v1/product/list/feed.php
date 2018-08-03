@@ -45,7 +45,7 @@
             }else{
                 $user_id = '';
             }
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                             product_id, 
                                             username,
                                             product_name,
@@ -59,7 +59,7 @@
                                                                 WHERE 
                                                                         product_favorite.product_id=product.product_id 
                                                                         AND 
-                                                                        user_id = ?
+                                                                        user_id = '".$user_id."'
                                                             ) AS product_isfavorite
                                     FROM 
                                             product
@@ -70,8 +70,6 @@
                     		    ORDER BY 
                                             product_id DESC
                     				LIMIT 6");
-            
-            $stmt->bind_param("s", $user_id);
             
             /*
                 Function location in : functions.php

@@ -43,20 +43,10 @@
                 $user_id = '';
             }
             
-            $stmt = $con->prepare("
+            $stmt = $con->query("
                                     SELECT 
                                             inner1.*,
                                             count(product_rate_id) AS product_israte,
-                                            (
-                                                SELECT 
-                                                        COUNT(product_favorite_id) 
-                                                FROM 
-                                                        product_favorite 
-                                                WHERE 
-                                                        product_favorite.product_id=inner1.product_id 
-                                                        AND 
-                                                        user_id = ?
-                                            ) AS product_isfavorite,
                                             IFNULL(product_rate_value,0) AS product_rate_value 
                                     FROM(
                                         SELECT 
@@ -69,22 +59,26 @@
                                             product_description,
                                             product_rate,
                                             product_stock,
+                                            product_minimum,
+                                            product_weight,
+                                            product_condition,
                                             shop_icon,
                                             shop_name,
     					                    product_count_favorite,
-                                            product_average_rate
+                                            product_average_rate,
+											category_name
                                         FROM 
                                             product
                                             LEFT JOIN brand ON brand.brand_id = product.brand_id
                                             LEFT JOIN shop ON shop.shop_id = brand.shop_id
                                             LEFT JOIN `user` ON `user`.user_id = shop.user_id
+                                            LEFT JOIN category ON category.category_id = product.category_id
                                         WHERE
-                                            product_id=?
+                                            product_id=".$id."
                                     ) AS inner1 
                                         LEFT JOIN product_rate ON inner1.product_id=product_rate.product_id 
                                     WHERE 
-                                        product_rate.user_id = ?");
-            $stmt->bind_param("sis", $user_id,$id,$user_id);
+                                        product_rate.user_id = '".$user_id."'");
             /*
                 Function location in : functions.php
             */

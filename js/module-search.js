@@ -1,5 +1,5 @@
-var search = new Object(),
-    searchPage = new Object();
+var search = {},
+    searchPage = {};
 
 function initSearch(){
     /*
@@ -7,7 +7,8 @@ function initSearch(){
         location function : js/module-general.js
     */
     var keywords = getUrlParam("keywords"),
-        category = getUrlParam("c");
+        category = getUrlParam("c"),
+        categoryProductStorage = sessionStorage.getItem("categoryProduct");
         
     search.keywords = (keywords === null)?'':keywords;
     search.category = (category === null)?'':category;
@@ -16,6 +17,21 @@ function initSearch(){
     search.rate = '';
     search.pricemax = '';
     search.pricemin = '';
+    
+    if(categoryProductStorage !== null){
+        var categoryProductFlag = 0;
+        $.each(JSON.parse(categoryProductStorage), function( key, val ) {
+            if(val.category_id === parseInt(search.category)){
+                var nameCategory = val.category_name;
+                $('#categorySearch').html(nameCategory);
+                categoryProductFlag = 1;
+                return false;
+            }
+        });
+        if(categoryProductFlag === 0){
+            $('#categorySearch').html('');
+        }
+    }
     
     searchItem();
     
@@ -92,6 +108,8 @@ function initSearch(){
 	        $('.content:first-child span:first-child,#sortingSearch').show();
 	        $('.content.price,.content.rate').show();
 	        
+	        $('#categorySearch').removeClass('hidden');
+	        
 	        search.type = 'product';
     
             searchItem();
@@ -102,6 +120,7 @@ function initSearch(){
 	        
 	        $('.content:first-child span:first-child,#sortingSearch').hide();
 	        $('.content.price,.content.rate').hide();
+	        $('#categorySearch').addClass('hidden');
 	        
 	        search.type = 'shop';
     

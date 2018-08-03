@@ -10,26 +10,22 @@
                 - id_socmed
     */
     function comment($stmt,$id,$shop_id,$user_id,$comment){
-        $stmt->execute();
-    
-        $stmt->bind_result($col1,$col2,$col3,$col4);
+        $row = $stmt->fetch_object();
         
-        $stmt->fetch();
-        
-        if($col2 == 'no-photo.jpg'){
-            $photo = 'http://'.INIT_URL.'/img/'.$col2;
+        if($row->user_photo == 'no-photo.jpg'){
+            $photo = INIT_URL.'/img/'.$row->user_photo;
         }else{
-            $photo = 'http://'.IMAGES_URL.'/'.$col1.'/'.$col2;
+            $photo = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/'.$row->user_photo));
         }
         
         $data = array(
                     "id" => intval($id),
                     "shop_id" => intval($shop_id),
                     "user_id" => $user_id,
-                    "fullname" => $col3,
+                    "fullname" => $row->fullname,
                     "user_photo" => $photo,
                     "shop_comment" => $comment,
-                    "comment_date" => $col4
+                    "comment_date" => $row->comment_date
                 );
                         
         $stmt->close();

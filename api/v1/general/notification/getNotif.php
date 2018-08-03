@@ -66,19 +66,14 @@
                         notification
                         LEFT JOIN `user` ON notification.user_id=`user`.user_id
                     WHERE
-                        notification.user_id = ?";
+                        notification.user_id = '".$user_id."'";
             if($keyword != ''){
-                $sql .= " AND notification_desc LIKE '%?%'";
+                $sql .= " AND notification_desc LIKE '%".$keyword."%'";
             }
             $sql .= " ORDER BY 
                         notification_id DESC";
-            $stmt = $con->prepare($sql);
-            
-            if($keyword != ''){
-                $stmt->bind_param("ss", $user_id,$keyword);
-            }else{
-                $stmt->bind_param("s", $user_id);
-            }
+            $stmt = $con->query($sql);
+    
             /*
                 Function location in : functions.php
             */

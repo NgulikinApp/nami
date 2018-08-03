@@ -42,7 +42,7 @@
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
             if($type == 0){
-                $stmt = $con->prepare(" SELECT 
+                $stmt = $con->query(" SELECT 
                                             * 
                                         FROM (
                                             SELECT 
@@ -59,17 +59,15 @@
                                                 LEFT JOIN `user` ON `user`.user_id = shop_review.user_id
                                                 LEFT JOIN `shop` ON `shop`.shop_id = shop_review.shop_id
                                             WHERE
-                                                shop_review.shop_id = ?
+                                                shop_review.shop_id = ".$id."
                                             ORDER BY 
                                                 shop_review_id DESC
-                                            LIMIT ?
+                                            LIMIT ".$pagesize."
                                         ) sub
                                         ORDER BY 
                                             shop_review_id ASC");
-                
-                $stmt->bind_param("ii", $id,$pagesize);
             }else{
-                $stmt = $con->prepare(" SELECT 
+                $stmt = $con->query(" SELECT 
                                                 shop_review_id,
                                                 shop_review.user_id,
                                                 shop_review_comment,
@@ -83,12 +81,10 @@
                                                 LEFT JOIN `user` ON `user`.user_id = shop_review.user_id
                                                 LEFT JOIN `shop` ON `shop`.shop_id = shop_review.shop_id
                                             WHERE
-                                                shop_review.shop_id = ?
+                                                shop_review.shop_id = ".$id."
                                             ORDER BY 
                                                 shop_review_id DESC
-                                            LIMIT ?,?");
-                
-                $stmt->bind_param("iii", $id,$page,$pagesize);
+                                            LIMIT ".$page.",".$pagesize."");
             }
             
             /*

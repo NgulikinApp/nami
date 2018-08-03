@@ -115,22 +115,8 @@
         return generateJSON($dataout);
     }
     
-    /*
-        Function referred on : all
-        Used for executing the query
-    */
-    function runQuery($stmt){
-        $stmt->execute();
-        
-        $stmt->close();
-    }
-    
-    function runQuery_returnId($stmt){
-        $stmt->execute();
-        
-        $last_id = $stmt->insert_id;
-        
-        $stmt->close();
+    function runQuery_returnId($con){
+        $last_id = $con->insert_id;
         
         return $last_id;
     }
@@ -236,8 +222,6 @@
         Return data: numeric
     */
     function count_rows($stmt){
-        $stmt->execute();
-        $stmt->store_result();
         $rowsCount = $stmt->num_rows;
         
         $stmt->close();
@@ -293,20 +277,12 @@
                 - message
                 - result
     */
-    function userDone($do){
-        if($do == "favorite"){
-            $dataout = array(
-                    "status" => "NO",
-                    "message" => "You have saved this item",
-                    "result" => array()
-                );
-        }else{
-            $dataout = array(
+    function userDone(){
+        $dataout = array(
                     "status" => "NO",
                     "message" => "You have rated this item",
                     "result" => array()
                 );
-        }
         
         /*
             Function location in : /model/generatejson.php
@@ -320,16 +296,11 @@
         Return data: rows
     */
     function calc_val($stmt){
-        $stmt->execute();
         
-        $stmt->bind_result($col1);
-        
-        $stmt->fetch();
-        
-        $count = $col1;
+        $row = $stmt->fetch_object();
         
         $stmt->close();
         
-        return $count;
+        return $row;
     }
 ?>

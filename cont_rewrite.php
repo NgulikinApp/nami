@@ -41,11 +41,26 @@
 				case 'generateToken':
 					include('api/v1/general/system/generateToken.php');
 				break;
+				case 'pdf':
+					include('api/v1/general/system/delivery.php');
+				break;
 				case 'notif':
 				    include('api/v1/general/notification/getNotif.php');
 				break;
 				case 'product':
 					switch (@$routes[2]) {
+					    case 'a':
+							include('api/v1/product/detail/actionData.php');
+						break;
+						case 'brand':
+							switch (@$routes[3]) {
+							    case 'a':
+        							include('api/v1/product/brand/actionData.php');
+        						break;
+							    default :
+							        include('api/v1/product/brand/getData.php');
+							}
+						break;
 						case 'category':
 							include('api/v1/product/list/category.php');
 						break;
@@ -68,6 +83,12 @@
 				break;
 				case 'profile':
 				    switch (@$routes[2]) {
+				        case 'cm':
+				            include('api/v1/profile/confirmPassword.php');
+				        break;
+				        case 'up':
+				            include('api/v1/profile/updatePassword.php');
+				        break;
 				        case 'u':
 				            include('api/v1/profile/updateUser.php');
 				        break;
@@ -82,7 +103,7 @@
 				case 'shop':
 				    switch (@$routes[2]) {
 				        case 'account':
-				            switch ($routes[3]) {
+				            switch (@$routes[3]) {
 				                case 'a':
         							include('api/v1/shop/detail/actionAccount.php');
         						break;
@@ -95,10 +116,24 @@
 							include('api/v1/shop/list/bank.php');
 						break;
 				        case 'brand':
-							include('api/v1/shop/list/brand.php');
+				            switch (@$routes[3]) {
+				                case 's':
+        							include('api/v1/shop/detail/selectBrand.php');
+        						break;
+				                default:
+				                    include('api/v1/shop/list/brand.php');
+				                break;
+				            }
 						break;
 						case 'delivery':
-							include('api/v1/shop/list/delivery.php');
+						    switch (@$routes[3]) {
+						        case 'e':
+        							include('api/v1/shop/detail/editDelivery.php');
+        						break;
+						        default:
+				                    include('api/v1/shop/list/delivery.php');
+				                break;
+						    }
 						break;
 				        case 'discuss':
 				            switch (@$routes[3]) {

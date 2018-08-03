@@ -49,7 +49,7 @@
                 return invalidKey();
             }
             
-            $stmt = $con->prepare("
+            $stmt = $con->query("
                                     SELECT 
                                             account_id,
                                             account_name,
@@ -61,9 +61,7 @@
                                             account 
                                             JOIN bank ON account.bank_id=bank.bank_id 
                                     WHERE 
-                                            user_id = ?");
-                                            
-            $stmt->bind_param("s", $user_id);
+                                            user_id = '".$user_id."'");
             
             /*
                 Function location in : function.php

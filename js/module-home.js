@@ -1,8 +1,7 @@
-var favoriteData = new Object();
+var favoriteData = {};
 
 function initHome(){
-    var url = 'http://init.ngulikin.com',
-        logoutsession = sessionStorage.getItem('logoutNgulikin'),
+    var logoutsession = sessionStorage.getItem('logoutNgulikin'),
         paymentfailedsession = sessionStorage.getItem('paymentFailedNgulikin'),
         loginsession = sessionStorage.getItem('loginNgulikin');
     
@@ -118,7 +117,7 @@ function uptodate(){
             url: PRODUCT_FEED_API,
             data: { filter: "uptodate"},
             dataType: 'json',
-            beforeSend: function(xhr, settings) { 
+            beforeSend: function(xhr, settings) {
                 xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
             },
             success: function(data, status) {

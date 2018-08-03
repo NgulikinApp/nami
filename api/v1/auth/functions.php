@@ -97,17 +97,13 @@
                 - id_socmed
     */
     function account_verify($stmt){
-        $stmt->execute();
+        $row = $stmt->fetch_object();
         
-        $stmt->bind_result($col1,$col2,$col3,$col4,$col5);
-        
-        $stmt->fetch();
-        
-        $user_id = $col1;
-        $user_isactive = $col2;
-        $password = $col3;
-        $socmed = $col4;
-        $idsocmed = $col5;
+        $user_id = $row->user_id;
+        $user_isactive = $row->user_isactive;
+        $password = $row->password;
+        $socmed = $row->socmed;
+        $idsocmed = $row->id_socmed;
         
         $stmt->close();
         
@@ -127,29 +123,28 @@
                 - merchant
     */
     function get_data_signin($stmt){
-        $stmt->execute();
-    
-        $stmt->bind_result($col1,$col2,$col3,$col4,$col5,$col6,$col7,$col8,$col9,$col10);
         
-        $stmt->fetch();
+        $row = $stmt->fetch_object();
         
-        if($col9 != "no-photo.jpg"){
-            $photo = 'http://'.IMAGES_URL.'/'.$col2.'/'.$col9;
+        if($row->user_photo != "no-photo.jpg"){
+            $photo = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/'.$row->user_photo));
         }else{
-            $photo = "http://".INIT_URL."/img/".$col9;
+            $photo = INIT_URL."/img/".$row->user_photo;
         }
         
         $data = array(
-                        "user_id"=>$col1,
-                        "username"=>$col2,
-                        "fullname"=>$col3,
-                        "email"=>$col4,
-                        "nohp"=>$col5,
-                        "dob"=>$col6,
-                        "gender"=>$col7,
-                        "key"=>$col8,
+                        "user_id"=>$row->user_id,
+                        "username"=>$row->username,
+                        "fullname"=>$row->fullname,
+                        "email"=>$row->email,
+                        "nohp"=>$row->phone,
+                        "dob"=>$row->dob,
+                        "gender"=>$row->gender,
+                        "key"=>$row->user_key,
                         "user_photo"=>$photo,
-                        "shop_id"=>$col10
+                        "shop_id"=>$row->shop_id,
+                        "brand_id"=>$row->shop_current_brand,
+                        "delivery_id"=>$row->shop_delivery
                     );
                     
         $_SESSION['user'] = $data;
@@ -174,18 +169,16 @@
         Return data:
                 - user_id
                 - user_isactive (0/1)
+                - email
+                - fullname
     */
     function get_account_forgotpassword($stmt){
-        $stmt->execute();
+        $row = $stmt->fetch_object();
         
-        $stmt->bind_result($col1,$col2,$col3,$col4);
-        
-        $stmt->fetch();
-        
-        $user_id = $col1;
-        $user_isactive = $col2;
-        $email = $col3;
-        $fullname = $col4;
+        $user_id = $row->user_id;
+        $user_isactive = $row->user_isactive;
+        $email = $row->email;
+        $fullname = $row->fullname;
         
         $stmt->close();
         
@@ -199,13 +192,9 @@
                 - user_id
     */
     function code_verified($stmt){
-        $stmt->execute();
+        $row = $stmt->fetch_object();
         
-        $stmt->bind_result($col1);
-        
-        $stmt->fetch();
-        
-        $user_id = $col1;
+        $user_id = $row->user_id;
         
         $stmt->close();
         
@@ -239,9 +228,11 @@
         Return data:
     */
     function returndata_signin($user_id,$con){
-        $stmt = $con->prepare(" SELECT 
+        $stmt = $con->query("SELECT 
                                         inner1.*,
-                                        IFNULL(shop_id,0) as shop_id 
+                                        IFNULL(shop_id,0) as shop_id,
+                                        shop_current_brand,
+                                        shop_delivery
                                 FROM(
                                         SELECT
                                             user_id,
@@ -256,10 +247,9 @@
                                         FROM 
                                             user 
                                         WHERE 
-                                            user_id=?
+                                            user_id='".$user_id."'
                                 )as inner1 
                                     LEFT JOIN shop ON inner1.user_id=shop.user_id");
-        $stmt->bind_param("s", $user_id);
                 
         /*
             Function location in : functions.php

@@ -12,7 +12,7 @@
             </div>
             <div class="grid_chapter">
                 <img src="img/banner2_resized.jpg" height="405"/>
-            </div>
+            </div
         </div>
     </section>
     <section class="container desc">
@@ -94,7 +94,7 @@
                         </div>
                         <div class="grid_rightsub_chapter">
                             <div class="grid_rightsub_chapter_left">
-                                <img src="https://scontent-sit4-1.xx.fbcdn.net/v/t1.0-1/p160x160/16472974_10208482547443706_4718047265869220728_n.jpg?oh=04316199791ead0ef22e368066f5a071&oe=5ABE5879" width="100" height="100">
+                                <img src="https://scontent.fjkt1-1.fna.fbcdn.net/v/t1.0-9/16472974_10208482547443706_4718047265869220728_n.jpg?_nc_cat=0&oh=a4a42e5ccd5d6566b116347eb5aa6021&oe=5BD24D26" width="100" height="100">
                             </div>
                             <div class="grid_rightsub_chapter_right">
                                 <span>Andhika Adhitama Gama</span>
@@ -108,7 +108,7 @@
                         </div>
                         <div class="grid_rightsub_chapter">
                             <div class="grid_rightsub_chapter_left">
-                                <img src="https://scontent.fsub6-2.fna.fbcdn.net/v/t1.0-1/p100x100/10262014_1703247593234804_5565481879552377594_n.jpg?oh=3cbdfa9735e480ed43f5e5c3f6ac4651&oe=5A487362" width="100" height="100">
+                                <img src="https://scontent.fjkt1-1.fna.fbcdn.net/v/t1.0-9/10262014_1703247593234804_5565481879552377594_n.jpg?_nc_cat=0&oh=ea882447a6bdf830ccaaaf72115e728b&oe=5C11E7C6" width="100" height="100">
                             </div>
                             <div class="grid_rightsub_chapter_right">
                                 <span>Reicha Sofi Azura</span>
@@ -139,7 +139,7 @@
                         </div>
                         <div class="grid_rightsub_chapter">
                             <div class="grid_rightsub_chapter_left">
-                                <img src="https://scontent.fcgk7-1.fna.fbcdn.net/v/t1.0-9/1936161_1074563715415_4219465_n.jpg?_nc_eui2=v1%3AAeE4VmBIv3JCqWSM6ul9e5Q3W55nEG9P3Z7D8Ic18bsqtaz6rGFYd3Ac28SAKllmbNOQl0mpiOKyHWxi22hvqXBE6pIfWimUUWgz5L7iRYbP3cs43l-aIm8eQao2Kd9onGc&oh=e0a37c5668e4402af66d6d1f5f794b51&oe=5A848DC4" width="100" height="100">
+                                <img src="https://scontent.fjkt1-1.fna.fbcdn.net/v/t1.0-1/10460988_10202462622957956_7341475977666742534_n.jpg?_nc_cat=0&oh=1231b20fbb7fbb61edf9ea0bffa754c5&oe=5BCCEEE7" width="100" height="100">
                             </div>
                             <div class="grid_rightsub_chapter_right">
                                 <span>Sandy Nurdiansyah</span>

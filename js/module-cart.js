@@ -2,8 +2,6 @@ function initCart(){
     var cartNgulikin = localStorage.getItem('cartNgulikin'),
         productPrice = "1000000",
         emailsession = localStorage.getItem('emailNgulikin'),
-        url = 'http://init.ngulikin.com',
-        urlAPI 	= 'http://api.ngulikin.com/v1/',
         loginsession = sessionStorage.getItem('loginNgulikin');
         
         cartNgulikin = parseInt(cartNgulikin);
@@ -170,7 +168,7 @@ function listLabels() {
         request.execute(function(resp) {
         	localStorage.setItem('emailNgulikin', resp.emails[0].value);
         	sessionStorage.setItem('loginNgulikin',1);
-        	location.href = "http://init.ngulikin.com/cart";
+        	location.href = url+"/cart";
         			     
         	gapi.auth2.getAuthInstance().signOut();
         });
@@ -181,6 +179,6 @@ function getUserData() {
 	FB.api('/me?fields=name,email', function(response) {
 		localStorage.setItem('emailNgulikin', response.email);
 		sessionStorage.setItem('loginNgulikin',1);
-        location.href = "http://init.ngulikin.com/cart";
+        location.href = url+"/cart";
 	});
 }

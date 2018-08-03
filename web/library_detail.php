@@ -3,6 +3,7 @@
     include 'web/system/checkDevice.php';
     include 'web/system/getUrl.php';
     include 'system/jsversionstring.php';
+    include 'web/system/minifier.php';
 ?>
 <link rel="shortcut icon" href="../../img/favicon.ico?jsr=<?php echo $jsversionstring; ?>" type="image/x-icon" />
 <!--CSS Library-->
@@ -16,7 +17,7 @@
 <link rel="stylesheet" type="text/css" media="all" href="../../css/milestones.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="../../css/dropzone.css?jsr=<?php echo $jsversionstring; ?>">
 <!--CSS Main-->
-<link href="../../css/main.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all" href="../../css/main.css?jsr=<?php echo $jsversionstring; ?>">
         
 <!--JS Library-->
 <script src="../../js/library/jquery-1.12.4.js?jsr=<?php echo $jsversionstring; ?>"></script>

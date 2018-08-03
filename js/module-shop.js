@@ -1,6 +1,6 @@
-var commentFlag = new Object(),
-    commentPage = new Object(),
-    shopProductPage = new Object();
+var commentFlag = {},
+    commentPage = {},
+    shopProductPage = {};
 
 function initShop(){
     commentFlag.type = 0;
@@ -47,12 +47,7 @@ function initShop(){
 	}
     
     $('#favorite-icon-shop').on( 'click', function( e ){
-        var isfavorite = $(this).attr('datainternal-id');
-        if(parseInt(isfavorite) == 1){
-            notif("error","Anda sudah menyimpan toko ini","top");
-        }else{
-            favoriteShop();
-        }
+        favoriteShop();
 	});
 	
 	$('#buttonDiscussShop').on( 'click', function( e ){
@@ -127,8 +122,6 @@ function detail(){
                             if(data.result.shop_banner !== ''){
                                 $('.home_container .home_container .grid-shop-banner').css('background','url(' + data.result.shop_banner + ')');
                             }
-                            
-                            $('#favorite-icon-shop').attr('datainternal-id',data.result.shop_isfavorite);
                     }else{
                         document.title = 'NOT FOUND | Ngulikin';
                         
@@ -173,9 +166,9 @@ function favoriteShop(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                        generateToken(favoriteShop);
-                }else if(data.message == 'You have saved this item'){
-                    notif("error","Anda sudah menyimpan toko ini","left","top");
+                    generateToken(favoriteShop);
+                }else if(data.result.isfavorite === 0){
+                    notif("info","Toko dihapus dari daftar favorit","left","top");
                 }else{
                     notif("info","Toko ditambah ke daftar favorit","left","top");
                 }

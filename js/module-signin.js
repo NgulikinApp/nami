@@ -1,4 +1,4 @@
-var authSigin = new Object();
+var authSigin = {};
 
 function initSignin(){
     var signinSessionEmail = sessionStorage.getItem('signinEmailNgulikin');

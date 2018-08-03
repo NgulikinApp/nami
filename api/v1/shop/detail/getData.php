@@ -52,13 +52,8 @@
                 }
             }
             
-            $stmt = $con->prepare("
-                                    SELECT 
-                                            inner1.*,
-                                            COUNT(shop_favorite_id) AS shop_isfavorite 
-                                    FROM(
-                                            SELECT 
-                                                    shop_id,
+            $stmt = $con->query("SELECT 
+                                                    shop.shop_id,
                                                     `user`.user_id,
                                                     username,
                                                     shop_name,
@@ -66,18 +61,12 @@
                                                     shop_description,
                                                     shop_banner,
                                                     IFNULL(university,'') AS university,
-                                        			user_photo,
-                                        			shop_total_product
+                                        			user_photo
                                             FROM 
                                                     shop
                                                     LEFT JOIN `user` ON `user`.user_id = shop.user_id
                                             WHERE
-                                                    shop_id=?
-                                    ) AS inner1 
-                                        LEFT JOIN shop_favorite ON inner1.shop_id=shop_favorite.shop_id
-                                    WHERE 
-                                        shop_favorite.user_id = ?");
-            $stmt->bind_param("is", $id,$user_id);
+                                                    shop.shop_id=".$id."");
             /*
                 Function location in : functions.php
             */

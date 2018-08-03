@@ -42,6 +42,22 @@ function initProfile(){
     $("#femalePrivate").parent().replaceWith(cnt);
     
     $('.ui-loader').remove();
+    
+    $('#emailSignin,#passwordSignin').keypress(function(e) {
+	    if(e.which == 13) {
+    	    $('#btnSubmitPassMyprofile').trigger('click');
+	    }
+	});
+    
+    $('#btnSubmitPassMyprofile').on( 'click', function( e ){
+        if($('#oldpassword').val() === '' || $('#newpassword').val() === '' || $('#newpassword_confirm').val() === ''){
+            notif("error","Semua input harus diisi","center","top");
+        }else if($('#newpassword').val() !== $('#newpassword_confirm').val()){
+            notif("error","Password baru dan konfirmasi password baru tidak sama","center","top");
+        }else{
+            updatePassword();
+        }
+    });
 }
 
 function profile(){
@@ -129,6 +145,44 @@ function updateProfile(){
                     notif("success","Data anda sudah diperbarui","center","top");
                     
                     localStorage.setItem('authNgulikin', JSON.stringify(data.result));
+                }
+            } 
+        });
+    }
+}
+
+function updatePassword(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(updatePassword);
+    }else{
+        var oldpassword = (SHA256($('#oldpassword').val())).toUpperCase();
+        var newpassword = (SHA256($('#newpassword').val())).toUpperCase();
+        
+        $.ajax({
+            type: 'POST',
+            url: PROFILE_UPDATEPASSWORD_API,
+            data:JSON.stringify({ 
+                    oldpassword : oldpassword,
+                    newpassword : newpassword
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                    generateToken(updatePassword);
+                }else if(data.message === 'Invalid key'){
+                    localStorage.removeItem('emailNgulikin');
+                    sessionStorage.setItem("logoutNgulikin", 1);
+                    localStorage.removeItem('authNgulikin');
+                    location.href = url;
+                    localStorage.getItem('authNgulikin');
+                }else if(data.message === 'Password is wrong'){
+                    notif("error","Password saat ini tidak benar","center","top");
+                }else{
+                    $('.loaderProgress').addClass('hidden');
+                    notif("success","Cek email anda untuk konfirmasi ubah password","center","top");
                 }
             } 
         });

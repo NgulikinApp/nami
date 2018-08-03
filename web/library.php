@@ -3,20 +3,20 @@
     include 'web/system/checkDevice.php';
     include 'web/system/getUrl.php';
     include 'system/jsversionstring.php';
+    include 'web/system/minifier.php';
 ?>
 <link rel="shortcut icon" href="img/favicon.ico?jsr=<?php echo $jsversionstring; ?>" type="image/x-icon" />
 <!--CSS Library-->
-<link type="text/css" media="all" href="css/bootstrap.min.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
-<link type="text/css" media="all" href="css/sidebar.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
-<link type="text/css" media="all" href="css/font-awesome.min.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
-<link href="css/jquery.notify.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css?jsr=<?php echo $jsversionstring; ?>">
+<link rel="stylesheet" type="text/css" media="all" href="css/sidebar.css?jsr=<?php echo $jsversionstring; ?>">
+<link rel="stylesheet" type="text/css" media="all" href="css/font-awesome.min.css?jsr=<?php echo $jsversionstring; ?>">
+<link rel="stylesheet" type="text/css" media="all" href="css/jquery.notify.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="css/jquery.tosrus.all.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="css/cslide-slide.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="css/jquery-anyslider.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="css/jquery.rateyo.min.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="css/dropzone.css?jsr=<?php echo $jsversionstring; ?>">
-<!--CSS Main-->
-<link type="text/css" media="all" href="css/main.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all" href="css/main.css?jsr=<?php echo $jsversionstring; ?>">
 
 <!--JS Library-->
 <script src="js/library/jquery-1.12.4.js?jsr=<?php echo $jsversionstring; ?>"></script>

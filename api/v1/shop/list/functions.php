@@ -4,22 +4,19 @@
         Used for showing callback data the feed of shoping in landing page
     */
     function feed($stmt){
-        $stmt->execute();
-    
-        $stmt->bind_result($col1,$col2,$col3,$col4);
         
         $data = array();
     
-        while ($stmt->fetch()) {
-            if($col3 != ""){
-                $icon = 'http://'.IMAGES_URL.'/'.$col4.'/shop/icon/'.$col3;
+        while ($row = $stmt->fetch_object()) {
+            if($row->shop_icon != ""){
+                $icon = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/shop/icon/'.$row->shop_icon));
             }else{
-                $icon = "http://".INIT_URL."/img/icontext.png";
+                $icon = INIT_URL."/img/icontext.png";
             }
             
             $data[] = array(
-                      "shop_id" => $col1,
-                      "shop_name" => $col2,
+                      "shop_id" => $row->shop_id,
+                      "shop_name" => $row->shop_name,
                       "shop_icon" =>  $icon
                     );
         }
@@ -37,27 +34,22 @@
         Used for returning array data
     */
     function favorite($stmt,$pagesize){
-        
-        $stmt->execute();
-        
-        $stmt->bind_result($col1,$col2,$col3,$col4,$col5,$col6);
-        
         $data = array();
-        
-        while ($stmt->fetch()) {
-            $total = $col6;
+        $total = 0;
+        while ($row = $stmt->fetch_object()) {
+            $total = $row->count_shop;
                         
-            if($col3 == ''){
+            if($row->shop_icon == ''){
                 $icon = "https://s4.bukalapak.com/img/409311077/s-194-194/TV_LED_Sharp_24__LC_24LE170i.jpg";
             }else{
-                $icon = 'http://'.IMAGES_URL.'/'.$col4.'/shop/icon/'.$col3;
+                $icon = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/shop/icon/'.$row->shop_icon));
             }
                         
             $data[] = array(
-                            "shop_id" => $col1,
-                            "shop_name" => $col2,
+                            "shop_id" => $row->shop_id,
+                            "shop_name" => $row->shop_name,
                             "shop_icon" =>  $icon,
-                            "shop_difdate" => $col5
+                            "shop_difdate" => $row->shop_difdate
                         );
         }
         
@@ -74,21 +66,16 @@
         Used for returning array data
     */
     function product($stmt,$pagesize){
-        
-        $stmt->execute();
-        
-        $stmt->bind_result($col1,$col2,$col3,$col4,$col5,$col6);
-        
         $data = array();
         
         $total = 0;
-        while ($stmt->fetch()) {
-            $total = $col5;
+        while ($row = $stmt->fetch_object()) {
+            $total = $row->shop_total_product;
             $data[] = array(
-                      "product_id" => $col1,
-                      "product_name" => $col2,
-                      "product_image" => 'http://'.IMAGES_URL.'/'.$col4.'/product/'.$col3,
-                      "product_price" => $col6,
+                      "product_id" => $row->product_id,
+                      "product_name" => $row->product_name,
+                      "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/product/'.$row->product_image)),
+                      "product_price" => $row->product_price,
                     );
         }
         
@@ -105,29 +92,24 @@
         Used for returning array data
     */
     function review($stmt,$pagesize){
-        
-        $stmt->execute();
-    
-        $stmt->bind_result($col1,$col2,$col3,$col4,$col5,$col6,$col7,$col8);
-        
         $data = array();
         
         $total = 0;
-        while ($stmt->fetch()) {
-            $total = $col8;
-            if($col5 != "no-photo.jpg"){
-                $icon = 'http://'.IMAGES_URL.'/'.$col4.'/'.$col5;
+        while ($row = $stmt->fetch_object()) {
+            $total = $row->shop_total_review;
+            if($row->user_photo != "no-photo.jpg"){
+                $icon = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/'.$row->user_photo));
             }else{
-                $icon = "http://".INIT_URL."/img/".$col5;
+                $icon = INIT_URL."/img/".$row->user_photo;
             }
             
             $data[] = array(
-                      "shop_review_id" => $col1,
-                      "user_id" => $col2,
-                      "shop_review_comment" =>  $col3,
+                      "shop_review_id" => $row->shop_review_id,
+                      "user_id" => $row->user_id,
+                      "shop_review_comment" => $row->shop_review_comment,
                       "user_photo" => $icon,
-                      "fullname" => $col6,
-                      "comment_date" => $col7
+                      "fullname" => $row->fullname,
+                      "comment_date" => $row->comment_date
                     );
         }
         
@@ -144,29 +126,24 @@
         Used for returning array data
     */
     function discuss($stmt,$pagesize){
-        
-        $stmt->execute();
-    
-        $stmt->bind_result($col1,$col2,$col3,$col4,$col5,$col6,$col7,$col8);
-        
         $data = array();
         
         $total = 0;
-        while ($stmt->fetch()) {
-            $total = $col8;
-            if($col5 != "no-photo.jpg"){
-                $icon = 'http://'.IMAGES_URL.'/'.$col4.'/'.$col5;
+        while ($row = $stmt->fetch_object()) {
+            $total = $row->shop_total_discuss;
+            if($row->user_photo != "no-photo.jpg"){
+                $icon = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/'.$row->user_photo));
             }else{
-                $icon = "http://".INIT_URL."/img/".$col5;
+                $icon = INIT_URL."/img/".$row->user_photo;
             }
             
             $data[] = array(
-                      "shop_discuss_id" => $col1,
-                      "user_id" => $col2,
-                      "shop_discuss_comment" =>  $col3,
+                      "shop_discuss_id" => $row->shop_discuss_id,
+                      "user_id" => $row->user_id,
+                      "shop_discuss_comment" =>  $row->shop_discuss_comment,
                       "user_photo" => $icon,
-                      "fullname" => $col6,
-                      "comment_date" => $col7
+                      "fullname" => $row->fullname,
+                      "comment_date" => $row->comment_date
                     );
         }
         
@@ -182,21 +159,16 @@
         Function referred on : brand.php
         Used for returning array data
     */
-    function brand($stmt,$pagesize){
-        
-        $stmt->execute();
-        
-        $stmt->bind_result($col1,$col2,$col3,$col4,$col5);
-        
+    function brand($stmt){
         $data = array();
         
         $total = 0;
-        while ($stmt->fetch()) {
-            $total = $col5;
+        while ($row = $stmt->fetch_object()) {
             $data[] = array(
-                      "brand_id" => $col1,
-                      "brand_name" => $col2,
-                      "brand_image" => 'http://'.IMAGES_URL.'/'.$col4.'/brand/'.$col3
+                      "brand_id" => $row->brand_id,
+                      "brand_name" => $row->brand_name,
+                      "brand_image" => IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/brand/'.$row->brand_image)),
+                      "shop_current_brand" => $row->shop_current_brand
                     );
         }
         
@@ -205,7 +177,7 @@
         /*
             Function location in : /model/general/functions.php
         */
-        credentialVerifiedCalc($data,$total,$pagesize);
+        credentialVerified($data);
     }
     
     /*
@@ -213,17 +185,13 @@
         Used for showing callback data the feed of bank
     */
     function bank($stmt){
-        $stmt->execute();
-    
-        $stmt->bind_result($col1,$col2,$col3);
-        
         $data = array();
     
-        while ($stmt->fetch()) {
+        while ($row = $stmt->fetch_object()) {
             $data[] = array(
-                      "bank_id" => $col1,
-                      "bank_name" => $col2,
-                      "bank_icon" =>  "http://".INIT_URL."/img/".$col3
+                      "bank_id" => $row->bank_id,
+                      "bank_name" => $row->bank_name,
+                      "bank_icon" =>  INIT_URL."/img/".$row->bank_icon
                     );
         }
         
@@ -240,20 +208,16 @@
         Used for showing callback data the feed of account
     */
     function account($stmt){
-        $stmt->execute();
-    
-        $stmt->bind_result($col1,$col2,$col3,$col4,$col5,$col6);
-        
         $data = array();
     
-        while ($stmt->fetch()) {
+        while ($row = $stmt->fetch_object()) {
             $data[] = array(
-                      "account_id" => $col1,
-                      "account_name" => $col2,
-                      "account_no" => $col3,
-                      "bank_name" => $col4,
-                      "bank_icon" =>  "/img/".$col5,
-                      "bank_id" => $col6
+                      "account_id" => $row->account_id,
+                      "account_name" => $row->account_name,
+                      "account_no" => $row->account_no,
+                      "bank_name" => $row->bank_name,
+                      "bank_icon" =>  "/img/".$row->bank_icon,
+                      "bank_id" => $row->bank_id
                     );
         }
         
@@ -269,28 +233,40 @@
         Function referred on : delivery.php
         Used for showing callback data the feed of delivery
     */
-    function delivery($stmt){
-        $stmt->execute();
-    
-        $stmt->bind_result($col1,$col2,$col3,$col4,$col5);
+    function delivery($stmt,$stmtdel,$delivery_id,$shop_id){
+        $delivery_array = explode(',',$delivery_id);
         
-        $data = array();
+        $datalist = array();
     
-        while ($stmt->fetch()) {
-            $data[] = array(
-                      "delivery_id" => $col1,
-                      "delivery_icon" => $col2,
-                      "is_choose" => $col3,
-                      "delivery_ismid" => $col4,
-                      "delivery_name" => $col5
+        while ($row = $stmt->fetch_object()) {
+            if (in_array($row->delivery_id, $delivery_array)) {
+                $is_choose = true;
+            } else {
+                $is_choose = false;
+            }
+            $datalist[] = array(
+                      "delivery_id" => $row->delivery_id,
+                      "delivery_icon" => $row->delivery_icon,
+                      "is_choose" => $is_choose,
+                      "delivery_ismid" => $row->delivery_ismid,
+                      "delivery_name" => $row->delivery_name
                     );
         }
+        
+        $rowdel = $stmtdel->fetch_object();
+        
+        $modify_date = $rowdel->modify_date;
+        
+        $data = array(
+                        "modify_date" => $modify_date,
+                        "list" => $datalist
+                    );
         
         $stmt->close();
         
         /*
             Function location in : /model/general/functions.php
         */
-        credentialVerified($data);
+        credentialVerified((object)$data);
     }
 ?>

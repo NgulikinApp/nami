@@ -12,47 +12,38 @@
                 - shop_banner
                 - university
                 - user_photo
-                - shop_isfavorite (0/1)
-                - shop_total_product
     */
     function detail($stmt){
-        $stmt->execute();
-    
-        $stmt->bind_result($col1,$col2,$col3,$col4,$col5,$col6,$col7,$col8,$col9,$col10,$col11);
-        
         $data = array();
     
-        while ($stmt->fetch()) {
-            if($col5 != ""){
-                $icon = 'http://'.IMAGES_URL.'/'.$col3.'/shop/icon/'.$col5;
-            }else{
-                $icon = "http://".INIT_URL."/img/icontext.png";
-            }
-            
-            if($col9 != "no-photo.jpg"){
-                $user_photo = 'http://'.IMAGES_URL.'/'.$col3.'/'.$col9;
-            }else{
-                $user_photo = "http://".INIT_URL."/img/".$col9;
-            }
-            
-            if($col7 != ""){
-                $shop_banner = 'http://'.IMAGES_URL.'/'.$col3.'/'.$col7;
-            }else{
-                $shop_banner = $col7;
-            }
-            
-            $data['shop_id'] = $col1;
-            $data['user_id'] = $col2;
-            $data['username'] = $col3;
-            $data['shop_name'] = $col4;
-            $data['shop_icon'] = $icon;
-            $data['shop_description'] = $col6;
-            $data['shop_banner'] = $shop_banner;
-            $data['university'] = $col8;
-            $data['user_photo'] = $user_photo;
-            $data['shop_total_product'] = $col10;
-            $data['shop_isfavorite'] = $col11;
+        $row = $stmt->fetch_object();
+        if($row->shop_icon != ""){
+            $icon = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/shop/icon/'.$row->shop_icon));
+        }else{
+            $icon = INIT_URL."/img/icontext.png";
         }
+        
+        if($row->user_photo != "no-photo.jpg"){
+            $user_photo = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/'.$row->user_photo));
+        }else{
+            $user_photo = INIT_URL."/img/".$row->user_photo;
+        }
+            
+        if($row->shop_banner != ""){
+            $shop_banner = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/'.$row->shop_banner));
+        }else{
+            $shop_banner = $row->shop_banner;
+        }
+            
+        $data['shop_id'] = $row->shop_id;
+        $data['user_id'] = $row->user_id;
+        $data['username'] = $row->username;
+        $data['shop_name'] = $row->shop_name;
+        $data['shop_icon'] = $icon;
+        $data['shop_description'] = $row->shop_description;
+        $data['shop_banner'] = $shop_banner;
+        $data['university'] = $row->university;
+        $data['user_photo'] = $user_photo;
         
         $stmt->close();
         
@@ -119,9 +110,6 @@
         Return data: row count
     */
     function account_verify($stmt){
-        $stmt->execute();
-        $stmt->store_result();
-
         $countrow = $stmt->num_rows;
         
         return $countrow;
@@ -145,5 +133,50 @@
             Function location in : /model/generatejson.php
         */        
         generateJSON($dataout);
+    }
+    
+    /*
+        Function referred on : editDelivery.php
+        Used for returning the list of delivery_id
+        Return data: 
+                    - shop_id
+                    - shop_delivery (list of delivery_id)
+    */
+    function editDelivery($shop_id,$shop_delivery){
+        $data = array(
+                    "shop_id" => $shop_id,
+                    "shop_delivery" => $shop_delivery
+                );
+        
+        /*
+            Function location in : /model/general/functions.php
+        */
+        credentialVerified((object)$data);                
+    }
+    
+    /*
+        Function referred on : selectBrand.php
+        Used for returning the selected brand
+        Return data:
+                - brand_id
+                - modify_date
+                - brand_image
+                - brand_name
+    */
+    function selectBrand($stmt,$username){
+        $row = $stmt->fetch_object();
+        
+        $data = array(
+                    "brand_id" => $row->shop_current_brand,
+                    "modify_date" => $row->modify_date,
+                    "brand_image" => IMAGES_URL.'/'.urlencode(base64_encode($username.'/brand/'.$row->brand_image)),
+                    "brand_name" => $row->brand_name,
+                    "brand_product_count" => $row->brand_product_count
+                );
+        $_SESSION['user']["brand_id"]=$row->shop_current_brand;
+        /*
+            Function location in : /model/general/functions.php
+        */
+        credentialVerified((object)$data);  
     }
 ?>

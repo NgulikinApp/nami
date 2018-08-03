@@ -41,17 +41,14 @@
             //secretKey variabel got from : /model/jwt.php
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                         user_id
                                     FROM 
                                         user 
                                     WHERE 
-                                        email=? 
+                                        email='".$request['email']."' 
                                         AND
-                                        code_forgotpassword=?");
-               
-            $stmt->bind_param("ss", $request['email'],$request['code']);
-            
+                                        code_forgotpassword='".$request['code']."'");
             /*
                 Function location in : /v1/auth/functions.php
             */

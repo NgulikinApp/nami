@@ -1,4 +1,4 @@
-var rateData = new Object();
+var rateData = {};
 
 function initProduct(){
 	detail();
@@ -21,7 +21,7 @@ function detail(){
             success: function(data, status) {
                 if(data.status == "OK"){
                     if(data.result.product_id !== null){
-                        var isfavorite = data.result.product_isfavorite;
+                        var israte = data.result.product_israte;
                         
                         var product = '<div class="content">';
                             product += '    <div class="left">';
@@ -117,9 +117,9 @@ function detail(){
                     	}
                         
                         $(".rateyo").rateYo({fullStar: true}).on("rateyo.set", function (e, data) {
-                            if($('.isSignin').val() === '1'){
+                            if($('.isSignin').val() === ''){
                     	        notif("error","Harap login terlebih dahulu","right","top");
-                            }else if(isfavorite == 1){
+                            }else if(israte == 1){
                     	        notif("error","Anda sudah memberikan penilaian produk ini","top");
                     	    }else{
                     	        rateData.value = data.rating;
@@ -135,10 +135,8 @@ function detail(){
                     	});
                     	
                     	$('#btnFavorite').on( 'click', function( e ){
-                    	    if($('.isSignin').val() === '1'){
+                    	    if($('.isSignin').val() === ''){
                     	        notif("error","Harap login terlebih dahulu","right","top");
-                    	    }else if(data.result.product_isfavorite == 1){
-                    	        notif("error","Anda sudah menyimpan produk ini","top");
                     	    }else{
                     	        favoriteProduct();
                     	    }
@@ -189,11 +187,13 @@ function favoriteProduct(){
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
                         generateToken(favoriteProduct);
-                }else if(data.message == 'You have saved this item'){
-                    notif("error","Anda sudah menyimpan produk ini","top");
                 }else{
                     $('.tabelList #like').html(data.result.product_count_favorite);
-                    notif("info","Product ditambah ke daftar favorit","right","top");
+                    if(data.result.isfavorite){
+                        notif("info","Product ditambah ke daftar favorit","right","top");   
+                    }else{
+                        notif("info","Product dihapus dari daftar favorit","right","top");
+                    }
                 }
             }
         });
