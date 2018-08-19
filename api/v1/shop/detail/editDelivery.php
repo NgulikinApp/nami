@@ -34,6 +34,8 @@
     */
     $request = postraw();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -60,7 +62,13 @@
                 return invalidKey();
             }
             
-            $con->query("UPDATE shop SET shop_delivery='".$request['shop_delivery']."' where shop_id=".$shop_id."");
+            $stmt = $con->prepare("UPDATE shop SET shop_delivery=?' where shop_id=?");
+            
+            $stmt->bind_param("si", $request['shop_delivery'], $shop_id);
+            
+            $stmt->execute();
+                
+            $stmt->close();
             
             /*
                 Function location in : functions.php
@@ -73,6 +81,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

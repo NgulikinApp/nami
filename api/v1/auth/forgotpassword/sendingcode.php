@@ -33,6 +33,8 @@
     */
     $request = postraw();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -74,13 +76,19 @@
                 */
                 $code = generateRandomString();
                 
-                $con->query("UPDATE 
+                $stmt = $con->prepare("UPDATE 
                                             user
                                         SET
-                                            code_forgotpassword = '".$code."',
+                                            code_forgotpassword = ?,
                                             time_code_forgotpassword = NOW()
                                         WHERE 
-                                            user_id = '".$verified[0]."'");
+                                            user_id = ?");
+                
+                $stmt->bind_param("ss", $code, $verified[0]);
+                
+                $stmt->execute();
+                
+                $stmt->close();
                 
                 /*
                     Function location in : /model/general/function.php
@@ -130,6 +138,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

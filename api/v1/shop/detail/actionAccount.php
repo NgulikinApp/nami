@@ -39,6 +39,8 @@
     $account_no = $request['account_no'];
     $bank_id = intval($request['bank_id']);
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -85,9 +87,21 @@
             
             if($request['method'] == "edit"){
                 $account_id = $request['account_id'];
-                $con->prepare("UPDATE account SET account_name='".$account_name."',account_no='".$account_no."',account_modifydate=NOW(),bank_id=".$bank_id." where account_id=".$account_id."");
+                $stmt = $con->prepare("UPDATE account SET account_name=?,account_no=?,account_modifydate=NOW(),bank_id=? where account_id=?");
+                
+                $stmt->bind_param("ssii", $account_name, $account_no, $bank_id, $account_id);
+            
+                $stmt->execute();
+                
+                $stmt->close();
             }else{
-                $stmt = $con->query("INSERT INTO account(user_id,bank_id,account_name,account_no) VALUES('".$user_id."',".$bank_id.",'".$account_name."','".$account_no."')");
+                $stmt = $con->prepare("INSERT INTO account(user_id,bank_id,account_name,account_no) VALUES('".$user_id."',".$bank_id.",'".$account_name."','".$account_no."')");
+                
+                $stmt->bind_param("siss", $user_id, $bank_id, $account_name, $account_no);
+            
+                $stmt->execute();
+                
+                $stmt->close();
                 
                 /*
                     Function location in : /model/general/functions.php
@@ -106,6 +120,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

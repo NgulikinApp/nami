@@ -86,7 +86,7 @@ Kecamatan Duren Sawit, Kota Jakarta Timur DKI Jakarta, 13450</strong>
                     <div class="head">NAMA BARANG</div>
                     <div class="body">
                         <div class="grid" style="overflow: hidden;">
-                            <img src="http://images.ngulikin.com/satria/product/CCTV_portable_Micro_SD_CCTV_micro_sd_CCTV_OUTDOOR_600TVL_cct.jpg" width="70" height="70"/>
+                            <img src="https://www.images.ngulikin.com/satria/product/CCTV_portable_Micro_SD_CCTV_micro_sd_CCTV_OUTDOOR_600TVL_cct.jpg" width="70" height="70"/>
                         </div>
                         <div class="grid proof">
                             <div class="head">

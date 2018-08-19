@@ -7,7 +7,8 @@ var shopProductPage = {},
     productLayerId = {},
     productLayerData = {},
     brandLayerAction = {},
-    productList = [];
+    productList = [],
+    productListUrl = [];
 
 function initShopSetting(){
     selectedBrand.brand_id = 0;
@@ -108,6 +109,8 @@ function initShopSetting(){
     $("#create-product").on( 'click', function( e ){
         productLayerAction.do = "add";
         productLayer();
+        productList = [];
+        productListUrl = [];
     });
     
     $("#create-brand").on( 'click', function( e ){
@@ -603,6 +606,8 @@ function productShop(){
                             productLayerAction.do = "edit";
                             productLayerId.id = $(this).data("id");
                             productLayer();
+                            productList = [];
+                            productListUrl = [];
                         });
                     }
                 }else{
@@ -629,7 +634,7 @@ function productLayer(){
         productLayer += '                   <label for="filesProduct">';
         productLayer += '                       <img id="productImageLayer" src="/img/uploadPhoto.png" width="250" height="250" align="right"/>';
         productLayer += '                   <label>';
-        productLayer += '                   <input type="file" id="filesProduct"/>';
+        productLayer += '                   <input type="file" id="filesProduct" name="file[]" multiple="multiple"/>';
         productLayer += '               </div>';
         productLayer += '               <div class="footerProductLayer">';
         productLayer += '                   <div id="photoProductList"></div>';
@@ -728,7 +733,7 @@ function productLayer(){
 	    productList = [];
 	});
 	
-	$("#productPrice,#productWeight,#productStockLayer,#productMiniLayer").keydown(function (e) {
+	$("#productPriceLayer,#productWeight,#productStockLayer,#productMiniLayer").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
              // Allow: Ctrl/cmd+A
@@ -774,7 +779,7 @@ function productLayer(){
         if(stockNgulikin === 1){
             $(this).css('opacity','0.5');
         }
-        $('#productStock').val(stockNgulikin);
+        $('#productStockLayer').val(stockNgulikin);
     });
     
     $('#plusStock').on('click', function (e) {
@@ -782,7 +787,7 @@ function productLayer(){
         if(stockNgulikin !== 1){
             $('#minStock').css('opacity','1');
         }
-        $('#productStock').val(stockNgulikin);
+        $('#productStockLayer').val(stockNgulikin);
     });
     
     $('#minMin').on('click', function (e) {
@@ -793,7 +798,7 @@ function productLayer(){
         if(minNgulikin === 1){
             $(this).css('opacity','0.5');
         }
-        $('#productMini').val(minNgulikin);
+        $('#productMiniLayer').val(minNgulikin);
     });
     
     $('#plusMin').on('click', function (e) {
@@ -801,7 +806,7 @@ function productLayer(){
         if(minNgulikin !== 1){
             $('#minMin').css('opacity','1');
         }
-        $('#productMini').val(minNgulikin);
+        $('#productMiniLayer').val(minNgulikin);
     });
     
     $("#filesProduct").change(function(){
@@ -821,32 +826,31 @@ function productLayer(){
 }
 
 function readProductURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            productList.push(e.target.result);
-            var product_images_len = productList.length;
-                    
-            var product = '';
-            for(var i=0;i<product_images_len;i++){
-                product += '<div class="col-md-9">';
-                product += '    <img src="'+productList[i]+'"/>';
-                product += '</div>';
-            }
-                    
-            $('#photoProductList').html(product);
-                    
-            $('#photoProductList').tosrus({
-                infinite	: true,
-                slides		: {
-                    visible		: 3
-                }
-            });
-        }
-
-        reader.readAsDataURL(input.files[0]);
+    var filesLen = input.files.length;
+    for (var i = 0; i < filesLen; i++) {
+    	productList.push(input.files[i]);
     }
+    var fileListDisplay = document.getElementById('photoProductList');
+    fileListDisplay.innerHTML = '';
+    productList.forEach(function (file, index) {
+        
+        var img = document.createElement("img");
+            img.src = window.URL.createObjectURL(file);
+            img.height = 60;
+            img.onload = function() {
+                window.URL.revokeObjectURL(this.src);
+                productListUrl.push(this.src);
+            }
+          
+          fileListDisplay.appendChild(img);
+    });
+    
+    $('#photoProductList').tosrus({
+        infinite	: true,
+            slides		: {
+            visible		: 3
+        }
+    });
 }
 
 function categoryProductLayer(){
@@ -938,10 +942,30 @@ function actionProductLayer(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(actionProductLayer);
     }else{
+        var data = new FormData();
+        data.append('method', productLayerAction.do);
+        data.append('product_id', productLayerId.id);
+        data.append('product_name', productLayerData.product_name);
+        data.append('product_price', productLayerData.product_price);
+        data.append('product_weight', productLayerData.product_weight);
+        data.append('product_stock', productLayerData.product_stock);
+        data.append('product_minimum', productLayerData.product_minimum);
+        data.append('product_stock', productLayerData.product_stock);
+        data.append('product_condition', productLayerData.product_condition);
+        /*var productListLen = productList.length;
+        for (i = 0; i < productListLen; i++) {
+            data.append('file' + i, productList[i]);
+        }*/
+        data.append('file', $('#filesProduct')[0].files[0]); 
+        
         $.ajax({
             type: 'POST',
             url: PRODUCT_ACTION_API,
-            data:JSON.stringify({
+            async: true,
+                contentType: false, 
+                processData: false,
+                data : data,
+            /*data:JSON.stringify({
                     method : productLayerAction.do,
                     product_id : productLayerId.id,
                     product_name : productLayerData.product_name,
@@ -950,15 +974,16 @@ function actionProductLayer(){
                     product_weight : productLayerData.product_weight,
                     product_stock : productLayerData.product_stock,
                     product_minimum : productLayerData.product_minimum,
-                    product_condition : productLayerData.product_condition
-            }),
+                    product_condition : productLayerData.product_condition,
+                    product_image : productListUrl
+            }),*/
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
                 xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(actionProductLayer);
+                    //generateToken(actionProductLayer);
                 }else{
                     productShop();
                     
@@ -966,7 +991,6 @@ function actionProductLayer(){
 	                $(".layerPopup").remove();
                     
             	    notif("info","Data sudah disimpan","center","top");
-            	    productList = [];
                 }
             }
         });

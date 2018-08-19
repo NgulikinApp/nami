@@ -4663,6 +4663,69 @@ label[for="filesBrand"],label[for="filesProduct"]{
     End of Account Seller Layer
 */
 /*
+    Mysales Layer
+*/
+.grid-shop-seller-body .title.mysales{
+    text-align: left;
+}
+.filterMysales{
+    display:inline-block;
+    position: relative;
+}
+.mysalesSender{
+    line-height: 20px;
+    font-size: 10px;
+    width: 10em;
+    overflow: inherit;
+    width: 17em;
+}
+.select.mysalesSender::after{
+    background:inherit;
+    padding: 1px 1em;
+}
+#filterStatusSender,#filterDeliverySender{
+    border-radius: 3px;
+    background: #FFFFFF;
+    font-size: 11px;
+}
+.filterMysales .select{
+    border: 1px solid #DFDFDF;
+    color: #848484;
+    background: inherit;
+}
+.textFilterShopSeller{
+    font-size: 15px;
+}
+#filterMysalesDate,#filterMysalesInput{
+    border: 1px solid #DFDFDF;
+    height: 22px;
+    outline:none;
+    font-size: 11px;
+    color: #848484;
+    border-radius: 3px;
+    padding: 0px 3px;
+}
+#filterMysalesDate::placeholder,#filterMysalesDate:-ms-input-placeholder,#filterMysalesDate::-ms-input-placeholder{
+    font-size:11px;
+}
+#filterMysalesInput{
+    width: 200px;
+}
+#search-mysalesorder{
+    position: absolute;
+    background-image: url(/img/search-icon.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    right: 5px;
+    top: 10px;
+    width: 10px;
+    height: 10px;
+}
+/*
+    End of Mysales Layer
+*/
+/*
     Footer Float Menu
 */
 .footerFloat{

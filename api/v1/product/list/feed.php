@@ -30,6 +30,8 @@
     */
     $token = bearer_auth();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -45,6 +47,7 @@
             }else{
                 $user_id = '';
             }
+            
             $stmt = $con->query("SELECT 
                                             product_id, 
                                             username,
@@ -82,6 +85,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

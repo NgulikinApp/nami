@@ -1,7 +1,7 @@
 <?php
     session_start();
     if(!isset($_SESSION['user'])){
-        header("Location: https://".$_SERVER['HTTP_HOST']);
+        header("Location: .");
     }
     include 'web/system/minify.php';
 ?>

@@ -10,6 +10,7 @@
     
     function conn(){
         $con = new mysqli("ngulikin.com", "ngulikin_admin", "ngulik1234", "ngulikin_master");
+        $con->set_charset("utf-8");
         return $con;
     }
     

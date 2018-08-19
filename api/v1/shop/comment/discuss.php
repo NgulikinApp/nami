@@ -37,6 +37,8 @@
     */
     $request = postraw();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -66,10 +68,7 @@
                
             $stmt->bind_param("iss", $id,$user_id,$request['comment']);
             
-            /*
-                Function location in : /model/general/functions.php
-            */
-            runQuery($stmt);
+            $stmt->execute();
             
             $shop_discuss_id = $con->insert_id;
             
@@ -77,12 +76,9 @@
                
             $stmt->bind_param("i", $id);
             
-            /*
-                Function location in : /model/general/functions.php
-            */
-            runQuery($stmt);
+            $stmt->execute();
             
-            $stmt = $con->prepare("SELECT 
+            $stmt = $con->query("SELECT 
                                         username,
                                         user_photo,
                                         fullname,
@@ -91,9 +87,7 @@
                                         shop_discuss
                                         LEFT JOIN `user` ON `user`.user_id = shop_discuss.user_id
                                     WHERE
-                                        shop_discuss_id = ?");
-            
-            $stmt->bind_param("i", $shop_discuss_id);
+                                        shop_discuss_id = ".$shop_discuss_id."");
             
             comment($stmt,$shop_discuss_id,$id,$user_id,$request['comment']);
         }catch(Exception $e){
@@ -103,6 +97,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

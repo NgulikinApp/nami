@@ -33,6 +33,8 @@
     */
     $request = postraw();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -96,24 +98,39 @@
             }
             
             if($request['method'] == 'add'){
-                $con->query("INSERT INTO brand(brand_name,brand_image,shop_id) VALUES('".$request['brand_name']."','".$brand_photo_name."','.$shop_id.')");
+                $stmt = $con->prepare("INSERT INTO brand(brand_name,brand_image,shop_id) VALUES(?,?,?)");
+                
+                $stmt->bind_param("ssi", $request['brand_name'], $brand_photo_name, $shop_id);
+                
+                $stmt->execute();
                 
                 /*
                     Function location in : /model/general/functions.php
                 */
                 $brand_id = runQuery_returnId($con);
                 
-                $con->query("UPDATE 
+                $stmt = $con->prepare("UPDATE 
                                         shop 
                                     SET 
-                                        shop_current_brand=".$brand_id.",
+                                        shop_current_brand=?,
                                         shop_current_brand_modifydate=NOW() 
                                     WHERE 
-                                        shop_id=".$shop_id."");
+                                        shop_id=?");
+                $stmt->bind_param("ii", $brand_id, $shop_id);
+                
+                $stmt->execute();
+                
+                $stmt->close();
                 
                 $_SESSION['user']["brand_id"]=$brand_id;
             }else{
-                $con->query("UPDATE brand SET brand_name='".$request['brand_name']."', brand_image='".$brand_photo_name."' WHERE brand_id=".$brand_id."");
+                $stmt = $con->prepare("UPDATE brand SET brand_name=?, brand_image=? WHERE brand_id=?");
+                
+                $stmt->bind_param("ssi", $request['brand_name'], $brand_photo_name,$brand_id);
+                
+                $stmt->execute();
+                
+                $stmt->close();
             }
         
             /*
@@ -127,6 +144,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     /*
         Function location in : /model/connection.php
     */

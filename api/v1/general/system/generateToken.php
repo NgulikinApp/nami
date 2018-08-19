@@ -1,5 +1,5 @@
 <?php
-    header('Access-Control-Allow-Origin: http://init.ngulikin.com');
+    header('Access-Control-Allow-Origin: https://www.ngulikin.com');
     //--------------------------------------------------------------------------
 	// Link to File
 	//--------------------------------------------------------------------------

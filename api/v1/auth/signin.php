@@ -31,6 +31,8 @@
     */
     $request = postraw();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($request['token'] == ''){
         /*
             Function location in : /model/general/functions.php
@@ -82,18 +84,20 @@
                     
                     $key = encrypt_hash('ngulik_'.$verified[0].date('Y-m-d H:i:s'));
                     
-                    $con->query("UPDATE 
+                    $stmt = $con->prepare("UPDATE 
                                                 user
                                             set
                                                 time_signin = NOW(),
-                                                password_socmed = '".$password."',
-                                                socmed = '".$socmed."',
-                                                id_socmed = '".$idsocmed."',
-                                                user_key = '".$key."'
+                                                password_socmed = ?,
+                                                socmed = ?,
+                                                id_socmed = ?,
+                                                user_key = ?
                                             WHERE 
-                                                user_id='".$verified[0]."'");
+                                                user_id=?");
                     
-                    
+                    $stmt->bind_param("sssss", $password, $socmed, $idsocmed, $key, $verified[0]);
+                
+                    $stmt->execute();
                     /*
                         Function location in : functions.php
                     */
@@ -113,13 +117,16 @@
             }else{
                 $key = encrypt_hash('ngulik_'.$verified[0].date('Y-m-d H:i:s'));
                 
-                $con->query("UPDATE 
+                $stmt = $con->prepare("UPDATE 
                                             user
                                         set
                                             time_signin = NOW(),
-                                            user_key = '".$key."'
+                                            user_key = ?
                                         WHERE 
-                                            user_id='".$verified[0]."'");
+                                            user_id=?");
+                $stmt->bind_param("ss", $key, $verified[0]);
+                
+                $stmt->execute();
                 
                 /*
                     Function location in : functions.php
@@ -133,6 +140,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

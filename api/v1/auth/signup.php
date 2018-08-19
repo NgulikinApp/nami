@@ -31,6 +31,8 @@
     */
     $request = postraw();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -110,7 +112,7 @@
                     $passwordSocmed = encrypt_hash('GooglePlus_Ngulikin');
                 }
                 
-                $con->query("INSERT INTO 
+                $stmt = $con->prepare("INSERT INTO 
                                                     user(
                                                         user_id,
                                                         username,
@@ -127,7 +129,13 @@
                                                         user_isactive,
                                                         id_socmed
                                                     ) 
-                                                    VALUES ('".$user_id."','".$request['username']."','".$request['name']."','".$request['password']."','".$request['email']."','".$request['nohp']."','".$request['dob']."','".$request['gender']."','".$key."','".$request['source']."','".$request['socmed']."','".$passwordSocmed."','".$user_isactive."','".$request['id_socmed']."')");
+                                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                
+                $stmt->bind_param("ssssssssssssss", $user_id, $request['username'], $request['name'], $request['password'], $request['email'], $request['nohp'], $request['dob'], $request['gender'], $key, $request['source'], $request['socmed'], $passwordSocmed, $user_isactive,$request['id_socmed']);
+
+                $stmt->execute();
+                
+                $stmt->close();
                 
                 $param = base64_encode($user_id.'~'.$key);
                 
@@ -197,6 +205,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

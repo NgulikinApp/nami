@@ -10,22 +10,32 @@
     */
     $con = conn();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     $q = base64_decode ($_GET['q']);
     
     $qArray = explode('~',$q);
     $user_id = $qArray[0];
     $key = $qArray[1];
     
-    $con->query("UPDATE 
+    $stmt = $con->prepare("UPDATE 
                         user
                 SET
                         user_isactive = 1
                 WHERE 
-                        user_id='".$user_id."'
+                        user_id=?
                         AND
-                        user_key='".$key."'");
+                        user_key=?");
+                        
+    $stmt->bind_param("ss", $user_id, $key);
+                
+    $stmt->execute();
+    
+    $stmt->close();
     
     echo "Akun anda sudah aktif, anda bisa login sekarang";
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

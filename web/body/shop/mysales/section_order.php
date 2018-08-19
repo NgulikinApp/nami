@@ -1,16 +1,24 @@
-<div class="title">
+<div class="title mysales">
     <div class="filterMysales textFilterShopSeller">Filter</div>
     <div class="filterMysales">
-        <input type="text" id="filterMysalesDate" data-inline="false" data-role="date"/>
+        <div class="select mysalesSender">
+            <select id="filterStatusSender">
+                <option>Status</option>
+                <option>Pending</option>
+            </select>
+        </div>
+    </div>
+    <div class="filterMysales">
+        <input type="text" id="filterMysalesDate" data-inline="false" data-role="date" placeholder="Tanggal"/>
     </div>
     <div class="filterMysales">
         <div class="select mysalesSender">
-            <select id="filterMysalesSender">
+            <select id="filterDeliverySender">
                 <option>Pilih Kurir</option>
             </select>
         </div>
     </div>
-    <div class="filterMysales search">
+   <div class="filterMysales search">
         <input type="text" id="filterMysalesInput" placeholder="Nama Pembeli / Nomor Invoice"/>
         <div id="search-mysalesorder"></div>
     </div>
@@ -31,7 +39,7 @@
                 <div class="body">JNE</div>
             </div>
         </div>
-        <div class="grid second">
+        <!--<div class="grid second">
             <div class="detail address">
                 <div class="head">
                     <img src="/img/people.png" style="vertical-align: baseline;margin-right: 10px;"/>Agung Prabontot
@@ -71,12 +79,12 @@ Thank you.</div>
             <div class="detail">
                 <img src="/img/download.png" style="vertical-align: text-top;"/> Download Laporan
             </div>
-        </div>
+        </div>-->
     </div>
-    <div class="order-container">
+    <!--<div class="order-container">
         <div class="grid">
             <div class="detail">
-                <img src="http://images.ngulikin.com/satria/product/CCTV_portable_Micro_SD_CCTV_micro_sd_CCTV_OUTDOOR_600TVL_cct.jpg" width="70" height="70"/>
+                <img src="https://www.images.ngulikin.com/satria/product/CCTV_portable_Micro_SD_CCTV_micro_sd_CCTV_OUTDOOR_600TVL_cct.jpg" width="70" height="70"/>
             </div>
             <div class="grid">
                 <div class="head">HINDIAN</div>
@@ -124,5 +132,5 @@ Thank you.</div>
         <div class="grid button-container">
             <input type="button" value="Proses Pembayaran" id="processMysalesButton"/>
         </div>
-    </div>
+    </div>-->
 </div>

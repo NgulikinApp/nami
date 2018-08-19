@@ -31,6 +31,8 @@
     */
     $request = postraw();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -41,13 +43,18 @@
             //secretKey variabel got from : /model/jwt.php
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            $con->query("UPDATE 
+            $stmt = $con->prepare("UPDATE 
                                         user
                                     SET
-                                        password = '".$request['password']."'
+                                        password = ?
                                     WHERE 
-                                        email = '".$request['email']."'");
+                                        email = ?");
             
+            $stmt->bind_param("ss", $request['password'], $request['email']);
+                
+            $stmt->execute();
+            
+            $stmt->close();
             
             $data = array(
             			'status' => "OK",
@@ -65,6 +72,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

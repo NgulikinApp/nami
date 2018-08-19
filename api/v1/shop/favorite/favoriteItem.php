@@ -31,6 +31,8 @@
     */
     $request = postraw();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -69,11 +71,25 @@
             $count_rows = count_rows($stmt);
             
             if($count_rows > 0){
-                $con->query("DELETE FROM shop_favorite WHERE shop_id = ".$request['shop_id']." AND user_id = '".$user_id."'");
-            
-                $con->query("UPDATE shop SET shop_count_favorite=shop_count_favorite-1 where shop_id=".$request['shop_id']."");
+                $stmt = $con->prepare("DELETE FROM shop_favorite WHERE shop_id = ? AND user_id = ?");
                 
-                $con->query("UPDATE user SET user_shop_favorites=user_shop_favorites-1 where user_id='".$user_id."'");
+                $stmt->bind_param("is", $request['shop_id'], $user_id);
+            
+                $stmt->execute();
+            
+                $stmt = $con->prepare("UPDATE shop SET shop_count_favorite=shop_count_favorite-1 where shop_id=?");
+                
+                $stmt->bind_param("i", $request['shop_id']);
+            
+                $stmt->execute();
+                
+                $stmt = $con->prepare("UPDATE user SET user_shop_favorites=user_shop_favorites-1 where user_id=?");
+                
+                $stmt->bind_param("s", $user_id);
+            
+                $stmt->execute();
+                
+                $stmt->close();
                 
                 /*
                     Function location in : functions.php
@@ -85,11 +101,25 @@
                 */
                 favorite($request['shop_id'],$user_id,$count_val,0);
             }else{
-                $con->query("INSERT INTO shop_favorite(shop_id,user_id) VALUES(".$request['shop_id'].",'".$user_id."')");
-            
-                $con->query("UPDATE shop SET shop_count_favorite=shop_count_favorite+1 where shop_id=".$request['shop_id']."");
+                $stmt = $con->prepare("INSERT INTO shop_favorite(shop_id,user_id) VALUES(?,?)");
                 
-                $con->query("UPDATE user SET user_shop_favorites=user_shop_favorites+1 where user_id='".$user_id."'");
+                $stmt->bind_param("is", $request['shop_id'], $user_id);
+            
+                $stmt->execute();
+            
+                $stmt = $con->prepare("UPDATE shop SET shop_count_favorite=shop_count_favorite+1 where shop_id=?");
+                
+                $stmt->bind_param("i", $request['shop_id']);
+            
+                $stmt->execute();
+                
+                $stmt = $con->prepare("UPDATE user SET user_shop_favorites=user_shop_favorites+1 where user_id=?");
+                
+                $stmt->bind_param("s", $user_id);
+            
+                $stmt->execute();
+                
+                $stmt->close();
                 
                 /*
                     Function location in : functions.php
@@ -108,6 +138,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

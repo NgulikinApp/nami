@@ -143,7 +143,7 @@
     <div class="order-container" style="line-height: 1.214;width: 35%;background: #004E81;color: #fff;">
         <div class="grid">
             <div class="detail">
-                <img src="http://images.ngulikin.com/satria/product/CCTV_portable_Micro_SD_CCTV_micro_sd_CCTV_OUTDOOR_600TVL_cct.jpg" width="70" height="70"/>
+                <img src="https://www.images.ngulikin.com/satria/product/CCTV_portable_Micro_SD_CCTV_micro_sd_CCTV_OUTDOOR_600TVL_cct.jpg" width="70" height="70"/>
             </div>
             <div class="grid">
                 <div class="head">HINDIAN</div>

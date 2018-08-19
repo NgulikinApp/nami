@@ -36,6 +36,8 @@
     */
     $brand_id = $request['brand_id'];
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -64,13 +66,17 @@
                 return invalidKey();
             }
             
-            $con->query("UPDATE 
+            $stmt = $con->prepare("UPDATE 
                                         shop 
                                     SET 
                                         shop_current_brand=".$brand_id.",
                                         shop_current_brand_modifydate=NOW() 
                                     WHERE 
                                         shop_id=".$shop_id."");
+            
+            $stmt->bind_param("ii", $brand_id, $shop_id);
+            
+            $stmt->execute();
             
             $stmt = $con->query("SELECT
                                         shop_current_brand,
@@ -95,6 +101,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

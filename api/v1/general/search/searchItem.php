@@ -38,6 +38,8 @@
     $pagesize = @$_GET['pagesize'];
     $category = @$_GET['category'];
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -144,6 +146,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

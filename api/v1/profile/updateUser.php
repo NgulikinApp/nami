@@ -33,6 +33,8 @@
     */
     $request = postraw();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -98,7 +100,13 @@
                 $imageresize->save($user_photo);
             }
             
-            $con->query("UPDATE user SET fullname='".$request['fullname']."', dob='".$request['dob']."', gender='".$request['gender']."', phone='".$request['phone']."',user_photo='".$user_photo_name."' WHERE user_id='".$user_id."'");   
+            $stmt = $con->prepare("UPDATE user SET fullname=?, dob=?, gender=?, phone=?,user_photo=? WHERE user_id=?");   
+            
+            $stmt->bind_param("ssssss", $request['fullname'],$request['dob'],$request['gender'],$request['phone'],$user_photo_name,$user_id);
+                
+            $stmt->execute();
+            
+            $stmt->close();
             
             /*
                 Function location in : functions.php
@@ -111,6 +119,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

@@ -15,13 +15,21 @@
     $qArray = explode('~',$q);
     $user_id = $qArray[0];
     $newpassword = $qArray[1];
+    
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
             
-    $con->query("UPDATE 
+    $stmt = $con->prepare("UPDATE 
                     user
                 SET
-                    password = '".$newpassword."'
+                    password = ?
                 WHERE 
-                    user_id = '".$user_id."'");
+                    user_id = ?");
+    
+    $stmt->bind_param("ss", $newpassword,$user_id);
+                
+    $stmt->execute();
+    
+    $stmt->close();
             
     $data = array(
                 'status' => "OK",
@@ -32,5 +40,7 @@
         Function location in : /model/generatejson.php
     */
     generateJSON($data);
+    
+    $con->commit();
     conn_close($con);
 ?>

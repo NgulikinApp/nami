@@ -38,6 +38,8 @@
     */
     $request = postraw();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -103,7 +105,13 @@
                 $imageresize->save($shop_photo);
             }
             
-            $con->query("UPDATE shop SET shop_name='".$request['shop_name']."'shop_description='".$request['shop_desc']."',shop_icon='".$shop_photo_name."' where shop_id=".$shop_id."");
+            $stmt = $con->prepare("UPDATE shop SET shop_name= ?,shop_description=?,shop_icon=? where shop_id=?");
+            
+            $stmt->bind_param("sssi", $request['shop_name'], $request['shop_desc'], $shop_photo_name, $shop_id);
+            
+            $stmt->execute();
+                
+            $stmt->close();
             
             /*
                 Function location in : functions.php
@@ -116,6 +124,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

@@ -37,6 +37,8 @@
     */
     $request = postraw();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -62,11 +64,19 @@
                 return invalidKey();
             }
             
-            $con->query("INSERT INTO shop_review(shop_id,user_id,shop_review_comment) VALUES(".$id.",'".$user_id."','".$request['comment']."')");
+            $stmt = $con->prepare("INSERT INTO shop_review(shop_id,user_id,shop_review_comment) VALUES(?,?,?)");
+            
+            $stmt->bind_param("iss", $id, $user_id, $request['comment']);
+            
+            $stmt->execute();
             
             $shop_review_id = $con->insert_id;
             
-            $con->query("UPDATE shop SET shop_total_review=shop_total_review+1 where shop_id=".$id."");
+            $stmt = $con->prepare("UPDATE shop SET shop_total_review=shop_total_review+1 where shop_id=".$id."");
+            
+            $stmt->bind_param("i", $id);
+            
+            $stmt->execute();
             
             $stmt = $con->query("SELECT 
                                         username,
@@ -88,6 +98,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

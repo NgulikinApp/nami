@@ -29,7 +29,7 @@ function initShopMysales(){
 	   $('#transaction-shop-seller-content').removeClass("hidden");
 	});
 	
-	$('.ui-loader').remove();
+	$('.ui-loader,#filterStatusSender-button span,#filterDeliverySender-button span').remove();
 	
 	$('#status-line').milestones({
 		stage: 5,

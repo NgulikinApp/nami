@@ -33,6 +33,8 @@
     */
     $request = postraw();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -46,9 +48,11 @@
             if(isset($_SESSION['user'])){
                 $user_id = $_SESSION['user']["user_id"];
                 $key = $_SESSION['user']["key"];
+                $username = $_SESSION['user']["username"];
             }else{
                 $user_id = '';
                 $key = '';
+                $username = '';
             }
             
             /*
@@ -58,20 +62,70 @@
                 return invalidKey();
             }
             
-            if($request['method'] == 'add'){
-                $stmt = $con->query("INSERT INTO product(product_name,product_description,product_price,product_weight,product_stock,product_minimum,product_condition) VALUES('".$request['product_name']."','".$request['product_description']."',".$request['product_price'].",".$request['product_weight'].",".$request['product_stock'].",".$request['product_minimum'].",".$request['product_condition'].")");
+            echo $count_product_image = count($_FILES['file']['name']);
             
+            //if(!empty($_FILES["product_image"])){
+            /*$poduct_photo_data = $request['product_image'];
+            $poduct_photo_data_len = count($request['product_image']);
+            
+            for($i=0; $i<$poduct_photo_data_len; $i++){
+                $product_photo_name = getID(16).'.png';
+                header('content-type: image/jpeg');
+                
+                echo base64_decode( $poduct_photo_data[$i]);
+                /*$path_photo = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/product';
+                
+                $product_photo = $path_photo.'/'.$product_photo_name;
+                //write image into directory
+                file_put_contents($product_photo, $data_photo);
+                
+                //Resize image
+                $imageresize = new ImageResize($product_photo);
+                $imageresize->resizeToBestFit(150, 150);
+                $imageresize->save($product_photo);*/
+                
+            //}
+            //echo $count_product_image = count($_FILES['file']['name']);
+                //echo $count_product_image = count($_FILES['file']['name']);
+                
+                /*for($i=0; $i<$count_product_image; $i++){
+                    $product_photo_name = ($i==0)?'':$product_photo_name.',';
+                    
+                    $product_photo_name = getID(16).'.png';
+                    
+                    $path_photo = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/product';
+                    
+                    $product_photo = $path_photo.'/'.$product_photo_name;
+                    
+                    move_uploaded_file($_FILES['product_image']['tmp_name'][$i], $product_photo);
+                }*/
+            //}
+            
+            //echo $product_photo_name;
+            /*if($request['method'] == 'add'){
+                $stmt = $con->query("INSERT INTO product(product_name,product_description,product_price,product_weight,product_stock,product_minimum,product_condition,product_image) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+                
+                $stmt->bind_param("ssiiiiis", $_POST['product_name'], $_POST['product_description'], $_POST['product_price'], $_POST['product_weight'], $_POST['product_stock'],$request['product_minimum'],$_POST['product_condition'],$product_photo_name);
+                
+                $stmt->execute();
+                
                 $product_id = runQuery_returnId($stmt);
             }else{
-                $con->query("UPDATE product SET product_name='".$request['product_name']."', product_description='".$request['product_description']."', product_price=".$request['product_price'].", product_weight=".$request['product_weight'].",product_stock=".$request['product_stock'].",product_minimum=".$request['product_minimum'].",product_condition=".$request['product_condition']." WHERE product_id=".$request['product_id']."");   
-            
+                $stmt = $con->prepare("UPDATE product SET product_name=?, product_description=?, product_price=?, product_weight=?,product_stock=?,product_minimum=?,product_condition=?,product_image=? WHERE product_id=?");   
+                
+                $stmt->bind_param("ssiiiiisi", $_POST['product_name'], $_POST['product_description'], $_POST['product_price'], $_POST['product_weight'], $_POST['product_stock'],$request['product_minimum'],$_POST['product_condition'],$product_photo_name,$_POST['product_id']);
+                
+                $stmt->execute();
+                
+                $stmt->close();
+                
                 $product_id = $request['product_id'];
             }
         
             /*
                 Function location in : functions.php
             */
-            actionData($request['product_name'],$request['product_description'],$request['product_price'],$request['product_weight'],$request['product_stock'],$request['product_minimum'],$request['product_condition'],$request['product_id']);
+            //actionData($_POST['product_name'],$_POST['product_description'],$_POST['product_price'],$_POST['product_weight'],$_POST['product_stock'],$_POST['product_minimum'],$_POST['product_condition'],$_POST['product_id']);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php
@@ -79,6 +133,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     /*
         Function location in : /model/connection.php
     */

@@ -31,6 +31,8 @@
     */
     $request = postraw();
     
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -69,11 +71,23 @@
             $count_rows = count_rows($stmt);
             
             if($count_rows > 0){
-                $con->query("DELETE FROM product_favorite WHERE product_id = ".$request['product_id']." AND user_id = '".$user_id."'");
+                $stmt = $con->prepare("DELETE FROM product_favorite WHERE product_id = ? AND user_id = ?'");
                 
-                $con->query("UPDATE product SET product_count_favorite=product_count_favorite-1 WHERE product_id=".$request['product_id']."");
+                $stmt->bind_param("is", $request['product_id'], $user_id);
                 
-                $con->query("UPDATE user SET user_product_favorites=user_product_favorites-1 WHERE user_id='".$user_id."'");
+                $stmt->execute();
+                
+                $stmt = $con->prepare("UPDATE product SET product_count_favorite=product_count_favorite-1 WHERE product_id=?");
+                
+                $stmt->bind_param("i", $request['product_id']);
+                
+                $stmt->execute();
+                
+                $stmt = $con->prepare("UPDATE user SET user_product_favorites=user_product_favorites-1 WHERE user_id=?");
+                
+                $stmt->bind_param("s", $user_id);
+                
+                $stmt->execute();
                 
                 $stmt = $con->query("SELECT 
                                             count(1) AS product_count
@@ -89,11 +103,23 @@
                 
                 favorite($request['product_id'],$user_id,$count_val,0);
             }else{
-                $con->query("INSERT INTO product_favorite(product_id,user_id) VALUES(".$request['product_id'].",'".$user_id."')");
+                $stmt = $con->prepare("INSERT INTO product_favorite(product_id,user_id) VALUES(?,?)");
                 
-                $con->query("UPDATE product SET product_count_favorite=product_count_favorite+1 where product_id=".$request['product_id']."");
+                $stmt->bind_param("is", $request['product_id'],$user_id);
                 
-                $con->query("UPDATE user SET user_product_favorites=user_product_favorites+1 where user_id='".$user_id."'");
+                $stmt->execute();
+                
+                $stmt = $con->prepare("UPDATE product SET product_count_favorite=product_count_favorite+1 where product_id=?");
+                
+                $stmt->bind_param("i", $request['product_id']);
+                
+                $stmt->execute();
+                
+                $stmt = $con->prepare("UPDATE user SET user_product_favorites=user_product_favorites+1 where user_id=?");
+                
+                $stmt->bind_param("s", $user_id);
+                
+                $stmt->execute();
                 
                 $stmt = $con->query("SELECT 
                                             count(1) AS product_count
@@ -117,6 +143,8 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
     
     /*
         Function location in : /model/connection.php

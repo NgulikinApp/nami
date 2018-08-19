@@ -1,6 +1,13 @@
 <?php
     session_start();
     include 'web/system/minify.php';
+    include 'web/system/getUrl.php';
+    $actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    $linkArray = explode('/',$actual_link);
+    $id = array_values(array_slice($linkArray, -1))[0];
+    if(!is_int($id)){
+        header("Location: .");
+    }
 ?>
 <!DOCTYPE html>
 <html class="qp-ui">

@@ -14,12 +14,16 @@
     /*
         Function referred on : all
         Used for getting the data memcache
-        Return data : tstring
+        Return data : string
     */
     function writeMemcached($key,$cache){
         /*
             Function location in : generatejson.php
         */
         generateJSON($cache->get($key));
+    }
+    
+    function setMemcached($key,$cache,$data,$exp){
+        $cache->set($key, $data, $exp);
     }
 ?>
