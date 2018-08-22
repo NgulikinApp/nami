@@ -17,6 +17,9 @@
 	//-----------------------------------------------------------------------------------
 	
 	switch (@$routes[0]) {
+	    case 'v2':
+	         include('api/v2/test.php');
+	    break;
 	    case 'v1':
 	        switch (@$routes[1]) {
 			    case 'activeAccount':

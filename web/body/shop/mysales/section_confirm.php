@@ -1,5 +1,5 @@
-<div class="title">
-    <div class="filterMysales">
+<div class="title mysales">
+    <div class="filterMysales textFilterShopSeller">
         <div id="confirmallConfirmMysales">
             <input type="checkbox" id="confirmall"/>
             <div>Konfirmasi Semua</div>
@@ -7,11 +7,11 @@
     </div>
     <div class="textFilterShopSeller filterMysales">Filter</div>
     <div class="filterMysales">
-        <input type="text" id="filterMysalesDate" data-inline="false" data-role="date"/>
+        <input type="text" id="filterMysalesDate" data-inline="false" data-role="date" placeholder="Tanggal"/>
     </div>
     <div class="filterMysales">
         <div class="select mysalesSender">
-            <select id="filterMysalesSender">
+            <select id="filterConfirmSender">
                 <option>Pilih Kurir</option>
             </select>
         </div>
@@ -51,13 +51,13 @@
                 </div>
             </div>
         </div>
-        <div class="grid">
-            <div class="leftCont">
+        <div class="grid" style="border-top: 1px solid #DFDFDF;border-bottom: 1px solid #DFDFDF;">
+            <div class="leftCont"style="float: left;width: 20.3%;padding: 20px 35px;">
                 <div class="grid">
                     <div class="head">INVOICE</div>
                     <div class="body" id="invoiceConfirmMysales">9999 999 999</div>
                 </div>
-                <div class="grid proof">
+                <div class="grid proof" style="margin-top: 20px;">
                     <div class="head">TANGGAL PESANAN</div>
                     <div class="body">
                         <strong>04 November 2017</strong>
@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="midCont">
-                <div class="left">
+                <div class="left" style="vertical-align: top;margin-top: 20px">
                     <div class="head">ALAMAT TUJUAN</div>
                     <div class="body">
                         <div class="grid">
@@ -82,11 +82,11 @@ Kecamatan Duren Sawit, Kota Jakarta Timur DKI Jakarta, 13450</strong>
                         </div>
                     </div>
                 </div>
-                <div class="right">
+                <div class="right" style="margin-top: 20px;">
                     <div class="head">NAMA BARANG</div>
                     <div class="body">
                         <div class="grid" style="overflow: hidden;">
-                            <img src="https://www.images.ngulikin.com/satria/product/CCTV_portable_Micro_SD_CCTV_micro_sd_CCTV_OUTDOOR_600TVL_cct.jpg" width="70" height="70"/>
+                            <img src="https://www.images.ngulikin.com/satria/product/CCTV_portable_Micro_SD_CCTV_micro_sd_CCTV_OUTDOOR_600TVL_cct.jpg" width="70" height="70" style="margin-bottom: 10px;"/>
                         </div>
                         <div class="grid proof">
                             <div class="head">
@@ -103,7 +103,7 @@ Kecamatan Duren Sawit, Kota Jakarta Timur DKI Jakarta, 13450</strong>
                     </div>
                 </div>
             </div>
-            <div class="rightCont">
+            <div class="rightCont" style="vertical-align: top;margin-top: 20px;">
                 <div class="grid">
                     <div class="detail">
                         <div class="head">PHONE</div>
@@ -133,19 +133,19 @@ Kecamatan Duren Sawit, Kota Jakarta Timur DKI Jakarta, 13450</strong>
         </div>
         <div class="grid">
             <div class="left">
-                <div class="detail">
+                <div class="detail bluesky">
                     <img src="/img/bubble.png" style="vertical-align: text-top;"/> Tanya Pembeli
                 </div>
-                <div class="detail">
+                <div class="detail bluesky">
                     <img src="/img/download.png" style="vertical-align: text-top;"/> Cetak Sekaligus
                 </div>
             </div>
             <div class="right confirm">
-                <div>KONFIRMASI</div>
-                <div><input type="checkbox" id="confirmprint"/></div>
-                <div id="printMySales">Cetak</div>
-                <div><input type="checkbox" id="confirmcancel"/></div>
-                <div>Batal</div>
+                <div style="margin: 15px 30px;">KONFIRMASI</div>
+                <div style="margin: 15px 10px;"><input type="radio" name="confirm" id="confirmprint"/></div>
+                <div id="printMySales" style="margin: 15px 0px;">Cetak</div>
+                <div style="margin: 15px 10px 15px 50px;"><input type="radio" name="confirm" id="confirmcancel"/></div>
+                <div style="margin: 15px 0px;">Batal</div>
             </div>
         </div>
     </div>

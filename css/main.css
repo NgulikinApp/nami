@@ -74,6 +74,9 @@ input[type="radio"]{
 .pinkyoung{
     color: #F97C64;
 }
+.yellow{
+    color :#FEBD18;
+}
 .border-yellow{
     border-bottom: 4px solid #FEBD18;
 }
@@ -1927,7 +1930,7 @@ section div h1{
     font-size: 10px;
     font-weight: unset;
 }
-#buttonSignIn,#buttonSignup,#buttonReset,#buttonForgotSend,#buttonForgotVerified,#buttonForgotChange{
+#buttonSignIn,#buttonSignup,#buttonReset,#buttonForgotSend,#buttonForgotVerified,#buttonForgotChange,#processMysalesButton{
 	background-color: #3FC3FF;
 	border-radius: 3px;
 	border: none;
@@ -4545,6 +4548,77 @@ label[for="filesBrand"],label[for="filesProduct"]{
 #detailProductCont input[name="productCondLayer"]{
     margin-right: 5px;
 }
+.order-container,.order-container .grid .detail.address{
+    float:left;
+}
+.order-container.left{
+    width:60%;
+    font-family: proxima_nova_ltsemibold;
+}
+.order-container.left .grid.second{
+    overflow:auto;
+}
+.order-container.left .grid:first-child,.order-container.left .grid.third{
+    border-bottom: 1px solid #DFDFDF;
+}
+.order-container.left .grid.third{
+    border-top: 1px solid #DFDFDF;
+    padding: 20px;
+    text-align: center;
+}
+.order-container.left .grid .detail .head,.confirm-container .grid .head,.status-container .grid .detail .head{
+    color : #807F7F;
+}
+.order-container.left .grid.third .detail{
+    width:49%;
+    cursor:pointer;
+}
+.order-container.left .grid.third .detail:hover{
+    color:#FEBD18 !important;
+}
+.order-container.right{
+    width:40%;
+    background: #004E81;
+    color:#FFF;
+}
+.order-container .grid .detail,.order-container .grid .detail .left,.order-container .grid .detail .right{
+    display:inline-block;
+}
+.order-container.right .grid:first-child .detail:last-child{
+    margin-left: 30px;
+}
+.order-container.right .grid:first-child{
+    padding:20px;
+}
+.order-container.right .grid:first-child .detail:last-child .head:hover,.confirm-container .grid:last-child .left .detail:hover{
+    color:#FEBD18 !important;
+    cursor:pointer;
+}
+.order-container.right .grid.prices .detail.prices:first-child{
+    margin: 5px 20px;
+}
+.order-container.right .grid.prices .detail.prices:last-child{
+    float: right;
+    margin-right: 100px;
+}
+.order-container.right .button-container{
+    text-align: center;
+    margin-bottom: 15px;
+}
+.order-container .grid .detail.address{
+    width:50%;
+}
+.order-container .grid .detail.address:first-child{
+    border-right: 1px solid #DFDFDF;
+    padding: 30px;
+}
+.order-container .grid .detail.address .grid.invoice{
+    padding:25px;
+}
+.order-container .grid .detail.transaction{
+    width:30%;
+    padding: 10px 35px;
+}
 /*
     Edit Shop Profile Popup
 */
@@ -4671,6 +4745,15 @@ label[for="filesBrand"],label[for="filesProduct"]{
 .filterMysales{
     display:inline-block;
     position: relative;
+    padding: 0px 10px;
+    border-right:1px solid #DFDFDF;
+}
+.filterMysales:first-child{
+    padding-left:25px;
+}
+.filterMysales:last-child{
+    border-right:0;
+    float: right;
 }
 .mysalesSender{
     line-height: 20px;
@@ -4683,7 +4766,7 @@ label[for="filesBrand"],label[for="filesProduct"]{
     background:inherit;
     padding: 1px 1em;
 }
-#filterStatusSender,#filterDeliverySender{
+#filterStatusSender,#filterDeliverySender,#filterConfirmSender,#filterStatusSender,#filterTransactionSender,#filterMysalesStatus{
     border-radius: 3px;
     background: #FFFFFF;
     font-size: 11px;
@@ -4694,7 +4777,8 @@ label[for="filesBrand"],label[for="filesProduct"]{
     background: inherit;
 }
 .textFilterShopSeller{
-    font-size: 15px;
+    font-size: 13px;
+    color: #848484;
 }
 #filterMysalesDate,#filterMysalesInput{
     border: 1px solid #DFDFDF;
@@ -4704,6 +4788,10 @@ label[for="filesBrand"],label[for="filesProduct"]{
     color: #848484;
     border-radius: 3px;
     padding: 0px 3px;
+}
+#filterMysalesInput{
+    padding-left: 5px;
+    padding-right: 20px;
 }
 #filterMysalesDate::placeholder,#filterMysalesDate:-ms-input-placeholder,#filterMysalesDate::-ms-input-placeholder{
     font-size:11px;
@@ -4717,10 +4805,115 @@ label[for="filesBrand"],label[for="filesProduct"]{
     background-repeat: no-repeat;
     background-size: contain;
     cursor: pointer;
-    right: 5px;
+    right: 15px;
     top: 10px;
     width: 10px;
     height: 10px;
+}
+#confirmallConfirmMysales div,.confirm-container .grid .leftCont,.confirm-container .grid .midCont,.confirm-container .grid .rightCont,.confirm-container .grid .midCont .left,.confirm-container .grid .midCont .right{
+    display:inline-block;
+}
+.confirm-container,.status-container,.order-container{
+    font-family: proxima_nova_ltsemibold;
+}
+.confirm-container:nth-child(2){
+    border-top: 1px solid #DFDFDF;
+    border-bottom: 1px solid #DFDFDF;
+}
+.confirm-container .grid .midCont .left,.confirm-container .grid .midCont .right{
+    width:49%
+}
+.confirm-container .grid .leftCont{
+    width:20%;
+}
+.confirm-container .grid:first-child .leftCont{
+    padding: 15px 0px 15px 35px;
+}
+.confirm-container .grid .midCont{
+    border-left: 1px solid #DFDFDF;
+    border-right: 1px solid #DFDFDF;
+    padding: 0px 25px;
+    width:50%;
+}
+.confirm-container .grid .midCont .right{
+    overflow: auto;
+    padding-left: 20px;
+}
+.confirm-container .grid .rightCont{
+    width:29%;
+    padding: 0px 25px;
+}
+.confirm-container .grid:last-child .left,.confirm-container .grid:last-child .right,.confirm-container .grid:last-child .right.confirm div{
+    float:left;
+}
+.confirm-container .grid:last-child .left{
+    width:70%;
+}
+.confirm-container .grid:last-child .left .detail{
+    width: 49%;
+    display: inline-block;
+    text-align: center;
+    padding: 15px;
+}
+.confirm-container .grid:last-child .right{
+    width:29%;
+    color: #807F7F;
+}
+.status-container .grid{
+    display:block;
+    overflow: auto;
+}
+.status-container .grid:first-child{
+    padding: 5px;
+}
+.status-container .grid:nth-child(2){
+    border-top:1px solid #DFDFDF;
+    border-bottom:1px solid #DFDFDF;
+}
+.status-container .grid .detail{
+    float:left;
+    width: 25%;
+    padding: 10px 35px;
+    border-right: 1px solid #DFDFDF;
+}
+.status-container .grid .detail:last-child{
+    border-right: 0;
+}
+.status-container .grid:first-child .detail:first-child .left,.status-container .grid:first-child .detail:first-child .right,.status-container .grid:last-child .detail .left,.status-container .grid:last-child .detail .right{
+    display:inline-block;
+}
+.status-container .grid .detail.statusline{
+    width: 75%;
+}
+.status-container .grid:last-child .detail:first-child{
+    width: 31%;
+}
+.status-container .grid:last-child .detail:last-child{
+    width: 69%;
+}
+.status-container .grid .detail.transaction:last-child{
+    width:19%;
+    line-height: 40px;
+    cursor: pointer;
+}
+.status-container .grid .detail.transaction:last-child:hover{
+    color:#FEBD18 !important;
+}
+.status-container .grid .detail.transaction:last-child img{
+    margin-bottom: 0px;
+}
+.status-container .grid:last-child .detail .right{
+    vertical-align: top;
+    background-color: #F97C64;
+    padding: 5px;
+    border-radius: 3px;
+    width: 110px;
+    text-align: center;
+    margin-top: 5px;
+    margin-left: 65px;
+}
+.status-container .grid:last-child .detail.statusline{
+    margin-top: 10px;
 }
 /*
     End of Mysales Layer

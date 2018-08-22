@@ -29,7 +29,8 @@ function initShopMysales(){
 	   $('#transaction-shop-seller-content').removeClass("hidden");
 	});
 	
-	$('.ui-loader,#filterStatusSender-button span,#filterDeliverySender-button span').remove();
+	$('.ui-loader,#filterStatusSender-button span,#filterDeliverySender-button span,#filterConfirmSender-button span,#filterStatusSender-button span,#filterTransactionSender-button span,#filterMysalesStatus-button span').remove();
+	$('.button-container .ui-btn').text('');
 	
 	$('#status-line').milestones({
 		stage: 5,
@@ -37,4 +38,9 @@ function initShopMysales(){
 		checkclass: 'checks',
 		labels: ["Pembayaran","Proses","Pengiriman","Sampai","Diterima"]
 	});
+	
+	$('.order-container.right .grid:first-child .detail:last-child .head').on('click', function (e) {
+        var productId = $(this).data('productid');
+        location.href = url+"/product/"+productId;
+    });
 }
