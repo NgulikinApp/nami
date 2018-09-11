@@ -43,4 +43,34 @@ function initShopMysales(){
         var productId = $(this).data('productid');
         location.href = url+"/product/"+productId;
     });
+    
+    listdelivery();
+}
+
+function listdelivery(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(listdelivery);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: SHOP_DELIVERY_API,
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.status == "OK"){
+                    var listdelivery = '<option value="0">Pilih Kurir</option>';
+                    $.each( data.result.list, function( key, val ) {
+                        if(val.is_choose)listdelivery += '<option value="'+val.delivery_id+'">'+val.delivery_name+'</option>';
+                    });
+                    $('#filterDeliverySender').html(listdelivery);
+                    $('#filterConfirmSender').html(listdelivery);
+                    $('#filterTransactionSender').html(listdelivery);
+                }else{
+                    generateToken(listdelivery);
+                }
+            }
+        });    
+    }
 }

@@ -69,6 +69,8 @@ function detailCart(){
                 var totalPrice = 0;
                 $.each( response, function( key, val ) {
                     cartNgulikin = val.sum_product;
+                    var list_delivery = val.product_delivery;
+                    
                     listElement += '<div class="detail-shopping-body-title">';
                     listElement += '    <div id="detail-shopping-icon">';
                     listElement += '        <i class="fa fa-shopping-cart"></i>';
@@ -88,7 +90,7 @@ function detailCart(){
                     listElement += '        </div>';
                     listElement += '    </div>';
                     listElement += '    <div class="detail-shopping-body-content2">';
-                    if(val.sum_product === 1){
+                    if(parseInt(val.sum_product) === 1){
                         listElement += '        <div class="minCart">';
                         listElement += '            <button style="opacity:0.5;" disabled>-</button>';
                         listElement += '        </div>';
@@ -115,8 +117,9 @@ function detailCart(){
                     listElement += '        <div class="title">Pilih Jasa Pengiriman</div>';
                     listElement += '        <div class="inputDesc">';
                     listElement += '            <select id="senderProductCart">';
-                    listElement += '                <option value="JNE">JNE</option>';
-                    listElement += '                <option value="TIKI">TIKI</option>';
+                    $.each( list_delivery, function( key, val ) {
+                        listElement += '        <option value="'+val.delivery_id+'">'+val.delivery_name+'</option>';
+                    });
                     listElement += '            </select>';
                     listElement += '            <span class="senderPriceProductCart">Rp 18.000</span>';
                     listElement += '        </div>';
@@ -131,7 +134,7 @@ function detailCart(){
                 $(".totalShoppingCart").html(totalCartText(1,totalPrice,$('#senderProductCart').val()));
                 
                 $('.minCart button').on('click', function (e) {
-                    cartNgulikin = cartNgulikin - 1;
+                    cartNgulikin = parseInt($('#sumProductCart').val()) - 1;
                     if(cartNgulikin == 1){
                         minCart(cartNgulikin);
                     }
@@ -141,7 +144,7 @@ function detailCart(){
                 });
                 
                 $('.plusCart button').on('click', function (e) {
-                    cartNgulikin = cartNgulikin + 1;
+                    cartNgulikin = parseInt($('#sumProductCart').val()) + 1;
                     $('.minCart button').prop('disabled',false);
                     $('.minCart button').css('opacity','1');
                     $('#sumProductCart').val(cartNgulikin);

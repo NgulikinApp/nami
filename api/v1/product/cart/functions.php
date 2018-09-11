@@ -48,12 +48,13 @@
                 - product_id
                 - sum
     */
-    function feed($stmt){
+    function feed($stmt,$con){
         
         $data = array();
         
         if(isset($_SESSION['user'])){
             while ($row = $stmt->fetch_object()) {
+                $datadel = listdelivery($con,$row->shop_delivery);
                 $data[] = array(
                           "product_id" => $row->product_id,
                           "product_name" => $row->product_name,
@@ -62,13 +63,15 @@
                           "sum_product" => $row->sum_product,
                           "cart_createdate" => $row->cart_adddate,
                           "shop_name" => $row->shop_name,
-                          "product_price" => $row->product_price
+                          "product_price" => $row->product_price,
+                          "product_delivery" => $datadel
                         );
             }
         }else{
             $dataArray = $_SESSION['productcart'];
             $i=0;
             while ($row = $stmt->fetch_object()) {
+                $datadel = listdelivery($con,$row->shop_delivery);
                 $data[] = array(
                           "product_id" => $row->product_id,
                           "product_name" => $row->product_name,
@@ -77,7 +80,8 @@
                           "sum_product" => $dataArray[$i]['sum'],
                           "cart_createdate" => $dataArray[$i]['date'],
                           "shop_name" => $row->shop_name,
-                          "product_price" => $row->product_price
+                          "product_price" => $row->product_price,
+                          "product_delivery" => $datadel
                         );
                 $i++;
             }
@@ -89,5 +93,24 @@
             Function location in : /model/general/functions.php
         */
         credentialVerified($data);
+    }
+    
+    function listdelivery($con,$listproductid){
+        $datadel = array();
+        $stmtdel = $con->query("SELECT 
+                                    delivery_id,
+                                    delivery_name
+                                FROM 
+                                    delivery
+                                WHERE
+                                    delivery_id IN (".$listproductid.")");
+        while ($rowdel = $stmtdel->fetch_object()) {
+            $datadel[] = array(
+                          "delivery_id" => $rowdel->delivery_id,
+                          "delivery_name" => $rowdel->delivery_name
+                );
+        }
+        
+        return $datadel;
     }
 ?>

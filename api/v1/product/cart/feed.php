@@ -49,7 +49,8 @@
                                             username,
                                             sum_product,
                                             shop_name,
-                                            product_price
+                                            product_price,
+                                            shop_delivery
                                     FROM 
                                             product
                                             LEFT JOIN brand ON product.brand_id = brand.brand_id
@@ -63,7 +64,7 @@
                 /*
                     Function location in : functions.php
                 */
-                feed($stmt);
+                feed($stmt,$con);
             }else{
                 $data = @$_SESSION['productcart'];
                 $i = 0;
@@ -83,7 +84,8 @@
                                             product_image,
                                             username,
                                             shop_name,
-                                            product_price
+                                            product_price,
+                                            shop_delivery
                                     FROM 
                                             product
                                             LEFT JOIN brand ON product.brand_id = brand.brand_id
@@ -95,7 +97,7 @@
                 /*
                     Function location in : functions.php
                 */
-                feed($stmt); 
+                feed($stmt,$con); 
             }
         }catch(Exception $e){
             /*
