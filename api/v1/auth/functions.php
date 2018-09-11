@@ -250,11 +250,43 @@
                                             user_id='".$user_id."'
                                 )as inner1 
                                     LEFT JOIN shop ON inner1.user_id=shop.user_id");
-                
+        
+        sessionCart($user_id,$con);        
         /*
             Function location in : functions.php
         */
         get_data_signin($stmt);
+    }
+    
+    function sessionCart($user_id,$con){
+        $data = $_SESSION['productcart'];
+        if(isset($data)){
+            $i = 0;
+            $list_productid = "";
+            foreach($data as &$value){
+                $list_productid = ($i != 0)?','.$list_productid:'';
+                $list_productid = $list_productid.$value['product_id'];
+                $i++;
+            }
+            
+            $stmt = $con->prepare("UPDATE cart SET cart_isactive='0' WHERE user_id=? AND product_id IN (?)");
+            
+            $stmt->bind_param("ss", $user_id,$list_productid);
+                
+            $stmt->execute();
+            
+            $stmt->close();
+            $cartLen = count($data);
+            for($i=0;$i<=$cartLen;$i++){
+                $stmt = $con->prepare("INSERT INTO cart(user_id,product_id,sum_product,cart_adddate) VALUES(?,?,?,?)");
+                
+                $stmt->bind_param("siis", $user_id,$data[$i]['product_id'],$data[$i]['sum'],$data[$i]['date']);
+                
+                $stmt->execute();
+                
+                $stmt->close();
+            }
+        }
     }
     
     /*

@@ -1,4 +1,5 @@
-var rateData = {};
+var rateData = {},
+    addtocartSum = {};
 
 function initProduct(){
 	detail();
@@ -128,10 +129,9 @@ function detail(){
                         });
                         
                         $('#btnCart').on( 'click', function( e ){
-                            var sumProduct = $('#sumProduct').val();
-                    	    localStorage.setItem('cartNgulikin',sumProduct);
+                            addtocartSum.sumproduct = $('#sumProduct').val();
                             
-                            notif("info","Product Ditambah ke keranjang","right","top");
+                            addtocartProduct();
                     	});
                     	
                     	$('#btnFavorite').on( 'click', function( e ){
@@ -226,6 +226,37 @@ function rateProduct(){
                 }else{
                     $('.tabelList #rate').html(data.result.product_avg_rate);
                     notif("info","Terima kasih sudah memberikan penilaian","right","top");
+                }
+            }
+        });
+    }
+}
+
+function addtocartProduct(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(addtocartProduct);
+    }else{
+        var url = window.location.href,
+            product_id = url.substr(url.lastIndexOf('/') + 1);
+            
+        $.ajax({
+            type: 'POST',
+            url: PRODUCT_CART_ADD_API,
+            data:JSON.stringify({ 
+                    product_id: product_id,
+                    sum : addtocartSum.sumproduct
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                    generateToken(addtocartProduct);
+                }else{
+                    $('#iconCartHeader').popover('hide');
+                    bubbleCart();
+                    notif("info","Product Ditambah ke keranjang","right","top");
                 }
             }
         });

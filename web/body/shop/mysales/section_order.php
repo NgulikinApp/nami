@@ -18,7 +18,7 @@
             </select>
         </div>
     </div>
-   <div class="filterMysales search">
+    <div class="filterMysales search">
         <input type="text" id="filterMysalesInput" placeholder="Nama Pembeli / Nomor Invoice"/>
         <div id="search-mysalesorder"></div>
     </div>

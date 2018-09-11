@@ -163,6 +163,8 @@
                     mkdir($path, 0700, true);
                 }
                 
+                sessionCart($user_id,$con);
+                
                 $result = array(
                                 "user_id"=>$user_id,
                                 "username"=>$request['username'],

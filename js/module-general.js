@@ -109,30 +109,8 @@ function initGeneral(){
 	    location.href = url+"/aboutus";
 	});
 	
-	var templatePopUpCart = '<div class="popover popover-bubble" role="tooltip">';
-    	templatePopUpCart += '  <div class="arrow"></div>';
-    	templatePopUpCart += '  <div class="bubble-container">';
-    	templatePopUpCart += '      <ul class="bubble-list-cart">';
-    	templatePopUpCart += '          <li>Jumlah <div class="bubble-sum-cart">0<img src="/img/button_cart.png" width="15" height="15"/></div></li>';
-    	templatePopUpCart += '      </ul>';
-    	templatePopUpCart += '      <div class="no-cart">';
-    	templatePopUpCart += '          <img src="/img/keranjang.png" width="120" height="100"/>';
-    	templatePopUpCart += '          <span>Tidak ada produk yang ditambahkan</span>';
-    	templatePopUpCart += '      </div>';
-    	templatePopUpCart += '      <div class="bubble-cart-button">';
-    	templatePopUpCart += '          <input type="button" value="Lihat Keranjang" onclick="cartClick()"/>';
-    	templatePopUpCart += '      </div>';
-    	templatePopUpCart += '  </div>';
-    	templatePopUpCart += '</div>';
-    	
-    $('#iconCartHeader').popover({
-        placement: 'bottom',
-        template: templatePopUpCart
-    }).on('click', function(e) {
-        $('#iconShopTemp').popover('hide');
-	    $('#iconNotifHeader').popover('hide');
-	    $('#iconProfileTemp').popover('hide');
-    });
+	bubbleCart();
+	
 	$('#iconFavoritHeader').on( 'click', function( e ){
 	    location.href = url+"/favorite";
 	});
@@ -222,6 +200,80 @@ function initGeneral(){
 	$('.footerFloat a:nth-child(2) span').on('click', function (e) {
 	    window.open('https://www.blog.ngulikin.com');
 	});
+}
+
+function bubbleCart(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(bubbleCart);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: PRODUCT_CART_API,
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var templatePopUpCart = '';
+                        templatePopUpCart += '<div class="popover popover-bubble" role="tooltip">';
+                        templatePopUpCart += '  <div class="arrow"></div>';
+                        templatePopUpCart += '  <div class="bubble-container">';
+                	if(data.result.length>0){
+                        	templatePopUpCart += '      <ul class="bubble-list-cart">';
+                        	templatePopUpCart += '          <li>Jumlah <div class="bubble-sum-cart">'+data.result.length+'<img src="/img/button_cart.png" width="15" height="15"/></div></li>';
+                        	templatePopUpCart += '      </ul>';
+                        	templatePopUpCart += '      <div class="no-cart">';
+                        	$.each( data.result, function( key, val ) {
+                        	    templatePopUpCart += '          <div class="list-cart" data-id="'+val.product_id+'">';
+                            	templatePopUpCart += '              <div class="list-cart-cont">';
+                            	templatePopUpCart += '                  <div class="list-cart-content">'+val.brand_name+'</div>';
+                            	templatePopUpCart += '                  <div class="list-cart-content">'+val.product_name+'</div>';
+                            	templatePopUpCart += '                  <div class="list-cart-content">Total '+val.sum_product+'</div>';
+                            	templatePopUpCart += '                  <div class="list-cart-content">'+val.cart_createdate+'</div>';
+                            	templatePopUpCart += '              </div>';
+                            	templatePopUpCart += '              <div class="list-cart-cont">';
+                            	templatePopUpCart += '                  <img src="'+val.product_image+'" width="65" height="65"/>';
+                            	templatePopUpCart += '              </div>';
+                            	templatePopUpCart += '              <div class="list-cart-cont">';
+                            	templatePopUpCart +=                    val.product_price;
+                            	templatePopUpCart += '              </div>';
+                            	templatePopUpCart += '          </div>';
+                        	});
+                        	templatePopUpCart += '      </div>';
+                        	templatePopUpCart += '      <div class="bubble-cart-button">';
+                        	templatePopUpCart += '          <input type="button" value="Lihat Keranjang" onclick="cartClick()"/>';
+                        	templatePopUpCart += '      </div>';
+                	}else{
+                        	templatePopUpCart += '      <ul class="bubble-list-cart">';
+                        	templatePopUpCart += '          <li>Jumlah <div class="bubble-sum-cart">0<img src="/img/button_cart.png" width="15" height="15"/></div></li>';
+                        	templatePopUpCart += '      </ul>';
+                        	templatePopUpCart += '      <div class="no-cart">';
+                        	templatePopUpCart += '          <img src="/img/keranjang.png" width="120" height="100"/>';
+                        	templatePopUpCart += '          <span>Tidak ada produk yang ditambahkan</span>';
+                        	templatePopUpCart += '      </div>';
+                        	templatePopUpCart += '      <div class="bubble-cart-button">';
+                        	templatePopUpCart += '          <input type="button" value="Lihat Keranjang" onclick="cartClick()"/>';
+                        	templatePopUpCart += '      </div>';
+                	}
+                	templatePopUpCart += '  </div>';
+                    templatePopUpCart += '</div>';
+                	
+                	$("#iconCartHeader").popover('destroy');
+                	$('#iconCartHeader').popover({
+                        placement: 'bottom',
+                        template: templatePopUpCart
+                    }).on('click', function(e) {
+                        $('#iconShopTemp').popover('hide');
+                    	$('#iconNotifHeader').popover('hide');
+                    	$('#iconProfileTemp').popover('hide');
+                    });
+                }else{
+                    generateToken(bubbleCart);
+                }
+            } 
+        });
+    }
 }
 
 function incomeShopClick(){

@@ -1930,7 +1930,7 @@ section div h1{
     font-size: 10px;
     font-weight: unset;
 }
-#buttonSignIn,#buttonSignup,#buttonReset,#buttonForgotSend,#buttonForgotVerified,#buttonForgotChange,#processMysalesButton{
+#buttonSignIn,#buttonSignup,#buttonReset,#buttonForgotSend,#buttonForgotVerified,#buttonForgotChange,#processMysalesButton,#buttonListTransactionIncome{
 	background-color: #3FC3FF;
 	border-radius: 3px;
 	border: none;
@@ -1944,7 +1944,7 @@ section div h1{
 	font-family: proxima_nova;
 	box-shadow: 3px 3px 5px #888888;
 }
-#buttonSignIn:hover,#buttonSignup:hover,#buttonReset:hover{
+#buttonSignIn:hover,#buttonSignup:hover,#buttonReset:hover,#buttonForgotSend:hover,#buttonForgotVerified:hover,#buttonForgotChange:hover,#processMysalesButton:hover,#buttonListTransactionIncome:hover{
     background-color: #007ec1;
 }
 #buttonSignIn{
@@ -2116,6 +2116,22 @@ hr{
     border-bottom: 1px solid #DFDFDF !important;
     border-top: 0px !important;
 }
+.list-cart{
+    font-size:12px;
+    overflow: auto;
+}
+.list-cart-cont{
+    float:left;
+}
+.list-cart-cont img{
+    margin: 0px 10px;
+}
+.list-cart-cont:last-child{
+    line-height: 65px;
+}
+.list-cart-content{
+    text-align: left;
+}
 .bubble-sum-cart{
     float:right;
 }
@@ -2168,12 +2184,12 @@ hr{
     margin-bottom: 205px;
     width:100%;
 }
-.grid-cartsum-left{
+.grid-cartsum-left,.grid-incomehistory-left{
     width:60%;
     float:left;
     padding: 20px;
 }
-.grid-cartsum-right{
+.grid-cartsum-right,.grid-incomehistory-right{
     width:40%;
     float:left;
     padding: 20px;
@@ -3384,7 +3400,7 @@ Product page
     visibility:hidden;
     width:100px;
 }
-.privateRight div label{
+.privateRight div label,.midProductLayer div label{
     background-color: #3FC3FF;
     padding: 3px;
     color: #FFF;
@@ -4198,7 +4214,7 @@ input.radioPaymentOthers:empty ~ label:before{
 .grid-shop-seller-body .bank .list-bank table .list-bank-name .left,.grid-shop-seller-body .bank .list-bank table .list-bank-name .right{
     display:inline-block;
 }
-.grid-shop-seller-body .bank .list-bank table .list-bank-name .left{
+.grid-shop-seller-body .bank .list-bank table .list-bank-name .left,.grid-incomehistory-left .left #photo_profile{
     background-image: url(/img/no-photo.jpg);
     border-radius: 25px;
     width: 40px;
@@ -4914,6 +4930,150 @@ label[for="filesBrand"],label[for="filesProduct"]{
 }
 .status-container .grid:last-child .detail.statusline{
     margin-top: 10px;
+}
+.grid-incomehistory-left,.grid-incomehistory-right{
+    border-top: 1px solid #DFDFDF;
+}
+.grid-incomehistory-left .left,.grid-incomehistory-left .right{
+    float:left;
+    width:50%;
+    font-family: 'proxima_nova_altbold';
+    color:#414141;
+}
+.grid-incomehistory-left .profile{
+    padding: 0px; 
+}
+.grid-incomehistory-left .profile .left{
+    border: 1px solid #DFDFDF;
+    padding: 10px;
+}
+.grid-incomehistory-left .profile .left #name_profile{
+    padding: 10px 30px;
+    text-overflow: ellipsis;
+}
+.grid-incomehistory-left .profile .left div{
+    float:left;
+}
+.grid-incomehistory-left .profile .right{
+    text-align: center;
+    padding: 20px;
+    color:#747474;
+}
+.grid-incomehistory-left .menu,.grid-incomehistory-right .menu{
+    overflow: auto;
+    background-color:#FEBD18;
+    padding: 20px 10px;
+    text-transform:uppercase;
+    font-family: 'proxima_nova_altbold';
+    color: #414141;
+}
+.grid-incomehistory-left .menu .left,.grid-incomehistory-left .menu .right,.grid-incomehistory-right .menu{
+    text-align: center;
+}
+.grid-incomehistory-left .menu .left{
+    border-right: 1px solid #747474;
+}
+.grid-incomehistory-right .menu{
+    margin-top: 62px;
+}
+.grid-incomehistory-left .body,.grid-incomehistory-right .body{
+    background-color:#F4F4F4;
+    border-left:1px solid #DFDFDF;
+    border-right:1px solid #DFDFDF;
+}
+.grid-incomehistory-left .body .list-menu,.grid-incomehistory-right .body .list-menu{
+    border-bottom:1px solid #DFDFDF;
+    padding: 20px 10px;
+    overflow: auto;
+    text-align: center;
+}
+.grid-incomehistory-right .body .list-menu .left{
+    float: left;
+    font-family: 'proxima_nova_altbold';
+    color: #414141;
+}
+.grid-incomehistory-right .body .list-menu .right{
+    float: right;
+    font-family: 'proxima_nova_altbold';
+    color: #414141;
+}
+.grid-incomehistory-right .body .list-menu .right img{
+    vertical-align: text-top;
+}
+.grid-incomehistory-left .footer{
+    padding: 15px;
+    border-left:1px solid #DFDFDF;
+    border-right:1px solid #DFDFDF;
+    overflow: auto;
+}
+.grid-incomehistory-left .footer .recbank{
+    border-bottom:1px solid #DFDFDF;
+    overflow: auto;
+    padding-bottom: 10px;
+}
+.grid-incomehistory-left .footer .left div:first-child{
+    text-transform:uppercase;
+    font-size: 14px;
+}
+.grid-incomehistory-left .footer .left div:last-child,.grid-incomehistory-left .footer .right{
+    font-size: 12px;
+}
+.grid-incomehistory-left .footer .right{
+    margin-top: 20px;
+    text-align: center;
+}
+.grid-incomehistory-right .footer{
+    padding: 5px 0px 15px;
+    text-align: center;
+    border-left:1px solid #DFDFDF;
+    border-right:1px solid #DFDFDF;
+    border-bottom:1px solid #DFDFDF;
+    overflow: auto;
+}
+.grid-incomehistory-left .addrec{
+    text-align:right;
+    padding: 5px 15px 15px;
+    font-family: 'proxima_nova_altbold';
+    border-left:1px solid #DFDFDF;
+    border-right:1px solid #DFDFDF;
+    border-bottom:1px solid #DFDFDF;
+}
+.grid-incomehistory-left .addrec:hover{
+    cursor:pointer;
+}
+.income{
+    font-family: 'proxima_nova_altbold';
+    font-size: 12px;
+    padding: 0px 30px;
+    margin-bottom: 10px;
+}
+.income .titlecont{
+    overflow:auto;
+}
+.income .titlecont .title{
+    float:left;
+    text-transform:uppercase;
+    color:#807F7F;
+    width:25%;
+    font-size: 14px;
+    border: 0px;
+}
+.income .list-incomecont{
+    background-color:#F4F4F4;
+    overflow:auto;
+    text-align: center;
+}
+.income .list-incomecont .list-income{
+    border-top:1px solid #DFDFDF;
+    overflow: auto;
+}
+.income .list-incomecont .list-income:first-child{
+    border-top:0px;
+}
+.income .list-incomecont .list-income .content-income{
+    float:left;
+    width:25%;
+    padding: 10px;
 }
 /*
     End of Mysales Layer

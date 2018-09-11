@@ -1,4 +1,5 @@
-var favoriteData = {};
+var favoriteData = {},
+    cartData = {};
 
 function initHome(){
     var logoutsession = sessionStorage.getItem('logoutNgulikin'),
@@ -195,7 +196,10 @@ function bestseller(){
                 	$(".tos-next").css('right','5px');
                 	
                 	$('.bestseller-cart').on('click', function (e) {
-                        notif("success","Produk ditambah ke keranjang","center","top");
+                	    var productArray = ($(this).next('i').next('div').attr('datainternal-id')).split("~");
+                	    
+                        cartData.product_id = parseInt(productArray[0]);
+                        addtocartProduct();
                     });
                                     
                     $('.bestseller-like').on('click', function (e) {
@@ -259,7 +263,10 @@ function promo(){
                 	});
                 	
                 	$('.promo-cart').on('click', function (e) {
-                        notif("success","Produk ditambah ke keranjang","center","top");
+                	    var productArray = ($(this).next('i').next('div').attr('datainternal-id')).split("~");
+                	    
+                        cartData.product_id = parseInt(productArray[0]);
+                        addtocartProduct();
                     });
                                     
                     $('.promo-like').on('click', function (e) {
@@ -325,4 +332,32 @@ function mousetosrushome(url){
         var datainternal = $(this).attr('datainternal-id').split("~");
         location.href = url+"/product/"+datainternal[0];
     });
+}
+
+function addtocartProduct(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(addtocartProduct);
+    }else{
+        $.ajax({
+            type: 'POST',
+            url: PRODUCT_CART_ADD_API,
+            data:JSON.stringify({ 
+                    product_id: cartData.product_id,
+                    sum : 1
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                    generateToken(addtocartProduct);
+                }else{
+                    $('#iconCartHeader').popover('hide');
+                    bubbleCart();
+                    notif("info","Product Ditambah ke keranjang","center","top");
+                }
+            }
+        });
+    }
 }

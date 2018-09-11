@@ -10,5 +10,6 @@
     include 'functions.php';
     
     unset($_SESSION['user']);
+    unset($_SESSION['productcart']);
     signout();
 ?>

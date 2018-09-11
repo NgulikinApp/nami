@@ -1,68 +1,19 @@
 function initCart(){
-    var cartNgulikin = localStorage.getItem('cartNgulikin'),
-        productPrice = "1000000",
-        emailsession = localStorage.getItem('emailNgulikin'),
+    var cartNgulikin = 0,
         loginsession = sessionStorage.getItem('loginNgulikin');
-        
-        cartNgulikin = parseInt(cartNgulikin);
     
     $( "#RegisOrNotCart" ).accordion();
     
-    if(emailsession !== null){
-        $( "#RegisOrNotCart" ).hide();
-        $( ".detail-shoppingaccount-footer .title" ).css({"background":"#FFFFFF","border-bottom":"2px solid #F5F5F5"});
-    }
-    
-    if(loginsession !== null && emailsession !== null){
-        notif("info","Anda telah login sebagai "+emailsession,"center","center");
+    if(loginsession !== null){
+        var fullname_popup = $('.fullname_popup').val();
+        notif("info","Anda telah login sebagai "+fullname_popup,"center","center");
         sessionStorage.removeItem('loginNgulikin');
     }
-        
-    var productPriceCalc = numberFormat(productPrice);
-    $('.productPriceCart').html(productPriceCalc);
-        
-    if(cartNgulikin !== null && cartNgulikin){
-        $('#cart-filledlist').show();
-        $('#cart-emptylist').hide();
-        $('.container').addClass('cart');
-        
-        $('#sumProductCart').val(cartNgulikin);
-    }else{
-        localStorage.removeItem('cartNgulikin');
-        $('#cart-filledlist').hide();
-        $('#cart-emptylist').show();
-        $('.container').removeClass('cart');
-    }
     
-    minCart(cartNgulikin);
-    
-    $('.minCart button').on('click', function (e) {
-        cartNgulikin = cartNgulikin - 1;
-        if(cartNgulikin == 1){
-            minCart(cartNgulikin);
-        }
-        $('#sumProductCart').val(cartNgulikin);
+    detailCart();
         
-        totalCartText(cartNgulikin,productPrice,$('#senderProductCart').val());
-    });
-    
-    $('.plusCart button').on('click', function (e) {
-        cartNgulikin = cartNgulikin + 1;
-        $('.minCart button').prop('disabled',false);
-        $('.minCart button').css('opacity','1');
-        $('#sumProductCart').val(cartNgulikin);
-        $('#sumProductSummaryCart').val(cartNgulikin);
-        
-        totalCartText(cartNgulikin,productPrice,$('#senderProductCart').val());
-    });
-    
-    $('#senderProductCart').on('change', function (e) {
-        var price = senderPriceCart($(this).val()).toString();
-        $('.senderPriceProductCart').html(numberFormat(price));
-        $('#sumProductSummaryCart').html(numberFormat(price));
-        
-        totalCartText(cartNgulikin,productPrice,$(this).val());
-    });
+    $('#cart-filledlist').show();
+    $('.container').addClass('cart');
     
     $('#buttonSignInCart').on( 'click', function( e ){
 	   var email = $('#emailSigninCart').val();
@@ -102,8 +53,119 @@ function initCart(){
     });
 }
 
+function detailCart(){
+    $.ajax({
+        type: 'GET',
+        url: PRODUCT_CART_API,
+        dataType: 'json',
+        beforeSend: function(xhr, settings) { 
+            xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+        },
+        success: function(data, status) {
+            if(data.status == "OK"){
+                var response = data.result;
+                var listElement = '';
+                
+                var totalPrice = 0;
+                $.each( response, function( key, val ) {
+                    cartNgulikin = val.sum_product;
+                    listElement += '<div class="detail-shopping-body-title">';
+                    listElement += '    <div id="detail-shopping-icon">';
+                    listElement += '        <i class="fa fa-shopping-cart"></i>';
+                    listElement += '    </div>';
+                    listElement += '    <div id="detail-shopping-sellername">'+val.shop_name+'</div>';
+                    listElement += '</div>';
+                    listElement += '<div class="detail-shopping-body-content">';
+                    listElement += '    <div class="detail-shopping-body-content1">';
+                    listElement += '        <div class="disaligner">';
+                    listElement += '            <img src="'+val.product_image+'" width="100" height="100"/>';
+                    listElement += '        </div>';
+                    listElement += '        <div class="aligner">';
+                    listElement += '            <div>'+val.product_name+'</div>';
+                    listElement += '        </div>';
+                    listElement += '        <div class="aligner">';
+                    listElement += '            <div class="productPriceCart">'+numberFormat(val.product_price)+'</div>';
+                    listElement += '        </div>';
+                    listElement += '    </div>';
+                    listElement += '    <div class="detail-shopping-body-content2">';
+                    if(val.sum_product === 1){
+                        listElement += '        <div class="minCart">';
+                        listElement += '            <button style="opacity:0.5;" disabled>-</button>';
+                        listElement += '        </div>';
+                    }else{
+                        listElement += '        <div class="minCart">';
+                        listElement += '            <button>-</button>';
+                        listElement += '        </div>';
+                    }
+                    listElement += '        <div class="inputSumCartTemp">';
+                    listElement += '            <input type="text" id="sumProductCart" value="'+val.sum_product+'"/>';
+                    listElement += '        </div>';
+                    listElement += '        <div class="plusCart">';
+                    listElement += '            <button>+</button>';
+                    listElement += '        </div>';
+                    listElement += '    </div>';
+                    listElement += '    <hr/>';
+                    listElement += '    <div class="detail-shopping-body-content3">';
+                    listElement += '        <div class="title">Catatan</div>';
+                    listElement += '        <div class="inputDesc">';
+                    listElement += '            <textarea id="descProductCart" placeholder="Contoh:Warna, Jenis, Ukuran" rows="7" cols="86"></textarea>';
+                    listElement += '        </div>';
+                    listElement += '    </div>';
+                    listElement += '    <div class="detail-shopping-body-content4">';
+                    listElement += '        <div class="title">Pilih Jasa Pengiriman</div>';
+                    listElement += '        <div class="inputDesc">';
+                    listElement += '            <select id="senderProductCart">';
+                    listElement += '                <option value="JNE">JNE</option>';
+                    listElement += '                <option value="TIKI">TIKI</option>';
+                    listElement += '            </select>';
+                    listElement += '            <span class="senderPriceProductCart">Rp 18.000</span>';
+                    listElement += '        </div>';
+                    listElement += '    </div>';
+                    listElement += '</div>';
+                    
+                    totalPrice = totalPrice + (val.product_price * val.sum_product);
+                });
+                
+                $(".detail-shopping-body").html(listElement);
+                $(".totalPriceCart").html(numberFormat(totalPrice.toString()));
+                $(".totalShoppingCart").html(totalCartText(1,totalPrice,$('#senderProductCart').val()));
+                
+                $('.minCart button').on('click', function (e) {
+                    cartNgulikin = cartNgulikin - 1;
+                    if(cartNgulikin == 1){
+                        minCart(cartNgulikin);
+                    }
+                    $('#sumProductCart').val(cartNgulikin);
+                    
+                    totalCartText(cartNgulikin,totalPrice,$('#senderProductCart').val());
+                });
+                
+                $('.plusCart button').on('click', function (e) {
+                    cartNgulikin = cartNgulikin + 1;
+                    $('.minCart button').prop('disabled',false);
+                    $('.minCart button').css('opacity','1');
+                    $('#sumProductCart').val(cartNgulikin);
+                    $('#sumProductSummaryCart').val(cartNgulikin);
+                    
+                    totalCartText(cartNgulikin,totalPrice,$('#senderProductCart').val());
+                });
+                
+                $('#senderProductCart').on('change', function (e) {
+                    var price = senderPriceCart($(this).val()).toString();
+                    $('.senderPriceProductCart').html(numberFormat(price));
+                    $('#sumProductSummaryCart').html(numberFormat(price));
+                    
+                    totalCartText(cartNgulikin,totalPrice,$(this).val());
+                });
+            }else{
+                generateToken(detailCart);
+            }
+        } 
+    });
+}
+
 function minCart(cartNgulikin){
-    if(cartNgulikin == 1){
+    if(cartNgulikin === 1){
         $('.minCart button').prop('disabled',true);
         $('.minCart button').css('opacity','0.5');
     }

@@ -426,43 +426,44 @@ function selectBrand(){
 
 function brandLayer(){
     var brandLayer = '<div class="layerPopup">';
-        brandLayer += '    <div class="accountSellerContainer productLayer">';
+        brandLayer += '    <div class="accountSellerContainer productLayer" style="width:550px;height: 330px;">';
         if(brandLayerAction.do === 'edit'){
             brandLayer += '        <div class="title">Ubah Brand</div>';
         }else{
             brandLayer += '        <div class="title">Buat Brand</div>';   
         }
-        brandLayer += '        <div class="body">';
-        brandLayer += '           <div class="left">';
+        brandLayer += '        <div class="body" style="padding: 25px;">';
+        brandLayer += '           <div class="left" style="width: 40%;">';
         brandLayer += '               <div class="midProductLayer">';
-        brandLayer += '                   <div>';
-        brandLayer += '                         <label for="filesBrand">';
         var brand_image = '/img/uploadPhoto.png';
         if(brandLayerAction.do === 'edit'){
             brand_image = $('#brand_image').attr('src');   
         }
-        brandLayer += '                             <img id="brandImageLayer" src="'+brand_image+'" width="250" height="250" align="right"/>';
-        brandLayer += '                         </label>';
+        brandLayer += '                   <img id="brandImageLayer" src="'+brand_image+'" width="150" height="150"/>';
+        brandLayer += '                   <div>';
+        brandLayer += '                         <label for="filesBrand">Unggah logo brand</label>';
         brandLayer += '                         <input id="filesBrand" type="file">';
         brandLayer += '                   </div>';
         brandLayer += '               </div>';
         brandLayer += '           </div>';
         brandLayer += '           <div class="right">';
         brandLayer += '               <div class="midProductLayer">';
-        brandLayer += '                   <table class="uploadProductCont" id="dataProductCont">';
+        brandLayer += '                   <table class="uploadProductCont" id="dataProductCont" style="width:325px;margin: 0;">';
         brandLayer += '                       <tr>';
         brandLayer += '                           <td>Nama Brand</td>';
         var brand_name = '';
         if(brandLayerAction.do === 'edit'){
             brand_name = $('#brand_name').text();   
         }
-        brandLayer += '                           <td><input type="text" id="brandNameLayer" value="'+brand_name+'"/></td>';
+        brandLayer += '                           <td>';
+        brandLayer += '                                 <input type="text" id="brandNameLayer" value="'+brand_name+'" style="width: 200px;"/>';
+        brandLayer += '                           </td>';
         brandLayer += '                       </tr>';
         brandLayer += '                   </table>';
         brandLayer += '               </div>';
         brandLayer += '           </div>';
         brandLayer += '        </div>';
-        brandLayer += '        <div class="footer">';
+        brandLayer += '        <div class="footer" style="margin-top: -40px;">';
 	    brandLayer += '            <input type="button" value="Batal" id="cancel"/>';
 	    brandLayer += '            <input type="button" value="Simpan" id="save"/>';
 	    brandLayer += '        </div>';

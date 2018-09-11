@@ -64,6 +64,15 @@
 							        include('api/v1/product/brand/getData.php');
 							}
 						break;
+						case 'cart':
+						    switch (@$routes[3]) {
+						        case 'a':
+        							include('api/v1/product/cart/addtocart.php');
+        						break;
+        						default :
+							        include('api/v1/product/cart/feed.php');
+						    }
+						break;
 						case 'category':
 							include('api/v1/product/list/category.php');
 						break;

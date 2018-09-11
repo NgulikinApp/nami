@@ -4,59 +4,14 @@
             <div class="detail-shopping-header">
                 Detail Belanja
             </div>
-            <div class="detail-shopping-body">
-                <div class="detail-shopping-body-title">
-                    <div id="detail-shopping-icon">
-                        <i class="fa fa-shopping-cart"></i>
-                    </div>
-                    <div id="detail-shopping-sellername">
-                        Andhika Adhitama Gama
-                    </div>
-                </div>
-                <div class="detail-shopping-body-content">
-                    <div class="detail-shopping-body-content1">
-                        <div class="disaligner">
-                            <img src="https://id-live-03.slatic.net/p/7/raja-clothing-jaket-parasut-simpel-logo-darkblue-1480440568-5188682-e06b304751ab35e2618eb83d00644b7c-catalog_233.jpg" width="100" height="100"/>
-                        </div>
-                        <div class="aligner">
-                            <div>Rainbow Hoddie</div>
-                        </div>
-                        <div class="aligner">
-                            <div class="productPriceCart">Rp 1.000.000</div>
-                        </div>
-                    </div>
-                    <div class="detail-shopping-body-content2">
-                        <div class="minCart">
-                            <button>-</button>
-                        </div>
-                        <div class="inputSumCartTemp">
-                            <input type="text" id="sumProductCart"/>
-                        </div>
-                        <div class="plusCart">
-                            <button>+</button>
-                        </div>
-                    </div>
-                    <hr/>
-                    <div class="detail-shopping-body-content3">
-                        <div class="title">Catatan</div>
-                        <div class="inputDesc">
-                            <textarea id="descProductCart" placeholder="Contoh:Warna, Jenis, Ukuran"rows="7" cols="86"></textarea>
-                        </div>
-                    </div>
-                    <div class="detail-shopping-body-content4">
-                        <div class="title">Pilih Jasa Pengiriman</div>
-                        <div class="inputDesc">
-                            <select id="senderProductCart">
-                                <option value="JNE">JNE</option>
-                                <option value="TIKI">TIKI</option>
-                            </select>
-                            <span class="senderPriceProductCart">Rp 18.000</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="detail-shopping-body"></div>
         </div>
         <div id="detail-shoppingaccount">
+            <?php
+                $css = "";
+                if(!isset($_SESSION['user'])){
+                    $css = 'style="background:#FFFFFF;border-bottom:2px solid #F5F5F5;"';
+            ?>
             <div id="RegisOrNotCart">
                 <h3 class="detail-shoppingaccount-header">
                     Login
@@ -87,7 +42,10 @@
                     <input class="inputShoppingAccountCart" placeholder="Telepon/Handphone">
                 </div>
             </div>
-            <div class="detail-shoppingaccount-footer">
+            <?php
+                }
+            ?>
+            <div class="detail-shoppingaccount-footer" <?php echo $css;?>>
                 <div class="title">
                     Isi Alamat Pengiriman
                 </div>
