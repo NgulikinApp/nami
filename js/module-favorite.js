@@ -95,7 +95,7 @@ function listfavoriteProduct(){
                             noData += '             Kamu belum menambahkan suatu produk kedalam daftar favoritmu. Simpan produk yang kamu sukai dengan menambahkannya ke daftar produk favoritmu.';
                             noData += '         </div>';
                             noData += '     </div>';
-                        $('#grid-favorite-listdatashop').html(noData);
+                        $('#grid-favorite-listdataproduct').html(noData);
                     }
                 }else{
                     generateToken(listfavoriteProduct);
