@@ -85,11 +85,24 @@
 						case 'feed':
 							include('api/v1/product/list/feed.php');
 						break;
+						case 'invoice':
+						    switch (@$routes[3]) {
+						        case 'us':
+        							include('api/v1/product/invoice/changestatusinvoice.php');
+        						break;
+						        case 'a':
+        							include('api/v1/product/invoice/addtoinvoice.php');
+        						break;
+						    }
+						break;
 						case 'rate':
 							include('api/v1/product/rate/rateItem.php');
 						break;
+						case 'status':
+							include('api/v1/product/list/status.php');
+						break;
 						default :
-							include('api/v1/product/detail/getData.php');
+						    include('api/v1/product/detail/getData.php');
 						break;
 					}
 				break;
@@ -114,6 +127,9 @@
 				break;
 				case 'shop':
 				    switch (@$routes[2]) {
+				        case 'a':
+        					include('api/v1/shop/detail/actionData.php');
+        				break;
 				        case 'account':
 				            switch (@$routes[3]) {
 				                case 'a':
@@ -163,6 +179,9 @@
 						case 'e':
 							include('api/v1/shop/detail/editData.php');
 						break;
+						case 'eb':
+							include('api/v1/shop/detail/editBanner.php');
+						break;
 				        case 'favorite':
 							include('api/v1/shop/favorite/favoriteItem.php');
 						break;
@@ -171,6 +190,16 @@
 						break;
 				        case 'feed':
 							include('api/v1/shop/list/feed.php');
+						break;
+						case 'notes':
+						    switch (@$routes[3]) {
+						        case 'e':
+        							include('api/v1/shop/detail/editNotes.php');
+        						break;
+						        default: 
+						            include('api/v1/shop/detail/getNotes.php');
+						        break;
+						    }
 						break;
 						case 'product':
 							include('api/v1/shop/list/product.php');
@@ -219,6 +248,9 @@
 		case 'forgotpassword':
 			include('web/body/forgotpassword/index.php');
 		break;
+		case 'help':
+			include('web/body/help/index.php');
+		break;
 		case 'invoice':
 			include('web/body/invoice/index.php');
 		break;
@@ -247,6 +279,9 @@
 		    switch (@$routes[1]) {
 		        case 'i':
 		            include('web/body/shop/myincome/index.php');
+		        break;
+		        case 'n':
+		            include('web/body/shop/notes/index.php');
 		        break;
 		        case 'p':
 		            include('web/body/shop/myproduct/index.php');

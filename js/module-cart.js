@@ -10,6 +10,10 @@ function initCart(){
         sessionStorage.removeItem('loginNgulikin');
     }
     
+    if($('.isSignin').val() === '1'){
+        $('#RegisOrNotCart').hide();
+    }
+    
     detailCart();
         
     $('#cart-filledlist').show();
@@ -45,11 +49,6 @@ function initCart(){
     			getUserData();
     		}
     	}, {scope: 'email,public_profile', return_scopes: true});
-    });
-    
-    $('.detail-summary-footer').on('click', function (e) {
-        sessionStorage.setItem('paymentNgulikin',1);
-        location.href = url+"/payment";
     });
 }
 
@@ -117,8 +116,12 @@ function detailCart(){
                     listElement += '        <div class="title">Pilih Jasa Pengiriman</div>';
                     listElement += '        <div class="inputDesc">';
                     listElement += '            <select id="senderProductCart">';
+                    var delivery_id = '0';
+                    var delivery_idflag = 0;
                     $.each( list_delivery, function( key, val ) {
+                        if(delivery_idflag === 0)delivery_id = val.delivery_id;
                         listElement += '        <option value="'+val.delivery_id+'">'+val.delivery_name+'</option>';
+                        delivery_idflag++;
                     });
                     listElement += '            </select>';
                     listElement += '            <span class="senderPriceProductCart">Rp 18.000</span>';
@@ -127,11 +130,13 @@ function detailCart(){
                     listElement += '</div>';
                     
                     totalPrice = totalPrice + (val.product_price * val.sum_product);
+                    var price = senderPriceCart(delivery_id).toString();
+                    $('#sumProductSummaryCart').html(numberFormat(price));
+                    totalCartText(val.sum_product,totalPrice,delivery_id);
                 });
                 
                 $(".detail-shopping-body").html(listElement);
-                $(".totalPriceCart").html(numberFormat(totalPrice.toString()));
-                $(".totalShoppingCart").html(totalCartText(1,totalPrice,$('#senderProductCart').val()));
+                $('.loaderProgress').addClass('hidden');
                 
                 $('.minCart button').on('click', function (e) {
                     cartNgulikin = parseInt($('#sumProductCart').val()) - 1;
@@ -160,6 +165,14 @@ function detailCart(){
                     
                     totalCartText(cartNgulikin,totalPrice,$(this).val());
                 });
+                
+                $('.detail-summary-footer').on('click', function (e) {
+                    if($('.isSignin').val() === '1'){
+                        location.href = url+"/payment";
+                    }else{
+                        notif("error","Harap login terlebih dahulu","right","top");
+                    }
+                });
             }else{
                 generateToken(detailCart);
             }
@@ -185,7 +198,8 @@ function totalCartText(cartNgulikin,productPrice,senderProductCart){
 
 function senderPriceCart(val){
     var price = 0;
-    if(val == 'JNE'){
+    sessionStorage.setItem('cartDelivery',val);
+    if(val == '1'){
         price = 18000;
     }else{
         price = 208000;

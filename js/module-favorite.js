@@ -59,10 +59,10 @@ function listfavoriteProduct(){
                             if(val.product_difdate <= 1){
                                 listFavorite += '       <span class="result-content-list-data-head-new">New</span>';
                             }
-                            listFavorite += '       <img src="'+val.product_image+'" class="favoriteProductAction" datainternal-id="'+val.product_id+'"/>';
+                            listFavorite += '       <img src="'+val.product_image+'" class="favoriteProductAction" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'"/>';
                             listFavorite += '   </div>';
                             listFavorite += '   <div class="result-content-list-data-body">';
-                            listFavorite += '       <span class="favoriteProductAction" datainternal-id="'+val.product_id+'">'+val.product_name+'</span>';
+                            listFavorite += '       <span class="favoriteProductAction" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">'+val.product_name+'</span>';
                             listFavorite += '       <span>'+val.product_price+'</span>';
                             listFavorite += '   </div>';
                             listFavorite += '</div>';
@@ -81,8 +81,10 @@ function listfavoriteProduct(){
                         });
                         
                         $('.favoriteProductAction').on('click', function (e) {
-                            var productId = $(this).attr('datainternal-id');
-                            location.href = url+"/product/"+productId;
+                            var shopname = $(this).data("shopname"),
+                                productname = ($(this).data("productname")).split(' ').join('-');
+                                
+                            location.href = url+"/product/"+shopname+"/"+productname;
                         });
                     }else{
                         $('#loaderFavoriteProduct').addClass('hidden');
@@ -136,10 +138,10 @@ function listfavoriteShop(){
                             if(val.shop_difdate <= 1){
                                 listFavorite += '       <span class="result-content-list-data-head-new">New</span>';
                             }
-                            listFavorite += '       <img src="'+val.shop_icon+'" class="favoriteShopAction" datainternal-id="'+val.shop_id+'"/>';
+                            listFavorite += '       <img src="'+val.shop_icon+'" class="favoriteShopAction" data-shopname="'+val.shop_name+'"/>';
                             listFavorite += '   </div>';
                             listFavorite += '   <div class="result-content-list-data-body">';
-                            listFavorite += '       <span class="favoriteShopAction" datainternal-id="'+val.shop_id+'">'+val.shop_name+'</span>';
+                            listFavorite += '       <span class="favoriteShopAction" data-shopname="'+val.shop_name+'">'+val.shop_name+'</span>';
                             listFavorite += '   </div>';
                             listFavorite += '</div>';
                         });
@@ -157,8 +159,8 @@ function listfavoriteShop(){
                         });
                         
                         $('.favoriteShopAction').on('click', function (e) {
-                            var shopId= $(this).attr('datainternal-id');
-                            location.href = url+"/shop/"+shopId;
+                            var shopname = ($(this).data("shopname")).split(' ').join('-');
+                            location.href = url+"/shop/"+shopname;
                         });
                     }else{
                         $('#loaderFavoriteShop').addClass('hidden');

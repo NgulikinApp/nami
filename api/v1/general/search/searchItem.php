@@ -37,6 +37,7 @@
     $page = @$_GET['page'];
     $pagesize = @$_GET['pagesize'];
     $category = @$_GET['category'];
+    $subcategory = @$_GET['subcategory'];
     
     $con->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
     
@@ -62,7 +63,7 @@
                 /*
                     Function location in : function.php
                 */            
-                $query .= buildCondition_item(@$name,@$pricemax,@$pricemin,@$rate,@$category);
+                $query .= buildCondition_item(@$name,@$pricemax,@$pricemin,@$rate,@$category,$subcategory);
                 
                 $query .= ";";
                 
@@ -73,7 +74,8 @@
                                 product_price,
                                 username,
                                 DATEDIFF(CURDATE(),CAST(product_createdate AS DATE)) AS difdate,
-                                @count_product AS count_product
+                                @count_product AS count_product,
+								shop_name
                             FROM 
                                 product
                                 LEFT JOIN brand ON brand.brand_id = product.brand_id
@@ -85,7 +87,7 @@
                 /*
                     Function location in : function.php
                 */
-                $query .= buildCondition_item(@$name,@$pricemax,@$pricemin,@$rate,@$category);
+                $query .= buildCondition_item(@$name,@$pricemax,@$pricemin,@$rate,@$category,$subcategory);
                 
                 $query .= ' AND product_isactive=1';
                 
@@ -107,7 +109,7 @@
                             WHERE
                                 1=1";
                 if(@$name != ''){
-                    $query .= " AND shop_name='".$name."'";
+                    $query .= " AND shop_name like '%".$name."%'";
                 }
                 
                 $query .= ";";
@@ -126,7 +128,7 @@
                                     1=1";
                 
                 if(@$name != ''){
-                    $query .= " AND shop_name='".$name."'";
+                    $query .= " AND shop_name like '%".$name."%'";
                 }
                 
                 $query .= ' ORDER BY shop_id DESC';

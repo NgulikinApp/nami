@@ -47,14 +47,14 @@
                                             product_image,
                                             cart_adddate,
                                             username,
-                                            sum_product,
+                                            cart_sumproduct AS sum_product,
                                             shop_name,
                                             product_price,
                                             shop_delivery
                                     FROM 
-                                            product
+                                            cart
+                                            LEFT JOIN product ON product.product_id = cart.product_id
                                             LEFT JOIN brand ON product.brand_id = brand.brand_id
-                                            LEFT JOIN cart ON product.product_id = cart.product_id
                                             LEFT JOIN shop ON shop.shop_id = brand.shop_id
                                             LEFT JOIN `user` ON `user`.user_id = shop.user_id
                                     WHERE 
@@ -66,7 +66,12 @@
                 */
                 feed($stmt,$con);
             }else{
-                $data = @$_SESSION['productcart'];
+                if(isset($_SESSION['productcart'])){
+                    $data = @$_SESSION['productcart'];
+                }else{
+                    $data = array();
+                }
+                
                 $i = 0;
                 $list_productid = "";
                 foreach($data as &$value){

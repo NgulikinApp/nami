@@ -3,26 +3,31 @@
         Function referred on : searchItem.php
         Used for returning query string
     */
-    function buildCondition_item($name,$pricemax,$pricemin,$rate,$category){
+    function buildCondition_item($name,$pricemax,$pricemin,$rate,$category,$subcategory){
         $query = '';
-        if(@$name != ''){
-            $query .= " AND product_name='".$name."'";
+        
+        if(@$category != ''){
+            $query .= " AND category_id = ".$category;
+        }
+        
+        if(@$subcategory != ''){
+            $query .= " AND subcategory_id = ".$subcategory;
         }
                 
         if(@$pricemax != '' && @$pricemin != ''){
-                    $query .= " AND product_price BETWEEN ".$pricemax." AND ".$pricemin;
+            $query .= " AND product_price BETWEEN ".$pricemax." AND ".$pricemin;
         }else if(@$pricemax == '' && @$pricemin != ''){
-                    $query .= " AND product_price >= ".$pricemin;
+            $query .= " AND product_price >= ".$pricemin;
         }else if(@$pricemax != '' && @$pricemin == ''){
-                    $query .= " AND product_price <= ".$pricemax;
+            $query .= " AND product_price <= ".$pricemax;
         }
                 
         if(@$rate != ''){
             $query .= " AND product_rate in(".$rate.")";
         }
-                
-        if(@$category != ''){
-            $query .= " AND category_id = ".$category;
+        
+        if(@$name != ''){
+            $query .= " AND product_name like '%".$name."%'";
         }
         
         return $query;
@@ -58,7 +63,8 @@
                                       "product_name" => $row[1],
                                       "product_image" =>  $icon,
                                       "product_price" =>  $row[3],
-                                      "product_difdate" =>  $row[5]
+                                      "product_difdate" =>  $row[5],
+                                      "shop_name" =>  $row[7]
                                     );
                         
                     }else{

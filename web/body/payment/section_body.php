@@ -136,27 +136,7 @@
                 <div class="detail-paymentSummary-header" >
                     Ringkasan Belanja
                 </div>
-                <div class="detail-paymentSummary-body">
-                    <div class="detail-paymentSummary-body-title">
-                        <div id="detail-paymentSummary-icon">
-                            <i class="fa fa-shopping-cart"></i>
-                        </div>
-                        <div id="detail-paymentSummary-sellername">
-                            Andhika Adhitama Gama
-                        </div>
-                    </div>
-                    <div class="detail-paymentSummary-body-content">
-                        <div class="detail-paymentSummary-body-content1">
-                            <div class="left">
-                                <img src="https://id-live-03.slatic.net/p/7/raja-clothing-jaket-parasut-simpel-logo-darkblue-1480440568-5188682-e06b304751ab35e2618eb83d00644b7c-catalog_233.jpg" width="100" height="100"/>
-                            </div>
-                            <div class="right">Rainbow Hoddie</div>
-                        </div>
-                        <div class="detail-paymentSummary-body-content2">
-                            <div class="left">10</div>
-                        </div>
-                    </div>
-                </div>
+                <div class="detail-paymentSummary-body"></div>
             </div>
             <div id="detail-totalPayment">
                 <div class="detail-totalPayment-header" >
@@ -165,16 +145,16 @@
                 <div class="detail-totalPayment-body">
                     <div>
                         <span class="left">Total Harga Barang</span>
-                        <span class="right totalPriceCart">Rp 1.000.000</span>
+                        <span class="right totalPriceCart"></span>
                     </div>
                     <div>
                         <span class="left">Biaya Kirim</span>
-                        <span class="right" id="sumProductSummaryCart">Rp 18.000</span>
+                        <span class="right" id="sumProductSummaryCart"></span>
                     </div>
                     <hr/>
                     <div>
                         <span class="left">Total Belanja</span>
-                        <span class="right totalShoppingCart">Rp 1.018.000</span>
+                        <span class="right totalShoppingCart"></span>
                     </div>
                 </div>
                 <div class="detail-totalPayment-footer">

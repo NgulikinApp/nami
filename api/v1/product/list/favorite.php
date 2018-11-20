@@ -65,11 +65,14 @@
                                         product_price,
                                         username,
                                         DATEDIFF(CURDATE(),CAST(product_createdate AS DATE)) AS product_difdate,
-                                        user_product_favorites AS count_product
+                                        user_product_favorites AS count_product,
+								        shop_name
                                     FROM 
-                                        product
-                                        LEFT JOIN product_favorite ON product_favorite.product_id = product.product_id
+                                        product_favorite
+                                        LEFT JOIN product ON product.product_id = product_favorite.product_id
                                         LEFT JOIN `user` ON `user`.user_id = product_favorite.user_id
+                                        LEFT JOIN brand ON brand.brand_id = product.brand_id
+                                        LEFT JOIN shop ON shop.shop_id = brand.shop_id
                                     WHERE
                                         product_favorite.user_id = '".$user_id."'
                                     ORDER BY 

@@ -24,14 +24,14 @@
                     Jam operasional
                 </div>
                 <div class="note-body-content-grid2">
-                    <div class="time">Jam 09.00</div>
+                    <div class="time" id="time_op_from">Jam 09.00</div>
                     <div class="time">:</div>
-                    <div class="time">Jam 09.00</div>
+                    <div class="time" id="time_op_to">Jam 09.00</div>
                 </div>
             </div>
-            <div class="note-body-content-right">
+            <!--<div class="note-body-content-right">
                 <div class="time-note">Catatan Pelapak diperuntukkan bagi pelapak yang ingin Catatan Pelapak diperuntukkan bagi pelapak yang ingin</div>
-            </div>
+            </div>-->
         </div>
         <div class="note-body-content">
             <div class="note-body-content-grid1">
@@ -80,13 +80,13 @@
             <div class="note-body-content-right">
                 <div class="date-operation">
                     <div>Tanggal tutup</div>
-                    <div class="date">04 November 2017</div>
-                    <div class="time">Jam 09.00</div>
+                    <div class="date" id="shop_close_empty">Belum diisi</div>
+                    <div class="time hidden" id="shop_close_filled"></div>
                 </div>
                 <div class="date-operation">
                     <div>Buka kembali</div>
-                    <div class="date">04 November 2017</div>
-                    <div class="time">Jam 09.00</div>
+                    <div class="date" id="shop_open_empty">Belum diisi</div>
+                    <div class="time hidden" id="shop_open_filled"></div>
                 </div>
             </div>
         </div>
@@ -106,7 +106,7 @@
                 </div>
                 <div class="note-body-content-grid2">
                     <img src="/img/people.png"/>
-                    <span id="owner-shop">Agung Prabontot</span>
+                    <span id="owner-shop">/span>
                 </div>
                 <div class="note-body-content-grid3">
                     <img src="/img/marker.png" id="marker-shop"/>

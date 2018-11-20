@@ -40,9 +40,10 @@
 }
 .tick .fa {
 	font-size: 10px;
-    margin-left: 3px;
-	margin-top: 2px;
+    margin-left: 4px;
+	margin-top: 3px;
     vertical-align: text-top;
+    position:absolute;
 }
 .checkmark{
 	background-image: -webkit-linear-gradient(top, #EEBC11 0%, #E67300 100%);

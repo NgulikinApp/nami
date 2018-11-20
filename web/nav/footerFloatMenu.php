@@ -9,8 +9,14 @@
         <a>
             <span>Bantuan</span>
         </a>
-        <a>
-            <span>Lacak Pesanan</span>
-        </a>
+        <?php
+            if(isset($_SESSION['user'])){
+        ?>
+                <a>
+                    <span id="track_orders">Lacak Pesanan</span>
+                </a>
+        <?php
+            }
+        ?>
     </nav>
 </div>

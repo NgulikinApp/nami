@@ -90,7 +90,7 @@ function shop(){
                     $.each( data.result, function( key, val ) {
                         listshop += '<div class="grid-list-cont4-item" title="'+val.shop_name+'">';
                         listshop += '   <img src="'+val.shop_icon+'" width="170"/>';
-                        listshop += '   <input type="hidden" class="shopTitle" value="'+val.shop_id+'"/>';
+                        listshop += '   <input type="hidden" class="shopTitle" value="'+val.shop_name+'"/>';
                         listshop += '</div>';
                         
                     });
@@ -98,7 +98,7 @@ function shop(){
                     $("#shoplist").html(listshop);
                     
                     $('.grid-list-cont4 .grid-list-cont4-item').on('click', function (e) {
-                        var shopTitle = $(this).find('.shopTitle').val();
+                        var shopTitle = ($(this).find('.shopTitle').val()).split(' ').join('-');
                         location.href = url+"/shop/"+shopTitle;
                     });
                 }else{
@@ -126,7 +126,7 @@ function uptodate(){
                     var listproduct = '';
                     $.each( data.result, function( key, val ) {
                         if(key < 4){
-                            listproduct += '<div class="grid_chapter_subcon">';
+                            listproduct += '<div class="grid_chapter_subcon" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">';
                             listproduct += '    <div class="grid_chapter_subcon_detail">';
                             listproduct += '        <div class="grid_chapter_subcon_head_detail">';
                             listproduct += '            <img src="'+val.product_image+'">';
@@ -136,16 +136,16 @@ function uptodate(){
                             listproduct += '            <p>IDR '+val.product_price+'</p>';
                             listproduct += '        </div>';
                             listproduct += '    </div>';
-                            listproduct += '        <input type="hidden" class="productCategory" value="furniture"/>';
-                            listproduct += '        <input type="hidden" class="productId" value="'+val.product_id+'"/>';
                             listproduct += '</div>';
                         }
                     });
                     $(".grid_chapter .grid_chapter_con:last-child").html(listproduct);
                     
                     $('.grid_chapter_subcon').on('click', function (e) {
-                        var productId = $(this).find('.productId').val();
-                        location.href = url+"/product/"+productId;
+                        var shopname = ($(this).data("shopname")).split(' ').join('-'),
+                            productname = ($(this).data("productname")).split(' ').join('-');
+                            
+                        location.href = url+"/product/"+shopname+"/"+productname;
                     });
                 }else{
                     generateToken(uptodate);
@@ -173,12 +173,12 @@ function bestseller(){
                 if(data.status == "OK"){
                     var listproduct = '';
                     $.each( data.result, function( key, val ) {
-                        listproduct += '<div class="col-md-9">';
+                        listproduct += '<div class="col-md-9" title="'+val.product_name+'">';
                         listproduct += '   <img src="'+val.product_image+'">';
                         listproduct += '   <div class="grid-sub-cont9-body-list-hover">';
                         listproduct += '       <i class="fa fa-shopping-cart bestseller-cart"></i>';
                         listproduct += '       <i class="fa fa-thumbs-o-up bestseller-like"></i>';
-                        listproduct += '       <div datainternal-id="'+val.product_id+'~'+val.product_isfavorite+'">Lihat</div>';
+                        listproduct += '       <div datainternal-id="'+val.product_id+'~'+val.product_isfavorite+'" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">Lihat</div>';
                         listproduct += '   </div>';
                         listproduct += '</div>';
                         
@@ -205,7 +205,7 @@ function bestseller(){
                     $('.bestseller-like').on('click', function (e) {
                         var productArray = ($(this).next('div').attr('datainternal-id')).split("~");
                         
-                        if($('.isSignin').val() === '1'){
+                        if($('.isSignin').val() === ''){
                     	   notif("error","Harap login terlebih dahulu","right","top");
                     	}else if(parseInt(productArray[1]) == 1){
                     	        notif("error","Anda sudah menyimpan produk ini","top");
@@ -242,12 +242,12 @@ function promo(){
                 if(data.status == "OK"){
                     var listproduct = '';
                     $.each( data.result, function( key, val ) {
-                        listproduct += '<div class="col-md-9">';
+                        listproduct += '<div class="col-md-9" title="'+val.product_name+'">';
                         listproduct += '   <img src="'+val.product_image+'">';
                         listproduct += '   <div class="grid-sub-cont9-body-list-hover">';
                         listproduct += '       <i class="fa fa-shopping-cart promo-cart"></i>';
                         listproduct += '       <i class="fa fa-thumbs-o-up promo-like"></i>';
-                        listproduct += '       <div datainternal-id="'+val.product_id+'~'+val.product_isfavorite+'">Lihat</div>';
+                        listproduct += '       <div datainternal-id="'+val.product_id+'~'+val.product_isfavorite+'" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">Lihat</div>';
                         listproduct += '   </div>';
                         listproduct += '</div>';
                         
@@ -272,7 +272,7 @@ function promo(){
                     $('.promo-like').on('click', function (e) {
                         var productArray = ($(this).next('div').attr('datainternal-id')).split("~");
                         
-                        if($('.isSignin').val() === '1'){
+                        if($('.isSignin').val() === ''){
                         	notif("error","Harap login terlebih dahulu","right","top");
                         }else if(parseInt(productArray[1]) == 1){
                     	        notif("error","Anda sudah menyimpan produk ini","top");
@@ -329,8 +329,10 @@ function mousetosrushome(url){
         $(this).children('.grid-sub-cont9-body-list-hover').hide();
     });
     $('.grid-sub-cont9-body-list-hover div').on('click', function (e) {
-        var datainternal = $(this).attr('datainternal-id').split("~");
-        location.href = url+"/product/"+datainternal[0];
+        var shopname = ($(this).data("shopname")).split(' ').join('-'),
+            productname = ($(this).data("productname")).split(' ').join('-');
+                            
+        location.href = url+"/product/"+shopname+"/"+productname;
     });
 }
 

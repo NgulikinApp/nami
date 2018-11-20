@@ -11,21 +11,15 @@
     </head>
     <body>
         <div class="loaderProgress">
-            <img src="../img/loader.gif" />
+            <img src="../../img/loader.gif" />
         </div>
 		<?php 
 		    include $_SERVER['DOCUMENT_ROOT'].'/web/nav/mainMenu.php';
 		    include 'section_body.php';
 		    include $_SERVER['DOCUMENT_ROOT'].'/web/nav/footerMenu.php';
 		    include 'web/nav/footerFloatMenu.php';
-		    
-		    if(isset($_SESSION['user'])){
-		        $isSignin = true;
-		    }else{
-		        $isSignin = false;
-		    }
+		    include 'web/nav/generalInput.php';
 		?>
-		<input type="hidden" class="isSignin" value="<?php echo $isSignin;?>"/>
 		<script src="../../js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	    <script src="../../js/module-product.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	    <script src="../../js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>

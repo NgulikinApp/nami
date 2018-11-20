@@ -66,7 +66,6 @@
                 Function location in : functions.php
             */
             $verified = account_verify($stmt);
-            
             if($verified[0] == ""){
                 /*
                     Function location in : functions.php
@@ -76,8 +75,8 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            }else if(($auth[1] != $verified[2] && intval($request['manual']) == '1') || (ListFindNoCase($verified[2],$auth[1]) == false && intval($request['manual']) == '0')){
-                if(intval($request['manual']) == 0 && ListFindNoCase($verified[3],$request['socmed']) == false){
+            }else if(($auth[1] != $verified[2] && intval($request['manual']) == '1') || (ListFindNoCase($verified[3],$request['socmed']) == false && intval($request['manual']) == 0)){
+                if(intval($request['manual']) == 0 && ListFindNoCase($verified[4],$request['id_socmed']) == false){
                     $password = $verified[2].','.$auth['1'];
                     $socmed = $verified[3].','.$request['socmed'];
                     $idsocmed = $verified[4].','.$request['id_socmed'];
@@ -96,14 +95,12 @@
                                                 user_id=?");
                     
                     $stmt->bind_param("sssss", $password, $socmed, $idsocmed, $key, $verified[0]);
-                
+                    
                     $stmt->execute();
                     /*
                         Function location in : functions.php
                     */
                     returndata_signin($verified[0],$con);
-                    
-                    return;
                 }
                 /*
                     Function location in : functions.php

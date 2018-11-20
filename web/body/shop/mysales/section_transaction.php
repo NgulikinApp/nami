@@ -2,7 +2,7 @@
     <div class="textFilterShopSeller filterMysales">Filter</div>
     <div class="filterMysales">
         <div class="select mysalesSender">
-            <select id="filterMysalesStatus">
+            <select id="filterMysalesStatus" class="statusproduct">
                 <option>Pilih Status</option>
                 <option>Pembayaran</option>
                 <option>Proses</option>

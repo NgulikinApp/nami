@@ -5,49 +5,57 @@ var commentFlag = {},
 function initShop(){
     commentFlag.type = 0;
     detail();
+    brandShop();
     productShop();
     discussShop();
     reviewShop();
         
     $('.grid-shop-body .grid-shop-body-head div:first-child').on('click', function (e) {
-        $(this).css({"background-color":"rgb(60, 60, 60)", "color":"#00BFFF"});
-        $('.grid-shop-body .grid-shop-body-head div:nth-child(2)').css({"background-color":"#F5F5F5", "color":"#808080"});
-        $('.grid-shop-body .grid-shop-body-head div:last-child').css({"background-color":"#F5F5F5", "color":"#808080"});
-        
-        $('.grid-shop-body #productShopSection').show();
-        $('.grid-shop-body #discussShopSection').hide();
-        $('.grid-shop-body #reviewShopSection').hide();
+        $('.grid-shop-body .grid-shop-body-head .menu').removeClass("bluesky").removeClass('border-yellow');
+	    $('.grid-shop-body .grid-shop-body-head .menu:first-child').addClass("bluesky").addClass('border-yellow');
+	   
+        $('.grid-shop-body #productShopSection').removeClass('hidden');
+        $('.grid-shop-body #discussShopSection').addClass('hidden');
+        $('.grid-shop-body #reviewShopSection').addClass('hidden');
+        $('.grid-shop-body #notesShopSection').addClass('hidden');
     });
     
     $('.grid-shop-body .grid-shop-body-head div:nth-child(2)').on('click', function (e) {
-        $(this).css({"background-color":"rgb(60, 60, 60)", "color":"#00BFFF"});
-        $('.grid-shop-body .grid-shop-body-head div:first-child').css({"background-color":"#F5F5F5", "color":"#808080"});
-        $('.grid-shop-body .grid-shop-body-head div:last-child').css({"background-color":"#F5F5F5", "color":"#808080"});
-        
-        $('.grid-shop-body #productShopSection').hide();
-        $('.grid-shop-body #discussShopSection').show();
-        $('.grid-shop-body #reviewShopSection').hide();
+        $('.grid-shop-body .grid-shop-body-head .menu').removeClass("bluesky").removeClass('border-yellow');
+	    $('.grid-shop-body .grid-shop-body-head .menu:nth-child(2)').addClass("bluesky").addClass('border-yellow');
+	    
+        $('.grid-shop-body #productShopSection').addClass('hidden');
+        $('.grid-shop-body #discussShopSection').removeClass('hidden');
+        $('.grid-shop-body #reviewShopSection').addClass('hidden');
+        $('.grid-shop-body #notesShopSection').addClass('hidden');
+    });
+    
+    $('.grid-shop-body .grid-shop-body-head div:nth-child(3)').on('click', function (e) {
+        $('.grid-shop-body .grid-shop-body-head .menu').removeClass("bluesky").removeClass('border-yellow');
+	    $('.grid-shop-body .grid-shop-body-head .menu:nth-child(3)').addClass("bluesky").addClass('border-yellow');
+	    
+        $('.grid-shop-body #productShopSection').addClass('hidden');
+        $('.grid-shop-body #discussShopSection').addClass('hidden');
+        $('.grid-shop-body #reviewShopSection').removeClass('hidden');
+        $('.grid-shop-body #notesShopSection').addClass('hidden');
     });
     
     $('.grid-shop-body .grid-shop-body-head div:last-child').on('click', function (e) {
-        $(this).css({"background-color":"rgb(60, 60, 60)", "color":"#00BFFF"});
-        $('.grid-shop-body .grid-shop-body-head div:first-child').css({"background-color":"#F5F5F5", "color":"#808080"});
-        $('.grid-shop-body .grid-shop-body-head div:nth-child(2)').css({"background-color":"#F5F5F5", "color":"#808080"});
-        
-        $('.grid-shop-body #productShopSection').hide();
-        $('.grid-shop-body #discussShopSection').hide();
-        $('.grid-shop-body #reviewShopSection').show();
+        $('.grid-shop-body .grid-shop-body-head .menu').removeClass("bluesky").removeClass('border-yellow');
+	    $('.grid-shop-body .grid-shop-body-head .menu:last-child').addClass("bluesky").addClass('border-yellow');
+	   
+        $('.grid-shop-body #productShopSection').addClass('hidden');
+        $('.grid-shop-body #discussShopSection').addClass('hidden');
+        $('.grid-shop-body #reviewShopSection').addClass('hidden');
+        $('.grid-shop-body #notesShopSection').removeClass('hidden');
     });
     
-    var emailsession = localStorage.getItem('emailNgulikin');
-	if(emailsession !== null){
-	    $('.grid-shop-body .grid-shop-body-content .grid-shop-body-content-inputComment').show();
-	}else{
-	    $('.grid-shop-body .grid-shop-body-content .grid-shop-body-content-inputComment').hide();
-	}
-    
     $('#favorite-icon-shop').on( 'click', function( e ){
-        favoriteShop();
+        if($('.isSignin').val() === ''){
+             notif("error","Harap login terlebih dahulu","left","top");
+        }else{
+            favoriteShop();
+        }
 	});
 	
 	$('#buttonDiscussShop').on( 'click', function( e ){
@@ -85,11 +93,11 @@ function detail(){
         generateToken(detail);
     }else{
         var url = window.location.href,
-            shop_id = url.substr(url.lastIndexOf('/') + 1);
+            shop_name = url.substr(url.lastIndexOf('/') + 1);
         
         $.ajax({
             type: 'GET',
-            url: SHOP_API+'/'+shop_id,
+            url: SHOP_API+'/'+shop_name,
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
                 xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
@@ -116,12 +124,64 @@ function detail(){
                             
                             document.title = data.result.shop_name + ' | Ngulikin';
                             
+                            $('#shop_id').val(data.result.shop_id);
+                            
                             if(data.result.university === ''){
                                 $('.grid-shop-head-right div:last-child').css('border-right','none');
                             }
                             if(data.result.shop_banner !== ''){
-                                $('.home_container .home_container .grid-shop-banner').css('background','url(' + data.result.shop_banner + ')');
+                                $('.home_container .container .grid-shop-banner').css('background','url(' + data.result.shop_banner + ')');
                             }
+                            
+                            if(data.result.canbecommented)$('.grid-shop-body-content-inputComment').removeClass('hidden');
+                            
+                            $('#day-line').milestones({
+                        		stage: 7,
+                        		checkclass: 'checks',
+                        		labels: ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"],
+                        		monday:data.result.shop_monday,
+                                tuesday:data.result.shop_tuesday,
+                                wednesday:data.result.shop_wednesday,
+                                thursday:data.result.shop_thursday,
+                                friday:data.result.shop_friday,
+                                saturday:data.result.shop_saturday,
+                                sunday:data.result.shop_sunday
+                        	});
+                        	
+                        	$('#time_op_from').html('Jam '+sectohour(data.result.shop_op_from));
+                        	$('#time_op_to').html('Jam '+sectohour(data.result.shop_op_to));
+                        	
+                        	var shop_desc = (data.result.shop_desc !== '')?data.result.shop_desc !== '':'Tidak ada keterangan';
+                        	$('#note-seller-info').html(shop_desc);
+                        	
+                        	$('.note-footer span').html(data.result.shop_notes_modifydate);
+                        	
+                        	var shop_closing_notes = (data.result.shop_closing_notes !== '')?data.result.shop_closing_notes !== '':'Tidak ada keterangan';
+                        	$('#close-info').html(shop_closing_notes);
+                        	
+                        	if(data.result.shop_close !== ''){
+                        	    $('#shop_close_filled').html(data.result.shop_close);
+                        	    $('#shop_close_filled').removeClass('hidden');
+                        	    $('#shop_close_empty').addClass('hidden');
+                        	}
+                        	
+                        	if(data.result.shop_open !== ''){
+                        	    $('#shop_open_filled').html(data.result.shop_open);
+                        	    $('#shop_open_filled').removeClass('hidden');
+                        	    $('#shop_open_empty').addClass('hidden');
+                        	}
+                        	
+                        	$('#shop_close_date').html(data.result.shop_close);
+                        	$('#shop_open_date').html(data.result.shop_open);
+                        	
+                        	var shop_location = (data.result.shop_location !== '')?data.result.shop_location !== '':'Belum diisi';
+                        	$('#address-shop').html(shop_location);
+                        	
+                        	$('#owner-shop').html(data.result.fullname);
+                        	
+                        	$('#shop_total_discuss').html(data.result.shop_total_discuss);
+                        	
+                        	$('#shop_total_review').html(data.result.shop_total_review);
                     }else{
                         document.title = 'NOT FOUND | Ngulikin';
                         
@@ -152,13 +212,11 @@ function favoriteShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(favoriteShop);
     }else{
-        var url = window.location.href,
-            shop_id = url.substr(url.lastIndexOf('/') + 1);
         $.ajax({
             type: 'POST',
             url: SHOP_FAVORITE_API,
             data:JSON.stringify({ 
-                    shop_id: shop_id
+                    shop_id: $('#shop_id').val()
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -177,17 +235,60 @@ function favoriteShop(){
     }
 }
 
+function brandShop(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(brandShop);
+    }else{
+        var urlCurr = window.location.href,
+            shop_name = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
+        
+        $('#pagingShopBrand').removeData("twbs-pagination");
+        $('#pagingShopBrand').unbind("page");
+        
+        $("#list-brand").empty();
+        
+        $('#loaderShopBrand').removeClass('hidden');
+        
+        $.ajax({
+            type: 'GET',
+            url: SHOP_BRAND_API+'/'+shop_name,
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.status == "OK"){
+                    var response = data.result;
+                    if(response.length > 0){
+                        var listBrand = '';
+                        $.each( response, function( key, val ) {
+                            listBrand += '<div>';
+                            listBrand += '   <img src="'+val.brand_image+'" class="brandShopImage"/>';
+                            listBrand += '</div>';
+                        });
+                        
+                        $('#loaderShopBrand').addClass('hidden');
+                        $("#list-brand").html(listBrand);
+                    }
+                }else{
+                    generateToken(brandShop);
+                }
+            }
+        });
+    }
+}
+
 function productShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(productShop);
     }else{
         var urlCurr = window.location.href,
-            shop_id = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
+            shop_name = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
         
         $('#pagingShopProduct').removeData("twbs-pagination");
         $('#pagingShopProduct').unbind("page");
         
-        $("#productShopSection .grid-shop-body-content-list").empty();
+        $("#list-product").empty();
         
         $('#loaderShopProduct').removeClass('hidden');
         
@@ -197,7 +298,7 @@ function productShop(){
         
         $.ajax({
             type: 'GET',
-            url: SHOP_PRODUCT_API+'/'+shop_id,
+            url: SHOP_PRODUCT_API+'/'+shop_name,
             data:{ 
                     page : shopProductPage.page-1,
                     pagesize : 8
@@ -218,21 +319,23 @@ function productShop(){
                         });
                         
                         $('#loaderShopProduct').addClass('hidden');
-                        $("#productShopSection .grid-shop-body-content-list").html(listProduct);
+                        $("#list-product").html(listProduct);
                         
                         $('.productShopImage').on('click', function (e) {
                             var datainternal = $(this).attr('datainternal-id');
                             location.href = url+"/product/"+datainternal;
                         });
                         
-                        $('#pagingShopProduct').twbsPagination({
-                            totalPages: data.total_page,
-                            visiblePages: 10,
-                            startPage: shopProductPage.page
-                        }).on('page', function (event, page) {
-                            shopProductPage.page = page;
-                            productShop();
-                        });
+                        if(response.length > 10){
+                            $('#pagingShopProduct').twbsPagination({
+                                totalPages: data.total_page,
+                                visiblePages: 10,
+                                startPage: shopProductPage.page
+                            }).on('page', function (event, page) {
+                                shopProductPage.page = page;
+                                productShop();
+                            });   
+                        }
                     }
                 }else{
                     generateToken(productShop);
@@ -247,7 +350,7 @@ function discussShop(){
         generateToken(discussShop);
     }else{
         var urlCurr = window.location.href,
-            shop_id = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
+            shop_name = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
             
         if(commentFlag.type == 1){
             $('.loaderProgress').removeClass('hidden');
@@ -261,7 +364,7 @@ function discussShop(){
         }
         $.ajax({
             type: 'GET',
-            url: SHOP_DISCUSS_API+'/'+shop_id,
+            url: SHOP_DISCUSS_API+'/'+shop_name,
             data:{ 
                     page : commentPage.page-1,
                     pagesize : 8,
@@ -284,23 +387,23 @@ function discussShop(){
                             listDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
                             listDiscuss += '        <div class="head">';
                             listDiscuss += '             <span>'+val.fullname+'</span>';
-                            listDiscuss += '             <span>'+val.comment_date+'</span>';
                             listDiscuss += '             <span>'+val.shop_discuss_comment+'</span>';
+                            listDiscuss += '             <span><img src="/img/notif.png"/> '+val.comment_date+'</span>';
                             listDiscuss += '         </div>';
-                            listDiscuss += '        <div class="body">';
-                            listDiscuss += '             <div class="discussCommentReply">';
-                            listDiscuss += '                <div>';
-                            listDiscuss += '                    <img src="https://scontent.fcgk3-1.fna.fbcdn.net/v/t1.0-1/p100x100/16472974_10208482547443706_4718047265869220728_n.jpg?_nc_eui2=v1%3AAeG-pza6KEQ0FXhmk9PaO35XAV9KvNQSEOZ3HfWgL28nSgZll4z8yMv6guvWkZekVaPEsxlb4sVGe6xhMQgS2yPOYc5sB9HUNMmKRH187NhZZ4IhFGbUdgg0TLbcnkmrxY4&oh=9d9c654cc1cba7477eb3135b24233106&oe=5A444A7E"/>';
-                            listDiscuss += '                </div>';
-                            listDiscuss += '                <div>';
-                            listDiscuss += '                    <span>';
-                            listDiscuss += '                        <span class="title" id="name">Andhika Adhitana Gama</span>';
-                            listDiscuss += '                        <span class="title" id="replySellerShop">Penjual</span>';
-                            listDiscuss += '                    </span>';
-                            listDiscuss += '                    <span>Jumat, 15 September 2017</span>';
-                            listDiscuss += '                    <span>All size gan, masih ready stock banget, bisa langsung di order</span>';
-                            listDiscuss += '                </div>';
-                            listDiscuss += '             </div>';
+                            listDiscuss += '     </div>';
+                            listDiscuss += '</div>';
+                            listDiscuss += '<div class="grid-shop-body-content-listComment-temp reply">';
+                            listDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
+                            listDiscuss += '        <img src="/img/no-photo.jpg"  class="discussShopPhoto"/>';
+                            listDiscuss += '     </div>';
+                            listDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
+                            listDiscuss += '        <div class="head">';
+                            listDiscuss += '            <span>';
+                            listDiscuss += '                <span class="title" id="name">Andhika Adhitana Gama</span>';
+                            listDiscuss += '                <span class="title" id="replySellerShop">Penjual</span>';
+                            listDiscuss += '            </span>';
+                            listDiscuss += '            <span>All size gan, masih ready stock banget, bisa langsung di order</span>';
+                            listDiscuss += '            <span><img src="/img/notif.png"/> Jumat, 15 September 2017</span>';
                             listDiscuss += '         </div>';
                             listDiscuss += '     </div>';
                             listDiscuss += '</div>';
@@ -342,8 +445,7 @@ function commentDiscussShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(commentDiscussShop);
     }else{
-        var url = window.location.href,
-            shop_id = url.substr(url.lastIndexOf('/') + 1),
+        var shop_id = $('#shop_id').val(),
             comment = $('#commentDiscussShop').val();
             
         $.ajax({
@@ -385,7 +487,7 @@ function reviewShop(){
         generateToken(reviewShop);
     }else{
         var urlCurr = window.location.href,
-            shop_id = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
+            shop_name = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
         
         if(commentFlag.type == 1){
             $('.loaderProgress').removeClass('hidden');
@@ -399,7 +501,7 @@ function reviewShop(){
         }
         $.ajax({
             type: 'GET',
-            url: SHOP_REVIEW_API+'/'+shop_id,
+            url: SHOP_REVIEW_API+'/'+shop_name,
             data:{ 
                     page : commentPage.page-1,
                     pagesize : 8,
@@ -422,8 +524,8 @@ function reviewShop(){
                             listReview += '     <div class="grid-shop-body-content-listComment-content">';
                             listReview += '        <div class="head">';
                             listReview += '            <span>'+val.fullname+'</span>';
-                            listReview += '             <span>'+val.comment_date+'</span>';
                             listReview += '             <span>'+val.shop_review_comment+'</span>';
+                            listReview += '             <span><img src="/img/notif.png"/> '+val.comment_date+'</span>';
                             listReview += '         </div>';
                             listReview += '     </div>';
                             listReview += '</div>';
@@ -464,8 +566,7 @@ function commentReviewShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(commentReviewShop);
     }else{
-        var url = window.location.href,
-            shop_id = url.substr(url.lastIndexOf('/') + 1),
+        var shop_id = $('#shop_id').val(),
             comment = $('#commentReviewShop').val();
         
         $.ajax({

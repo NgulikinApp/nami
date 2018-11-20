@@ -2,7 +2,7 @@
     <div class="filterMysales textFilterShopSeller">Filter</div>
     <div class="filterMysales">
         <div class="select mysalesSender">
-            <select id="filterStatusSender">
+            <select id="filterStatusSender" class="statusproduct">
                 <option>Status</option>
                 <option>Pending</option>
             </select>

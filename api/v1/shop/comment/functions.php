@@ -3,27 +3,54 @@
         Function referred on : review.php, discuss.php
         Used for getting the verified account
         Return data:
+                - id
+                - shop_id
                 - user_id
-                - user_isactive (0/1)
-                - password
-                - socmed (googleplus,facebook,etc)
-                - id_socmed
+                - fullname
+                - shop_comment
+                - comment_date
     */
-    function comment($stmt,$id,$shop_id,$user_id,$comment){
+    function comment($stmt,$id,$shop_id,$user_id,$comment,$user_photo,$fullname){
         $row = $stmt->fetch_object();
-        
-        if($row->user_photo == 'no-photo.jpg'){
-            $photo = INIT_URL.'/img/'.$row->user_photo;
-        }else{
-            $photo = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/'.$row->user_photo));
-        }
         
         $data = array(
                     "id" => intval($id),
                     "shop_id" => intval($shop_id),
                     "user_id" => $user_id,
-                    "fullname" => $row->fullname,
-                    "user_photo" => $photo,
+                    "fullname" => $fullname,
+                    "user_photo" => $user_photo,
+                    "shop_comment" => $comment,
+                    "comment_date" => $row->comment_date
+                );
+                        
+        $stmt->close();
+        
+        /*
+            Function location in : /model/general/functions.php
+        */
+        credentialVerified((object)$data);
+    }
+    
+    /*
+        Function referred on : replyDiscuss.php
+        Used for getting the verified account
+        Return data:
+                - id
+                - shop_id
+                - user_id
+                - fullname
+                - shop_comment
+                - comment_date
+    */
+    function commentreply($stmt,$id,$shop_discuss_id,$user_id,$comment,$user_photo,$fullname){
+        $row = $stmt->fetch_object();
+        
+        $data = array(
+                    "id" => intval($id),
+                    "shop_discuss_id" => intval($shop_discuss_id),
+                    "user_id" => $user_id,
+                    "fullname" => $fullname,
+                    "user_photo" => $user_photo,
                     "shop_comment" => $comment,
                     "comment_date" => $row->comment_date
                 );

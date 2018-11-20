@@ -50,7 +50,8 @@
                                             brand_image,
                                             brand_product_count,
                                             CONCAT('Dibuat tanggal ',DATE_FORMAT(brand_createdate, '%d %M %Y'),', pukul ',DATE_FORMAT(brand_createdate, '%H.%i')) AS brand_createdate,
-                                            username
+                                            username,
+                                            shop_banner
                                         FROM 
                                             brand
                                             LEFT JOIN shop ON shop.shop_id=brand.shop_id

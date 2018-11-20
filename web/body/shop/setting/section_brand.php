@@ -1,3 +1,4 @@
+<div class="title" style="padding: 0;border-bottom: 0;"></div>
 <div class="profile menu" id="brand_shop"></div>
 <div class="title">
     Brand

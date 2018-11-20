@@ -29,9 +29,6 @@ function initShopMysales(){
 	   $('#transaction-shop-seller-content').removeClass("hidden");
 	});
 	
-	$('.ui-loader,#filterStatusSender-button span,#filterDeliverySender-button span,#filterConfirmSender-button span,#filterStatusSender-button span,#filterTransactionSender-button span,#filterMysalesStatus-button span').remove();
-	$('.button-container .ui-btn').text('');
-	
 	$('#status-line').milestones({
 		stage: 5,
 		checks: 1,
@@ -45,6 +42,10 @@ function initShopMysales(){
     });
     
     listdelivery();
+    liststatus();
+    
+    $('.ui-loader,#filterStatusSender-button span,#filterDeliverySender-button span,#filterConfirmSender-button span,#filterStatusSender-button span,#filterTransactionSender-button span,#filterMysalesStatus-button span,#filterStatusSender-button span').remove();
+	$('.button-container .ui-btn').text('');
 }
 
 function listdelivery(){
@@ -69,6 +70,32 @@ function listdelivery(){
                     $('#filterTransactionSender').html(listdelivery);
                 }else{
                     generateToken(listdelivery);
+                }
+            }
+        });    
+    }
+}
+
+function liststatus(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(liststatus);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: PRODUCT_STATUS_API,
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.status == "OK"){
+                    var liststatus = '<option value="0">Pilih Status</option>';
+                    $.each( data.result, function( key, val ) {
+                        liststatus += '<option value="'+val.status_id+'">'+val.status_name+'</option>';
+                    });
+                    $('.statusproduct').html(liststatus);
+                }else{
+                    generateToken(liststatus);
                 }
             }
         });    

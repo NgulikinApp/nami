@@ -16,17 +16,8 @@
 		      include 'web/body/home.php';
 		      include 'web/nav/footerFloatMenu.php';
 		      include 'web/nav/footerMenu.php';
-		      
-		      if(isset($_SESSION['user'])){
-		          $isSignin = true;
-		          $fullname = $_SESSION['user']["fullname"];
-		      }else{
-		          $fullname = '';
-		          $isSignin = false;
-		      }
+		      include 'web/nav/generalInput.php';
 		?>
-		<input type="hidden" class="isSignin" value="<?php echo $isSignin;?>"/>
-		<input type="hidden" class="fullname_popup" value="<?php echo $fullname; ?>"/>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-home.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>

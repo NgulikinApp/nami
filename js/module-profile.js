@@ -1,4 +1,6 @@
 function initProfile(){
+    var trackordertab = sessionStorage.getItem('track_orderNgulikin');
+    
     $( "#accordionMyprofile" ).accordion();
     
     profile();
@@ -6,11 +8,35 @@ function initProfile(){
     $('#myaccounttab').on( 'click', function( e ){
         $('.myprofile').removeClass('active');
         $('#myaccount').addClass('active');
+        
+        $('.menuProfile ul li').removeClass('greytab');
+        $(this).addClass('greytab');
+    });
+    
+    $('#trackorderstab').on( 'click', function( e ){
+        $('.menuProfile ul li').removeClass('greytab');
+        $(this).addClass('greytab');
     });
     
     $('#changepasswordtab').on( 'click', function( e ){
         $('.myprofile').removeClass('active');
         $('#changepassword').addClass('active');
+        
+        $('.menuProfile ul li').removeClass('greytab');
+        $(this).addClass('greytab');
+    });
+    
+    $('#historytab').on( 'click', function( e ){
+        $('.menuProfile ul li').removeClass('greytab');
+        $(this).addClass('greytab');
+    });
+    
+    $('#createshoptab').on( 'click', function( e ){
+        $('.myprofile').removeClass('active');
+        $('#createshop').addClass('active');
+        
+        $('.menuProfile ul li').removeClass('greytab');
+        $(this).addClass('greytab');
     });
     
     $('#accordionMyprofile h3').on( 'click', function( e ){
@@ -58,6 +84,11 @@ function initProfile(){
             updatePassword();
         }
     });
+    
+    if(trackordertab !== null){
+        $('#trackorderstab').trigger('click');
+        sessionStorage.removeItem('track_orderNgulikin');
+	}
 }
 
 function profile(){

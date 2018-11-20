@@ -17,11 +17,7 @@ function notification(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(notification);
     }else{
-        var user_id = authData.data !== ''? JSON.parse(authData.data).user_id : '',
-            key = authData.data !== ''? JSON.parse(authData.data).key : '',
-            keyword = $('#searchNotif').val();
-            
-        $('.loaderImg').removeClass('hidden');
+        var keyword = $('#searchNotif').val();
         $.ajax({
             type: 'GET',
             url: NOTIFICATION_API,
@@ -38,22 +34,25 @@ function notification(){
                         $.each( response, function( key, val ) {
                             listNotif += '<li>';
                             listNotif += '   <div class="bodyNotif-list-left">';
-                            listNotif += '      <div class="title">'+val.username+'</div>';
+                            listNotif += '      <div class="title">'+val.brand_name+'</div>';
                             listNotif += '      <div class="content">'+val.notification_desc+'</div>';
                             listNotif += '      <div class="date">';
                             listNotif += '          <img src="/img/button_notif.png" width="10" height="10"/>'+val.notification_createdate+'';
                             listNotif += '      </div>';
                             listNotif += '   </div>';
                             listNotif += '   <div class="bodyNotif-list-right">';
-                            listNotif += '      <img src="'+val.notification_photo+'" width="100" height="100" />';
+                            listNotif += '      <img src="'+val.notification_photo+'" width="100" height="100" onclick="cartClick()"/>';
                             listNotif += '   </div>';
                             listNotif += '</li>';
                         });
                         listNotif += '</ul>';
-                        
-                        $(".bodyNotif-list ul").html(listNotif);
+                    }else{
+                        var listNotif = '<div class="no-notif" id="no-notifList">';
+                            listNotif += '  <img src="/img/no-notif.png" width="220" height="180"/>';
+                            listNotif += '  <span>Tidak ada notifikasi</span>';
+                            listNotif += '</div>';
                     }
-                    $('.loaderImg').addClass('hidden');
+                    $(".bodyNotif-list").html(listNotif);
                 }else{
                     generateToken(notification);
                 }

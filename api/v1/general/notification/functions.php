@@ -9,11 +9,10 @@
         while ($row = $stmt->fetch_object()) {
             $data[] = array(
                       "notification_id" => $row->notification_id,
-                      "user_id" => $row->user_id,
+                      "brand_name" => $row->brand_name,
                       "notification_desc" => $row->notification_desc,
-                      "notification_photo" => $row->notification_photo,
-                      "notification_createdate" => $row->notification_createdate,
-                      "username" => $row->username
+                      "notification_photo" => IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/product/'.$row->product_image)),
+                      "notification_createdate" => $row->notification_createdate
                     );
         }
         

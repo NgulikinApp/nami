@@ -6,6 +6,7 @@ $( document ).ready(function() {
 	if (typeof initSignin != 'undefined')checkFunction(initSignin);
 	if (typeof initCart != 'undefined')checkFunction(initCart);
 	if (typeof initFavorite != 'undefined')checkFunction(initFavorite);
+	if (typeof initHelp != 'undefined')checkFunction(initHelp);
 	if (typeof initProduct != 'undefined')checkFunction(initProduct);
 	if (typeof initProfile != 'undefined')checkFunction(initProfile);
 	if (typeof initShop != 'undefined')checkFunction(initShop);
@@ -18,6 +19,7 @@ $( document ).ready(function() {
 	if (typeof initPayment != 'undefined')checkFunction(initPayment);
 	if (typeof initShopMyincome != 'undefined')checkFunction(initShopMyincome);
 	if (typeof initShopMysales != 'undefined')checkFunction(initShopMysales);
+	if (typeof initShopNotes != 'undefined')checkFunction(initShopNotes);
 });
 
 function checkFunction(name){

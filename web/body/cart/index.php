@@ -16,22 +16,16 @@
 		<script src="https://apis.google.com/js/api.js?jsr=<?php echo $jsversionstring; ?>"></script>
     </head>
     <body>
+        <div class="loaderProgress">
+            <img src="img/loader.gif" />
+        </div>
 		<?php 
 		      include $_SERVER['DOCUMENT_ROOT'].'/web/nav/mainMenu.php';
 		      include 'section_body.php';
 		      include 'web/nav/footerFloatMenu.php';
 		      include $_SERVER['DOCUMENT_ROOT'].'/web/nav/footerMenu.php';
-		      
-		      if(isset($_SESSION['user'])){
-		          $isSignin = true;
-		          $fullname = $_SESSION['user']["fullname"];
-		      }else{
-		          $fullname = '';
-		          $isSignin = false;
-		      }
+		      include 'web/nav/generalInput.php';
 		?>
-		<input type="hidden" class="isSignin" value="<?php echo $isSignin;?>"/>
-		<input type="hidden" class="fullname_popup" value="<?php echo $fullname; ?>"/>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-cart.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>

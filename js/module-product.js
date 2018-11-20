@@ -9,12 +9,13 @@ function detail(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(detail);
     }else{
-        var url = window.location.href,
-            product_id = url.substr(url.lastIndexOf('/') + 1);
-            
+        var pathname = window.location.pathname,
+            arraypathname = pathname.split("/"),
+            shop_name = arraypathname[2],
+            product_name = arraypathname[3];
         $.ajax({
             type: 'GET',
-            url: PRODUCT_API+'/'+product_id,
+            url: PRODUCT_API+'/'+shop_name+'/'+product_name,
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
                 xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));

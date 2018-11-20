@@ -143,6 +143,7 @@
                         "key"=>$row->user_key,
                         "user_photo"=>$photo,
                         "shop_id"=>$row->shop_id,
+                        "shop_name"=>$row->shop_name,
                         "brand_id"=>$row->shop_current_brand,
                         "delivery_id"=>$row->shop_delivery
                     );
@@ -232,7 +233,8 @@
                                         inner1.*,
                                         IFNULL(shop_id,0) as shop_id,
                                         shop_current_brand,
-                                        shop_delivery
+                                        shop_delivery,
+                                        shop_name
                                 FROM(
                                         SELECT
                                             user_id,
@@ -250,8 +252,8 @@
                                             user_id='".$user_id."'
                                 )as inner1 
                                     LEFT JOIN shop ON inner1.user_id=shop.user_id");
-        
-        sessionCart($user_id,$con);        
+                                    
+        if(isset( $_SESSION['productcart']))sessionCart($user_id,$con);        
         /*
             Function location in : functions.php
         */

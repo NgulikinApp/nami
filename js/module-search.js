@@ -7,33 +7,64 @@ function initSearch(){
         location function : js/module-general.js
     */
     var keywords = getUrlParam("keywords"),
-        category = getUrlParam("c"),
         categoryProductStorage = sessionStorage.getItem("categoryProduct");
         
+    var pathname = window.location.pathname,
+        arraypathname = pathname.split("/"),
+        category = arraypathname[2],
+        subcategory = arraypathname[3];
+        
     search.keywords = (keywords === null)?'':keywords;
-    search.category = (category === null)?'':category;
+    search.category = category;
+    search.subcategory = subcategory;
     search.type = 'product';
     search.selsort = '1';
     search.rate = '';
     search.pricemax = '';
     search.pricemin = '';
     
-    if(categoryProductStorage !== null){
-        var categoryProductFlag = 0;
-        $.each(JSON.parse(categoryProductStorage), function( key, val ) {
-            if(val.category_id === parseInt(search.category)){
-                var nameCategory = val.category_name;
-                $('#categorySearch').html(nameCategory);
-                categoryProductFlag = 1;
-                return false;
-            }
-        });
-        if(categoryProductFlag === 0){
-            $('#categorySearch').html('');
-        }
-    }
+    $('#search-general').val(search.keywords);
     
-    searchItem();
+    if(categoryProductStorage !== null){
+        if (typeof category !== "undefined") {
+            var categoryProductFlag = 0;
+            var subcategoryProductFlag = 0;
+            $.each(JSON.parse(categoryProductStorage), function( key, val ) {
+                if(val.category_name === search.category){
+                    var nameCategory = val.category_name;
+                    search.category = val.category_id;
+                    $('#categorySearch').html(nameCategory);
+                    $('#categorySearchText').removeClass('hidden');
+                    $('.fa-angle-right').removeClass('hidden');
+                    categoryProductFlag = 1;
+                    
+                    if(typeof subcategory !== "undefined"){
+                        $.each(val.subcategory, function( subkey, subval ) {
+                            if(subval.subcategory_name === search.subcategory){
+                                search.subcategory = subval.subcategory_id;
+                                subcategoryProductFlag = 1;
+                                return false;
+                            }
+                        });
+                    }
+                    return false;
+                }
+            });
+            if(categoryProductFlag === 0 || categoryProductFlag === 1 && typeof subcategory !== "undefined" && subcategoryProductFlag === 0){
+                $('.result-content #searchNotFound').addClass('active');
+                $('.result-content .list-search').removeClass('active');
+                $('#categorySearch').html('');
+                $('.loaderImg').addClass('hidden');
+            }else{
+                searchItem();
+            }
+        }else{
+            $('#categorySearch').html('');
+            searchItem();
+        }
+    }else{
+        generateToken(initSearch);
+    }
     
     $(".star_0").rateYo({rating: 0,readOnly: true,starWidth : "15px"});
     $(".star_1").rateYo({rating: 1,readOnly: true,starWidth : "15px"});
@@ -109,6 +140,7 @@ function initSearch(){
 	        $('.content.price,.content.rate').show();
 	        
 	        $('#categorySearch').removeClass('hidden');
+	        $('.fa-angle-right').removeClass('hidden');
 	        
 	        search.type = 'product';
     
@@ -121,6 +153,7 @@ function initSearch(){
 	        $('.content:first-child span:first-child,#sortingSearch').hide();
 	        $('.content.price,.content.rate').hide();
 	        $('#categorySearch').addClass('hidden');
+	        $('.fa-angle-right').addClass('hidden');
 	        
 	        search.type = 'shop';
     
@@ -151,6 +184,7 @@ function searchItem(){
             data:{
                     name : search.keywords,
                     category : search.category,
+                    subcategory : search.subcategory,
                     selsort : search.selsort,
                     type : search.type,
                     rate : search.rate,
@@ -170,7 +204,7 @@ function searchItem(){
                         var listElement = '';
                         $.each( response, function( key, val ) {
                             if(search.type == 'shop'){
-                                listElement += '<div class="result-content-list-data" datainternal-id="'+val.shop_id+'">';
+                                listElement += '<div class="result-content-list-data" data-shopname="'+val.shop_name+'">';
                                 listElement += '   <div class="result-content-list-data-head">';
                                 if(val.shop_difdate <= 1){
                                     listElement += '   <span class="result-content-list-data-head-new">New</span>';
@@ -182,7 +216,7 @@ function searchItem(){
                                 listElement += '   </div>';
                                 listElement += '</div>';
                             }else{
-                                listElement += '<div class="result-content-list-data" datainternal-id="'+val.product_id+'">';
+                                listElement += '<div class="result-content-list-data" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">';
                                 listElement += '   <div class="result-content-list-data-head">';
                                 if(val.product_difdate <= 1){
                                     listElement += '   <span class="result-content-list-data-head-new">New</span>';
@@ -209,11 +243,13 @@ function searchItem(){
                         
                         $('.result-content-list-data').on('click', function (e) {
                             if(search.type == 'shop'){
-                                var shopId = $(this).attr('datainternal-id');
-                                location.href = url+"/shop/"+shopId;
+                                var shopname = ($(this).data("shopname")).split(' ').join('-');
+                                location.href = url+"/shop/"+shopname;
                             }else{
-                                var productId = $(this).attr('datainternal-id');
-                                location.href = url+"/product/"+productId;
+                                var shopname = ($(this).data("shopname")).split(' ').join('-'),
+                                    productname = ($(this).data("productname")).split(' ').join('-');
+                                    
+                                location.href = url+"/product/"+shopname+"/"+productname;
                             }
                         });
                     }else{

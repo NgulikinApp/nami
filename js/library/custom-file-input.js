@@ -21,10 +21,12 @@
 			else
 				fileName = e.target.value.split( '\\' ).pop();
 			
-			if( fileName )
+			if( fileName ){
 				label.querySelector( '#namefile' ).innerHTML = fileName;
-			else
+				document.getElementById("questionsvg").style.display = "none";
+			}else{
 				label.innerHTML = labelVal;
+			}
 		});
 
 		// Firefox bug fix

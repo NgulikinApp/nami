@@ -168,7 +168,8 @@
                       "brand_id" => $row->brand_id,
                       "brand_name" => $row->brand_name,
                       "brand_image" => IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/brand/'.$row->brand_image)),
-                      "shop_current_brand" => $row->shop_current_brand
+                      "shop_current_brand" => $row->shop_current_brand,
+                      "shop_total_brand" => $row->shop_total_brand
                     );
         }
         

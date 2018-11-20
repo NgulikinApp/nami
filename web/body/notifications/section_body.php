@@ -54,10 +54,6 @@
 	        </div>
 	        <div class="bodyNotif-list">
 	            <img src="img/loader.gif" class="loaderImg" id="loaderNotif"/>
-	            <div class="no-notif" id="no-notifList">
-	                <img src="/img/no-notif.png" width="220" height="180"/>
-	                <span>Tidak ada notifikasi</span>
-	            </div>
 	        </div>
 	    </div>
 	</section>

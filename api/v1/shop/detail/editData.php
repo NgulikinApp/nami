@@ -116,7 +116,7 @@
             /*
                 Function location in : functions.php
             */
-            editDetail($shop_id,$request['shop_name'],$request['shop_desc'],$shop_photo);
+            editDetail($shop_id,$request['shop_name'],$request['shop_desc'],$shop_photo_name,$username);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

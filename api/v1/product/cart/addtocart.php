@@ -13,6 +13,11 @@
     use \Firebase\JWT\JWT;
     
     /*
+        Function location in : /model/connection.php
+    */
+    $con = conn();
+    
+    /*
         Function location in : /model/general/postraw.php
     */
     $request = postraw();
@@ -21,6 +26,8 @@
         Function location in : /model/general/get_auth.php
     */
     $token = bearer_auth();
+    
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
         /*
@@ -38,7 +45,7 @@
                 $user_id = '';
             }
             
-            addtocart($user_id,$request['product_id'],$request['sum']);
+            addtocart($user_id,$request['product_id'],$request['sum'],$con);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php
@@ -46,4 +53,11 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
+    
+    /*
+        Function location in : /model/connection.php
+    */
+    conn_close($con);
 ?>

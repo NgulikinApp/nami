@@ -32,7 +32,8 @@
             $data['product_minimum'] = $row->product_minimum;
             $data['product_weight'] = $row->product_weight;
             $data['product_condition'] = $row->product_condition;
-            $data['category_name'] = $row->category_name;
+            $data['category_id'] = intval($row->category_id);
+            $data['subcategory_id'] = intval($row->subcategory_id);
             $data['shop_icon'] = $icon;
             $data['shop_name'] = $row->shop_name;
             $data['product_count_favorite'] = $row->product_count_favorite;
@@ -63,7 +64,7 @@
                 - product_minimum
                 - product_condition
     */
-    function actionData($product_name,$product_description,$product_price,$product_weight,$product_stock,$product_minimum,$product_condition,$product_id){
+    function actionData($product_name,$product_description,$product_price,$product_weight,$product_stock,$product_minimum,$product_condition,$product_category,$product_subcategory,$product_id){
         $data = array(
                         "product_id"=>$product_id,
                         "product_name"=>$product_name,
@@ -72,7 +73,9 @@
                         "product_weight"=>$product_weight,
                         "product_stock"=>$product_stock,
                         "product_minimum"=>$product_minimum,
-                        "product_condition"=>$product_condition
+                        "product_condition"=>$product_condition,
+                        "product_category"=>$product_category,
+                        "product_subcategory"=>$product_subcategory
                     );
         
         /*

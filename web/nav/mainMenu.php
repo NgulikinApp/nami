@@ -38,6 +38,7 @@
             ?>
                 <div class="iconHeader tooltip" id="iconNotifHeader" data-toggle="popover" data-trigger="click" data-content="1">
                     <span class="tooltiptext tooltip-bottom">Notifikasi</span>
+                    <span class="sumNotifinMenuCart">0</span>
                 </div>
             <?php
                 }
@@ -54,11 +55,15 @@
                     }
                     
                     if(isset($_SESSION['user'])){
+                        if(intval($_SESSION['user']["shop_id"]) != 0){
                 ?>
                 <div id="iconShopTemp" data-toggle="popover" data-trigger="click" data-content="1">
                     <div id="iconShop"></div>
                     <span class="tooltiptext tooltip-bottom">Toko</span>
                 </div>
+                <?php
+                        }
+                ?>
                 <div id="iconProfileTemp" data-toggle="popover" data-trigger="click" data-content="1">
                     <div id="iconProfile"></div>
                     <span class="tooltiptext tooltip-bottom">Profil</span>
@@ -77,3 +82,4 @@
     <div class="menu-category-sub-menu"></div>
 </div>
 <div class="cover-popup"></div>
+<div class="cover-category hidden"></div>

@@ -103,17 +103,17 @@
             
             //echo $product_photo_name;
             /*if($request['method'] == 'add'){
-                $stmt = $con->query("INSERT INTO product(product_name,product_description,product_price,product_weight,product_stock,product_minimum,product_condition,product_image) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt = $con->query("INSERT INTO product(product_name,product_description,product_price,product_weight,product_stock,product_minimum,product_condition,product_image,category_id,subcategory_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 
-                $stmt->bind_param("ssiiiiis", $_POST['product_name'], $_POST['product_description'], $_POST['product_price'], $_POST['product_weight'], $_POST['product_stock'],$request['product_minimum'],$_POST['product_condition'],$product_photo_name);
+                $stmt->bind_param("ssiiiiisii", $_POST['product_name'], $_POST['product_description'], $_POST['product_price'], $_POST['product_weight'], $_POST['product_stock'],$request['product_minimum'],$_POST['product_condition'],$product_photo_name,$_POST['product_category'],$_POST['product_subcategory']);
                 
                 $stmt->execute();
                 
                 $product_id = runQuery_returnId($stmt);
             }else{
-                $stmt = $con->prepare("UPDATE product SET product_name=?, product_description=?, product_price=?, product_weight=?,product_stock=?,product_minimum=?,product_condition=?,product_image=? WHERE product_id=?");   
+                $stmt = $con->prepare("UPDATE product SET product_name=?, product_description=?, product_price=?, product_weight=?,product_stock=?,product_minimum=?,product_condition=?,product_image=?,category_id=?,subcategory_id=? WHERE product_id=?");   
                 
-                $stmt->bind_param("ssiiiiisi", $_POST['product_name'], $_POST['product_description'], $_POST['product_price'], $_POST['product_weight'], $_POST['product_stock'],$request['product_minimum'],$_POST['product_condition'],$product_photo_name,$_POST['product_id']);
+                $stmt->bind_param("ssiiiiisiii", $_POST['product_name'], $_POST['product_description'], $_POST['product_price'], $_POST['product_weight'], $_POST['product_stock'],$request['product_minimum'],$_POST['product_condition'],$product_photo_name,$_POST['product_category'],$_POST['product_subcategory'],$_POST['product_id']);
                 
                 $stmt->execute();
                 
@@ -125,7 +125,7 @@
             /*
                 Function location in : functions.php
             */
-            //actionData($_POST['product_name'],$_POST['product_description'],$_POST['product_price'],$_POST['product_weight'],$_POST['product_stock'],$_POST['product_minimum'],$_POST['product_condition'],$_POST['product_id']);
+            //actionData($_POST['product_name'],$_POST['product_description'],$_POST['product_price'],$_POST['product_weight'],$_POST['product_stock'],$_POST['product_minimum'],$_POST['product_condition'],$_POST['product_category'],$_POST['product_subcategory'],$_POST['product_id']);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

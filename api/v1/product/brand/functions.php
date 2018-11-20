@@ -7,10 +7,18 @@
         $data = array();
     
         $row = $stmt->fetch_object();
+        
+        if($row->shop_banner != ""){
+            $shop_banner = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/shop/banner/'.$row->shop_banner));
+        }else{
+            $shop_banner = '';
+        }
+        
         $data['brand_name'] = $row->brand_name;
         $data['brand_image'] = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/brand/'.$row->brand_image));
         $data['brand_product_count'] = $row->brand_product_count;
         $data['brand_createdate'] = $row->brand_createdate;
+        $data['shop_banner'] = $shop_banner;
         
         $stmt->close();
         

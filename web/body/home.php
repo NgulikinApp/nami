@@ -139,7 +139,7 @@
                         </div>
                         <div class="grid_rightsub_chapter">
                             <div class="grid_rightsub_chapter_left">
-                                <img src="https://scontent.fjkt1-1.fna.fbcdn.net/v/t1.0-1/10460988_10202462622957956_7341475977666742534_n.jpg?_nc_cat=0&oh=1231b20fbb7fbb61edf9ea0bffa754c5&oe=5BCCEEE7" width="100" height="100">
+                                <img src="https://scontent-sin6-2.xx.fbcdn.net/v/t1.0-1/p160x160/10460988_10202462622957956_7341475977666742534_n.jpg?_nc_cat=102&_nc_ht=scontent-sin6-2.xx&oh=0c581392f710fdbfbf7780b6bce859bd&oe=5C57B408" width="100" height="100">
                             </div>
                             <div class="grid_rightsub_chapter_right">
                                 <span>Sandy Nurdiansyah</span>

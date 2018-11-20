@@ -27,6 +27,13 @@
             include 'section_body.php';
             include $_SERVER['DOCUMENT_ROOT'].'/web/nav/footerMenu.php';
             include 'web/nav/footerFloatMenu.php';
+            include 'web/nav/generalInput.php';
+            
+            if(isset($_SESSION['user'])){
+		        $isSignin = true;
+		    }else{
+		        $isSignin = false;
+		    }
         ?>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-rules.js?jsr=<?php echo $jsversionstring; ?>"></script>

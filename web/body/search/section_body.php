@@ -2,6 +2,8 @@
     <section class="container search">
         <div class="filter-content">
     	    <div class="content">
+    	        <span id="categorySearchText" class="hidden">Kategori</span>
+    	        <i class="fa fa-angle-right hidden"></i>
     	        <span id="categorySearch"></span>
     	        <span>Urutkan</span>
     	        <div class="select search">

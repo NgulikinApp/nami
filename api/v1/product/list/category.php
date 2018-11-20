@@ -38,11 +38,24 @@
             $exp = JWT::decode($token, $secretKey, array('HS256'));
         
             $stmt = $con->query("SELECT 
-                                            category_id, 
+                                            category.category_id, 
                                             category_name, 
-                                            category_icon 
+                                            category_icon,
+                                            subcategory.subcategory_id,
+                                            subcategory.subcategory_name
                                     FROM 
                                             category
+                                            LEFT JOIN (SELECT 
+                                                           s.category_id,
+                                                       	   GROUP_CONCAT(subcategory_id) AS subcategory_id,
+                                                           GROUP_CONCAT(s.subcategory_name) AS subcategory_name
+                                                       FROM
+                                                       	    subcategory s
+                                                       WHERE 
+                                                            subcategory_isactive=1
+                                                       GROUP BY s.category_id
+                                                      )
+                                            subcategory ON category.category_id=subcategory.category_id
                                     WHERE
                                             category_isactive=1");
             

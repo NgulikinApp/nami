@@ -11,6 +11,13 @@ var shopProductPage = {},
     productListUrl = [];
 
 function initShopSetting(){
+    var notessession = sessionStorage.getItem('notesNgulikin');
+    
+    if(notessession !== null){
+        notif("info","Data sudah diubah","center","center");
+        sessionStorage.removeItem('notesNgulikin');
+    }
+    
     selectedBrand.brand_id = 0;
     //setting shop
     $('#profile-shop-seller').on( 'click', function( e ){
@@ -41,35 +48,6 @@ function initShopSetting(){
 	   $('#delivery-shop-seller-content').removeClass("hidden");
 	});
 	
-	//mysales
-	$('#order-shop-seller').on( 'click', function( e ){
-	   $('.grid-shop-seller-menu nav div').removeClass("bluesky").removeClass('border-yellow');
-	   $(this).addClass("bluesky").addClass('border-yellow');
-	   $('.grid-shop-seller-content').addClass("hidden");
-	   $('#order-shop-seller-content').removeClass("hidden");
-	});
-	$('#confirm-shop-seller').on( 'click', function( e ){
-	   $('.grid-shop-seller-menu nav div').removeClass("bluesky").removeClass('border-yellow');
-	   $(this).addClass("bluesky").addClass('border-yellow');
-	   $(this).parent('a').css('margin-left','-5px');
-	   $('.grid-shop-seller-content').addClass("hidden");
-	   $('#confirm-shop-seller-content').removeClass("hidden");
-	});
-	$('#status-shop-seller').on( 'click', function( e ){
-	   $('.grid-shop-seller-menu nav div').removeClass("bluesky").removeClass('border-yellow');
-	   $(this).addClass("bluesky").addClass('border-yellow');
-	   $(this).parent('a').css('margin-left','-5px');
-	   $('.grid-shop-seller-content').addClass("hidden");
-	   $('#status-shop-seller-content').removeClass("hidden");
-	});
-	$('#transaction-shop-seller').on( 'click', function( e ){
-	   $('.grid-shop-seller-menu nav div').removeClass("bluesky").removeClass('border-yellow');
-	   $(this).addClass("bluesky").addClass('border-yellow');
-	   $(this).parent('a').css('margin-left','-5px');
-	   $('.grid-shop-seller-content').addClass("hidden");
-	   $('#transaction-shop-seller-content').removeClass("hidden");
-	});
-	
 	var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()+1; //January is 0!
@@ -84,13 +62,6 @@ function initShopSetting(){
     today = yyyy+'-'+mm+'-'+dd;
 	
 	$('#filterMysalesDate').val(today);
-	
-	$('#day-line').milestones({
-		stage: 7,
-		checks: 7,
-		checkclass: 'checks',
-		labels: ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"]
-	});
     
     detail();
     detailBrand();
@@ -116,6 +87,10 @@ function initShopSetting(){
     $("#create-brand").on( 'click', function( e ){
         brandLayerAction.do = "add";
         brandLayer();
+    });
+    
+    $(".note input[type='button']").on( 'click', function( e ){
+        location.href = url+"/shop/n";
     });
 }
 
@@ -147,14 +122,68 @@ function detail(){
                             shop += '       <input type="button" value="Ganti" id="edit-shop-profile"/>';
                             shop += '   </div>';
                             shop += '</div>';
-                            shop += '<div class="grid-shop-banner"></div>';
+                            shop += '<div class="grid-shop-banner">';
+                            shop += '   <i class="fa fa-pencil"></i>';
+                            shop += '</div>';
                             
                             $('#profile_shop').html(shop);
+                            
+                            $('#day-line').milestones({
+                        		stage: 7,
+                        		checkclass: 'checks',
+                        		labels: ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"],
+                        		monday:data.result.shop_monday,
+                                tuesday:data.result.shop_tuesday,
+                                wednesday:data.result.shop_wednesday,
+                                thursday:data.result.shop_thursday,
+                                friday:data.result.shop_friday,
+                                saturday:data.result.shop_saturday,
+                                sunday:data.result.shop_sunday
+                        	});
+                        	
+                        	$('#time_op_from').html('Jam '+sectohour(data.result.shop_op_from));
+                        	$('#time_op_to').html('Jam '+sectohour(data.result.shop_op_to));
+                        	
+                        	var shop_desc = (data.result.shop_desc !== '')?data.result.shop_desc !== '':'Tidak ada keterangan';
+                        	$('#note-seller-info').html(shop_desc);
+                        	
+                        	$('.note-footer span').html(data.result.shop_notes_modifydate);
+                        	
+                        	var shop_closing_notes = (data.result.shop_closing_notes !== '')?data.result.shop_closing_notes !== '':'Tidak ada keterangan';
+                        	$('#close-info').html(shop_closing_notes);
+                        	
+                        	if(data.result.shop_close !== ''){
+                        	    $('#shop_close_filled').html(data.result.shop_close);
+                        	    $('#shop_close_filled').removeClass('hidden');
+                        	    $('#shop_close_empty').addClass('hidden');
+                        	}
+                        	
+                        	if(data.result.shop_open !== ''){
+                        	    $('#shop_open_filled').html(data.result.shop_open);
+                        	    $('#shop_open_filled').removeClass('hidden');
+                        	    $('#shop_open_empty').addClass('hidden');
+                        	}
+                        	
+                        	$('#shop_close_date').html(data.result.shop_close);
+                        	$('#shop_open_date').html(data.result.shop_open);
+                        	
+                        	var shop_location = (data.result.shop_location !== '')?data.result.shop_location !== '':'Belum diisi';
+                        	$('#address-shop').html(shop_location);
+                        	
+                        	$('#owner-shop').html(data.result.fullname);
                     }
                     $('.loaderProgress').addClass('hidden');
+                    var shop_banner = data.result.shop_banner;
+                    if(shop_banner !== ''){
+                        $(".grid-shop-banner").css("background","url("+shop_banner+")");
+                    }
                     
                     $('#edit-shop-profile').on( 'click', function( e ){
                 	   editProfile();
+                	});
+                	
+                	$('.grid-shop-banner i').on( 'click', function( e ){
+                	   editBanner();
                 	});
                 }else{
                     generateToken(detail);
@@ -192,7 +221,7 @@ function detailBrand(){
                             brand += '       </div>';
                             brand += '   </div>';
                             brand += '</div>';
-                            brand += '<div class="note-footer brand">';
+                            brand += '<div class="note-footer">';
                             brand += '   <span>'+data.result.brand_createdate+'</span>';
                             brand += '   <input type="button" value="Ganti" id="edit-brand"/>';
                             brand += '</div>';
@@ -200,6 +229,11 @@ function detailBrand(){
                             $('#brand_shop').html(brand);
                     }
                     $('.loaderProgress').addClass('hidden');
+                    
+                    var shop_banner = data.result.shop_banner;
+                    if(shop_banner !== ''){
+                        $(".grid-shop-banner").css("background","url("+shop_banner+")");
+                    }
                     
                     $("#edit-brand").on( 'click', function( e ){
                         brandLayerAction.do = "edit";
@@ -217,7 +251,7 @@ function editProfile(){
     var editProfile = '<div class="layerPopup">';
 	    editProfile += '     <div class="editProfileSellerContainer">';
 	    editProfile += '         <div class="title">Pengaturan profil toko</div>';
-	    editProfile += '         <div style="overflow-y:auto;height: 402px;"><div class="body">';
+	    editProfile += '         <div style="height: 210px;"><div class="body">';
 	    editProfile += '            <div class="content">';
 	    editProfile += '                <div class="left">';
 	    editProfile += '                    <img src="/img/no-photo.jpg" id="previewLogoSeller" width="150" height="150"/>';
@@ -236,13 +270,6 @@ function editProfile(){
 	    editProfile += '                        <textarea id="desc-seller-edit" cols="58" rows="5"></textarea>';
 	    editProfile += '                    </div>';
 	    editProfile += '                </div>';
-	    editProfile += '            </div>';
-	    editProfile += '            <div class="banner">';
-	    editProfile += '                <div id="drop_zone" class="drop-zone">';
-	    editProfile += '                   <p class="title">Ganti Banner</p>';
-	    editProfile += '                   <div class="preview-container"></div>';
-	    editProfile += '                </div>';
-	    editProfile += '                <input class="file_input" accept="image/*" type="file" multiple="" name="file">';
 	    editProfile += '            </div>';
 	    editProfile += '         </div></div>';
 	    editProfile += '         <div class="footer">';
@@ -266,15 +293,6 @@ function editProfile(){
 	
 	$('#previewLogoSeller').attr('src',imgsrc);
 	
-	$(".file_input").withDropZone("#drop_zone", {
-      action: {
-        name: "image",
-        params: {
-          preview: true,
-        }
-      },
-    });
-	
 	$('.editProfileSellerContainer .footer #save').on( 'click', function( e ){
 	    doEditProfile();
 	});
@@ -285,11 +303,11 @@ function editProfile(){
 	});
 	
 	$("#filesSeller").change(function(){
-        readURL(this);
+        readURLLogoShop(this);
     });
 }
 
-function readURL(input) {
+function readURLLogoShop(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
@@ -307,7 +325,8 @@ function doEditProfile(){
     }else{
         var shop_name = $("#name-seller-edit").val(),
             shop_desc = $("#desc-seller-edit").val(),
-            shop_icon = $('#previewLogoSeller').attr('src');
+            shop_icon = $('#previewLogoSeller').attr('src'),
+            shop_banner = $('#tempBanner').attr('src');
             
         $.ajax({
             type: 'POST',
@@ -315,7 +334,8 @@ function doEditProfile(){
             data:JSON.stringify({ 
                     shop_name: shop_name,
                     shop_desc : shop_desc,
-                    shop_icon : shop_icon
+                    shop_icon : shop_icon,
+                    shop_banner : shop_banner
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -334,6 +354,100 @@ function doEditProfile(){
                     $(".layerPopup").fadeOut();
             	    $(".layerPopup").remove();
             	    notif("info","Data sudah diubah","center","top");
+                }
+            }
+        });
+    }
+}
+
+function editBanner(){
+    var editBanner = '<div class="layerPopup">';
+	    editBanner += '     <div class="editProfileSellerContainer" style="height: 270px;">';
+	    editBanner += '         <div class="title">Ubah foto sampul</div>';
+	    editBanner += '         <div style="overflow-y:auto;height: 180px;"><div class="body">';
+	    editBanner += '            <div class="banner">';
+	    editBanner += '                <div id="drop_zone" class="drop-zone">';
+	    editBanner += '                   <p class="title">Ubah Foto Sampul</p>';
+	    editBanner += '                   <div class="preview-container"></div>';
+	    editBanner += '                </div>';
+	    editBanner += '                <input class="file_input" id="filebanner" accept="image/*" type="file" multiple="" name="file">';
+	    editBanner += '                <img src="" id="tempBanner" style="display:none;">';
+	    editBanner += '            </div>';
+	    editBanner += '         </div></div>';
+	    editBanner += '         <div class="footer">';
+	    editBanner += '            <input type="button" value="Batal" id="cancel"/>';
+	    editBanner += '            <input type="button" value="Simpan" id="save"/>';
+	    editBanner += '         </div>';
+	    editBanner += '     </div>';
+	    editBanner += '</div>';
+	       
+	$("body").append(editBanner);
+	
+	$(".file_input").withDropZone("#drop_zone", {
+      action: {
+        name: "image",
+        params: {
+          preview: true,
+        }
+      },
+    });
+    
+    $('#filebanner').on( 'change', function( e ){
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+                reader.onload = (function(theFile) {
+                    var image = new Image();
+                        image.src = theFile.target.result;
+                    
+                        image.onload = function() {
+                            if(this.width <= 1055 || this.height <= 247){
+                                notif("info","ukuran foto sampul minimal 1056x248","center","top");
+                                $('.preview-container').remove();
+                                $('#drop_zone .title').show();
+                            }else{
+                                $("#tempBanner").attr('src', this.src);
+                            }
+                        };
+                });
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+    
+    $('.editProfileSellerContainer .footer #save').on( 'click', function( e ){
+	    doEditBanner();
+	});
+	
+	$('.editProfileSellerContainer .footer #cancel').on( 'click', function( e ){
+	    $(".layerPopup").fadeOut();
+	    $(".layerPopup").remove();
+	});
+}
+
+function doEditBanner(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(doEditBanner);
+    }else{
+        var shop_banner = $('#tempBanner').attr('src');
+            
+        $.ajax({
+            type: 'POST',
+            url: SHOP_EDITBANNER_API,
+            data:JSON.stringify({ 
+                    shop_banner : shop_banner
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                        generateToken(doEditBanner);
+                }else{
+                    $(".layerPopup").fadeOut();
+            	    $(".layerPopup").remove();
+            	    notif("info","Data sudah diubah","center","top");
+            	    
+            	    $(".grid-shop-banner").css("background","url("+data.result.shop_banner+")");
                 }
             }
         });
@@ -665,6 +779,14 @@ function productLayer(){
         productLayer += '                           </td>';
         productLayer += '                       </tr>';
         productLayer += '                       <tr>';
+        productLayer += '                           <td>Subkategori Produk</td>';
+        productLayer += '                           <td id="subcategoryProductLayerCont">';
+        productLayer += '                               <div class="select">';
+        productLayer += '                                   <select id="subcategoryProductLayer"></select>';
+        productLayer += '                               </div>';
+        productLayer += '                           </td>';
+        productLayer += '                       </tr>';
+        productLayer += '                       <tr>';
         productLayer += '                           <td id="descLabel">Deskripsi Produk</td>';
         productLayer += '                           <td><textarea id="descProductLayer" cols="35" rows="7"></textarea></td>';
         productLayer += '                       </tr>';
@@ -714,17 +836,11 @@ function productLayer(){
         productLayer += '</div>';
     
     $("body").append(productLayer);
-    
-    var categoryProductStorage = sessionStorage.getItem("categoryProduct");
-	if(categoryProductStorage === null){
-	    categoryProductLayer();
-	}else{
-	    bindCategoryProductLayer(JSON.parse(categoryProductStorage));
-	}
 	
 	if(productLayerAction.do === "edit"){
 	    detailProduct();
 	}else{
+	    getcategory(1,0);
 	    $('#newProduct').attr('checked','checked');
 	}
     
@@ -733,6 +849,22 @@ function productLayer(){
 	    $(".layerPopup").remove();
 	    productList = [];
 	});
+	
+	$('#categoryProductLayer').on( 'change', function( e ){
+	    var categoryProductStorage = sessionStorage.getItem("categoryProduct"),
+	        listsubcategory = ''
+	        category_id = parseInt($(this).val());
+        
+        $.each( JSON.parse(categoryProductStorage) , function( key, val ) {
+            if(val.category_id === category_id){
+                $.each( val.subcategory , function( subkey, subval ) {
+                    listsubcategory += '<option value="'+subval.subcategory_id+'">'+subval.subcategory_name+'</option>';
+                });
+            }
+        });
+                        
+        $("#subcategoryProductLayer").html(listsubcategory);
+    });
 	
 	$("#productPriceLayer,#productWeight,#productStockLayer,#productMiniLayer").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
@@ -818,6 +950,8 @@ function productLayer(){
         productLayerData.product_name = $('#productNameLayer').val();
         productLayerData.product_description = $('#descProductLayer').val();
         productLayerData.product_price = $('#productPriceLayer').val();
+        productLayerData.product_category = $('#categoryProductLayer').val();
+        productLayerData.product_subcategory = $('#subcategoryProductLayer').val();
         productLayerData.product_weight = $('#productWeight').val();
         productLayerData.product_stock = $('#productStockLayer').val();
         productLayerData.product_minimum = $('#productMiniLayer').val();
@@ -854,7 +988,16 @@ function readProductURL(input) {
     });
 }
 
-function categoryProductLayer(){
+function getcategory(category_id,subcategory_id){
+    var categoryProductStorage = sessionStorage.getItem("categoryProduct");
+	if(categoryProductStorage === null){
+	    categoryProductLayer(category_id,subcategory_id);
+	}else{
+	    bindCategoryProductLayer(JSON.parse(categoryProductStorage),category_id,subcategory_id);
+	}
+}
+
+function categoryProductLayer(category_id){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(categoryProductLayer);
     }else{
@@ -877,14 +1020,23 @@ function categoryProductLayer(){
     }
 }
 
-function bindCategoryProductLayer(data){
+function bindCategoryProductLayer(data,category_id,subcategory_id){
     var listcategory = '';
+    var listsubcategory = '';
     
-    $.each( data , function( key, val ) {       
-        listcategory += '<option value="'+val.category_id+'">'+val.category_name+'</option>';
+    $.each( data , function( key, val ) {
+        var selectedcategory = (val.category_id === category_id) ? 'selected' : '';
+        listcategory += '<option value="'+val.category_id+'" '+selectedcategory+'>'+val.category_name+'</option>';
+        if(val.category_id === category_id){
+            $.each( val.subcategory , function( subkey, subval ) {
+                var selectedsubcategory = (subval.subcategory_id === subcategory_id) ? 'selected' : '';
+                listsubcategory += '<option value="'+subval.subcategory_id+'" '+selectedsubcategory+'>'+subval.subcategory_name+'</option>';
+            });
+        }
     });
                     
     $("#categoryProductLayer").html(listcategory);
+    $("#subcategoryProductLayer").html(listsubcategory);
 }
 
 function detailProduct(){
@@ -901,7 +1053,6 @@ function detailProduct(){
             success: function(data, status) {
                 if(data.status == "OK"){
                     $('#productNameLayer').val(data.result.product_name);
-                    $('#categoryProductLayerCont').html('<b>'+(data.result.category_name).toUpperCase()+'</b>');
                     $('#descProductLayer').val(data.result.product_description);
                     $('#productPriceLayer').val(data.result.product_price);
                     $('#productStockLayer').val(data.result.product_stock);
@@ -913,6 +1064,8 @@ function detailProduct(){
                     }else{
                         $('#oldProduct').attr('checked','checked');
                     }
+                    
+                    getcategory(data.result.category_id,data.result.subcategory_id);
                     
                     var product_images_len = data.result.product_image.length;
                     
@@ -948,6 +1101,8 @@ function actionProductLayer(){
         data.append('product_id', productLayerId.id);
         data.append('product_name', productLayerData.product_name);
         data.append('product_price', productLayerData.product_price);
+        data.append('product_category', productLayerData.product_category);
+        data.append('product_subcategory', productLayerData.product_subcategory);
         data.append('product_weight', productLayerData.product_weight);
         data.append('product_stock', productLayerData.product_stock);
         data.append('product_minimum', productLayerData.product_minimum);

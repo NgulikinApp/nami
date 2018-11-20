@@ -22,7 +22,9 @@
     
     //Parameters
     $linkArray = explode('/',$actual_link);
-    $id = intval(array_values(array_slice($linkArray, -1))[0]);
+    $shop_nametemp = array_values(array_slice($linkArray, -1))[0];
+    $shop_nameArray = explode('?',$shop_nametemp);
+    $shop_name = $shop_nameArray[0];
     $page = $_GET['page'];
     $pagesize = $_GET['pagesize'];
     
@@ -54,12 +56,12 @@
                                             fullname,
                                             DATE_FORMAT(shop_discuss_createdate, '%W, %d %M %Y') AS comment_date,
                                             shop_total_discuss
-                                        FROM 
-                                            shop_discuss
+                                        FROM
+                                            `shop`
+                                            LEFT JOIN shop_discuss ON shop_discuss.shop_id = `shop`.shop_id
                                             LEFT JOIN `user` ON `user`.user_id = shop_discuss.user_id
-                                            LEFT JOIN `shop` ON `shop`.shop_id = shop_discuss.shop_id
                                         WHERE
-                                            shop_discuss.shop_id = ".$id."
+                                            shop.shop_name = '".$shop_name."'
                                         ORDER BY 
                                             shop_discuss_id DESC
                                         LIMIT ".$pagesize."

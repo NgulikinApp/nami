@@ -150,7 +150,7 @@
                 	$mail->Password = "FD76889Ddt!";
                 	$mail->setFrom("info@ngulikin.com", "Ngulikin");
                 	$mail->addAddress($request['email'], $request['name']);
-                	$mail->Subject = 'Ngulikin (Forgot Password)';
+                	$mail->Subject = 'Ngulikin (Aktifasi Akun)';
                 	$mail->Body = "Klik tombol aktif dibawah ini, untuk mengaktifkan akun anda.<br><br><a href='".INIT_URL."/v1/activeAccount?q=".$param."'><div style='background-color:#004E82;border-radius: 10px;width: 30px;font-weight: bold;padding:8px;color:#FFFFFF;'>Aktif</div></a>";
                 	$mail->AltBody = 'This is a plain-text message body';
                 	

@@ -20,6 +20,10 @@
     */
     $con = conn();
     
+    //Parameters
+    $linkArray = explode('/',$actual_link);
+    $shop_name = array_values(array_slice($linkArray, -1))[0];
+    
     /*
         Function location in : /model/general/get_auth.php
     */
@@ -36,21 +40,25 @@
         try{
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            if(isset($_SESSION['user'])){
-                $user_id = $_SESSION['user']["user_id"];
-                $key = $_SESSION['user']["key"];
-                $shop_id = $_SESSION['user']["shop_id"];
-            }else{
-                $user_id = '';
-                $key = '';
-                $shop_id = '';
-            }
+            if($shop_name == "brand"){
+                if(isset($_SESSION['user'])){
+                    $user_id = $_SESSION['user']["user_id"];
+                    $key = $_SESSION['user']["key"];
+                    $shop_name = $_SESSION['user']["shop_name"];
+                }else{
+                    $user_id = '';
+                    $key = '';
+                    $shop_name = '';
+                }
+            }    
             
-            /*
-                Function location in : /model/general/functions.php
-            */
-            if(checkingAuthKey($con,$user_id,$key) == 0){
-                return invalidKey();
+            if($shop_name == "brand"){
+                /*
+                    Function location in : /model/general/functions.php
+                */
+                if(checkingAuthKey($con,$user_id,$key) == 0){
+                    return invalidKey();
+                }
             }
             
             $stmt = $con->query("SELECT 
@@ -58,13 +66,14 @@
                                         brand_name,
                                         brand_image,
                                         username,
-                                        shop_current_brand
+                                        shop_current_brand,
+                                        shop_total_brand
                                     FROM 
                                         shop
                                         LEFT JOIN `user` ON `user`.user_id = shop.user_id
                                         LEFT JOIN brand ON brand.shop_id = shop.shop_id
                                     WHERE
-                                        brand.shop_id = ".$shop_id."
+                                        shop.shop_name = '".$shop_name."'
                                     ORDER BY 
                                         brand_id DESC");
             

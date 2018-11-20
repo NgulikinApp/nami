@@ -69,7 +69,7 @@ function buttonSignup(){
             inputFlag = false;
             $(this).addClass('invalidFormat');
             $(this).parent().next().next().html('Format email tidak benar').addClass('invalidFormat');
-        }else if($(this).attr('id') == 'dateSignUp' && isDate(dateSignUp,'-',2,1,0) === false){
+        }else if($(this).attr('id') == 'dateSignUp' && isDate(dateSignUp,2,1,0) === false){
             inputFlag = false;
             $(this).addClass('invalidFormat');
             $(this).parent().next().html('Tanggal lahir tidak benar').addClass('invalidFormat');

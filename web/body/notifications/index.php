@@ -19,6 +19,7 @@
 		      include 'section_body.php';
 		      include $_SERVER['DOCUMENT_ROOT'].'/web/nav/footerMenu.php';
 		      include 'web/nav/footerFloatMenu.php';
+		      include 'web/nav/generalInput.php';
 		?>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-notifications.js?jsr=<?php echo $jsversionstring; ?>"></script>

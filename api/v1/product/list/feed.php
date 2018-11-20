@@ -48,31 +48,39 @@
                 $user_id = '';
             }
             
-            $stmt = $con->query("SELECT 
-                                            product_id, 
+            $sql = "SELECT 
+                                            product.product_id, 
                                             username,
                                             product_name,
                                             product_image,
                                             product_price,
                     						(
-                                                                SELECT 
-                                                                        COUNT(product_favorite_id) 
-                                                                FROM 
-                                                                        product_favorite 
-                                                                WHERE 
-                                                                        product_favorite.product_id=product.product_id 
-                                                                        AND 
-                                                                        user_id = '".$user_id."'
-                                                            ) AS product_isfavorite
+                                                SELECT 
+                                                    COUNT(product_favorite_id) 
+                                                FROM 
+                                                    product_favorite 
+                                                WHERE 
+                                                    product_favorite.product_id=product.product_id 
+                                                    AND 
+                                                    user_id = '".$user_id."'
+                                            ) AS product_isfavorite,
+											shop_name
                                     FROM 
                                             product
                                             LEFT JOIN brand ON brand.brand_id = product.brand_id
                                             LEFT JOIN shop ON shop.shop_id = brand.shop_id
-                                            LEFT JOIN `user` ON `user`.user_id = shop.user_id
+                                            LEFT JOIN `user` ON `user`.user_id = shop.user_id";
                     				
-                    		    ORDER BY 
-                                            product_id DESC
-                    				LIMIT 6");
+            if($filter == 'bestseller'){
+                $sql .= " LEFT JOIN invoice_detail ON invoice_detail.product_id=product.product_id
+                          LEFT JOIN invoice ON invoice.invoice_id=invoice.invoice_id 
+                          ORDER BY product_sold DESC";
+            }else{
+                $sql .= "  ORDER BY product_id DESC";
+            }
+            
+            $sql .= " LIMIT 6";
+            $stmt = $con->query($sql);
             
             /*
                 Function location in : functions.php

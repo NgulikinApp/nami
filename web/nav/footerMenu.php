@@ -4,14 +4,7 @@
             <div class="footer-body">
                 <div class="footer-body-left">
                     <h3>NGULIKIN</h3>
-                    <ul>
-                        <li>Ngulikin Furniture</li>
-                        <li>Ngulikin Fashion</li>
-                        <li>Ngulikin Kuliner</li>
-                        <li>Ngulikin Teknologi</li>
-                        <li>Ngulikin Jasa Kreatif</li>
-                        <li>Ngulikin Ide</li>
-                    </ul>
+                    <ul></ul>
                 </div>
                 <div class="footer-body-mid1">
                     <h3>GABUNG NGULIKERS INDONESIA</h3>
@@ -39,9 +32,9 @@
                 <div class="footer-body-right">
                     <h3>IKUTI KAMI</h3>
                     <ul class="list-socmed">
-                        <li><a class="socmed-follow socmed-follow-facebook" datainternal-id="https://web.facebook.com/Ngulikincom-1901044953474837">FACEBOOK</a></li>
-                        <li><a class="socmed-follow socmed-follow-instagram" datainternal-id="https://www.instagram.com/ngulikin">INSTAGRAM</a></li>
-                        <li><a class="socmed-follow socmed-follow-twitter" datainternal-id="">TWITTER</a></li>
+                        <li><i class="fa fa-facebook socmed-follow" datainternal-id="https://web.facebook.com/Ngulikincom-1901044953474837" title="facebook"></i></li>
+                        <li><i class="fa fa-instagram socmed-follow" datainternal-id="https://www.instagram.com/ngulikin" title="instagram"></i></li>
+                        <li><i class="fa fa-linkedin socmed-follow" datainternal-id="https://www.linkedin.com/company/ngulikin" title="linkedin"></i></li>
                     </ul>
                     <ul class="list-socmed">
                         <li><a datainternal-id="terms">Ketentuan</a></li>

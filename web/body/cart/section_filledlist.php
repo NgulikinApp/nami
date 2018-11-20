@@ -9,8 +9,10 @@
         <div id="detail-shoppingaccount">
             <?php
                 $css = "";
+                $loginhide = "";
                 if(!isset($_SESSION['user'])){
                     $css = 'style="background:#FFFFFF;border-bottom:2px solid #F5F5F5;"';
+                }
             ?>
             <div id="RegisOrNotCart">
                 <h3 class="detail-shoppingaccount-header">
@@ -42,9 +44,6 @@
                     <input class="inputShoppingAccountCart" placeholder="Telepon/Handphone">
                 </div>
             </div>
-            <?php
-                }
-            ?>
             <div class="detail-shoppingaccount-footer" <?php echo $css;?>>
                 <div class="title">
                     Isi Alamat Pengiriman
@@ -98,16 +97,16 @@
             <div class="detail-summary-body">
                 <div>
                     <span class="left">Total Harga Barang</span>
-                    <span class="right totalPriceCart">Rp 1.000.000</span>
+                    <span class="right totalPriceCart"></span>
                 </div>
                 <div>
                     <span class="left">Biaya Kirim</span>
-                    <span class="right" id="sumProductSummaryCart">Rp 18.000</span>
+                    <span class="right" id="sumProductSummaryCart"></span>
                 </div>
                 <hr/>
                 <div>
                     <span class="left">Total Belanja</span>
-                    <span class="right totalShoppingCart">Rp 1.018.000</span>
+                    <span class="right totalShoppingCart"></span>
                 </div>
             </div>
             <div class="detail-summary-footer">

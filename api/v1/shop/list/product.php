@@ -22,7 +22,7 @@
     
     //Parameters
     $linkArray = explode('/',$actual_link);
-    $id = intval(array_values(array_slice($linkArray, -1))[0]);
+    $id = array_values(array_slice($linkArray, -1))[0];
     $page = $_GET['page'];
     $pagesize = $_GET['pagesize'];
     
@@ -59,7 +59,8 @@
                         product_image,
                         username,
                         shop_total_product,
-                        product_price
+                        product_price,
+                        shop_name
                     FROM 
                         shop
                         LEFT JOIN `user` ON `user`.user_id = shop.user_id
@@ -68,17 +69,17 @@
                     WHERE ";
             
             if($type == "product"){
-                $sql .="product.brand_id = ".$id."";
+                $sql .="product.brand_id = ".intval($id)."";
             }else{
-                $sql .="shop.shop_id = ".$id."";
+                $shop_nameArray = explode('?',$id);
+                $shop_name = $shop_nameArray[0];
+                $sql .="shop.shop_name = '".$shop_name."'";
             }
             
             $sql .=" ORDER BY 
                             product_id DESC
                      LIMIT ".$page.",".$pagesize."";
-        
             $stmt = $con->query($sql);
-            
             /*
                 Function location in : function.php
             */

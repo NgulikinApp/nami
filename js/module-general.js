@@ -4,12 +4,28 @@ var url = 'https://www.ngulikin.com',
 function initGeneral(){
     var categoryFlag = false,
         fullname_popup = $('.fullname_popup').val(),
-        user_photo_popup = $('.user_photo_popup').val();
+        user_photo_popup = $('.user_photo_popup').val(),
+        ishasShop = parseInt($('.ishasShop').val());
     
     $('.leftHeader,#backHomeSignup,#backHomeSignin').on( 'click', function( e ){
 	    location.href = url;
 	    sessionStorage.removeItem('signinEmailNgulikin');
 	});
+	
+	var position = $(window).scrollTop(); 
+
+    // should start at 0
+    
+    $(window).scroll(function() {
+        var scroll = $(window).scrollTop();
+        if(scroll > position) {
+            $('.footerFloat').fadeOut( "slow" );
+        } else {
+            $('.footerFloat').fadeIn( "slow" );
+        }
+        $('.menu-category-sub-menu').slideUp("slow");
+        position = scroll;
+    });
 	
 	if(sessionStorage.getItem('tokenNgulikin') === null){
         $.getJSON(TOKEN_API, function( data ) {
@@ -19,6 +35,9 @@ function initGeneral(){
 	
 	if(fullname_popup !== ''){
     	$('#iconProfile').css('background-image','url("'+user_photo_popup+'")');
+    	if(ishasShop === 0){
+    	    $('.menu-category-search').css('width','calc(100% - 730px)');
+    	}
     	
     	var templatePopUpShop = '<div class="popover popover-bubble" role="tooltip">';
     	    templatePopUpShop += '  <div class="arrow"></div>';
@@ -47,25 +66,6 @@ function initGeneral(){
     	    $('#iconProfileTemp').popover('hide');
     	    
     	    $('.fullname_bubble').html(fullname_popup);
-        });
-        
-        var templatePopUpNotif = '<div class="popover popover-bubble" role="tooltip">';
-    	    templatePopUpNotif += '  <div class="arrow"></div>';
-    	    templatePopUpNotif += '  <div class="bubble-container">';
-    	    templatePopUpNotif += '      <div class="no-notif">';
-    	    templatePopUpNotif += '          <img src="/img/no-notif.png" width="120" height="100"/>';
-    	    templatePopUpNotif += '          <span>Tidak ada notifikasi</span>';
-    	    templatePopUpNotif += '      </div>';
-    	    templatePopUpNotif += '  </div>';
-    	    templatePopUpNotif += '</div>';
-    	
-    	$('#iconNotifHeader').popover({
-          placement: 'bottom',
-          template: templatePopUpNotif
-        }).on('click', function(e) {
-            $('#iconShopTemp').popover('hide');
-    	    $('#iconCartHeader').popover('hide');
-    	    $('#iconProfileTemp').popover('hide');
         });
         
         var templatePopUpProfile = '<div class="popover popover-bubble" role="tooltip">';
@@ -97,7 +97,7 @@ function initGeneral(){
     	    $('.popover').children('div:last-child').css('width','100%');
         });
     }else{
-        $('.menu-category-search').css('width','calc(100% - 720px)');
+        $('.menu-category-search').css('width','calc(100% - 730px)');
     }
 	
     /*socmed footer menu action*/
@@ -110,6 +110,10 @@ function initGeneral(){
 	});
 	
 	bubbleCart();
+	
+	if($('.isSignin').val() !== ''){
+	    bubbleNotif();
+	}
 	
 	$('#iconFavoritHeader').on( 'click', function( e ){
 	    location.href = url+"/favorite";
@@ -138,9 +142,6 @@ function initGeneral(){
 	});
 	$('#buttonQuestionerCancel').on( 'click', function( e ){
 	   $('.questionerContainer').hide("fade");
-	});
-	$('#buttonQuestionerSend').on( 'click', function( e ){
-	    asking();
 	});
 	
 	var categoryProductStorage = sessionStorage.getItem("categoryProduct");
@@ -197,8 +198,17 @@ function initGeneral(){
 	    $(this).addClass('bluesky');
 	});
 	
-	$('.footerFloat a:nth-child(2) span').on('click', function (e) {
+	$('.footerFloat a:nth-child(2) span,.footer-body-mid2 ul li:nth-child(3)').on('click', function (e) {
 	    window.open('https://www.blog.ngulikin.com');
+	});
+	
+	$('.footerFloat a:nth-child(3) span').on('click', function (e) {
+	    location.href = url+"/help";
+	});
+	
+	$('#track_orders').on('click', function (e) {
+	    sessionStorage.setItem('track_orderNgulikin',1);
+	    profileClick();
 	});
 }
 
@@ -219,43 +229,43 @@ function bubbleCart(){
                         templatePopUpCart += '<div class="popover popover-bubble" role="tooltip">';
                         templatePopUpCart += '  <div class="arrow"></div>';
                         templatePopUpCart += '  <div class="bubble-container">';
-                	if(data.result.length>0){
-                        	templatePopUpCart += '      <ul class="bubble-list-cart">';
-                        	templatePopUpCart += '          <li>Jumlah <div class="bubble-sum-cart">'+data.result.length+'<img src="/img/button_cart.png" width="15" height="15"/></div></li>';
-                        	templatePopUpCart += '      </ul>';
-                        	templatePopUpCart += '      <div class="no-cart">';
-                        	$.each( data.result, function( key, val ) {
-                        	    templatePopUpCart += '          <div class="list-cart" data-id="'+val.product_id+'">';
-                            	templatePopUpCart += '              <div class="list-cart-cont">';
-                            	templatePopUpCart += '                  <div class="list-cart-content">'+val.brand_name+'</div>';
-                            	templatePopUpCart += '                  <div class="list-cart-content">'+val.product_name+'</div>';
-                            	templatePopUpCart += '                  <div class="list-cart-content">Total '+val.sum_product+'</div>';
-                            	templatePopUpCart += '                  <div class="list-cart-content">'+val.cart_createdate+'</div>';
-                            	templatePopUpCart += '              </div>';
-                            	templatePopUpCart += '              <div class="list-cart-cont">';
-                            	templatePopUpCart += '                  <img src="'+val.product_image+'" width="65" height="65"/>';
-                            	templatePopUpCart += '              </div>';
-                            	templatePopUpCart += '              <div class="list-cart-cont">';
-                            	templatePopUpCart +=                    val.product_price;
-                            	templatePopUpCart += '              </div>';
-                            	templatePopUpCart += '          </div>';
-                        	});
-                        	templatePopUpCart += '      </div>';
-                        	templatePopUpCart += '      <div class="bubble-cart-button">';
-                        	templatePopUpCart += '          <input type="button" value="Lihat Keranjang" onclick="cartClick()"/>';
-                        	templatePopUpCart += '      </div>';
-                	}else{
-                        	templatePopUpCart += '      <ul class="bubble-list-cart">';
-                        	templatePopUpCart += '          <li>Jumlah <div class="bubble-sum-cart">0<img src="/img/button_cart.png" width="15" height="15"/></div></li>';
-                        	templatePopUpCart += '      </ul>';
-                        	templatePopUpCart += '      <div class="no-cart">';
-                        	templatePopUpCart += '          <img src="/img/keranjang.png" width="120" height="100"/>';
-                        	templatePopUpCart += '          <span>Tidak ada produk yang ditambahkan</span>';
-                        	templatePopUpCart += '      </div>';
-                        	templatePopUpCart += '      <div class="bubble-cart-button">';
-                        	templatePopUpCart += '          <input type="button" value="Lihat Keranjang" onclick="cartClick()"/>';
-                        	templatePopUpCart += '      </div>';
-                	}
+                    	if(data.result.length>0){
+                            templatePopUpCart += '      <ul class="bubble-list-cart">';
+                            templatePopUpCart += '          <li>Jumlah <div class="bubble-sum-cart">'+data.result.length+'<img src="/img/button_cart.png" width="15" height="15"/></div></li>';
+                            templatePopUpCart += '      </ul>';
+                            templatePopUpCart += '      <div class="no-cart">';
+                            $.each( data.result, function( key, val ) {
+                            	templatePopUpCart += '          <div class="list-cart" data-id="'+val.product_id+'">';
+                                templatePopUpCart += '              <div class="list-cart-cont">';
+                                templatePopUpCart += '                  <div class="list-cart-content">'+val.brand_name+'</div>';
+                                templatePopUpCart += '                  <div class="list-cart-content">'+val.product_name+'</div>';
+                                templatePopUpCart += '                  <div class="list-cart-content">Total '+val.sum_product+'</div>';
+                                templatePopUpCart += '                  <div class="list-cart-content">'+val.cart_createdate+'</div>';
+                                templatePopUpCart += '              </div>';
+                                templatePopUpCart += '              <div class="list-cart-cont">';
+                                templatePopUpCart += '                  <img src="'+val.product_image+'" width="65" height="65"/>';
+                                templatePopUpCart += '              </div>';
+                                templatePopUpCart += '              <div class="list-cart-cont">';
+                                templatePopUpCart +=                    val.product_price;
+                                templatePopUpCart += '              </div>';
+                                templatePopUpCart += '          </div>';
+                            });
+                            templatePopUpCart += '      </div>';
+                            templatePopUpCart += '      <div class="bubble-cart-button">';
+                            templatePopUpCart += '          <input type="button" value="Lihat Keranjang" onclick="cartClick()"/>';
+                            templatePopUpCart += '      </div>';
+                    	}else{
+                            templatePopUpCart += '      <ul class="bubble-list-cart">';
+                            templatePopUpCart += '          <li>Jumlah <div class="bubble-sum-cart">0<img src="/img/button_cart.png" width="15" height="15"/></div></li>';
+                            templatePopUpCart += '      </ul>';
+                            templatePopUpCart += '      <div class="no-cart">';
+                            templatePopUpCart += '          <img src="/img/keranjang.png" width="120" height="100"/>';
+                            templatePopUpCart += '          <span>Tidak ada produk yang ditambahkan</span>';
+                            templatePopUpCart += '      </div>';
+                            templatePopUpCart += '      <div class="bubble-cart-button">';
+                            templatePopUpCart += '          <input type="button" value="Lihat Keranjang" onclick="cartClick()"/>';
+                            templatePopUpCart += '      </div>';
+                    	}
                 	templatePopUpCart += '  </div>';
                     templatePopUpCart += '</div>';
                 	
@@ -268,6 +278,8 @@ function bubbleCart(){
                     	$('#iconNotifHeader').popover('hide');
                     	$('#iconProfileTemp').popover('hide');
                     });
+                    
+                    $(".sumManinMenuCart").html(data.result.length);
                 }else{
                     generateToken(bubbleCart);
                 }
@@ -296,6 +308,72 @@ function profileClick(){
     location.href = url+"/profile"
 }
 
+function bubbleNotif(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(bubbleNotif);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: NOTIFICATION_API,
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var templatePopUpNotif = '';
+                        templatePopUpNotif += '<div class="popover popover-bubble" role="tooltip">';
+                        templatePopUpNotif += '  <div class="arrow"></div>';
+                        templatePopUpNotif += '  <div class="bubble-container">';
+                        if(data.result.length>0){
+                            templatePopUpNotif += '<div class="no-cart">';
+                            $.each( data.result, function( key, val ) {
+                                templatePopUpNotif += '<div class="list-cart">';
+                                templatePopUpNotif += '     <div class="list-cart-cont">';
+                                templatePopUpNotif += '         <div class="list-cart-content">'+val.brand_name+'</div>';
+                                templatePopUpNotif += '         <div class="list-cart-content">'+val.notification_desc+'</div>';
+                                templatePopUpNotif += '         <div class="list-cart-content">'+val.notification_createdate+'</div>';
+                                templatePopUpNotif += '     </div>';
+                                templatePopUpNotif += '     <div class="list-cart-cont">';
+                                templatePopUpNotif += '         <img src="'+val.notification_photo+'" width="65" height="65" onclick="cartClick()" style="cursor:pointer;"/>';
+                                templatePopUpNotif += '     </div>';
+                                templatePopUpNotif += '</div>';
+                            });
+                            templatePopUpNotif += '</div>';
+                            templatePopUpNotif += '<div class="bubble-cart-button">';
+                            templatePopUpNotif += '     <input type="button" value="Lihat Notifikasi" onclick="notifClick()"/>';
+                            templatePopUpNotif += '</div>';
+                        }else{
+                            templatePopUpNotif += '<div class="no-notif">';
+    	                    templatePopUpNotif += '     <img src="/img/no-notif.png" width="120" height="100"/>';
+    	                    templatePopUpNotif += '     <span>Tidak ada notifikasi</span>';
+    	                    templatePopUpNotif += '</div>';
+                        }
+                        templatePopUpNotif += '  </div>';
+                        templatePopUpNotif += '</div>';
+                	
+                	$("#iconNotifHeader").popover('destroy');
+                	$('#iconNotifHeader').popover({
+                      placement: 'bottom',
+                      template: templatePopUpNotif
+                    }).on('click', function(e) {
+                        $('#iconShopTemp').popover('hide');
+                	    $('#iconCartHeader').popover('hide');
+                	    $('#iconProfileTemp').popover('hide');
+                    });
+                    $(".sumNotifinMenuCart").html(data.result.length);
+                }else{
+                    generateToken(bubbleNotif);
+                }
+            } 
+        });
+    }
+}
+
+function notifClick(){
+    location.href = url+"/notifications";
+}
+
 function logoutClick(){
     $.ajax({
         type: 'GET',
@@ -312,45 +390,6 @@ function generateToken(name){
 	    sessionStorage.setItem('tokenNgulikin',data.result);
 	    eval("name()");
 	});
-}
-
-function asking(){
-    var nameQuestion = $('#nameQuestion').val(),
-	    emailQuestion = $('#emailQuestion').val(),
-	    descQuestion = $('#descQuestion').val(),
-	    fileQuestioner = $('#fileQuestioner')[0].files[0],
-	    data = new FormData();
-	        
-	if(nameQuestion === '' || emailQuestion === '' || descQuestion === ''){
-	    notif("error","Nama, email, dan pertanyaan harus diisi","right","bottom");
-	}else if(!validateEmail(emailQuestion)){
-	    notif("error","Format email tidak benar","right","bottom");
-	}else{
-	    data.append('name', nameQuestion);
-        data.append('email', emailQuestion);
-        data.append('question', descQuestion);
-        // Attach file
-        data.append('file', fileQuestioner); 
-        
-        if(sessionStorage.getItem('tokenNgulikin') === null){
-            generateToken(asking);
-        }else{
-            $.ajax({
-                type: 'POST',
-                url: ASKING_API,
-                data: data,
-                async: true,
-                contentType: false, 
-                processData: false,
-                dataType: 'json',
-                success: function(result){
-                    var message_email = result.message;
-                    var status_email = (result.status == "OK")? "info" : "error";
-                    notif(status_email,message_email,"right","bottom");
-                }
-            });
-        }
-	}
 }
 
 function categoryProduct(){
@@ -379,6 +418,7 @@ function categoryProduct(){
 function bindCategoryProduct(data){
     var listcategory = '';
     var listcategoryMain = '<nav>';
+    var listcategoryFooter = '';
     
     $.each( data , function( key, val ) {
         var nameCategory = val.category_name;
@@ -389,27 +429,58 @@ function bindCategoryProduct(data){
         listcategory += '</span>';
         listcategory += '</li>';
                             
-        listcategoryMain += '<a class="menu-category-items">';
-        listcategoryMain += '   <div data-category="'+val.category_id+'">'+nameCategory+'</div>';
-        listcategoryMain += '</a>';
+        listcategoryMain += '<div class="menu-category-items">';
+        listcategoryMain += '   <div class="dropbtn" data-category="'+nameCategory+'">'+nameCategory+'</div>';
+        listcategoryMain += '   <div class="menu-category-subitems">';
+        
+        $.each( val.subcategory , function( subkey, subval ) {
+            listcategoryMain += '       <a class="dropbtnsub" data-category="'+nameCategory+'" data-subcategory="'+subval.subcategory_name+'">'+subval.subcategory_name+'</a>';
+        });
+        
+        listcategoryMain += '   </div>';
+        listcategoryMain += '</div>';
+        
+        listcategoryFooter += '<li data-category="'+nameCategory+'">Ngulikin '+nameCategory+'</li>';
     });
     listcategoryMain += '<nav>';
                     
     $('#loaderHomeCategory').addClass('hidden');
     $(".grid-list-cont8").html(listcategory);
     $(".menu-category-sub-menu").html(listcategoryMain);
+    $(".footer-body-left ul").html(listcategoryFooter);
                     
     $('.grid-listmiddle-cont8').on('click', function (e) {
         var categoryVal = $(this).data("category");
                             
-	   location.href = url+"/search?c="+categoryVal;
+	    location.href = url+"/search/"+categoryVal;
     });
                     
-    $('.menu-category-items div').on('click', function (e) {
+    $('.dropbtn').on('click', function (e) {
         var categoryVal = $(this).data("category");
                             
-	    location.href = url+"/search?c="+categoryVal;
+	    location.href = url+"/search/"+categoryVal;
     });
+    
+    $('.dropbtnsub').on('click', function (e) {
+        var categoryVal = $(this).data("category");
+        var subcategoryVal = $(this).data("subcategory");
+                            
+	    location.href = url+"/search/"+categoryVal+"/"+subcategoryVal;
+    });
+    
+    $('.footer-body-left ul li').on('click', function (e) {
+        var categoryVal = $(this).data("category");
+                            
+	    location.href = url+"/search/"+categoryVal;
+    });
+    
+    $('.menu-category-items').hover(function(){
+	    $('.cover-category').removeClass('hidden');
+	});
+	
+	$('.menu-category-items').mouseleave(function(){
+	    $('.cover-category').addClass('hidden');
+	});
 }
 
 //currency function
@@ -470,7 +541,7 @@ function validateEmail(email) {
     Date validation
     Value parameter - required. All other parameters are optional.
 */
-function isDate(value, sepVal, dayIdx, monthIdx, yearIdx) {
+function isDate(value, dayIdx, monthIdx, yearIdx) {
     try {
         //Change the below values to determine which format of date you wish to check. It is set to dd/mm/yyyy by default.
         var DayIndex = dayIdx !== undefined ? dayIdx : 0; 
@@ -478,7 +549,7 @@ function isDate(value, sepVal, dayIdx, monthIdx, yearIdx) {
         var YearIndex = yearIdx !== undefined ? yearIdx : 0;
  
         value = value.replace(/-/g, "/").replace(/\./g, "/"); 
-        var SplitValue = value.split(sepVal || "/");
+        var SplitValue = value.split("/");
         var OK = true;
         if (!(SplitValue[DayIndex].length == 1 || SplitValue[DayIndex].length == 2)) {
             OK = false;
@@ -489,6 +560,7 @@ function isDate(value, sepVal, dayIdx, monthIdx, yearIdx) {
         if (OK && SplitValue[YearIndex].length != 4) {
             OK = false;
         }
+        
         if (OK) {
             var Day = parseInt(SplitValue[DayIndex], 10);
             var Month = parseInt(SplitValue[MonthIndex], 10);
@@ -521,4 +593,19 @@ function isDate(value, sepVal, dayIdx, monthIdx, yearIdx) {
     catch (e) {
         return false;
     }
-} 
+}
+
+function hourtosec(hour){
+    var a = hour.split(':'); // split it at the colons
+
+    // minutes are worth 60 seconds. Hours are worth 60 minutes.
+    return seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60;
+}
+
+function sectohour(sec){
+    var date = new Date(null);
+        date.setSeconds(sec); // specify value for SECONDS here
+    var result = date.toISOString().substr(11, 5);
+    
+    return result;
+}

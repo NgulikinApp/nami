@@ -22,7 +22,7 @@
     
     //Parameters
     $linkArray = explode('/',$actual_link);
-    $id = intval(array_values(array_slice($linkArray, -1))[0]);
+    $id = array_values(array_slice($linkArray, -1))[0];
     
     /*
         Function location in : /model/general/get_auth.php
@@ -40,39 +40,61 @@
         try{
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            if(isset($_SESSION['user'])){
-                $user_id = $_SESSION['user']["user_id"];
-            }else{
-                $user_id = '';
-            }
-            
             if($id == "shop"){
                 if(isset($_SESSION['user'])){
-                    $id = $_SESSION['user']["shop_id"];
+                    $id = intval($_SESSION['user']["shop_id"]);
                 }else{
-                    $id = '';
+                    $id = 0;
                 }
+            }else{
+                $id = preg_replace('/-/', ' ', $id);
             }
             
-            $stmt = $con->query("SELECT 
-                                                    shop.shop_id,
-                                                    `user`.user_id,
-                                                    username,
-                                                    shop_name,
-                                                    shop_icon,
-                                                    shop_description,
-                                                    shop_banner,
-                                                    IFNULL(university,'') AS university,
-                                        			user_photo
-                                            FROM 
-                                                    shop
-                                                    LEFT JOIN `user` ON `user`.user_id = shop.user_id
-                                            WHERE
-                                                    shop.shop_id=".$id."");
+            $sql = "SELECT 
+                        shop.shop_id,
+                        `user`.user_id,
+                        username,
+                        fullname,
+                        shop_name,
+                        shop_icon,
+                        shop_description,
+                        shop_banner,
+                        IFNULL(university,'') AS university,
+                        user_photo,
+                        shop_op_from,
+                        shop_op_to,
+                        shop_sunday,
+                        shop_monday,
+                        shop_tuesday,
+                        shop_wednesday,
+                        shop_thursday,
+                        shop_friday,
+                        shop_saturday,
+                        shop_desc,
+                        IFNULL(DATE_FORMAT(shop_close, '%d %M %Y'),'') AS shop_close,
+                        IFNULL(DATE_FORMAT(shop_open, '%d %M %Y'),'') AS shop_open,
+                        shop_closing_notes,
+                        shop_location,
+                        shop_image_location,
+                        CONCAT('Terakhir diganti tanggal ',DATE_FORMAT(shop_notes_modifydate, '%d %M %Y'),', pukul ',DATE_FORMAT(shop_notes_modifydate, '%H.%i')) AS shop_notes_modifydate,
+                        shop_total_review,
+                        shop_total_discuss
+                    FROM 
+                        shop
+                        LEFT JOIN `user` ON `user`.user_id = shop.user_id
+                    WHERE";
+                                                    
+            if(is_int($id)){
+                $sql .= " shop.shop_id=".$id."";
+            }else{
+                $sql .= " shop.shop_name='".$id."'";
+            }
+            $stmt = $con->query($sql);
+            
             /*
                 Function location in : functions.php
             */
-            detail($stmt);
+            detail($stmt,$id);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

@@ -52,9 +52,13 @@
             if(isset($_SESSION['user'])){
                 $user_id = $_SESSION['user']["user_id"];
                 $key = $_SESSION['user']["key"];
+                $user_photo = $_SESSION['user']["user_photo"];
+                $fullname = $_SESSION['user']["fullname"];
             }else{
                 $user_id = '';
                 $key = '';
+                $user_photo = $_SESSION['user']["user_photo"];
+                $fullname = $_SESSION['user']["fullname"];
             }
             
             /*
@@ -79,17 +83,13 @@
             $stmt->execute();
             
             $stmt = $con->query("SELECT 
-                                        username,
-                                        user_photo,
-                                        fullname,
                                         DATE_FORMAT(shop_discuss_createdate, '%W, %d %M %Y') AS comment_date
                                     FROM 
                                         shop_discuss
-                                        LEFT JOIN `user` ON `user`.user_id = shop_discuss.user_id
                                     WHERE
                                         shop_discuss_id = ".$shop_discuss_id."");
             
-            comment($stmt,$shop_discuss_id,$id,$user_id,$request['comment']);
+            comment($stmt,$shop_discuss_id,$id,$user_id,$request['comment'],$user_photo,$fullname);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

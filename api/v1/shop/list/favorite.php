@@ -66,8 +66,8 @@
                                     DATEDIFF(CURDATE(),CAST(shop_createdate AS DATE)) AS difdate,
                                     user_shop_favorites AS count_shop
                         FROM 
-                                    shop
-                                    LEFT JOIN shop_favorite ON shop_favorite.shop_id = shop.shop_id
+                                    shop_favorite
+                                    LEFT JOIN shop ON shop.shop_id = shop_favorite.shop_id
                                     LEFT JOIN `user` ON `user`.user_id = shop_favorite.user_id
                                 WHERE
                                     shop_favorite.user_id = '".$user_id."'
