@@ -1,3 +1,8 @@
+$( document ).ready(function() {
+    initGeneral();
+    initForgotPassword();
+});
+
 function initForgotPassword(){
     $('#backLogin').on('click', function (e) {
         location.href = url+"/signin";

@@ -1,3 +1,8 @@
+$( document ).ready(function() {
+    initGeneral();
+    initShopMyincome();
+});
+
 function initShopMyincome(){
     $('#history-shop-seller').on( 'click', function( e ){
 	   $('.grid-shop-seller-menu nav div').removeClass("bluesky").removeClass('border-yellow');

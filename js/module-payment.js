@@ -1,3 +1,8 @@
+$( document ).ready(function() {
+    initGeneral();
+    initPayment();
+});
+
 function initPayment(){
     detailPayment();
     $('#firstAccordion, #secondAccordion, #thirdAccordion, #forthAccordion').collapse('hide');	
@@ -69,6 +74,11 @@ function detailPayment(){
                 
                 $(".detail-paymentSummary-body").html(listElement);
                 $('.loaderProgress').addClass('hidden');
+                $('body').removeClass('hiddenoverflow');
+                
+                $('.detail-totalPayment-footer').on('click', function (e) {
+                    location.href = url+"/invoice/1";
+                });
             }else{
                 generateToken(detailPayment);
             }

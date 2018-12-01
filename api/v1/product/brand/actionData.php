@@ -62,39 +62,22 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0) == 0){
                 return invalidKey();
             }
             
-            //if the data file is not binary string
-            $brand_photo_data = $request['brand_image'];
-            
-            if (substr($brand_photo_data,0,4) != 'data'){
-                $brand_photo_data_array = explode('/',$brand_photo_data);
-                $brand_photo_name = end($brand_photo_data_array);
-                $brand_photo_name = base64_decode(urldecode ($brand_photo_name));
-                $brand_photo_name_array = explode('/',$brand_photo_name);
-                $brand_photo_name = end($brand_photo_name_array);
-            }else{
-                /*
-                    Function location in : /model/general/functions.php
-                */
-                $brand_photo_name = getID(16).'.png';
+            $brand_photo_name = "";
+            if (isset($_SESSION['file'])){
                 
-                list($type, $brand_photo_data) = explode(';', $brand_photo_data);
-                list(, $brand_photo_data)      = explode(',', $brand_photo_data);
-                $data_photo = base64_decode($brand_photo_data);
+                $source_dir = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/temp';
+                $dest_dir = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/brand';
+                $brand_photo_name = $_SESSION['file'][0];
                 
-                $path_photo = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/brand';
+                $source = $source_dir.'/'.$brand_photo_name;
+                $dest = $dest_dir.'/'.$brand_photo_name;
                 
-                $brand_photo = $path_photo.'/'.$brand_photo_name;
-                //write image into directory
-                file_put_contents($brand_photo, $data_photo);
-                
-                //Resize image
-                $imageresize = new ImageResize($brand_photo);
-                $imageresize->resizeToBestFit(150, 150);
-                $imageresize->save($brand_photo);
+                rename($source,$dest);
+                unset($_SESSION['file']);
             }
             
             if($request['method'] == 'add'){

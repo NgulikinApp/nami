@@ -1,3 +1,8 @@
+$( document ).ready(function() {
+    initGeneral();
+    initProfile();
+});
+
 function initProfile(){
     var trackordertab = sessionStorage.getItem('track_orderNgulikin');
     
@@ -44,10 +49,6 @@ function initProfile(){
         $(this).css('background-image','url(/img/arrow_up.png)');
     });
     
-    $("#filesPrivate").change(function(){
-        readURL(this);
-    });
-    
     $('#btnSubmitMyprofile').on( 'click', function( e ){
         updateProfile();
     });
@@ -85,10 +86,54 @@ function initProfile(){
         }
     });
     
+    $('#filesPrivate').on( 'change', function( e ){
+        uploadPhoto();
+    });
+    
     if(trackordertab !== null){
         $('#trackorderstab').trigger('click');
         sessionStorage.removeItem('track_orderNgulikin');
 	}
+}
+
+function uploadPhoto(){
+    var data = new FormData(),
+        filePath = $('#filesPrivate').val(),
+        fileExt = (filePath.substr(filePath.lastIndexOf('\\') + 1).split('.')[1]).toLowerCase(),
+        filePhoto = $('#filesPrivate')[0].files[0],
+        fileSize = filePhoto.size/ 1024 / 1024;
+        
+        data.append('type', 'profile');
+        data.append('file', filePhoto);
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(uploadPhoto);
+    }else{
+        if(fileSize < 2){
+            if(fileExt === 'jpg' || fileExt === 'png'){
+                $('.loaderProgress').removeClass('hidden');
+                $.ajax({
+                    type: 'POST',
+                    url: PUTFILE_API,
+                    data: data,
+                    async: true,
+                    contentType: false, 
+                    processData: false,
+                    dataType: 'json',
+                    beforeSend: function(xhr, settings) { 
+                        xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+                    },
+                    success: function(result){
+                        $('#previewImagePrivate').attr('src',result.src);
+                        $('.loaderProgress').addClass('hidden');
+                    }
+                });
+            }else{
+                notif("error","Format file hanya boleh jpg atau png","center","top");
+            }
+        }else{
+            notif("error","File tidak boleh lebih dari 2 MB","center","top");
+        }
+    }
 }
 
 function profile(){
@@ -154,8 +199,7 @@ function updateProfile(){
                     fullname : $('#fullnamePrivate').val(),
                     dob : $('#dobPrivate').val(),
                     gender : $('input[name=sexPrivate]:checked').val(),
-                    phone : $('#phonePrivate').val(),
-                    user_photo : $('#previewImagePrivate').attr('src')
+                    phone : $('#phonePrivate').val()
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 

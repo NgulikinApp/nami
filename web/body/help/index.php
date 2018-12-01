@@ -21,6 +21,5 @@
 		<script src="js/library/custom-file-input.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-help.js?jsr=<?php echo $jsversionstring; ?>"></script>
-		<script src="js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>
 </html>

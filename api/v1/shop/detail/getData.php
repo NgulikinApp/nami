@@ -43,6 +43,14 @@
             if($id == "shop"){
                 if(isset($_SESSION['user'])){
                     $id = intval($_SESSION['user']["shop_id"]);
+                    $username = $_SESSION['user']["username"];
+                    
+                    $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/temp';
+            
+                    /*
+                        Function location in : /model/general/functions.php
+                    */
+                    emptyFolder($path);
                 }else{
                     $id = 0;
                 }

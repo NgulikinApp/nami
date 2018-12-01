@@ -46,17 +46,26 @@
             if(isset($_SESSION['user'])){
                 $user_id = $_SESSION['user']["user_id"];
                 $key = $_SESSION['user']["key"];
+                $username = $_SESSION['user']["username"];
             }else{
                 $user_id = '';
                 $key = '';
+                $username = '';
             }
             
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0) == 0){
                 return invalidKey();
             }
+            
+            $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/temp';
+            
+            /*
+                Function location in : /model/general/functions.php
+            */
+            emptyFolder($path);
             
             $stmt = $con->query("SELECT 
                                             fullname, 

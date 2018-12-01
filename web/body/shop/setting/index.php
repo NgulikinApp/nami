@@ -15,7 +15,7 @@
 		    Pengaturan Toko | Ngulikin
 		</title>
     </head>
-    <body>
+    <body class="hiddenoverflow">
         <div class="loaderProgress">
             <img src="../img/loader.gif" />
         </div>
@@ -28,6 +28,5 @@
         ?>
 		<script src="../../js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="../../js/module-shop-setting.js?jsr=<?php echo $jsversionstring; ?>"></script>
-		<script src="../../js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>
 </html>

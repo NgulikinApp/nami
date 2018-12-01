@@ -1,5 +1,10 @@
 var productPage = {},
     shopPage = {};
+    
+$( document ).ready(function() {
+    initGeneral();
+    initFavorite();
+});
 
 function initFavorite(){
     var fullname_popup = $('.fullname_popup').val();

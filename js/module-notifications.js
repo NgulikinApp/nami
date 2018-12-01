@@ -1,3 +1,8 @@
+$( document ).ready(function() {
+    initGeneral();
+    initNotifications();
+});
+
 function initNotifications(){
     notification();
 	$('.notif-filter-sub-menu li').on('click', function (e) {

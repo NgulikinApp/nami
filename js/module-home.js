@@ -1,6 +1,11 @@
 var favoriteData = {},
     cartData = {};
 
+$( document ).ready(function() {
+    initGeneral();
+    initHome();
+});
+
 function initHome(){
     var logoutsession = sessionStorage.getItem('logoutNgulikin'),
         paymentfailedsession = sessionStorage.getItem('paymentFailedNgulikin'),

@@ -105,6 +105,7 @@
                 "shop_icon" => $icon
                 );
         
+        $_SESSION['user']["shop_name"] = $shop_name;
          /*
             Function location in : /model/general/functions.php
         */

@@ -50,6 +50,9 @@
 				case 'notif':
 				    include('api/v1/general/notification/getNotif.php');
 				break;
+				case 'putfile':
+					include('api/v1/general/system/putFile.php');
+				break;
 				case 'product':
 					switch (@$routes[2]) {
 					    case 'a':
@@ -93,6 +96,8 @@
 						        case 'a':
         							include('api/v1/product/invoice/addtoinvoice.php');
         						break;
+        						default :
+							        include('api/v1/product/invoice/getData.php');
 						    }
 						break;
 						case 'rate':
@@ -111,11 +116,17 @@
 				        case 'cm':
 				            include('api/v1/profile/confirmPassword.php');
 				        break;
-				        case 'up':
-				            include('api/v1/profile/updatePassword.php');
+				        case 'ls':
+				            include('api/v1/profile/listpendingSeller.php');
 				        break;
 				        case 'u':
 				            include('api/v1/profile/updateUser.php');
+				        break;
+				        case 'up':
+				            include('api/v1/profile/updatePassword.php');
+				        break;
+				        case 'us':
+				            include('api/v1/profile/updateStatusSeller.php');
 				        break;
 				        default :
 							include('api/v1/profile/user.php');
@@ -222,7 +233,13 @@
 				case 'signin':
 					include('api/v1/auth/signin.php');
 				break;
+				case 'signinadmin':
+					include('api/v1/auth/signin_admin.php');
+				break;
 				case 'signout':
+					include('api/v1/auth/signout.php');
+				break;
+				case 'signoutadmin':
 					include('api/v1/auth/signout.php');
 				break;
 				case 'signup':

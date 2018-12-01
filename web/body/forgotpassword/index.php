@@ -23,6 +23,5 @@
         ?>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-forgotpassword.js?jsr=<?php echo $jsversionstring; ?>"></script>
-		<script src="js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>
 </html>

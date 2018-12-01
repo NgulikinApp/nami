@@ -71,6 +71,9 @@ input[type="radio"]{
 textarea{
 	resize:none;
 }
+.hiddenoverflow{
+   overflow: hidden; 
+}
 .bluesky{
     color:#3FC3FF !important;
 }
@@ -4033,6 +4036,21 @@ input.radioPaymentOthers:empty ~ label:before{
     margin-top: -170px;
     margin-left: -170px;
     position: relative;
+}
+.loaderPopup{
+    background: rgba(255,255,255, 0.5);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.loaderPopup img{
+    left: 50%;
+    position: relative;
+    margin-left: -170px;
+    top: 50%;
+    margin-top: -140px;
+    height: initial;
 }
 #loaderHomeCategory,#loaderSearch,#loaderNotif{
     left: 50%;

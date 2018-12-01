@@ -1,6 +1,11 @@
 var search = {},
     searchPage = {};
 
+$( document ).ready(function() {
+    initGeneral();
+    initSearch();
+});
+
 function initSearch(){
     /*
         Get value from url parameter.

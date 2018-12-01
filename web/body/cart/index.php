@@ -15,7 +15,7 @@
 		<script src="js/library/FBsdk.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="https://apis.google.com/js/api.js?jsr=<?php echo $jsversionstring; ?>"></script>
     </head>
-    <body>
+    <body class="hiddenoverflow">
         <div class="loaderProgress">
             <img src="img/loader.gif" />
         </div>
@@ -28,6 +28,5 @@
 		?>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-cart.js?jsr=<?php echo $jsversionstring; ?>"></script>
-		<script src="js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>
 </html>

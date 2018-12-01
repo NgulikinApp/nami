@@ -10,6 +10,11 @@ var shopProductPage = {},
     productList = [],
     productListUrl = [];
 
+$( document ).ready(function() {
+    initGeneral();
+    initShopSetting();
+});
+
 function initShopSetting(){
     var notessession = sessionStorage.getItem('notesNgulikin');
     
@@ -172,7 +177,10 @@ function detail(){
                         	
                         	$('#owner-shop').html(data.result.fullname);
                     }
+                    
                     $('.loaderProgress').addClass('hidden');
+                    $('body').removeClass('hiddenoverflow');
+                    
                     var shop_banner = data.result.shop_banner;
                     if(shop_banner !== ''){
                         $(".grid-shop-banner").css("background","url("+shop_banner+")");
@@ -276,6 +284,9 @@ function editProfile(){
 	    editProfile += '            <input type="button" value="Batal" id="cancel"/>';
 	    editProfile += '            <input type="button" value="Simpan" id="save"/>';
 	    editProfile += '         </div>';
+	    editProfile += '        <div class="loaderPopup hidden">';
+	    editProfile += '            <img src="../img/loader.gif"/>';
+	    editProfile += '        </div>';
 	    editProfile += '     </div>';
 	    editProfile += '</div>';
 	       
@@ -303,19 +314,47 @@ function editProfile(){
 	});
 	
 	$("#filesSeller").change(function(){
-        readURLLogoShop(this);
+        uploadPhotoShop();
     });
 }
 
-function readURLLogoShop(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $("#previewLogoSeller").attr('src', e.target.result);
+function uploadPhotoShop(){
+    var data = new FormData(),
+        filePath = $('#filesSeller').val(),
+        fileExt = (filePath.substr(filePath.lastIndexOf('\\') + 1).split('.')[1]).toLowerCase(),
+        filePhoto = $('#filesSeller')[0].files[0],
+        fileSize = filePhoto.size/ 1024 / 1024;
+        
+        data.append('type', 'shop');
+        data.append('file', filePhoto);
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(uploadPhotoShop);
+    }else{
+        if(fileSize < 2){
+            if(fileExt === 'jpg' || fileExt === 'png'){
+                $('.loaderPopup').removeClass('hidden');
+                $.ajax({
+                    type: 'POST',
+                    url: PUTFILE_API,
+                    data: data,
+                    async: true,
+                    contentType: false, 
+                    processData: false,
+                    dataType: 'json',
+                    beforeSend: function(xhr, settings) { 
+                        xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+                    },
+                    success: function(result){
+                        $('#previewLogoSeller').attr('src',result.src);
+                        $('.loaderPopup').addClass('hidden');
+                    }
+                });
+            }else{
+                notif("error","Format file hanya boleh jpg atau png","center","top");
+            }
+        }else{
+            notif("error","File tidak boleh lebih dari 2 MB","center","top");
         }
-
-        reader.readAsDataURL(input.files[0]);
     }
 }
 
@@ -324,18 +363,14 @@ function doEditProfile(){
         generateToken(doEditProfile);
     }else{
         var shop_name = $("#name-seller-edit").val(),
-            shop_desc = $("#desc-seller-edit").val(),
-            shop_icon = $('#previewLogoSeller').attr('src'),
-            shop_banner = $('#tempBanner').attr('src');
+            shop_desc = $("#desc-seller-edit").val();
             
         $.ajax({
             type: 'POST',
-            url: SHOP_EDITDETAIL_API,
+            url: SHOP_ACTION_API,
             data:JSON.stringify({ 
                     shop_name: shop_name,
-                    shop_desc : shop_desc,
-                    shop_icon : shop_icon,
-                    shop_banner : shop_banner
+                    shop_desc : shop_desc
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -378,6 +413,9 @@ function editBanner(){
 	    editBanner += '            <input type="button" value="Batal" id="cancel"/>';
 	    editBanner += '            <input type="button" value="Simpan" id="save"/>';
 	    editBanner += '         </div>';
+	    editBanner += '        <div class="loaderPopup hidden">';
+	    editBanner += '            <img src="../img/loader.gif"/>';
+	    editBanner += '        </div>';
 	    editBanner += '     </div>';
 	    editBanner += '</div>';
 	       
@@ -405,6 +443,7 @@ function editBanner(){
                                 $('.preview-container').remove();
                                 $('#drop_zone .title').show();
                             }else{
+                                uploadPhotoBanner();
                                 $("#tempBanner").attr('src', this.src);
                             }
                         };
@@ -423,18 +462,52 @@ function editBanner(){
 	});
 }
 
+function uploadPhotoBanner(){
+    var data = new FormData(),
+        filePath = $('#filebanner').val(),
+        fileExt = (filePath.substr(filePath.lastIndexOf('\\') + 1).split('.')[1]).toLowerCase(),
+        filePhoto = $('#filebanner')[0].files[0],
+        fileSize = filePhoto.size/ 1024 / 1024;
+        
+        data.append('type', 'banner');
+        data.append('file', filePhoto);
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(uploadPhotoBanner);
+    }else{
+        if(fileSize < 2){
+            if(fileExt === 'jpg' || fileExt === 'png'){
+                $('.loaderPopup').removeClass('hidden');
+                $.ajax({
+                    type: 'POST',
+                    url: PUTFILE_API,
+                    data: data,
+                    async: true,
+                    contentType: false, 
+                    processData: false,
+                    dataType: 'json',
+                    beforeSend: function(xhr, settings) { 
+                        xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+                    },
+                    success: function(result){
+                        $('.loaderPopup').addClass('hidden');
+                    }
+                });
+            }else{
+                notif("error","Format file hanya boleh jpg atau png","center","top");
+            }
+        }else{
+            notif("error","File tidak boleh lebih dari 2 MB","center","top");
+        }
+    }
+}
+
 function doEditBanner(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(doEditBanner);
     }else{
-        var shop_banner = $('#tempBanner').attr('src');
-            
         $.ajax({
             type: 'POST',
             url: SHOP_EDITBANNER_API,
-            data:JSON.stringify({ 
-                    shop_banner : shop_banner
-            }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
                 xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
@@ -445,9 +518,12 @@ function doEditBanner(){
                 }else{
                     $(".layerPopup").fadeOut();
             	    $(".layerPopup").remove();
-            	    notif("info","Data sudah diubah","center","top");
             	    
-            	    $(".grid-shop-banner").css("background","url("+data.result.shop_banner+")");
+            	    if(data.result.shop_banner !== ''){
+            	        notif("info","Data sudah diubah","center","top");
+            	    
+            	        $(".grid-shop-banner").css("background","url("+data.result.shop_banner+")");
+            	    }
                 }
             }
         });
@@ -581,13 +657,16 @@ function brandLayer(){
 	    brandLayer += '            <input type="button" value="Batal" id="cancel"/>';
 	    brandLayer += '            <input type="button" value="Simpan" id="save"/>';
 	    brandLayer += '        </div>';
+	    brandLayer += '        <div class="loaderPopup hidden">';
+	    brandLayer += '            <img src="../img/loader.gif"/>';
+	    brandLayer += '        </div>';
         brandLayer += '     </div>';
         brandLayer += '</div>';
         
         $("body").append(brandLayer);
         
         $("#filesBrand").change(function(){
-            readURL(this);
+            uploadPhotoBrand();
         });
         
         $('.accountSellerContainer .footer #save').on( 'click', function( e ){
@@ -602,15 +681,43 @@ function brandLayer(){
     	});
 }
 
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $("#brandImageLayer").attr('src', e.target.result);
+function uploadPhotoBrand(){
+    var data = new FormData(),
+        filePath = $('#filesBrand').val(),
+        fileExt = (filePath.substr(filePath.lastIndexOf('\\') + 1).split('.')[1]).toLowerCase(),
+        filePhoto = $('#filesBrand')[0].files[0],
+        fileSize = filePhoto.size/ 1024 / 1024;
+        
+        data.append('type', 'brand');
+        data.append('file', filePhoto);
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(uploadPhotoBrand);
+    }else{
+        if(fileSize < 2){
+            if(fileExt === 'jpg' || fileExt === 'png'){
+                $('.loaderPopup').removeClass('hidden');
+                $.ajax({
+                    type: 'POST',
+                    url: PUTFILE_API,
+                    data: data,
+                    async: true,
+                    contentType: false, 
+                    processData: false,
+                    dataType: 'json',
+                    beforeSend: function(xhr, settings) { 
+                        xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+                    },
+                    success: function(result){
+                        $('#brandImageLayer').attr('src',result.src);
+                        $('.loaderPopup').addClass('hidden');
+                    }
+                });
+            }else{
+                notif("error","Format file hanya boleh jpg atau png","center","top");
+            }
+        }else{
+            notif("error","File tidak boleh lebih dari 2 MB","center","top");
         }
-
-        reader.readAsDataURL(input.files[0]);
     }
 }
 
@@ -623,7 +730,7 @@ function doActionBrand(){
             url: PRODUCT_BRAND_ACTION_API,
             data:JSON.stringify({
                     method : brandLayerAction.do,
-                    brand_image: $('#brandImageLayer').attr('src'),
+                    //brand_image: $('#brandImageLayer').attr('src'),
                     brand_name : $("#brandNameLayer").val()
             }),
             dataType: 'json',
@@ -832,6 +939,9 @@ function productLayer(){
 	    productLayer += '            <input type="button" value="Batal" id="cancel"/>';
 	    productLayer += '            <input type="button" value="Simpan" id="save"/>';
 	    productLayer += '        </div>';
+	    productLayer += '        <div class="loaderPopup hidden">';
+	    productLayer += '            <img src="../img/loader.gif"/>';
+	    productLayer += '        </div>';
         productLayer += '    </div>';
         productLayer += '</div>';
     
@@ -943,7 +1053,7 @@ function productLayer(){
     });
     
     $("#filesProduct").change(function(){
-        readProductURL(this);
+        uploadPhotoProduct();
     });
     
     $('.productLayer #save').on('click', function (e) {
@@ -960,22 +1070,57 @@ function productLayer(){
     });
 }
 
-function readProductURL(input) {
-    var filesLen = input.files.length;
-    for (var i = 0; i < filesLen; i++) {
-    	productList.push(input.files[i]);
+function uploadPhotoProduct(){
+    var data = new FormData(),
+        filePath = $('#filesProduct').val(),
+        fileExt = (filePath.substr(filePath.lastIndexOf('\\') + 1).split('.')[1]).toLowerCase(),
+        filePhoto = $('#filesProduct')[0].files[0],
+        fileSize = filePhoto.size/ 1024 / 1024;
+        
+        data.append('type', 'product');
+        data.append('file', filePhoto);
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(uploadPhotoProduct);
+    }else{
+        if(fileSize < 2){
+            if(fileExt === 'jpg' || fileExt === 'png'){
+                $('.loaderPopup').removeClass('hidden');
+                $.ajax({
+                    type: 'POST',
+                    url: PUTFILE_API,
+                    data: data,
+                    async: true,
+                    contentType: false, 
+                    processData: false,
+                    dataType: 'json',
+                    beforeSend: function(xhr, settings) { 
+                        xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+                    },
+                    success: function(result){
+                        productList.push(result.src);
+                        $('.loaderPopup').addClass('hidden');
+                        
+                        readProductURL();
+                    }
+                });
+            }else{
+                notif("error","Format file hanya boleh jpg atau png","center","top");
+            }
+        }else{
+            notif("error","File tidak boleh lebih dari 2 MB","center","top");
+        }
     }
+}
+
+function readProductURL() {
     var fileListDisplay = document.getElementById('photoProductList');
     fileListDisplay.innerHTML = '';
     productList.forEach(function (file, index) {
         
         var img = document.createElement("img");
-            img.src = window.URL.createObjectURL(file);
-            img.height = 60;
-            img.onload = function() {
-                window.URL.revokeObjectURL(this.src);
-                productListUrl.push(this.src);
-            }
+            img.setAttribute("src", file);
+            img.setAttribute("width", "60");
+            img.setAttribute("height", "60");
           
           fileListDisplay.appendChild(img);
     });
@@ -1096,32 +1241,13 @@ function actionProductLayer(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(actionProductLayer);
     }else{
-        var data = new FormData();
-        data.append('method', productLayerAction.do);
-        data.append('product_id', productLayerId.id);
-        data.append('product_name', productLayerData.product_name);
-        data.append('product_price', productLayerData.product_price);
-        data.append('product_category', productLayerData.product_category);
-        data.append('product_subcategory', productLayerData.product_subcategory);
-        data.append('product_weight', productLayerData.product_weight);
-        data.append('product_stock', productLayerData.product_stock);
-        data.append('product_minimum', productLayerData.product_minimum);
-        data.append('product_stock', productLayerData.product_stock);
-        data.append('product_condition', productLayerData.product_condition);
-        /*var productListLen = productList.length;
-        for (i = 0; i < productListLen; i++) {
-            data.append('file' + i, productList[i]);
-        }*/
-        data.append('file', $('#filesProduct')[0].files[0]); 
-        
         $.ajax({
             type: 'POST',
             url: PRODUCT_ACTION_API,
             async: true,
-                contentType: false, 
-                processData: false,
-                data : data,
-            /*data:JSON.stringify({
+            contentType: false, 
+            processData: false,
+            data:JSON.stringify({
                     method : productLayerAction.do,
                     product_id : productLayerId.id,
                     product_name : productLayerData.product_name,
@@ -1130,16 +1256,15 @@ function actionProductLayer(){
                     product_weight : productLayerData.product_weight,
                     product_stock : productLayerData.product_stock,
                     product_minimum : productLayerData.product_minimum,
-                    product_condition : productLayerData.product_condition,
-                    product_image : productListUrl
-            }),*/
+                    product_condition : productLayerData.product_condition
+            }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
                 xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    //generateToken(actionProductLayer);
+                    generateToken(actionProductLayer);
                 }else{
                     productShop();
                     

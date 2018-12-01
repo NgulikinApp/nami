@@ -1,3 +1,8 @@
+$( document ).ready(function() {
+    initGeneral();
+    initSignup();
+});
+
 function initSignup(){
     var signinSessionEmail = sessionStorage.getItem('signinEmailNgulikin'),
         signinSessionSocmed = sessionStorage.getItem('signinSocmedNgulikin'),

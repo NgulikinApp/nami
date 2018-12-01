@@ -1,3 +1,8 @@
+$( document ).ready(function() {
+    initGeneral();
+    initRules();
+});
+
 function initRules(){
     $('.listTerms li[datainternal-id="terms"]').on('click', function (e) {
 	    $('#termsMenu').show();

@@ -1,6 +1,11 @@
 var rateData = {},
     addtocartSum = {};
 
+$( document ).ready(function() {
+    initGeneral();
+    initProduct();
+});
+
 function initProduct(){
 	detail();
 }
@@ -22,7 +27,7 @@ function detail(){
             },
             success: function(data, status) {
                 if(data.status == "OK"){
-                    if(data.result.product_id !== null){
+                    if($.isEmptyObject(data.result) === false){
                         var israte = data.result.product_israte;
                         
                         var product = '<div class="content">';
@@ -142,24 +147,9 @@ function detail(){
                     	        favoriteProduct();
                     	    }
                     	});
-                    }else{
-                        document.title = 'NOT FOUND | Ngulikin';
-                        
-                        var product = '<div id="cart-emptylist">';
-                            product += '    <div class="grid-cart-header">';
-                            product += '        Detail Produk ';
-                            product += '    </div>';
-                            product += '    <div class="grid-cart-body"></div>';
-                            product += '    <div class="grid-cart-footer">';
-                            product += '        <div>';
-                            product += '            Produk tidak ditemukan';
-                            product += '        </div>';
-                            product += '    </div>';
-                            product += '</div>';
-                        
-                        $('.grid-product-container:first-child').html(product);
                     }
                     $('.loaderProgress').addClass('hidden');
+                    $('body').removeClass('hiddenoverflow');
                 }else{
                     generateToken(detail);
                 }

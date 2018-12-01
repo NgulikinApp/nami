@@ -64,11 +64,12 @@
                 - product_minimum
                 - product_condition
     */
-    function actionData($product_name,$product_description,$product_price,$product_weight,$product_stock,$product_minimum,$product_condition,$product_category,$product_subcategory,$product_id){
+    function actionData($product_name,$product_description,$product_image,$product_price,$product_weight,$product_stock,$product_minimum,$product_condition,$product_category,$product_subcategory,$product_id){
         $data = array(
                         "product_id"=>$product_id,
                         "product_name"=>$product_name,
                         "product_description"=>$product_description,
+                        "product_image"=>$product_image,
                         "product_price"=>$product_price,
                         "product_weight"=>$product_weight,
                         "product_stock"=>$product_stock,

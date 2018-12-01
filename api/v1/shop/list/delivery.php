@@ -51,7 +51,7 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0) == 0){
                 return invalidKey();
             }
             

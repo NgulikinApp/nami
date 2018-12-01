@@ -49,63 +49,67 @@
                 $user_id = $_SESSION['user']["user_id"];
                 $key = $_SESSION['user']["key"];
                 $username = $_SESSION['user']["username"];
+                $shop_id = $_SESSION['user']["shop_id"];
             }else{
                 $user_id = '';
                 $key = '';
                 $username = '';
+                $shop_id = '';
             }
             
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0) == 0){
                 return invalidKey();
             }
             
-            //if the data file is not binary string
-            $shop_photo_data = $request['shop_image'];
-            
-            if (substr($brand_photo_data,0,4) != 'data'){
-                $shop_photo_data_array = explode('/',$shop_photo_data);
-                $shop_photo_name = end($shop_photo_data_array);
-                $shop_photo_name = base64_decode(urldecode ($shop_photo_name));
-                $shop_photo_name_array = explode('/',$shop_photo_name);
-                $shop_photo_name = end($shop_photo_name_array);
-            }else{
+            $shop_photo_name = "";
+            if (isset($_SESSION['file'])){
+                
+                $source_dir = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/temp';
+                $dest_dir = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop/icon';
+                $shop_photo_name = $_SESSION['file'][0];
+                
+                $source = $source_dir.'/'.$shop_photo_name;
+                $dest = $dest_dir.'/'.$shop_photo_name;
+                
                 /*
                     Function location in : /model/general/functions.php
                 */
-                $shop_photo_name = getID(16).'.png';
+                emptyFolder($dest_dir);
                 
-                list($type, $shop_photo_data) = explode(';', $shop_photo_data);
-                list(, $shop_photo_data)      = explode(',', $shop_photo_data);
-                $data_photo = base64_decode($shop_photo_data);
-                
-                $path_photo = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/brand';
-                
-                $shop_photo = $path_photo.'/'.$shop_photo_name;
-                //write image into directory
-                file_put_contents($shop_photo, $data_photo);
-                
-                //Resize image
-                $imageresize = new ImageResize($shop_photo);
-                $imageresize->resizeToBestFit(150, 150);
-                $imageresize->save($shop_photo);
+                rename($source,$dest);
             }
             
-            $stmt = $con->prepare("INSERT INTO shop(shop_name,shop_icon,shop_description) VALUES(?,?,?)");
+            if($shop_id != ''){
+                if ($shop_photo_name != ''){
+                    $stmt = $con->prepare("UPDATE shop SET shop_name= ?,shop_description=?,shop_icon=? where shop_id=?");
+                    
+                    $stmt->bind_param("sssi", $request['shop_name'], $request['shop_desc'], $shop_photo_name, $shop_id);
+                }else{
+                    $stmt = $con->prepare("UPDATE shop SET shop_name= ?,shop_description=? where shop_id=?");
+                    
+                    $stmt->bind_param("sssi", $request['shop_name'], $request['shop_desc'], $shop_id);
+                }   
+            }else{
+                $stmt = $con->prepare("INSERT INTO shop(shop_name,shop_icon,shop_description) VALUES(?,?,?)");
                 
-            $stmt->bind_param("sss", $request['shop_name'], $shop_photo_name, $request['shop_desc']);
+                $stmt->bind_param("sss", $request['shop_name'], $shop_photo_name, $request['shop_desc']);   
+            }
                 
             $stmt->execute();
             
-            $stmt->close();    
-            /*
-                Function location in : /model/general/functions.php
-            */
-            $shop_id = runQuery_returnId($con);
-                
-            $_SESSION['user']["shop_id"]=$shop_id;
+            $stmt->close();  
+            
+            if($shop_id == ''){
+                /*
+                    Function location in : /model/general/functions.php
+                */
+                $shop_id = runQuery_returnId($con);
+                    
+                $_SESSION['user']["shop_id"]=$shop_id;
+            }
         
             /*
                 Function location in : functions.php

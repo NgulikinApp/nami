@@ -1,9 +1,12 @@
 <?php
+    /*
+        This API used in ngulikin.com/js/module-home.js
+    */
+    
     //--------------------------------------------------------------------------
 	// Link to File
 	//--------------------------------------------------------------------------
     include $_SERVER['DOCUMENT_ROOT'].'/api/model/general/get_auth.php';
-	include $_SERVER['DOCUMENT_ROOT'].'/api/model/general/postraw.php';
     include $_SERVER['DOCUMENT_ROOT'].'/api/model/beanoflink.php';
     include 'functions.php';
     
@@ -18,16 +21,18 @@
     $con = conn();
     
     /*
-        Function location in : /model/general/postraw.php
+        Parameters
     */
-    $request = postraw();
+    $filter = $_GET['filter'];
+    $page = @$_GET['page'];
+    $pagesize = @$_GET['pagesize'];
     
     /*
         Function location in : /model/general/get_auth.php
     */
     $token = bearer_auth();
     
-    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
     
     if($token == ''){
         /*
@@ -39,9 +44,9 @@
             //secretKey variabel getting from : /model/jwt.php
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            if(isset($_SESSION['user'])){
-                $user_id = $_SESSION['user']["user_id"];
-                $key = $_SESSION['user']["key"];
+            if(isset($_SESSION['user_admin'])){
+                $user_id = $_SESSION['user_admin']["user_id"]; 
+                $key = $_SESSION['user_admin']["key"];
             }else{
                 $user_id = '';
                 $key = '';
@@ -50,31 +55,36 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,1) == 0){
                 return invalidKey();
             }
             
-            $stmt = $con->prepare("INSERT INTO invoice(user_id,delivery_id,invoice_delivery_price,invoice_total_price) VALUES(?,?,?,?)");
+            $sql = "SELECT 
+                        COUNT(1) as count_user
+                    FROM 
+                        `user`
+                    WHERE
+                        user_seller='1'";
             
-            $stmt->bind_param("siii", $user_id,$request['delivery_id'],$request['delivery_price'],$request['invoice_total_price']);
+            $stmtCount = $con->query($sql);
             
-            $stmt->execute();
+            $sql = "SELECT 
+                        user_id,
+                        username,
+                        photo_card,
+                        photo_selfie,
+                        user_asked_seller_date
+                    FROM 
+                        `user`
+                    WHERE 
+                        user_seller='1'
+                    LIMIT ".$page.','.$pagesize;
+            $stmt = $con->query($sql);
             
-            $invoice_id = $con->insert_id;
-            
-            $stmt = $con->prepare("INSERT INTO invoice_detail(invoice_id,product_id,invoice_detail_sumproduct,invoice_detail_notes) VALUES(?,?,?,?)");
-            
-            $stmt->bind_param("iiis", $invoice_id,$request['product_id'],$request['invoice_detail_sumproduct'],$request['invoice_detail_notes']);
-            
-            $stmt->execute();
-            
-            $stmt = $con->prepare("INSERT INTO invoice_status_detail(invoice_id) VALUES(?)");
-            
-            $stmt->bind_param("i", $invoice_id);
-            
-            $stmt->execute();
-            
-            addtoinvoice($invoice_id);
+            /*
+                Function location in : functions.php
+            */
+            listPendingUser($stmt,$stmtCount,$pagesize);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

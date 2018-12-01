@@ -6,7 +6,6 @@
     //--------------------------------------------------------------------------
 	// Link to File
 	//--------------------------------------------------------------------------
-	include $_SERVER['DOCUMENT_ROOT'].'/api/model/beanoflink.php';
     include 'functions.php';
     
     unset($_SESSION['user']);

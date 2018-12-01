@@ -25,7 +25,6 @@
         ?>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-signin.js?jsr=<?php echo $jsversionstring; ?>"></script>
-		<script src="js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
     </script>
 	</body>
 </html>

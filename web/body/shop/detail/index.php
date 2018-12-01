@@ -18,7 +18,7 @@
 		</title>
 		
     </head>
-    <body>
+    <body class="hiddenoverflow">
         <div class="loaderProgress">
             <img src="../img/loader.gif" />
         </div>
@@ -32,6 +32,5 @@
         <input type="hidden" id="shop_id" value=""/>
 		<script src="../../js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="../../js/module-shop.js?jsr=<?php echo $jsversionstring; ?>"></script>
-		<script src="../../js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>
 </html>

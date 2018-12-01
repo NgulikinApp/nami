@@ -87,6 +87,25 @@
     }
     
     /*
+        Function referred on : signin_admin.php
+        Used for calling the json data that user is not admin
+        Return data:
+                - status (NO)
+                - message
+    */
+    function access_denied(){
+        $dataout = array(
+                        "status" => 'NO',
+                        "message" => 'access_denied'
+                    );
+        
+        /*
+            Function location in : /model/generatejson.php
+        */        
+        generateJSON($dataout);
+    }
+    
+    /*
         Function referred on : signin.php
         Used for getting the verified account
         Return data:
@@ -108,6 +127,26 @@
         $stmt->close();
         
         return array($user_id,intval($user_isactive),$password,$socmed,$idsocmed);
+    }
+    
+    /*
+        Function referred on : signin.php
+        Used for getting the verified account
+        Return data:
+                - user_id
+                - password
+                - user_admin (0/1)
+    */
+    function account_verify_admin($stmt){
+        $row = $stmt->fetch_object();
+        
+        $user_id = $row->user_id;
+        $password = $row->password;
+        $user_admin = intval($row->user_admin);
+        
+        $stmt->close();
+        
+        return array($user_id,$password,$user_admin);
     }
     
     /*
@@ -222,7 +261,6 @@
         return generateJSON($dataout);
     }
     
-    
     /*
         Function referred on : signin.php
         Used for compiling user table
@@ -258,6 +296,26 @@
             Function location in : functions.php
         */
         get_data_signin($stmt);
+    }
+    
+    function returndata_signin_admin($user_id,$key){
+        $data = array(
+                    "status" => $user_id,
+                    "message" => $key
+            );
+        $_SESSION['user_admin'] = $data;
+    
+        $dataout = array(
+                        "status" => 'OK',
+                        "message" => 'Signin successfully'
+                    );
+        
+        $stmt->close();
+        
+        /*
+            Function location in : /model/generatejson.php
+        */
+        return generateJSON($dataout);
     }
     
     function sessionCart($user_id,$con){

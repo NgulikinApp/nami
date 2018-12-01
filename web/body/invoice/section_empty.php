@@ -1,11 +1,11 @@
 <div id="cart-emptylist">
     <div class="grid-cart-header">
-        Detail Produk
+        Detail Invoice
     </div>
     <div class="grid-cart-body"></div>
     <div class="grid-cart-footer">
         <div>
-            Produk tidak ditemukan
+            Invoice tidak ada
         </div>
     </div>
 </div>

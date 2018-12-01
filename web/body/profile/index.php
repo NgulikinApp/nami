@@ -11,7 +11,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1, width=device-width">
 		<?php include $_SERVER['DOCUMENT_ROOT'].'/web/library_detail.php';?>
-		<title>NOT FOUND | Ngulikin</title>
+		<title>Tidak ditemukan | Ngulikin</title>
 		<link href="../../css/jquery.mobile.datepicker.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
         <link href="../../css/jquery.mobile.datepicker.theme.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
         
@@ -31,6 +31,5 @@
 		?>
 		<script src="../../js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	    <script src="../../js/module-profile.js?jsr=<?php echo $jsversionstring; ?>"></script>
-	    <script src="../../js/module-onload.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>
 </html>

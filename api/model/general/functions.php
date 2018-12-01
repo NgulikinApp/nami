@@ -252,15 +252,28 @@
         Used for checking the user key
         Return data: row count data
     */
-    function checkingAuthKey($con,$user_id,$key){
-        $result = $con->query("SELECT 
+    function checkingAuthKey($con,$user_id,$key,$isadmin){
+        if($isadmin == 0){
+           $sql = "SELECT 
                                     1
                                 FROM 
                                     `user`
                                 WHERE
                                     user_id = '".$user_id."'
                                     AND
-                                    user_key = '".$key."'");
+                                    user_key = '".$key."'"; 
+        }else{
+           $sql = "SELECT 
+                                    1
+                                FROM 
+                                    `user`
+                                WHERE
+                                    user_id = '".$user_id."'
+                                    AND
+                                    user_key_admin = '".$key."'"; 
+        }
+        
+        $result = $con->query($sql);
                                     
         $row_cnt = $result->num_rows;
         
@@ -302,5 +315,20 @@
         $stmt->close();
         
         return $row;
+    }
+    
+    /*
+        Function referred on : all
+        Used for removing the all files from specific directory
+    */
+    function emptyFolder($path){
+        //delete all file
+        $files = glob($path.'/*'); // get all file names
+        foreach($files as $file){ // iterate files
+            if(is_file($file))
+                unlink($file); // delete file
+        }
+            
+        unset($_SESSION['file']);
     }
 ?>

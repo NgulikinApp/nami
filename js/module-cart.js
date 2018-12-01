@@ -1,3 +1,9 @@
+$( document ).ready(function() {
+    initGeneral();
+    initCart();
+    handleClientLoad();
+});
+
 function initCart(){
     var cartNgulikin = 0,
         loginsession = sessionStorage.getItem('loginNgulikin');
@@ -137,6 +143,7 @@ function detailCart(){
                 
                 $(".detail-shopping-body").html(listElement);
                 $('.loaderProgress').addClass('hidden');
+                $('body').removeClass('hiddenoverflow');
                 
                 $('.minCart button').on('click', function (e) {
                     cartNgulikin = parseInt($('#sumProductCart').val()) - 1;

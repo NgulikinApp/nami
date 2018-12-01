@@ -1,3 +1,8 @@
+$( document ).ready(function() {
+    initGeneral();
+    initHelp();
+});
+
 function initHelp(){
     $('#buttonSignIn').on( 'click', function( e ){
 	    asking();

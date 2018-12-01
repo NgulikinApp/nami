@@ -44,8 +44,17 @@
             
             if(isset($_SESSION['user'])){
                 $user_id = $_SESSION['user']["user_id"];
+                $key = $_SESSION['user']["key"];
             }else{
                 $user_id = '';
+                $key = '';
+            }
+            
+            /*
+                Function location in : /model/general/functions.php
+            */
+            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+                return invalidKey();
             }
             
             $sql = "SELECT 

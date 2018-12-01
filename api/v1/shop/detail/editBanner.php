@@ -64,61 +64,43 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0) == 0){
                 return invalidKey();
             }
             
-            //if the data file is not binary string
-            $shop_photo_data = $request['shop_banner'];
-            if (substr($shop_photo_data,0,4) != 'data'){
-                $shop_photo_data_array = explode('/',$shop_photo_data);
-                $shop_banner_name = end($shop_photo_data_array);
-                $shop_banner = $shop_photo_data;
-            }else{
+            if (isset($_SESSION['file'])){
+                $source_dir = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/temp';
+                $dest_dir = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop/banner';
+                $shop_banner_name = $_SESSION['file'][0];
+                    
+                $source = $source_dir.'/'.$shop_banner_name;
+                $dest = $dest_dir.'/'.$shop_banner_name;
+                    
                 /*
                     Function location in : /model/general/functions.php
                 */
-                $shop_banner_name = getID(16).'.png';
+                emptyFolder($dest_dir);
+                    
+                rename($source,$dest);
                 
-                list($type, $shop_photo_data) = explode(';', $shop_photo_data);
-                list(, $shop_photo_data)      = explode(',', $shop_photo_data);
-                $data_photo = base64_decode($shop_photo_data);
+                $stmt = $con->prepare("UPDATE shop SET shop_banner= ? where shop_id=?");
                 
-                $path_photo = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop/banner';
+                $stmt->bind_param("si", $shop_banner_name, $shop_id);
                 
-                //delete all file
-                $files = glob($path_photo.'/*'); // get all file names
-                foreach($files as $file){ // iterate files
-                  if(is_file($file))
-                    unlink($file); // delete file
-                }
+                $stmt->execute();
+                    
+                $stmt->close();
                 
-                $shop_photo = $path_photo.'/'.$shop_banner_name;
-                
-                //write image into directory
-                file_put_contents($shop_photo, $data_photo);
-                
-                
-                //Resize image
-                $imageresize = new ImageResize($shop_photo);
-                $imageresize->resizeToBestFit(1056, 248);
-                $imageresize->save($shop_photo);
-                
-                $shop_banner = IMAGES_URL.'/'.urlencode(base64_encode($username.'/shop/banner/'.$shop_banner_name));
+                /*
+                    Function location in : functions.php
+                */
+                editBanner($shop_id,$shop_banner);
+            }else{
+                /*
+                    Function location in : functions.php
+                */
+                editBanner($shop_id,'');
             }
-            
-            $stmt = $con->prepare("UPDATE shop SET shop_banner= ? where shop_id=?");
-            
-            $stmt->bind_param("si", $shop_banner_name, $shop_id);
-            
-            $stmt->execute();
-                
-            $stmt->close();
-            
-            /*
-                Function location in : functions.php
-            */
-            editBanner($shop_id,$shop_banner);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

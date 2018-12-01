@@ -159,9 +159,31 @@
                 }
                 
                 $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'];
-                if (!file_exists($path)) {
-                    mkdir($path, 0700, true);
-                }
+                mkdir($path, 0700, true);
+                
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/temp';
+                mkdir($path, 0700, true);
+                
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/shop';
+                mkdir($path, 0700, true);
+                
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/shop/icon';
+                mkdir($path, 0700, true);
+                
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/shop/banner';
+                mkdir($path, 0700, true);
+                
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/product';
+                mkdir($path, 0700, true);
+                
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/brand';
+                mkdir($path, 0700, true);
+                
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/shop/notes';
+                mkdir($path, 0700, true);
+                
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/seller';
+                mkdir($path, 0700, true);
                 
                 sessionCart($user_id,$con);
                 

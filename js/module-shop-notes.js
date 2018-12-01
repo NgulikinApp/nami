@@ -1,5 +1,10 @@
 var shopPhotoList = [],
     dayData = {};
+
+$( document ).ready(function() {
+    initGeneral();
+    initShopNotes();
+});
     
 function initShopNotes(){
     detail();
@@ -42,7 +47,7 @@ function initShopNotes(){
 	$('.ui-loader').remove();
 	
 	$("#filesShop").change(function(){
-        readShoptURL(this);
+        uploadPhotoLocation();
     });
 	
 	$('#cancel').on( 'click', function( e ){
@@ -150,19 +155,67 @@ function dayline(){
 	});
 }
 
-function readShoptURL(input) {
-    var filesLen = input.files.length;
-    for (var i = 0; i < filesLen; i++) {
-    	shopPhotoList.push(input.files[i]);
+function uploadPhotoLocation(){
+    var data = new FormData(),
+        filePath = $('#filesShop').val(),
+        fileExt = (filePath.substr(filePath.lastIndexOf('\\') + 1).split('.')[1]).toLowerCase(),
+        filePhoto = $('#filesShop')[0].files[0],
+        fileSize = filePhoto.size/ 1024 / 1024;
+        
+        data.append('type', 'product');
+        data.append('file', filePhoto);
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(uploadPhotoLocation);
+    }else{
+        if(fileSize < 2){
+            if(fileExt === 'jpg' || fileExt === 'png'){
+                $('.loaderProgress').removeClass('hidden');
+                $.ajax({
+                    type: 'POST',
+                    url: PUTFILE_API,
+                    data: data,
+                    async: true,
+                    contentType: false, 
+                    processData: false,
+                    dataType: 'json',
+                    beforeSend: function(xhr, settings) { 
+                        xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+                    },
+                    success: function(result){
+                        shopPhotoList.push(result.src);
+                        $('.loaderProgress').addClass('hidden');
+                        
+                        readProductURL();
+                    }
+                });
+            }else{
+                notif("error","Format file hanya boleh jpg atau png","center","top");
+            }
+        }else{
+            notif("error","File tidak boleh lebih dari 2 MB","center","top");
+        }
     }
+}
+
+function readShoptURL() {
+    var fileListDisplay = document.getElementById('photoShopLocationList');
+    fileListDisplay.innerHTML = '';
+    
     shopPhotoList.forEach(function (file, index) {
         
         var img = document.createElement("img");
-            img.src = window.URL.createObjectURL(file);
-            img.height = 60;
-            img.onload = function() {
-                window.URL.revokeObjectURL(this.src);
-            }
+            img.setAttribute("src", file);
+            img.setAttribute("width", "60");
+            img.setAttribute("height", "60");
+          
+          fileListDisplay.appendChild(img);
+    });
+    
+    $('#photoShopLocationList').tosrus({
+        infinite	: true,
+            slides		: {
+            visible		: 3
+        }
     });
 }
 

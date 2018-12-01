@@ -1,3 +1,8 @@
+$( document ).ready(function() {
+    initGeneral();
+    initShopMysales();
+});
+
 function initShopMysales(){
     //mysales shop
     $('#order-shop-seller').on( 'click', function( e ){

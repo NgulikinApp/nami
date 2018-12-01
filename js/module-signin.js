@@ -1,5 +1,11 @@
 var authSigin = {};
 
+$( document ).ready(function() {
+    initGeneral();
+    initSignin();
+    handleClientLoad();
+});
+
 function initSignin(){
     var signinSessionEmail = sessionStorage.getItem('signinEmailNgulikin');
         

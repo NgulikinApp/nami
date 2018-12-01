@@ -51,9 +51,12 @@
                 - user_photo
     */
     function updateUser($user_id,$con){
-        $stmt = $con->query(" SELECT 
+        $stmt = $con->query("SELECT 
                                         inner1.*,
-                                        IFNULL(shop_id,0) as shop_id 
+                                        IFNULL(shop_id,0) as shop_id,
+                                        shop_current_brand,
+                                        shop_delivery,
+                                        shop_name
                                 FROM(
                                         SELECT
                                             user_id,
@@ -90,8 +93,13 @@
                         "gender"=>$row->gender,
                         "key"=>$row->user_key,
                         "user_photo"=>$photo,
-                        "shop_id"=>$row->shop_id
+                        "shop_id"=>$row->shop_id,
+                        "shop_name"=>$row->shop_name,
+                        "brand_id"=>$row->shop_current_brand,
+                        "delivery_id"=>$row->shop_delivery
                     );
+        
+        $_SESSION['user'] = $data;
         
         /*
             Function location in : /model/general/functions.php
@@ -143,5 +151,60 @@
             Function location in : /model/generatejson.php
         */        
         generateJSON($dataout);
+    }
+    
+    /*
+        Function referred on : listPendingUser.php
+        Used for returning array data
+    */
+    function listPendingUser($stmt,$stmtCount,$pagesize){
+        $data = array();
+        
+        $i = 0;
+        $rowCount = $stmtCount->fetch_object();
+        $total = intval($rowCount['user_count']);
+        
+        do {
+            $result = $con->store_result();
+            
+            while ($row = $result->fetch_row()) {
+                if($i > 0){
+                    $data[] = array(
+                          "user_id" => $row[0],
+                          "username" => $row[1],
+                          "photo_card" => IMAGES_URL.'/'.urlencode(base64_encode($row[1].'/seller/'.$row[2])),
+                          "photo_selfie" => IMAGES_URL.'/'.urlencode(base64_encode($row[1].'/seller/'.$row[3])),
+                          "user_asked_seller_date" => $row[4]
+                        );
+                }
+                $i++;
+            }
+            $result->free();
+        }while ($con->more_results() && $con->next_result());
+        
+        /*
+            Function location in : /model/general/functions.php
+        */
+        credentialVerifiedCalc($data,$total,$pagesize);
+    }
+    
+    /*
+        Function referred on : updateStatusSeller.php
+        Used for calling the json data 
+        Return data:
+                - status (YES/NO)
+                - message
+                - result
+    */
+    function updateStatusSeller(){
+        $data = array(
+                "status" => 'YES',
+                "message" => 'status updated'
+        );
+        
+        /*
+            Function location in : /model/generatejson.php
+        */        
+        generateJSON((object)$data);
     }
 ?>

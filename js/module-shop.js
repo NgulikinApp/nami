@@ -2,8 +2,14 @@ var commentFlag = {},
     commentPage = {},
     shopProductPage = {};
 
+$( document ).ready(function() {
+    initGeneral();
+    initShop();
+});
+
 function initShop(){
     commentFlag.type = 0;
+    
     detail();
     brandShop();
     productShop();
@@ -183,7 +189,7 @@ function detail(){
                         	
                         	$('#shop_total_review').html(data.result.shop_total_review);
                     }else{
-                        document.title = 'NOT FOUND | Ngulikin';
+                        document.title = 'Tidak ditemukan | Ngulikin';
                         
                         var shop = '<div id="cart-emptylist">';
                             shop += '    <div class="grid-cart-header">';
@@ -200,6 +206,7 @@ function detail(){
                         $('.home_container .container').html(shop);
                     }
                     $('.loaderProgress').addClass('hidden');
+                    $('body').removeClass('hiddenoverflow');
                 }else{
                     generateToken(detail);
                 }
