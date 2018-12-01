@@ -18,6 +18,10 @@
         
         if($stmt->num_rows > 0){
             $row = $stmt->fetch_object();
+            
+            $shopImageArray = explode(",",$row->shop_image_location);
+            $countShopImage = sizeof($shopImageArray);
+            
             if($row->shop_icon != ""){
                 $icon = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/shop/icon/'.$row->shop_icon));
             }else{
@@ -41,7 +45,7 @@
                 $imageArray = explode(",",$row->shop_image_location);
                 $countImage = sizeof($imageArray);
                 for($i=0;$i<$countImage;$i++){
-                    $image = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/shop/location/'.$imageArray[$i]));
+                    $image = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/shop/notes/'.$imageArray[$i]));
                     array_push($shop_image_location,$image);
                 }   
             }
@@ -72,11 +76,11 @@
             $data['shop_open'] = $row->shop_open;
             $data['shop_closing_notes'] = $row->shop_closing_notes;
             $data['shop_location'] = $row->shop_location;
-            $data['shop_image_location'] = $shop_image_location;
             $data['shop_notes_modifydate'] = $row->shop_notes_modifydate;
             $data['canbecommented'] = $canbecommented;
             $data['shop_total_review'] = $row->shop_total_review;
             $data['shop_total_discuss'] = $row->shop_total_discuss;
+            $data['shop_image_location'] = $shop_image_location;
         }
         
         $stmt->close();

@@ -184,7 +184,8 @@
                         "shop_id"=>$row->shop_id,
                         "shop_name"=>$row->shop_name,
                         "brand_id"=>$row->shop_current_brand,
-                        "delivery_id"=>$row->shop_delivery
+                        "delivery_id"=>$row->shop_delivery,
+                        "user_seller"=>$row->user_seller
                     );
                     
         $_SESSION['user'] = $data;
@@ -283,7 +284,8 @@
                                             dob,
                                             gender,
                                             user_key,
-                                            user_photo
+                                            user_photo,
+                                            user_seller
                                         FROM 
                                             user 
                                         WHERE 

@@ -68,10 +68,22 @@ function initShop(){
         commentDiscussShop();
 	});
 	
+	$('#commentDiscussShop').keypress(function(e) {
+	    if(e.which == 13) {
+    	    $('#buttonDiscussShop').trigger('click');
+	    }
+	});
+	
 	$('#buttonReviewShop').on( 'click', function( e ){
 	    if($('#commentReviewShop').val() !== ''){
 	        $('#buttonReviewShop').prop( "disabled", true );
             commentReviewShop();
+	    }
+	});
+	
+	$('#commentReviewShop').keypress(function(e) {
+	    if(e.which == 13) {
+    	    $('#buttonReviewShop').trigger('click');
 	    }
 	});
 	
@@ -467,7 +479,7 @@ function commentDiscussShop(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                        generateToken(commentDiscussShop);
+                    generateToken(commentDiscussShop);
                 }else{
                     var elemDiscuss = '<div class="grid-shop-body-content-listComment-temp">';
                         elemDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
@@ -483,6 +495,9 @@ function commentDiscussShop(){
                         elemDiscuss += '</div>';
                         
                     $("#discussShopSection .grid-shop-body-content-listComment").append(elemDiscuss);
+                    
+                    var shop_total_discuss = parseInt($("#shop_total_discuss").text())+1;
+                    $("#shop_total_discuss").html(shop_total_discuss);
                 }
             }
         });
@@ -606,7 +621,10 @@ function commentReviewShop(){
                     $("#reviewShopSection .grid-shop-body-content-listComment").append(elemReview);
                     
                     $('#buttonReviewShop').prop( "disabled", false );
-                    $('#commentReviewShop').val('')
+                    $('#commentReviewShop').val('');
+                    
+                    var shop_total_review = parseInt($("#shop_total_review").text())+1;
+                    $("#shop_total_review").html(shop_total_review);
                 }
             }
         });
