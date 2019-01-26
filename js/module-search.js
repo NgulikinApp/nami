@@ -7,6 +7,7 @@ $( document ).ready(function() {
 });
 
 function initSearch(){
+    provinces();
     /*
         Get value from url parameter.
         location function : js/module-general.js
@@ -27,6 +28,8 @@ function initSearch(){
     search.rate = '';
     search.pricemax = '';
     search.pricemin = '';
+    search.province = '';
+    search.regency = '';
     
     $('#search-general').val(search.keywords);
     
@@ -92,8 +95,28 @@ function initSearch(){
 	/*
 	    Action for triggering ajax search by change sorting select box or location select box 
 	*/
-	$('#sortingSearch,#locSearch').on('change', function (e) {
-	    search.selsort = $('#sortingSearch').val();
+	$('#sortingSearch,#provSearch').on('change', function (e) {
+	    search.selsort = $(this).val();
+	    searchItem();
+	});
+	
+	$('#provSearch').on('change', function (e) {
+	    search.province = $(this).val();
+	    search.regency = '';
+	    if(search.province !== ''){
+	        $('#regSearch').prop("disabled",false);
+	        $('.fiter-reg').removeClass("hidden");
+	        regencies();
+	    }else{
+	        $('#regSearch').html("<option value=''>- Pilih Kabupaten -</option>");
+	        $('#regSearch').prop("disabled",true);
+	        $('.fiter-reg').addClass("hidden");
+	    }
+	    searchItem();
+	});
+	
+	$('#regSearch').on('change', function (e) {
+	    search.regency = $(this).val();
 	    searchItem();
 	});
 	
@@ -141,11 +164,13 @@ function initSearch(){
 	        $('.result-content .result-content-tab .tab .icon-product').addClass('active');
 	        $('.result-content .result-content-tab .tab .icon-shop').removeClass('active');
 	        
-	        $('.content:first-child span:first-child,#sortingSearch').show();
+	        $('.content:first-child span:first-child,#sortingText,#sortingSearch').show();
 	        $('.content.price,.content.rate').show();
 	        
 	        $('#categorySearch').removeClass('hidden');
-	        $('.fa-angle-right').removeClass('hidden');
+	        if (typeof category !== "undefined") {
+	            $('.fa-angle-right').removeClass('hidden');
+	        }
 	        
 	        search.type = 'product';
     
@@ -155,7 +180,7 @@ function initSearch(){
 	        $('.result-content .result-content-tab .tab .icon-product').removeClass('active');
 	        $('.result-content .result-content-tab .tab .icon-shop').addClass('active');
 	        
-	        $('.content:first-child span:first-child,#sortingSearch').hide();
+	        $('.content:first-child span:first-child,#sortingText,#sortingSearch').hide();
 	        $('.content.price,.content.rate').hide();
 	        $('#categorySearch').addClass('hidden');
 	        $('.fa-angle-right').addClass('hidden');
@@ -165,6 +190,67 @@ function initSearch(){
             searchItem();
 	    }
 	});
+}
+
+function provinces(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(provinces);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: ADMINISTRATIVE_API,
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var response = data.result;
+                    
+                    var listElement = '<option value= "">- Pilih Provinsi -</option>';
+                    $.each( response, function( key, val ) {
+                        listElement += '<option value="'+val.id+'">'+val.name+'</option>';
+                    });
+                    
+                    $("#provSearch").html(listElement);
+                }else{
+                    generateToken(provinces);
+                }
+            } 
+        });
+    }
+}
+
+function regencies(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(provinces);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: ADMINISTRATIVE_API,
+            data:{
+                id : search.province
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var response = data.result;
+                    
+                    var listElement = '<option value= "">- Pilih Kabupaten -</option>';
+                    $.each( response, function( key, val ) {
+                        listElement += '<option value="'+val.id+'">'+val.name+'</option>';
+                    });
+                    
+                    $("#regSearch").html(listElement);
+                }else{
+                    generateToken(regencies);
+                }
+            } 
+        });
+    }
 }
 
 function searchItem(){
@@ -195,6 +281,8 @@ function searchItem(){
                     rate : search.rate,
                     pricemax : search.pricemax,
                     pricemin : search.pricemin,
+                    province : search.province,
+                    regency : search.regency,
                     page : searchPage.page-1,
                     pagesize : 20
             },
@@ -209,6 +297,9 @@ function searchItem(){
                         var listElement = '';
                         $.each( response, function( key, val ) {
                             if(search.type == 'shop'){
+                                var fregency = (val.regency_name).charAt(0).toUpperCase(),
+                                    regency_name = fregency + ((val.regency_name).substr(1)).toLowerCase();
+                                    
                                 listElement += '<div class="result-content-list-data" data-shopname="'+val.shop_name+'">';
                                 listElement += '   <div class="result-content-list-data-head">';
                                 if(val.shop_difdate <= 1){
@@ -218,6 +309,10 @@ function searchItem(){
                                 listElement += '   </div>';
                                 listElement += '   <div class="result-content-list-data-body">';
                                 listElement += '       <span>'+val.shop_name+'</span>';
+                                listElement += '       <span>';
+                                listElement += '            <img src="/img/marker.png" style="vertical-align:inherit;margin-right: 5px;"/>';
+                                listElement +=              regency_name;
+                                listElement += '       </span>';
                                 listElement += '   </div>';
                                 listElement += '</div>';
                             }else{
@@ -235,6 +330,8 @@ function searchItem(){
                                 listElement += '</div>';
                             }
                         });
+                        
+                        $('.result-content #searchNotFound').removeClass('active');
                         $(".list-search .result-content-list").html(listElement);
                         
                         $('.pagination').twbsPagination({
@@ -261,6 +358,8 @@ function searchItem(){
                         searchPage.page = 1;
                         $('.result-content #searchNotFound').addClass('active');
                         $('.result-content .list-search').removeClass('active');
+                        $(".list-search .result-content-list").html('');
+                        $(".list-search .pagination").html('');
                     }
                     $('.loaderImg').addClass('hidden');
                 }else{

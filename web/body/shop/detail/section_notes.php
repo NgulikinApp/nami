@@ -68,35 +68,37 @@
         </div>
         <div class="note-body">
             <div class="note-body-content">
-                <div class="note-body-content-left" id="address-shop-con">
+                <div class="note-body-content-left">
                     <div class="note-body-content-grid1">
                         Alamat penjual/toko
                     </div>
                     <div class="note-body-content-grid2">
                         <img src="/img/people.png"/>
-                        <span id="owner-shop"></span>
+                        <span id="owner-shop">/span>
                     </div>
                     <div class="note-body-content-grid3">
                         <img src="/img/marker.png" id="marker-shop"/>
                         <span id="address-shop">
-                            <font>Jakarta Timur</font>
-                            <br/>
-                            <font>jl jaya gas no 59 jakarta timur Kecamatan Duren Sawit, Kota Jakarta Timur</font>
-                            <br/>
-                            <font>DKI Jakarta, 13450</font>
+                            Belum diisi
                         </span>
                     </div>
-                </div>
-                <div class="note-body-content-right">
-                    <div class="note-body-content-grid1" id="nohp-title-shop">
+                    <div class="note-body-content-grid4">
                         Nomor telepon toko
                     </div>
-                    <div class="note-body-content-grid2" id="nohp-ket-shop">
+                    <div class="note-body-content-grid5">
                         <div>
-                            <img src="/img/hp.png" id="hp-shop">
-                            <span id="hp-shop">08576754857</span>
+                            <img src="/img/hp.png" id="phone-shop">
+                            <span id="hp-shop"></span>
                         </div>
-                        <div class="pink-young">Cantumkan jika ada</div>
+                        <div class="pinkyoung">Cantumkan jika ada</div>
+                    </div>
+                </div>
+                <div class="note-body-content-right" id="address-shop-con">
+                    <div class="note-body-content-grid1 photo-location-shop">
+                        Foto Lokasi Toko
+                    </div>
+                    <div class="note-body-content-grid2 photo-location-shop list-photo-location">
+                        Tidak ada foto
                     </div>
                 </div>
             </div>

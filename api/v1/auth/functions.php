@@ -116,17 +116,19 @@
                 - id_socmed
     */
     function account_verify($stmt){
-        $row = $stmt->fetch_object();
+        $stmt->execute();
         
-        $user_id = $row->user_id;
-        $user_isactive = $row->user_isactive;
-        $password = $row->password;
-        $socmed = $row->socmed;
-        $idsocmed = $row->id_socmed;
+        $stmt->bind_result($col1, $col2, $col3);
+        
+        $stmt->fetch();
+        
+        $user_id = $col1;
+        $user_isactive = $col2;
+        $password = $col3;
         
         $stmt->close();
         
-        return array($user_id,intval($user_isactive),$password,$socmed,$idsocmed);
+        return array($user_id,intval($user_isactive),$password);
     }
     
     /*
@@ -138,11 +140,15 @@
                 - user_admin (0/1)
     */
     function account_verify_admin($stmt){
-        $row = $stmt->fetch_object();
+        $stmt->execute();
         
-        $user_id = $row->user_id;
-        $password = $row->password;
-        $user_admin = intval($row->user_admin);
+        $stmt->bind_result($col1, $col2, $col3);
+        
+        $stmt->fetch();
+        
+        $user_id = $col1;
+        $password = $col2;
+        $user_admin = intval($col3);
         
         $stmt->close();
         
@@ -161,34 +167,64 @@
                 - socmed (ngulikin if the user login on manual, googleplus, facebook, etc...)
                 - merchant
     */
-    function get_data_signin($stmt){
+    function get_data_signin($stmt,$cache){
         
-        $row = $stmt->fetch_object();
+        $stmt->execute();
         
-        if($row->user_photo != "no-photo.jpg"){
-            $photo = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/'.$row->user_photo));
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16);
+        
+        $stmt->fetch();
+        
+        if($col9 != "no-photo.jpg"){
+            $photo = IMAGES_URL.'/'.urlencode(base64_encode($col2.'/'.$col9));
         }else{
-            $photo = INIT_URL."/img/".$row->user_photo;
+            $photo = INIT_URL."/img/".$col9;
+        }
+        
+        $date1=date_create(date("Y-m-d H:i:s"));
+        $date2=date_create($col10);
+
+        $diff=date_diff($date1,$date2);
+        $days = $diff->format("%a");
+        
+        if($days <= 7){
+            $time_signup = $days." hari bergabung";
+        }else if($days <= 30){
+            $week= floor($days/7);
+            $time_signup = $week." minggu bergabung";
+        }else if($days < 365){
+            $month = floor($days/31);
+            $time_signup = $month." bulan bergabung";
+        }else{
+            $year = floor($days/365);
+            $time_signup = $year." tahun bergabung";
         }
         
         $data = array(
-                        "user_id"=>$row->user_id,
-                        "username"=>$row->username,
-                        "fullname"=>$row->fullname,
-                        "email"=>$row->email,
-                        "nohp"=>$row->phone,
-                        "dob"=>$row->dob,
-                        "gender"=>$row->gender,
-                        "key"=>$row->user_key,
+                        "user_id"=>$col1,
+                        "username"=>$col2,
+                        "fullname"=>$col3,
+                        "email"=>$col4,
+                        "nohp"=>$col5,
+                        "dob"=>$col6,
+                        "gender"=>$col7,
+                        "key"=>$col8,
                         "user_photo"=>$photo,
-                        "shop_id"=>$row->shop_id,
-                        "shop_name"=>$row->shop_name,
-                        "brand_id"=>$row->shop_current_brand,
-                        "delivery_id"=>$row->shop_delivery,
-                        "user_seller"=>$row->user_seller
+                        "shop_id"=>$col11,
+                        "shop_name"=>$col14,
+                        "shop_icon"=>$col15,
+                        "shop_banner"=>$col16,
+                        "brand_id"=>$col12,
+                        "delivery_id"=>$col13,
+                        "time_signup"=>$time_signup
                     );
                     
         $_SESSION['user'] = $data;
+        
+        setMemcached("m_user_".$col1."_".$col8."_0",$cache,1,3600);
+        
+        session_regenerate_id();
+        session_regenerate_id(true);
     
         $dataout = array(
                         "status" => 'OK',
@@ -214,12 +250,16 @@
                 - fullname
     */
     function get_account_forgotpassword($stmt){
-        $row = $stmt->fetch_object();
+        $stmt->execute();
         
-        $user_id = $row->user_id;
-        $user_isactive = $row->user_isactive;
-        $email = $row->email;
-        $fullname = $row->fullname;
+        $stmt->bind_result($col1, $col2, $col3, $col4);
+        
+        $stmt->fetch();
+        
+        $user_id = $col1;
+        $user_isactive = $col2;
+        $email = $col3;
+        $fullname = $col4;
         
         $stmt->close();
         
@@ -233,9 +273,13 @@
                 - user_id
     */
     function code_verified($stmt){
-        $row = $stmt->fetch_object();
+        $stmt->execute();
         
-        $user_id = $row->user_id;
+        $stmt->bind_result($col1);
+        
+        $stmt->fetch();
+        
+        $user_id = $col1;
         
         $stmt->close();
         
@@ -267,13 +311,15 @@
         Used for compiling user table
         Return data:
     */
-    function returndata_signin($user_id,$con){
-        $stmt = $con->query("SELECT 
+    function returndata_signin($user_id,$con,$cache){
+        $stmt = $con->prepare("SELECT 
                                         inner1.*,
                                         IFNULL(shop_id,0) as shop_id,
                                         shop_current_brand,
                                         shop_delivery,
-                                        shop_name
+                                        shop_name,
+                                        shop_icon,
+                                        shop_banner
                                 FROM(
                                         SELECT
                                             user_id,
@@ -285,19 +331,21 @@
                                             gender,
                                             user_key,
                                             user_photo,
-                                            user_seller
+                                            time_signup
                                         FROM 
                                             user 
                                         WHERE 
-                                            user_id='".$user_id."'
+                                            user_id=?
                                 )as inner1 
                                     LEFT JOIN shop ON inner1.user_id=shop.user_id");
                                     
+        $stmt->bind_param("s", $user_id);    
+        
         if(isset( $_SESSION['productcart']))sessionCart($user_id,$con);        
         /*
             Function location in : functions.php
         */
-        get_data_signin($stmt);
+        get_data_signin($stmt,$cache);
     }
     
     function returndata_signin_admin($user_id,$key){
@@ -306,6 +354,9 @@
                     "message" => $key
             );
         $_SESSION['user_admin'] = $data;
+        
+        session_regenerate_id();
+        session_regenerate_id(true);
     
         $dataout = array(
                         "status" => 'OK',
@@ -321,8 +372,7 @@
     }
     
     function sessionCart($user_id,$con){
-        $data = $_SESSION['productcart'];
-        if(isset($data)){
+        if(isset($_SESSION['productcart'])){
             $i = 0;
             $list_productid = "";
             foreach($data as &$value){
@@ -340,7 +390,7 @@
             $stmt->close();
             $cartLen = count($data);
             for($i=0;$i<=$cartLen;$i++){
-                $stmt = $con->prepare("INSERT INTO cart(user_id,product_id,sum_product,cart_adddate) VALUES(?,?,?,?)");
+                $stmt = $con->prepare("INSERT INTO cart(user_id,product_id,cart_sumproduct,cart_adddate) VALUES(?,?,?,?)");
                 
                 $stmt->bind_param("siis", $user_id,$data[$i]['product_id'],$data[$i]['sum'],$data[$i]['date']);
                 
@@ -371,6 +421,6 @@
         /*
             Function location in : /model/generatejson.php
         */        
-        generateJSON($dataout);
+        return generateJSON($dataout);
     }
 ?>

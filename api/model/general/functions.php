@@ -252,34 +252,49 @@
         Used for checking the user key
         Return data: row count data
     */
-    function checkingAuthKey($con,$user_id,$key,$isadmin){
-        if($isadmin == 0){
-           $sql = "SELECT 
-                                    1
-                                FROM 
-                                    `user`
-                                WHERE
-                                    user_id = '".$user_id."'
-                                    AND
-                                    user_key = '".$key."'"; 
+    function checkingAuthKey($con,$user_id,$key,$isadmin,$cache){
+        $data = getMemcached("m_user_".$user_id."_".$key."_".$isadmin,$cache);
+        if($data != ''){
+            return 1;
         }else{
-           $sql = "SELECT 
-                                    1
-                                FROM 
-                                    `user`
-                                WHERE
-                                    user_id = '".$user_id."'
-                                    AND
-                                    user_key_admin = '".$key."'"; 
+            if($isadmin == 0){
+               $sql = "SELECT 
+                            user_key
+                        FROM 
+                            `user`
+                        WHERE
+                            user_id = ?
+                            AND
+                            user_key = ?"; 
+            }else{
+               $sql = "SELECT 
+                            user_key_admin
+                        FROM 
+                            `user`
+                        WHERE
+                            user_id = ?
+                            AND
+                            user_key_admin = ?"; 
+            }
+            
+            $stmt = $con->prepare($sql);
+            $stmt->bind_param("ss", $user_id,$key);
+            
+            $result = $stmt->execute(); //execute() tries to fetch a result set. Returns true on succes, false on failure.
+            $stmt->store_result();
+            
+            $stmt->bind_result($col1);
+            $stmt->fetch();
+            
+            $row_cnt = $stmt->num_rows;
+            
+            if($row_cnt > 0){
+                setMemcached("m_user_".$user_id."_".$col1."_".$isadmin,$cache,1,3600);      
+            }
+            $stmt->close();
+            
+            return $row_cnt;
         }
-        
-        $result = $con->query($sql);
-                                    
-        $row_cnt = $result->num_rows;
-        
-        $result->close();
-        
-        return $row_cnt;
     }
     
     /*
@@ -309,8 +324,9 @@
         Return data: rows
     */
     function calc_val($stmt){
+        $stmt->execute();
         
-        $row = $stmt->fetch_object();
+        $row = $stmt->fetch();
         
         $stmt->close();
         
@@ -330,5 +346,38 @@
         }
             
         unset($_SESSION['file']);
+    }
+    
+    /*
+        Function referred on : all
+        Used for removing the html tag in parameters
+    */
+    function param($param){
+        $param = mb_convert_encoding($param, 'UTF-8', 'UTF-8');
+        $param = htmlentities($param, ENT_QUOTES, 'UTF-8');
+        
+        return $param;
+    }
+    
+    /*
+        Function referred on : all
+        Used for sending email
+    */
+    function sendEmail($sendfrom,$namefrom,$sendto,$nameto,$subject,$body){
+        $mail = new PHPMailer;
+        $mail->isSMTP();
+        $mail->Debugoutput = 'html';
+        $mail->Host = "mail.ngulikin.com";
+        $mail->Port = 25;
+        $mail->SMTPAuth = true;
+        $mail->Username = "ngulikin";
+        $mail->Password = "FD76889Ddt!";
+        $mail->setFrom($sendfrom, $namefrom);
+        $mail->addAddress($sendto, $nameto);
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        $mail->AltBody = 'This is a plain-text message body';
+                	
+        return $mail->send();
     }
 ?>

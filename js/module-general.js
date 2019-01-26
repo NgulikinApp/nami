@@ -198,15 +198,20 @@ function initGeneral(){
 	    $(this).addClass('bluesky');
 	});
 	
-	$('.footerFloat a:nth-child(2) span,.footer-body-mid2 ul li:nth-child(3)').on('click', function (e) {
+	$('#footerSell').on('click', function (e) {
+	    sessionStorage.setItem('create_shopNgulikin',1);
+	    profileClick();
+	});
+	
+	$('#footerBlog,.footer-body-mid2 ul li:nth-child(3)').on('click', function (e) {
 	    window.open('https://www.blog.ngulikin.com');
 	});
 	
-	$('.footerFloat a:nth-child(3) span').on('click', function (e) {
+	$('#footerHelp,.footer-body-mid2 ul li:nth-child(2)').on('click', function (e) {
 	    location.href = url+"/help";
 	});
 	
-	$('#track_orders').on('click', function (e) {
+	$('#footerOrders').on('click', function (e) {
 	    sessionStorage.setItem('track_orderNgulikin',1);
 	    profileClick();
 	});
@@ -485,11 +490,14 @@ function bindCategoryProduct(data){
 
 //currency function
 function numberFormat(val){
-    return 'Rp ' + (val).replace(/(\d)(?=(\d{3})+$)/g, "$1.");
+    return 'Rp ' + (val.toString()).replace(/(\d)(?=(\d{3})+$)/g, "$1.");
 }
 
 //notif function
 function notif(type,message,x,y){
+    if ($(".notify")[0]){
+        return;
+    }
     notify({
         type: type, //alert | success | error | warning | info
         title: "Ngulikin",

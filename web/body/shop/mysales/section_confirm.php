@@ -27,27 +27,27 @@
             <div class="leftCont">
                 <div class="head">PEMBELIAN OLEH</div>
                 <div class="body">
-                    <strong>Reicha Sofi</strong>
+                    Reicha Sofi
                 </div>
             </div>
             <div class="midCont">
                 <div class="left">
                     <div class="head">PENGIRIMAN</div>
                     <div class="body">
-                        <strong>Agung Prabontot</strong>
+                        Agung Prabontot
                     </div>
                 </div>
                 <div class="right">
                     <div id="univMySales">
                         <img src="/img/marker.png" /> 
-                        <strong>Paramadina, Jakarta Selatan</strong>
+                        Paramadina, Jakarta Selatan
                     </div>
                 </div>
             </div>
             <div class="rightCont">
                 <div class="head">AGEN KURIR</div>
                 <div class="body">
-                    <strong>JNE</strong>
+                    JNE
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
                 <div class="grid proof" style="margin-top: 20px;">
                     <div class="head">TANGGAL PESANAN</div>
                     <div class="body">
-                        <strong>04 November 2017</strong>
+                        04 November 2017
                     </div>
                 </div>
             </div>
@@ -70,15 +70,15 @@
                     <div class="body">
                         <div class="grid">
                             <img src="/img/people.png" style="vertical-align: baseline;margin-right: 10px;"/>
-                            <strong>Agung Prabontot</strong>
+                            Agung Prabontot
                         </div>
                         <div class="grid proof" style="padding-left: 20px;position: relative;">
-                            <img src="/img/marker.png" style="vertical-align: baseline;position: absolute;left: 0;"/><strong>jl jaya gas no 59 jakarta timur 
-Kecamatan Duren Sawit, Kota Jakarta Timur DKI Jakarta, 13450</strong>
+                            <img src="/img/marker.png" style="vertical-align: baseline;position: absolute;left: 0;"/>jl jaya gas no 59 jakarta timur 
+Kecamatan Duren Sawit, Kota Jakarta Timur DKI Jakarta, 13450
                         </div>
                         <div class="grid" style="margin-top:15px;">
                             <img src="/img/hp.png" style="vertical-align: super;margin-right: 10px;"/>
-                            <strong>0857246422217</strong>
+                            0857246422217
                         </div>
                     </div>
                 </div>
@@ -90,15 +90,15 @@ Kecamatan Duren Sawit, Kota Jakarta Timur DKI Jakarta, 13450</strong>
                         </div>
                         <div class="grid proof">
                             <div class="head">
-                                <strong>HINDIAN</strong>
+                                HINDIAN
                             </div>
                             <div class="body">
-                                <strong>Rainbow Outer</strong>
+                                Rainbow Outer
                             </div>
                         </div>
                         <div class="grid">
-                            <div class="head"><strong>Jumlah :</strong></div>
-                            <div class="body"><strong>10 (0.5kg)</strong></div>
+                            <div class="head">Jumlah :</div>
+                            <div class="body">10 (0.5kg)</div>
                         </div>
                     </div>
                 </div>
@@ -136,7 +136,7 @@ Kecamatan Duren Sawit, Kota Jakarta Timur DKI Jakarta, 13450</strong>
                 <div class="detail bluesky">
                     <img src="/img/bubble.png" style="vertical-align: text-top;"/> Tanya Pembeli
                 </div>
-                <div class="detail bluesky">
+                <div class="detail bluesky" id="print_confirm">
                     <img src="/img/download.png" style="vertical-align: text-top;"/> Cetak Sekaligus
                 </div>
             </div>

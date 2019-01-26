@@ -31,6 +31,11 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $shop_id = param($request['shop_id']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -54,34 +59,44 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
-            $stmt = $con->query("SELECT 
-                                    1
+            $stmt = $con->prepare("SELECT 
+                                        COUNT(shop_favorite_id) as count_favorite
                                     FROM 
                                         shop_favorite 
                                     WHERE 
-                                        shop_id=".$request['shop_id']." AND user_id='".$user_id."'");
+                                        shop_id=? AND user_id=?");
             
-            /*
-                Function location in : functions.php
-            */
-            $count_rows = count_rows($stmt);
+            $stmt->bind_param("is", $shop_id,$user_id);
+            $stmt->execute();
             
-            if($count_rows > 0){
+            $stmt->bind_result($col1);
+            
+            $stmt->fetch();
+            
+            $count_shop = $col1;
+            
+            $stmt->close();
+            
+            if(intval($count_shop) > 0){
                 $stmt = $con->prepare("DELETE FROM shop_favorite WHERE shop_id = ? AND user_id = ?");
                 
-                $stmt->bind_param("is", $request['shop_id'], $user_id);
+                $stmt->bind_param("is", $shop_id, $user_id);
             
                 $stmt->execute();
+                
+                $stmt->close();
             
                 $stmt = $con->prepare("UPDATE shop SET shop_count_favorite=shop_count_favorite-1 where shop_id=?");
                 
-                $stmt->bind_param("i", $request['shop_id']);
+                $stmt->bind_param("i", $shop_id);
             
                 $stmt->execute();
+                
+                $stmt->close();
                 
                 $stmt = $con->prepare("UPDATE user SET user_shop_favorites=user_shop_favorites-1 where user_id=?");
                 
@@ -94,24 +109,28 @@
                 /*
                     Function location in : functions.php
                 */
-                $count_val = count_shop($con,$request['shop_id']);
+                $count_val = count_shop($con,$shop_id);
                 
                 /*
                     Function location in : functions.php
                 */
-                favorite($request['shop_id'],$user_id,$count_val,0);
+                favorite($shop_id,$user_id,$count_val,0);
             }else{
                 $stmt = $con->prepare("INSERT INTO shop_favorite(shop_id,user_id) VALUES(?,?)");
                 
-                $stmt->bind_param("is", $request['shop_id'], $user_id);
+                $stmt->bind_param("is", $shop_id, $user_id);
             
                 $stmt->execute();
+                
+                $stmt->close();
             
                 $stmt = $con->prepare("UPDATE shop SET shop_count_favorite=shop_count_favorite+1 where shop_id=?");
                 
-                $stmt->bind_param("i", $request['shop_id']);
+                $stmt->bind_param("i", $shop_id);
             
                 $stmt->execute();
+                
+                $stmt->close();
                 
                 $stmt = $con->prepare("UPDATE user SET user_shop_favorites=user_shop_favorites+1 where user_id=?");
                 
@@ -124,12 +143,12 @@
                 /*
                     Function location in : functions.php
                 */
-                $count_val = count_shop($con,$request['shop_id']);
+                $count_val = count_shop($con,$shop_id);
                 
                 /*
                     Function location in : functions.php
                 */
-                favorite($request['shop_id'],$user_id,$count_val,1);
+                favorite($shop_id,$user_id,$count_val,1);
             }
         }catch(Exception $e){
             /*

@@ -30,6 +30,7 @@
             include 'web/nav/generalInput.php';
         ?>
         <input type="hidden" id="shop_id" value=""/>
+        <input type="hidden" id="shop_discuss_id" value=""/>
 		<script src="../../js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="../../js/module-shop.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>

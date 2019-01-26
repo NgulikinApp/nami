@@ -37,6 +37,11 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $comment = param($request['comment']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -53,24 +58,38 @@
                 $user_id = $_SESSION['user']["user_id"];
                 $key = $_SESSION['user']["key"];
                 $user_photo = $_SESSION['user']["user_photo"];
-                $fullname = $_SESSION['user']["fullname"];
+                $username = $_SESSION['user']["username"];
             }else{
                 $user_id = '';
                 $key = '';
                 $user_photo = '';
-                $fullname = '';
+                $username = '';
             }
             
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
+            }
+            
+            if($id == 0 || $id == $shop_id){
+                /*
+                    Function location in : functions.php
+                */
+                unauthComment();
+            }
+            
+            if($comment == ''){
+                /*
+                    Function location in : functions.php
+                */
+                emptyComment();
             }
             
             $stmt = $con->prepare("INSERT INTO shop_review(shop_id,user_id,shop_review_comment) VALUES(?,?,?)");
             
-            $stmt->bind_param("iss", $id, $user_id, $request['comment']);
+            $stmt->bind_param("iss", $id, $user_id, $comment);
             
             $stmt->execute();
             
@@ -82,14 +101,15 @@
             
             $stmt->execute();
             
-            $stmt = $con->query("SELECT 
+            $stmt = $con->prepare("SELECT 
                                         DATE_FORMAT(shop_review_createdate, '%W, %d %M %Y') AS comment_date
                                     FROM 
                                         shop_review
                                     WHERE
-                                        shop_review_id = ".$shop_review_id."");
+                                        shop_review_id = ?");
+            $stmt->bind_param("i", $shop_review_id);
             
-            comment($stmt,$shop_review_id,$id,$user_id,$request['comment'],$user_photo,$fullname);
+            comment($stmt,$shop_review_id,$id,$user_id,$comment,$user_photo,$username);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

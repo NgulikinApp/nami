@@ -65,11 +65,15 @@ body{
 ul{
     list-style:none;
 }
+input{
+    outline:none;
+}
 input[type="radio"]{
     cursor:pointer;
 }
 textarea{
 	resize:none;
+	outline:none;
 }
 .hiddenoverflow{
    overflow: hidden; 
@@ -86,7 +90,7 @@ textarea{
     background-color:#F4F5F5;
 }
 .pinkyoung{
-    color: #F97C64;
+    color: #F97C64 !important;
 }
 .yellow{
     color :#FEBD18;
@@ -464,7 +468,7 @@ select::-ms-expand {
 #menuLogin{
     margin-top: 20px;
 }
-#menuLogin,#btnSubmitMyprofile,#btnSubmitPassMyprofile{
+#menuLogin,#btnSubmitMyprofile,#btnSubmitPassMyprofile,#btnSubmitCreateShop{
     padding-top: 7px;
     padding-bottom: 7px;
     padding-left: 50px;
@@ -500,6 +504,9 @@ select::-ms-expand {
 }
 .listShopMenu{
     padding: 5px;
+}
+.listShopMenu a{
+    color: #000;
 }
 .listShopMenu a:hover{
     text-decoration:none;
@@ -2578,11 +2585,19 @@ hr{
     font-size: 14px;
     float: left;
     width:180px;
+    font-family: proxima_nova_ltsemibold;
 }
 .grid-favorite-footer.filled div .result-content-list-data .result-content-list-data-body span{
     display:block;
     text-align: left;
     line-height: 20px;
+}
+.favoriteProductAction{
+    color:#817F7F;
+    margin-bottom: 5px;
+}
+.favoriteProductPrice{
+    color:#E05B36;
 }
 /*
     End of Favorite Page
@@ -3079,7 +3094,6 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
 }
 .grid-shop-body-content-listComment-content .head span img{
     width:15px !important;
-    vertical-align: super;
 }
 .grid-shop-body-content-listComment-content .head span .title{
     display:inline-block !important;
@@ -3212,6 +3226,18 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
     background-color: rgb(245, 245, 245);
     padding: 5px;
 }
+.discussShopCommentDate{
+    display: inline-block !important;
+    margin-right: 10px;
+    font-size: 10px;
+}
+.discussShopCommentReply{
+    display:inline-block !important;
+    cursor: pointer;
+}
+.fa-reply{
+    color:#FCBC1B;
+}
 .showMoreTxt{
     position: relative;
     left: 50%;
@@ -3221,6 +3247,23 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
 }
 .showMoreTxt:hover{
     color:#007ec1;
+}
+.commentReplyDiscussShop{
+    border: 0;
+    width: 100%;
+    outline: none;
+    padding: 3px 15px;
+}
+.commentReplyDiscussShopTemp{
+    border: 1px solid #E0E0DF;
+    margin-bottom: 5px;
+}
+.replyCommentShop{
+    width: 100%;
+}
+.replyingCommentShop{
+    width: 95%;
+    float: right !important;
 }
 /* End of shop page */
 
@@ -3401,6 +3444,13 @@ Product page
     border-bottom: 1px solid #F5F5F5;
     padding: 5px;
 }
+.myprofile .headerMyprofileTransaction{
+    text-align: center;
+    width: 100%;
+    font-family: proxima_nova_altbold;
+    border-bottom: 1px solid #F5F5F5;
+    padding: 5px;
+}
 #accordionMyprofile h3{
     cursor:pointer;
     font-size:13px;
@@ -3414,14 +3464,103 @@ Product page
     background-repeat: no-repeat;
     background-position: 98%;
 }
-#myaccount,#changepassword,#createshop{
+#myaccount,#changepassword,#createshop,#transaction,#filesCreateShopPrivate{
     display:none;
 }
-#myaccount.active,#changepassword.active,#createshop.active{
+#myaccount.active,#changepassword.active,#createshop.active,#transaction.active,label[for="filesCreateShopPrivate"]{
     display:block;
 }
 #changepassword.active{
     height:325px;
+}
+.filterMyprofileTransaction{
+    padding:5px;
+    border-bottom: 1px solid #F5F5F5;
+}
+#search-transaction{
+    position: absolute;
+    background-image: url(/img/search-icon.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    right: 15px;
+    top: 7px;
+    width: 10px;
+    height: 10px;
+}
+#createshop .body div{
+    overflow: auto;
+    margin:10px 0px;
+    float: left;
+}
+#createshop .body div:nth-child(odd) {
+    width: 10%;
+}
+#createshop .body div:nth-child(even) {
+    width: 90%;
+}
+.inputCreateShopPrivate{
+    border: 2px solid #F5F5F5;
+    border-radius: 5px;
+    padding: 3px; 
+}
+#shopname{
+    width: 20%;
+}
+.myprofile .bodyMyprofile .dataTransaction{
+    display:inline-block;
+    width: 20%;
+    display: table-cell;
+    vertical-align: middle;
+    font-family: proxima_nova_ltsemibold;
+}
+.myprofile .bodyMyprofile .dataTransaction:first-child,.myprofile .bodyMyprofile .dataTransaction:last-child{
+    width: 10%;
+}
+.myprofile .bodyMyprofile .dataTransaction:first-child{
+    text-align: center;
+}
+.myprofile .bodyMyprofile .dataTransaction:nth-child(4){
+    width: 20%;
+}
+.myprofile .bodyMyprofile .dataTransaction:nth-child(5){
+    width: 15%;
+}
+.myprofile .bodyMyprofile .head{
+    font-family: proxima_nova_altbold;
+    border-bottom: 1px solid #F5F5F5;
+}
+.viewDetailTransaction{
+    cursor:pointer;
+    color: #3FC3FF;
+    text-align: center;
+}
+.viewDetailTransaction:hover{
+    color: #007ec1;
+}
+.dataTransaction .header{
+    position:inherit;
+    height: auto;
+    text-transform: uppercase;
+    color: #807F7F;
+    background-color: inherit;
+}
+.dataTransaction .detail{
+    text-overflow: ellipsis; 
+}
+.dataTransaction .statusTransaction{
+    color: #3FC3FF;
+}
+.bodyProfileTransaction{
+    padding:0px !important;
+}
+.listMyprofileTransaction{
+    display: table;
+    width: 100%;
+    padding: 10px;
+}
+.listMyprofileTransaction:nth-child(2n+1){
+    background-color: #F4F5F5;
 }
 .myprofile#changepassword .bodyMyprofile div{
     width: 100%;
@@ -3444,7 +3583,7 @@ Product page
 .footerMyprofile,.addressmyprofile,.myprofile .bodyMyprofile{
     padding: 15px;
 }
-.footerMyprofile #btnSubmitMyprofile,.footerMyprofile #btnSubmitPassMyprofile{
+.footerMyprofile #btnSubmitMyprofile,.footerMyprofile #btnSubmitPassMyprofile,.footerMyprofile #btnSubmitCreateShop{
     float:right;
 }
 .addressmyprofile div{
@@ -3496,11 +3635,11 @@ Product page
     padding: 3px;
     width: 100%;
 }
-.privateRight div input{
+.privateRight div input,#filesCreateShopPrivate{
     visibility:hidden;
     width:100px;
 }
-.privateRight div label,.midProductLayer div label{
+.privateRight div label,.midProductLayer div label,#createshop .body div label{
     background-color: #3FC3FF;
     padding: 3px;
     color: #FFF;
@@ -4244,12 +4383,9 @@ input.radioPaymentOthers:empty ~ label:before{
 .date-operation .date{
     margin: 5px;
 }
-#nohp-ket-shop,#nohp-title-shop{
-    padding-left: 20px
-}
 .date-operation .time{
     background-color: #F97C64;
-    width: 110px;
+    width: 140px;
     margin: auto;
     padding: 5px;
     border-radius: 3px;
@@ -4262,7 +4398,7 @@ input.radioPaymentOthers:empty ~ label:before{
     vertical-align: sub;
     margin-left: 10px;
 }
-.grid-shop-seller-body .note .note-body .note-body-content #marker-shop,#notesShopSection .note .note-body .note-body-content #marker-shop{
+.grid-shop-seller-body .note .note-body .note-body-content #marker-shop,#notesShopSection .note .note-body .note-body-content #marker-shop,.grid-shop-seller-body .note .note-body .note-body-content #phone-shop,#notesShopSection .note .note-body .note-body-content #phone-shop{
     margin: 10px 5px;
 }
 .grid-shop-seller-body .note .note-body .note-body-content #hp-shop,#notesShopSection .note .note-body .note-body-content #hp-shop{
@@ -4271,7 +4407,7 @@ input.radioPaymentOthers:empty ~ label:before{
 .grid-shop-seller-body .note .note-body .note-body-content #nohp-ket-shop,#notesShopSection .note .note-body .note-body-content #nohp-ket-shop{
     vertical-align: super;
 }
-.grid-shop-seller-body .note .note-body .note-body-content #address-shop,#notesShopSection .note .note-body .note-body-content #address-shop{
+.grid-shop-seller-body .note .note-body .note-body-content #address-shop,#notesShopSection .note .note-body .note-body-content #address-shop,.grid-shop-seller-body .note .note-body .note-body-content #hp-shop,#notesShopSection .note .note-body .note-body-content #hp-shop,.grid-shop-seller-body .note .note-body .note-body-content .photo-location-shop,#notesShopSection .note .note-body .note-body-content .photo-location-shop{
     margin-left: 10px;
 }
 .grid-shop-seller-body .note .note-body .note-body-content #address-shop font:nth-child(3),.grid-shop-seller-body .note .note-body .note-body-content #address-shop font:last-child,#notesShopSection .note .note-body .note-body-content #address-shop font:nth-child(3),#notesShopSection .note .note-body .note-body-content #address-shop font:last-child{
@@ -4283,13 +4419,13 @@ input.radioPaymentOthers:empty ~ label:before{
     float:left;
 }
 .grid-shop-seller-body .note .note-body .note-body-content #address-shop-con,#notesShopSection .note .note-body .note-body-content #address-shop-con{
-    border-right: 1px solid #DFDFDF;
+    border-left: 1px solid #DFDFDF;
 }
-.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-grid1,#notesShopSection .note .note-body .note-body-content .note-body-content-grid1{
+.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-grid1,#notesShopSection .note .note-body .note-body-content .note-body-content-grid1,.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-grid4,#notesShopSection .note .note-body .note-body-content .note-body-content-grid4{
     color:#807F7F;
     font-family: 'proxima_nova_ltsemibold';
 }
-#notesShopSection .note .note-body .note-body-content .note-body-content-grid1,#notesShopSection .note .note-body .note-body-content .note-body-content-grid2,#notesShopSection .note .note-body .note-body-content .note-body-content-grid3{
+#notesShopSection .note .note-body .note-body-content .note-body-content-grid1,#notesShopSection .note .note-body .note-body-content .note-body-content-grid2,#notesShopSection .note .note-body .note-body-content .note-body-content-grid3,#notesShopSection .note .note-body .note-body-content .note-body-content-grid4,#notesShopSection .note .note-body .note-body-content .note-body-content-grid5{
     text-align:left;
 }
 .grid-shop-seller-body .note .note-body .note-body-content .note-body-content-right .date-operation,.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-grid2 .time,#notesShopSection .note .note-body .note-body-content .note-body-content-right .date-operation,#notesShopSection .note .note-body .note-body-content .note-body-content-grid2 .time{
@@ -4553,8 +4689,12 @@ input.radioPaymentOthers:empty ~ label:before{
     text-align: center;
     width: 85px;
 }
+#photoShopLocationList{
+    width: 290px;
+    margin: auto;
+}
 /*
-    End of  Shop seller page
+    End of Shop seller page
 */
 /*
     Edit Shop Profile Popup
@@ -5193,7 +5333,8 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     overflow: auto;
     padding-bottom: 10px;
 }
-.grid-incomehistory-left .footer .left div:first-child{
+.recbank .bluesky{
+    font-family: 'proxima_nova_altbold';
     text-transform:uppercase;
     font-size: 14px;
 }
@@ -5201,7 +5342,6 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     font-size: 12px;
 }
 .grid-incomehistory-left .footer .right{
-    margin-top: 20px;
     text-align: center;
 }
 .grid-incomehistory-right .footer{
@@ -5236,7 +5376,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     float:left;
     text-transform:uppercase;
     color:#807F7F;
-    width:25%;
+    width:22.5%;
     font-size: 14px;
     border: 0px;
 }
@@ -5257,8 +5397,268 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     width:25%;
     padding: 10px;
 }
+.print_incomemonth,.print_income{
+    cursor:pointer;
+}
 /*
     End of Mysales Layer
+*/
+/*
+    Invoice Page
+*/
+.filled-invoice{
+    overflow: auto;
+    background-color: #004E82;
+    margin: 20px;
+    border: 1px solid #DFDFDF;
+    width: calc(100% - 100px);
+    min-height: 850px;
+}
+.filled-invoice .left{
+    width:50%;
+    float:left;
+    border-right:0.6px solid #DFDFDF;
+}
+.filled-invoice .right{
+    float:right;
+    background-color: #FFFFFF;
+    right: 70px;
+    width: calc(100% - 715px);
+    min-width: 394px;
+    position: absolute;
+    box-shadow: 2px -1px 15px 0 rgba(0,0,0,.3);
+    -webkit-box-shadow: 2px -1px 15px 0 rgba(0,0,0,.3);
+}
+.filled-invoice .right .content .grid{
+    font-family: proxima_nova_ltsemibold;
+    overflow: auto;
+}
+.filled-invoice .right .content .grid .left{
+    border:0;
+}
+.filled-invoice .right .content .grid .left .body{
+    padding: 0px;
+}
+.filled-invoice .right .content .grid .right{
+    text-align: center;
+}
+.filled-invoice .right .content .grid .body div{
+    overflow:auto;
+}
+.filled-invoice .right .content .grid .body div:last-child{
+    margin-top:20px;
+}
+.data_receiver_invoice span{
+    display:block;
+}
+.data_receiver_invoice span img{
+    vertical-align: super;
+}
+#change_transfer_invoice{
+    color:#005080;
+    cursor:pointer;
+    margin-top: 20px;
+}
+#change_transfer_invoice:hover{
+    color: #FEBD18;
+}
+.detail_payment_invoice_left{
+    float:left;
+}
+.detail_payment_invoice_right{
+    float:right;
+}
+.line_invoice{
+    border-top: 1px solid #747474;
+}
+.caption_warning,.filled-invoice .left .title{
+    padding:10px;
+}
+.caption_warning{
+    color:#3FC3FF;
+    background-color: #FFFFFF;
+}
+.caption_warning img{
+    vertical-align:super;
+}
+.filled-invoice .left .title{
+    text-align:center;
+    border-top:0.5px solid #DFDFDF;
+    overflow:auto;
+    background-color: #FFFFFF;
+    font-family: proxima_nova_ltsemibold;
+}
+.filled-invoice .left .body{
+    padding: 20px 30px;
+}
+.filled-invoice .right .content{
+    padding:30px;
+}
+.filled-invoice .right .content .title{
+    text-align:center;
+    font-size: 30px;
+    color: #004E81;
+    font-family: proxima_nova_ltsemibold;
+}
+.filled-invoice .right .footer{
+    text-align:center;
+    background-color:#3FC3FF;
+    overflow:auto;
+    color: #004E81;
+    font-family: proxima_nova_ltsemibold;
+    font-size: 14px;
+}
+.detail-invoice-icon{
+    background-color: #FFFFFF;
+    float:left;
+    padding: 10px;
+}
+.detail-invoice-shopname{
+    font-family: proxima_nova_altbold;
+    background-color: #3FC3FF;
+    text-align: center;
+    padding: 10px;
+}
+#status_invoice{
+    color:#FFF;
+}
+#countdown_invoice{
+    background-color: #F97C64;
+    color: #FFF;
+    padding: 5px;
+    border-radius: 5px;
+    width: 200px;
+    margin: auto; 
+}
+.detail-invoice-body{
+    padding: 10px 0px;
+    overflow: auto;
+}
+.detail-invoice-body-content{
+    color:#FFF;
+    font-family: proxima_nova_ltsemibold;
+}
+.detail-invoice-body-content .disaligner,.detail-invoice-body-content .aligner{
+    float:left;
+}
+.detail-invoice-body-content .aligner{
+    float:right;
+    width: 81.5%;
+    padding: 20px;
+}
+.detail-invoice-body-content .aligner .brand_name{
+    font-size: 18px;
+}
+.detail-invoice-body-content .aligner .product_name{
+    color:#FEBD18;
+}
+.detail-invoice-body-content .aligner .rateyo{
+    float: left;
+}
+.detail-invoice-footer{
+    overflow:auto;
+    font-family: proxima_nova_ltsemibold;
+    color:#FFF;
+    cursor:pointer;
+    border-bottom: 1px solid #4966f3;
+    margin-bottom: 10px;
+}
+.detail-invoice-footer .detail_text{
+    float:left;
+}
+.detail-invoice-footer .angle{
+    float:right;
+}
+.detail-invoice-footer-detail{
+    overflow:auto;
+    font-family: proxima_nova_ltsemibold;
+    border-bottom: 1px solid #4966f3;
+    margin-bottom: 15px;
+}
+.detail-invoice-footer-detail .grid{
+    display:block;
+    color:#FFF;
+    overflow: auto;
+    padding: 10px 0px;
+}
+.detail-invoice-footer-detail .grid:not(:first-child){
+    border-top: 1px solid #4966f3;
+}
+.detail-invoice-footer-detail .grid .left{
+    float:left;
+}
+.detail-invoice-footer-detail .grid .left .invoice-sum{
+    margin-left: 100px;
+}
+.detail-invoice-footer-detail .grid .right{
+    box-shadow: none;
+    float:right;
+    background-color: transparent;
+    text-align: center;
+    position: relative;
+    width: 90px;
+    min-width: 90px;
+}
+.invoice-wight{
+    color: #FEBD18;
+}
+.title_notes_invoice{
+    opacity:0.5;
+    text-align: left;
+}
+.history_invoice{
+    text-align:center;
+    cursor:pointer;
+    color:#FEBD18 !important;
+}
+.history_invoice:hover{
+    color:inherit;
+}
+#payment_method{
+    padding: 20px;
+    font-family: proxima_nova_ltsemibold;
+}
+#payment_method{
+    display:block;
+}
+#payment_method .title div{
+    padding: 10px;
+    border: 1px solid #DFDFDF;
+    border-bottom: 0;
+    width: 40%;
+    text-align: center;
+}
+#payment_method .content{
+    padding: 30px;
+    overflow: auto;
+    border:1px solid #DFDFDF;
+    text-align: center;
+}
+#payment_method .content ul{
+    overflow:auto;
+}
+#payment_method .content li{
+    float:left;
+    width: 150px;
+    margin: 0px 68px;
+    position: relative;
+}
+#payment_method .content .no_method{
+    position:absolute;
+    background-color:#FEBD18;
+    margin-top: 1px;
+    margin-left: -10px;
+    padding: 5px 10px;
+}
+#payment_method .head{
+    margin-top: 10px;
+    background-color: #004E82;
+}
+#payment_method .caption{
+    padding: 10px;
+}
+/*
+    End of Invoice page
 */
 /*
     Footer Float Menu
@@ -5281,6 +5681,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 }
 .footerFloat a{
     text-decoration: none;
+    color: #000;
 }
 .footerFloat span{
     padding: 0px 15px 14px;

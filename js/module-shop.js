@@ -196,10 +196,45 @@ function detail(){
                         	$('#address-shop').html(shop_location);
                         	
                         	$('#owner-shop').html(data.result.fullname);
+                        	$('#hp-shop').html(data.result.phone);
                         	
                         	$('#shop_total_discuss').html(data.result.shop_total_discuss);
                         	
                         	$('#shop_total_review').html(data.result.shop_total_review);
+                        	
+                        	var shop_image_location_len = data.result.shop_image_location.length;
+                        	if(shop_image_location_len > 0){
+                        	    var imageLocation = '<div class="image">';
+                        	        imageLocation += '      <img src="'+data.result.shop_image_location[0]+'" width="200" height="200"/>';
+                        	        imageLocation += '</div>';
+                        	        if(shop_image_location_len > 1){
+                        	            imageLocation += '<div class="listimage" style="margin-top:10px;">';
+                        	            imageLocation += '      <nav>';
+                        	            for(var i=0;i<shop_image_location_len;i++){
+                                	        imageLocation += '      <a href="'+data.result.shop_image_location[i]+'">';
+                                            imageLocation += '          <img src="'+data.result.shop_image_location[i]+'" width="50" height="50"/>';
+                                            imageLocation += '      </a>';
+                        	            }
+                                	    imageLocation += '      </nav>';
+                        	            imageLocation += '</div>';
+                        	        }
+                        	        
+                        	    $('.list-photo-location').html(imageLocation);
+                        	    
+                        	    $.tosrus.defaults.media.image = {
+                            		filterAnchors: function( $anchor ) {
+                            			return $anchor.attr( 'href' ).indexOf( 'images.ngulikin.com' ) > -1;
+                            		}
+                            	};
+                            	
+                        	    $('.listimage a').tosrus({
+                            		buttons: 'inline',
+                            		pagination	: {
+                            			add			: true,
+                            			type		: 'thumbnails'
+                            		}
+                            	});
+                        	}
                     }else{
                         document.title = 'Tidak ditemukan | Ngulikin';
                         
@@ -282,7 +317,7 @@ function brandShop(){
                         var listBrand = '';
                         $.each( response, function( key, val ) {
                             listBrand += '<div>';
-                            listBrand += '   <img src="'+val.brand_image+'" class="brandShopImage"/>';
+                            listBrand += '   <img src="'+val.brand_image+'" title="'+val.brand_name+'" class="brandShopImage"/>';
                             listBrand += '</div>';
                         });
                         
@@ -333,7 +368,7 @@ function productShop(){
                         var listProduct = '';
                         $.each( response, function( key, val ) {
                             listProduct += '<div>';
-                            listProduct += '   <img src="'+val.product_image+'" datainternal-id="'+val.product_id+'" class="productShopImage"/>';
+                            listProduct += '   <img src="'+val.product_image+'" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'" title="'+val.product_name+'" class="productShopImage"/>';
                             listProduct += '</div>';
                         });
                         
@@ -341,8 +376,10 @@ function productShop(){
                         $("#list-product").html(listProduct);
                         
                         $('.productShopImage').on('click', function (e) {
-                            var datainternal = $(this).attr('datainternal-id');
-                            location.href = url+"/product/"+datainternal;
+                            var shopname = ($(this).data("shopname")).split(' ').join('-'),
+                                productname = ($(this).data("productname")).split(' ').join('-');
+                                                    
+                                location.href = url+"/product/"+shopname+"/"+productname;
                         });
                         
                         if(response.length > 10){
@@ -401,31 +438,43 @@ function discussShop(){
                         $.each( response, function( key, val ) {
                             listDiscuss += '<div class="grid-shop-body-content-listComment-temp">';
                             listDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
-                            listDiscuss += '        <img src="'+val.user_photo+'" datainternal-id="'+val.user_id+'" class="discussShopPhoto"/>';
+                            listDiscuss += '        <img src="'+val.user_photo+'" class="discussShopPhoto"/>';
                             listDiscuss += '     </div>';
                             listDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
                             listDiscuss += '        <div class="head">';
                             listDiscuss += '             <span>'+val.fullname+'</span>';
                             listDiscuss += '             <span>'+val.shop_discuss_comment+'</span>';
-                            listDiscuss += '             <span><img src="/img/notif.png"/> '+val.comment_date+'</span>';
+                            listDiscuss += '             <span class="discussShopCommentDate"><img src="/img/notif.png"/> '+val.comment_date+'</span>';
+                            if($('.isSignin').val() !== ''){
+                                listDiscuss += '             <span class="discussShopCommentReply" data-shop_discuss_id="'+val.shop_discuss_id+'"><i class="fa fa-reply"></i> Balas</span>';
+                            }
                             listDiscuss += '         </div>';
                             listDiscuss += '     </div>';
                             listDiscuss += '</div>';
-                            listDiscuss += '<div class="grid-shop-body-content-listComment-temp reply">';
-                            listDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
-                            listDiscuss += '        <img src="/img/no-photo.jpg"  class="discussShopPhoto"/>';
-                            listDiscuss += '     </div>';
-                            listDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
-                            listDiscuss += '        <div class="head">';
-                            listDiscuss += '            <span>';
-                            listDiscuss += '                <span class="title" id="name">Andhika Adhitana Gama</span>';
-                            listDiscuss += '                <span class="title" id="replySellerShop">Penjual</span>';
-                            listDiscuss += '            </span>';
-                            listDiscuss += '            <span>All size gan, masih ready stock banget, bisa langsung di order</span>';
-                            listDiscuss += '            <span><img src="/img/notif.png"/> Jumat, 15 September 2017</span>';
-                            listDiscuss += '         </div>';
-                            listDiscuss += '     </div>';
-                            listDiscuss += '</div>';
+                            
+                            if(val.reply_comments.length > 0){
+                                $.each( val.reply_comments, function( reply_key, reply_val ) {
+                                    var isseller = reply_val.isseller ? 'Penjual' : '';
+                                    listDiscuss += '<div class="grid-shop-body-content-listComment-temp reply">';
+                                    listDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
+                                    listDiscuss += '        <img src="'+reply_val.user_photo+'"  class="discussShopPhoto"/>';
+                                    listDiscuss += '     </div>';
+                                    listDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
+                                    listDiscuss += '        <div class="head">';
+                                    listDiscuss += '            <span>';
+                                    listDiscuss += '                <span class="title" id="name">'+reply_val.fullname+'</span>';
+                                    listDiscuss += '                <span class="title" id="replySellerShop">'+isseller+'</span>';
+                                    listDiscuss += '            </span>';
+                                    listDiscuss += '            <span>'+reply_val.comment+'</span>';
+                                    listDiscuss += '            <span class="discussShopCommentDate"><img src="/img/notif.png"/>'+reply_val.comment_date+'</span>';
+                                    if($('.isSignin').val() !== ''){
+                                        listDiscuss += '             <span class="discussShopCommentReply reply" data-shop_discuss_id="'+val.shop_discuss_id+'"><i class="fa fa-reply"></i> Balas</span>';
+                                    }
+                                    listDiscuss += '         </div>';
+                                    listDiscuss += '     </div>';
+                                    listDiscuss += '</div>';
+                                });
+                            }
                         });
                         
                         if(commentFlag.type == 0){
@@ -446,11 +495,30 @@ function discussShop(){
                             $('.loaderProgress').addClass('hidden');
                         }
                         
-                        
-                        $('.discussShopPhoto').on('click', function (e) {
-                            var datainternal = $(this).attr('datainternal-id');
-                            location.href = url+"/product/"+datainternal;
-                        });
+                        $('.discussShopCommentReply').on( 'click', function( e ){
+                            $('.commentReplyDiscussShopTemp').remove();
+                            var shop_discuss_id = $(this).data("shop_discuss_id");
+                            $('#shop_discuss_id').val(shop_discuss_id);
+                            
+                            var replytemp = '';
+                            if($(this).hasClass('reply')){
+                                replytemp += '<div class="commentReplyDiscussShopTemp replyingCommentShop">';
+                                replytemp += '  <input type="text" class="commentReplyDiscussShop" placeholder="..."/>';
+                                replytemp += '</div>';
+                            }else{
+                                replytemp = '<div class="commentReplyDiscussShopTemp replyCommentShop">';
+                                replytemp += '  <input type="text" class="commentReplyDiscussShop" placeholder="..."/>';
+                                replytemp += '</div>';
+                            }
+                            $(replytemp).insertAfter($(this).closest('.grid-shop-body-content-listComment-temp'));
+                            
+                            $('.commentReplyDiscussShop').keypress(function(e) {
+                        	    if(e.which == 13 && $('.commentReplyDiscussShop').val() !== '') {
+                        	        
+                            	    replyCommentDiscussShop();
+                        	    }
+                        	});
+	                    });
                     }
                 }else{
                     generateToken(discussShop);
@@ -483,11 +551,11 @@ function commentDiscussShop(){
                 }else{
                     var elemDiscuss = '<div class="grid-shop-body-content-listComment-temp">';
                         elemDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
-                        elemDiscuss += '        <img src="'+data.result.user_photo+'" datainternal-id="'+data.result.user_id+'" class="reviewShopPhoto"/>';
+                        elemDiscuss += '        <img src="'+data.result.user_photo+'" class="reviewShopPhoto"/>';
                         elemDiscuss += '     </div>';
                         elemDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
                         elemDiscuss += '        <div class="head">';
-                        elemDiscuss += '            <span>'+data.result.fullname+'</span>';
+                        elemDiscuss += '            <span>'+data.result.username+'</span>';
                         elemDiscuss += '             <span>'+data.result.comment_date+'</span>';
                         elemDiscuss += '             <span>'+data.result.shop_comment+'</span>';
                         elemDiscuss += '         </div>';
@@ -498,6 +566,34 @@ function commentDiscussShop(){
                     
                     var shop_total_discuss = parseInt($("#shop_total_discuss").text())+1;
                     $("#shop_total_discuss").html(shop_total_discuss);
+                }
+            }
+        });
+    }
+}
+
+function replyCommentDiscussShop(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(commentDiscussShop);
+    }else{
+        var shop_discuss_id = $('#shop_discuss_id').val(),
+            comment = $('.commentReplyDiscussShop').val();
+            
+        $.ajax({
+            type: 'POST',
+            url: SHOP_DISCUSS_REPLYCOMMENT_API+'/'+shop_discuss_id,
+            data:JSON.stringify({ 
+                    comment: comment
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                    generateToken(commentDiscussShop);
+                }else{
+                    discussShop();
                 }
             }
         });
@@ -541,11 +637,11 @@ function reviewShop(){
                         $.each( response, function( key, val ) {
                             listReview += '<div class="grid-shop-body-content-listComment-temp">';
                             listReview += '     <div class="grid-shop-body-content-listComment-content">';
-                            listReview += '        <img src="'+val.user_photo+'" datainternal-id="'+val.user_id+'" class="reviewShopPhoto"/>';
+                            listReview += '        <img src="'+val.user_photo+'" class="reviewShopPhoto"/>';
                             listReview += '     </div>';
                             listReview += '     <div class="grid-shop-body-content-listComment-content">';
                             listReview += '        <div class="head">';
-                            listReview += '            <span>'+val.fullname+'</span>';
+                            listReview += '            <span>'+val.username+'</span>';
                             listReview += '             <span>'+val.shop_review_comment+'</span>';
                             listReview += '             <span><img src="/img/notif.png"/> '+val.comment_date+'</span>';
                             listReview += '         </div>';
@@ -570,11 +666,6 @@ function reviewShop(){
                             
                             $('.loaderProgress').addClass('hidden');
                         }
-                        
-                        $('.reviewShopPhoto').on('click', function (e) {
-                            var datainternal = $(this).attr('datainternal-id');
-                            location.href = url+"/product/"+datainternal;
-                        });
                     }
                 }else{
                     generateToken(reviewShop);
@@ -607,11 +698,11 @@ function commentReviewShop(){
                 }else{
                     var elemReview = '<div class="grid-shop-body-content-listComment-temp">';
                         elemReview += '     <div class="grid-shop-body-content-listComment-content">';
-                        elemReview += '        <img src="'+data.result.user_photo+'" datainternal-id="'+data.result.user_id+'" class="reviewShopPhoto"/>';
+                        elemReview += '        <img src="'+data.result.user_photo+'" class="reviewShopPhoto"/>';
                         elemReview += '     </div>';
                         elemReview += '     <div class="grid-shop-body-content-listComment-content">';
                         elemReview += '        <div class="head">';
-                        elemReview += '            <span>'+data.result.fullname+'</span>';
+                        elemReview += '            <span>'+data.result.username+'</span>';
                         elemReview += '             <span>'+data.result.comment_date+'</span>';
                         elemReview += '             <span>'+data.result.shop_comment+'</span>';
                         elemReview += '         </div>';

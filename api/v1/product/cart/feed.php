@@ -40,17 +40,18 @@
             if(isset($_SESSION['user'])){
                 $user_id = $_SESSION['user']["user_id"];
                 
-                $stmt = $con->query("SELECT 
+                $stmt = $con->prepare("SELECT 
                                             cart.product_id, 
                                             product_name,
                                             brand_name,
                                             product_image,
-                                            cart_adddate,
                                             username,
-                                            cart_sumproduct AS sum_product,
                                             shop_name,
                                             product_price,
-                                            shop_delivery
+                                            shop_delivery,
+                                            shop.shop_id,
+                                            cart_sumproduct AS sum_product,
+                                            cart_adddate
                                     FROM 
                                             cart
                                             LEFT JOIN product ON product.product_id = cart.product_id
@@ -58,9 +59,11 @@
                                             LEFT JOIN shop ON shop.shop_id = brand.shop_id
                                             LEFT JOIN `user` ON `user`.user_id = shop.user_id
                                     WHERE 
-                                            cart.user_id = '".$user_id."'
+                                            cart.user_id = ?
                                             AND
                                             cart_isactive = '1'");
+                
+                $stmt->bind_param("s", $user_id);
                 /*
                     Function location in : functions.php
                 */
@@ -82,7 +85,7 @@
                 
                 $list_productid = $list_productid == ""? "''":$list_productid;
                 
-                $stmt = $con->query("SELECT 
+                $stmt = $con->prepare("SELECT 
                                             product_id, 
                                             product_name,
                                             brand_name,
@@ -90,15 +93,17 @@
                                             username,
                                             shop_name,
                                             product_price,
-                                            shop_delivery
+                                            shop_delivery,
+                                            shop.shop_id
                                     FROM 
                                             product
                                             LEFT JOIN brand ON product.brand_id = brand.brand_id
                                             LEFT JOIN shop ON shop.shop_id = brand.shop_id
                                             LEFT JOIN `user` ON `user`.user_id = shop.user_id
                                     WHERE 
-                                            product_id IN (".$list_productid.")");
+                                            product_id IN (?)");
                 
+                $stmt->bind_param("s", $list_productid);
                 /*
                     Function location in : functions.php
                 */

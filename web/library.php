@@ -8,7 +8,6 @@
 <link rel="shortcut icon" href="img/favicon.ico?jsr=<?php echo $jsversionstring; ?>" type="image/x-icon" />
 <!--CSS Library-->
 <link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css?jsr=<?php echo $jsversionstring; ?>">
-<link rel="stylesheet" type="text/css" media="all" href="css/sidebar.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="css/font-awesome.min.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="css/jquery.notify.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="css/jquery.tosrus.all.css?jsr=<?php echo $jsversionstring; ?>">

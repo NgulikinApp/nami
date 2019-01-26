@@ -30,7 +30,7 @@
     */
     $token = bearer_auth();
     
-    $con->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
         /*
@@ -48,48 +48,58 @@
             }
             
             $sql = "
-                            SELECT 
-                                product.product_id,
-                                `user`.user_id,
-                                username,
-                                product_name,
-                                product_image,
-                                product_price,
-                                product_description,
-                                product_rate,
-                                product_stock,
-                                product_minimum,
-                                product_weight,
-                                product_condition,
-                                shop_icon,
-                                shop_name,
-    					        product_count_favorite,
-                                product_average_rate,
-								category_id,
-								subcategory_id,
-                                product_rate_value,
+                    SELECT 
+                        product.product_id,
+                        `user`.user_id,
+                        username,
+                        product_name,
+                        product_image,
+                        product_price,
+                        product_description,
+                        product_stock,
+                        product_minimum,
+                        product_weight,
+                        product_condition,
+                        shop_icon,
+                        shop_name,
+    					product_count_favorite,
+                        product_average_rate,
+						category_id,
+						subcategory_id,
+                        product_count_rate,
                        ";
             if($user_id != ''){
-                $sql .=" (SELECT count(product_rate_id) AS product_rate_id FROM product_rate WHERE product.product_id=product_rate.product_id AND user_id = '".$user_id."') AS product_israte";
+                $sql .=" (SELECT count(product_rate_id) AS product_rate_id FROM product_rate WHERE product.product_id=product_rate.product_id AND user_id = ?) AS product_israte,";
             }else{
-                $sql .=" 0 AS product_israte";
+                $sql .=" 0 AS product_israte,";
             }
-            $sql .= " FROM 
+            $sql .= " 
+                        shop.shop_id,
+                        product.brand_id,
+                        product_level,
+                        DATE_FORMAT(product_modifydate, '%d %M %Y') AS product_modifydate,
+                        product_sold
+                            FROM 
                                 product
                                 LEFT JOIN brand ON brand.brand_id = product.brand_id
                                 LEFT JOIN shop ON shop.shop_id = brand.shop_id
                                 LEFT JOIN `user` ON `user`.user_id = shop.user_id
                             	LEFT JOIN product_rate ON product.product_id=product_rate.product_id
                             WHERE
-                                product_name='".$productname."'
+                                product_name = ?
                                 AND
-                                shop_name = '".$shopname."'";
+                                shop_name = ?";
+            $stmt = $con->prepare($sql);
             
-            $stmt = $con->query($sql);
+            if($user_id != ''){
+                $stmt->bind_param("sss", $user_id,$productname,$shopname);
+            }else{
+                $stmt->bind_param("ss", $productname,$shopname);
+            }
             /*
                 Function location in : functions.php
             */
-            detail($stmt);
+            detail($stmt,$cache,$con);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

@@ -67,8 +67,9 @@ function listfavoriteProduct(){
                             listFavorite += '       <img src="'+val.product_image+'" class="favoriteProductAction" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'"/>';
                             listFavorite += '   </div>';
                             listFavorite += '   <div class="result-content-list-data-body">';
-                            listFavorite += '       <span class="favoriteProductAction" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">'+val.product_name+'</span>';
-                            listFavorite += '       <span>'+val.product_price+'</span>';
+                            listFavorite += '       <span class="favoriteProductAction" id="" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">'+val.product_name+'</span>';
+                            listFavorite += '       <span class="favoriteProductPrice">IDR '+val.product_price+'</span>';
+                            listFavorite += '       <span class="rateyo" id="rateproduct'+key+'" style="margin:initial;padding: 0;"></span>';
                             listFavorite += '   </div>';
                             listFavorite += '</div>';
                         });
@@ -83,6 +84,10 @@ function listfavoriteProduct(){
                         }).on('page', function (event, page) {
                             productPage.page = page;
                             listfavoriteProduct();
+                        });
+                        
+                        $.each( data.response, function( key, val ) {
+                            $("#rateproduct"+key).rateYo({rating: val.product_average_rate,readOnly: true,starWidth : "15px", spacing   : "1px"});
                         });
                         
                         $('.favoriteProductAction').on('click', function (e) {

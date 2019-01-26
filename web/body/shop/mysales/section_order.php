@@ -2,7 +2,7 @@
     <div class="filterMysales textFilterShopSeller">Filter</div>
     <div class="filterMysales">
         <div class="select mysalesSender">
-            <select id="filterStatusSender" class="statusproduct">
+            <select id="filterStatusOrder" class="statusproduct">
                 <option>Status</option>
                 <option>Pending</option>
             </select>
@@ -76,7 +76,7 @@ Thank you.</div>
             <div class="detail bluesky">
                 <img src="/img/bubble.png" style="vertical-align: text-top;"/> Tanya Pembeli
             </div>
-            <div class="detail bluesky">
+            <div class="detail bluesky" id="print_neworder">
                 <img src="/img/download.png" style="vertical-align: text-top;"/> Download Laporan
             </div>
         </div>
@@ -87,7 +87,7 @@ Thank you.</div>
                 <img src="https://www.images.ngulikin.com/satria/product/CCTV_portable_Micro_SD_CCTV_micro_sd_CCTV_OUTDOOR_600TVL_cct.jpg" width="70" height="70"/>
             </div>
             <div class="detail">
-                <div class="head" data-productid="1">HINDIAN</div>
+                <div class="head" data-shopname="Massom" data-productname="OLIVE WOOD TABLE">HINDIAN</div>
                 <div class="body prices">Rainbow Outwear Sweater</div>
             </div>
         </div>

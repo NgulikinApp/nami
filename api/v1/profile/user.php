@@ -56,7 +56,7 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
@@ -67,18 +67,20 @@
             */
             emptyFolder($path);
             
-            $stmt = $con->query("SELECT 
-                                            fullname, 
+            $stmt = $con->prepare("SELECT 
+                                            IFNULL(fullname,'') AS fullname, 
                                             dob,
                                             username,
                                             gender,
                                             phone,
                     						email,
-                    						user_photo
+                    						user_photo,
+                    						user_status_id
                                     FROM 
                                             user
                     		        WHERE
-                    		                user_id='".$user_id."'");
+                    		                user_id=?");
+            $stmt->bind_param("s", $user_id);
             
             /*
                 Function location in : functions.php

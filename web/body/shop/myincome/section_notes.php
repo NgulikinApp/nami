@@ -20,13 +20,13 @@
             <div class="content-income">8 Jan - 14 Jan 2018</div>
             <div class="content-income">Ngulik Pay saldo</div>
             <div class="content-income">14 Januari 2018</div>
-            <div class="content-income"><img src="/img/download.png" /></div>
+            <div class="content-income print_income"><img src="/img/download.png" /></div>
         </div>
         <div class="list-income">
             <div class="content-income">8 Jan - 14 Jan 2018</div>
             <div class="content-income">Ngulik Pay saldo</div>
             <div class="content-income">14 Januari 2018</div>
-            <div class="content-income"><img src="/img/download.png" /></div>
+            <div class="content-income print_income"><img src="/img/download.png" /></div>
         </div>
     </div>
 </div>

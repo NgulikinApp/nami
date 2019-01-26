@@ -6,18 +6,22 @@
     function detail($stmt){
         $data = array();
     
-        $row = $stmt->fetch_object();
+        $stmt->execute();
         
-        if($row->shop_banner != ""){
-            $shop_banner = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/shop/banner/'.$row->shop_banner));
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6);
+        
+        $stmt->fetch();
+        
+        if($col6 != ""){
+            $shop_banner = IMAGES_URL.'/'.urlencode(base64_encode($col5.'/shop/banner/'.$col6));
         }else{
             $shop_banner = '';
         }
         
-        $data['brand_name'] = $row->brand_name;
-        $data['brand_image'] = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/brand/'.$row->brand_image));
-        $data['brand_product_count'] = $row->brand_product_count;
-        $data['brand_createdate'] = $row->brand_createdate;
+        $data['brand_name'] = $col1;
+        $data['brand_image'] = IMAGES_URL.'/'.urlencode(base64_encode($col5.'/brand/'.$col2));
+        $data['brand_product_count'] = $col3;
+        $data['brand_createdate'] = $col4;
         $data['shop_banner'] = $shop_banner;
         
         $stmt->close();
@@ -36,9 +40,10 @@
                 - brand_name
                 - brand_createdate
                 - brand_product_count
+                - username
     */
     function actionData($brand_id,$con){
-        $stmt = $con->query("SELECT
+        $stmt = $con->prepare("SELECT
                                     brand_name, 
                                     brand_image,
                                     brand_product_count,
@@ -49,8 +54,9 @@
                                     LEFT JOIN shop ON shop.shop_id=brand.shop_id
                                     LEFT JOIN `user` ON user.user_id=shop.user_id
                             WHERE 
-                                brand_id=".$brand_id."");
-                
+                                brand_id=?");
+         
+        $stmt->bind_param("i", $brand_id);       
         /*
             Function location in : functions.php
         */

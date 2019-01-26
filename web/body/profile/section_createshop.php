@@ -1,17 +1,46 @@
 <div class="myprofile" id="createshop">
-    <div class="headerMyprofile">Buat Toko</div>
+    <div class="headerMyprofileTransaction">Buat Toko</div>
     <div class="bodyMyprofile">
-        <div>
-            <span>Nama Toko</span>
+        <div class="head">Detail</div>
+        <div class="body">
+            <div>
+                <span>Nama</span>
+            </div>
+            <input type="text" id="shopname" class="inputCreateShopPrivate"/>
+            <div>
+                <span>Logo</span>
+            </div>
+            <div>
+                <img src="../../img/no-photo.jpg" id="previewImageCreateShopPrivate" width="150" height="150"/>
+                <label for="filesCreateShopPrivate" style="display: block;">Unggah Foto</label>
+                <input id="filesCreateShopPrivate" type="file">
+            </div>
+            <div>
+                <span>Deskripsi</span>
+            </div>
+            <div>
+                <textarea id="shopdesc" class="inputCreateShopPrivate" cols="50" rows="5"></textarea>
+            </div>
         </div>
-        <div>
-            <input type="text" id="shopname" class="inputChangePassword"/>
-        </div>
-        <div>
-            <span>Deskripsi Toko</span>
-        </div>
-        <div>
-            <textarea id="shopdesc" class="inputChangePassword"></textarea>
+        <div class="head">Rekening</div>
+        <div class="body">
+            <div>
+                <span style="line-height: 30px;">Nama Bank</span>
+            </div>
+            <div style="margin: 0px;">
+                <div class="select" id="bankname_con" style="width: 15%;overflow: hidden;">
+                    <select id="bankname"></select>
+                </div>
+            </div>
+            <div>
+                <span style="line-height: 30px;">Nama Pemilik</span>
+            </div>
+            <input type="text" id="recname" class="inputCreateShopPrivate" style="width: 33.5%;"/>
+            <div>
+                <span>No. Rekening</span>
+            </div>
+            <img src="/img/bca.png" id="recbanking"/>
+            <input type="text" id="recno" class="inputCreateShopPrivate" style="width: 20%;"/>
         </div>
     </div>
     <div class="footerMyprofile">

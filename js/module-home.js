@@ -183,7 +183,7 @@ function bestseller(){
                         listproduct += '   <div class="grid-sub-cont9-body-list-hover">';
                         listproduct += '       <i class="fa fa-shopping-cart bestseller-cart"></i>';
                         listproduct += '       <i class="fa fa-thumbs-o-up bestseller-like"></i>';
-                        listproduct += '       <div datainternal-id="'+val.product_id+'~'+val.product_isfavorite+'" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">Lihat</div>';
+                        listproduct += '       <div datainternal-id="'+val.product_id+'~'+val.product_isfavorite+'~'+val.shop_id+'" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">Lihat</div>';
                         listproduct += '   </div>';
                         listproduct += '</div>';
                         
@@ -204,6 +204,7 @@ function bestseller(){
                 	    var productArray = ($(this).next('i').next('div').attr('datainternal-id')).split("~");
                 	    
                         cartData.product_id = parseInt(productArray[0]);
+                        cartData.shop_id = parseInt(productArray[2]);
                         addtocartProduct();
                     });
                                     
@@ -213,7 +214,7 @@ function bestseller(){
                         if($('.isSignin').val() === ''){
                     	   notif("error","Harap login terlebih dahulu","right","top");
                     	}else if(parseInt(productArray[1]) == 1){
-                    	        notif("error","Anda sudah menyimpan produk ini","top");
+                    	   notif("error","Anda sudah menyimpan produk ini","top");
                         }else{
                             favoriteData.product_id = parseInt(productArray[0]);
                             favoriteProduct();
@@ -252,7 +253,7 @@ function promo(){
                         listproduct += '   <div class="grid-sub-cont9-body-list-hover">';
                         listproduct += '       <i class="fa fa-shopping-cart promo-cart"></i>';
                         listproduct += '       <i class="fa fa-thumbs-o-up promo-like"></i>';
-                        listproduct += '       <div datainternal-id="'+val.product_id+'~'+val.product_isfavorite+'" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">Lihat</div>';
+                        listproduct += '       <div datainternal-id="'+val.product_id+'~'+val.product_isfavorite+'~'+val.shop_id+'" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">Lihat</div>';
                         listproduct += '   </div>';
                         listproduct += '</div>';
                         
@@ -271,6 +272,7 @@ function promo(){
                 	    var productArray = ($(this).next('i').next('div').attr('datainternal-id')).split("~");
                 	    
                         cartData.product_id = parseInt(productArray[0]);
+                        cartData.shop_id = parseInt(productArray[2]);
                         addtocartProduct();
                     });
                                     
@@ -350,6 +352,7 @@ function addtocartProduct(){
             url: PRODUCT_CART_ADD_API,
             data:JSON.stringify({ 
                     product_id: cartData.product_id,
+                    shop_id: cartData.shop_id,
                     sum : 1
             }),
             dataType: 'json',

@@ -30,6 +30,12 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $oldpassword = param($request['oldpassword']);
+    $newpassword = param($request['newpassword']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
     
     if($token == ''){
@@ -57,17 +63,22 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
-            $stmt = $con->query("SELECT 
+            $stmt = $con->prepare("SELECT 
                                     1
                                 FROM 
                                     user 
                                 WHERE 
-                                    user_id='".$user_id."' and password='".$request['oldpassword']."'");
+                                    user_id=? and password=?");
             
+            $stmt->bind_param("ss", $user_id,$oldpassword);
+            
+            $stmt->execute();
+            
+            $stmt->store_result();
             /*
                 Function location in : /model/general/functions.php
             */
@@ -79,7 +90,7 @@
                 */
                 password_notcorrect();
             }else{
-                $param = base64_encode($user_id.'~'.$request['newpassword']);
+                $param = base64_encode($user_id.'~'.$newpassword);
                 
                 $mail = new PHPMailer;
                 $mail->isSMTP();

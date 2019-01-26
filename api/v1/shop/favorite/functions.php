@@ -14,13 +14,14 @@
     }
     
     function count_shop($con,$shop_id){
-        $stmt = $con->query("SELECT 
+        $stmt = $con->prepare("SELECT 
                                 count(1) AS shop_count
                             FROM 
                                 shop_favorite 
                             WHERE 
-                                shop_id=".$shop_id."");
-                
+                                shop_id=?");
+        
+        $stmt->bind_param("i", $shop_id);        
         /*
             Function location in : /model/general/functions.php
         */

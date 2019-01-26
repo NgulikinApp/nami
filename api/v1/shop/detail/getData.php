@@ -86,23 +86,30 @@
                         shop_image_location,
                         CONCAT('Terakhir diganti tanggal ',DATE_FORMAT(shop_notes_modifydate, '%d %M %Y'),', pukul ',DATE_FORMAT(shop_notes_modifydate, '%H.%i')) AS shop_notes_modifydate,
                         shop_total_review,
-                        shop_total_discuss
+                        shop_total_discuss,
+                        phone
                     FROM 
                         shop
                         LEFT JOIN `user` ON `user`.user_id = shop.user_id
                     WHERE";
                                                     
             if(is_int($id)){
-                $sql .= " shop.shop_id=".$id."";
+                $sql .= " shop.shop_id=?";
             }else{
-                $sql .= " shop.shop_name='".$id."'";
+                $sql .= " shop.shop_name=?";
             }
-            $stmt = $con->query($sql);
+            $stmt = $con->prepare($sql);
+            
+            if(is_int($id)){
+                $stmt->bind_param("i", $id);
+            }else{
+                $stmt->bind_param("s", $id);
+            }
             
             /*
                 Function location in : functions.php
             */
-            detail($stmt,$id);
+            detail($stmt);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

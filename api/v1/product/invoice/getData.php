@@ -50,7 +50,7 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
@@ -59,7 +59,6 @@
                                 invoice.invoice_id,
                                 delivery_name,
                                 invoice_delivery_price,
-                                invoice_noresi,
                                 invoice_total_price,
                                 invoice_paid,
                                 invoice_paiddate,
@@ -83,10 +82,18 @@
                                 LEFT JOIN delivery ON delivery.delivery_id = invoice.delivery_id
                                 LEFT JOIN `user` ON `user`.user_id=invoice.user_id
                             WHERE
-                                invoice.invoice_id = ".$noinvoice."
+                                invoice.invoice_id = ?
+                            GROUP BY
+                                invoice_detail_notes,
+                                product_name,
+                                brand_name,
+                                shop_name,
+                                product_image,
+                                product_average_rate
                        ";
             
-            $stmt = $con->query($sql);
+            $stmt = $con->prepare($sql);
+            $stmt->bind_param("i", $noinvoice);
             /*
                 Function location in : functions.php
             */

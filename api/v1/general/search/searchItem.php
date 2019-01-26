@@ -28,16 +28,18 @@
     /*
         Parameters
     */
-    $name = @$_GET['name'];
-    $selsort = @$_GET['selsort'];
-    $pricemax = @$_GET['pricemax'];
-    $pricemin = @$_GET['pricemin'];
-    $rate = @$_GET['rate'];
-    $type = @$_GET['type'];
-    $page = @$_GET['page'];
-    $pagesize = @$_GET['pagesize'];
-    $category = @$_GET['category'];
-    $subcategory = @$_GET['subcategory'];
+    $name = param(@$_GET['name']);
+    $selsort = param(@$_GET['selsort']);
+    $pricemax = param(@$_GET['pricemax']);
+    $pricemin = param($_GET['pricemin']);
+    $rate = param(@$_GET['rate']);
+    $type = param(@$_GET['type']);
+    $page = param(@$_GET['page']);
+    $pagesize = param(@$_GET['pagesize']);
+    $category = param(@$_GET['category']);
+    $subcategory = param(@$_GET['subcategory']);
+    $province = param(@$_GET['province']);
+    $regency = param(@$_GET['regency']);
     
     $con->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
     
@@ -57,13 +59,15 @@
                                 @count_product := COUNT(product_id) 
                             FROM 
                                 product
+                                LEFT JOIN brand ON brand.brand_id = product.brand_id
+                                LEFT JOIN shop ON shop.shop_id = brand.shop_id
                             WHERE
                                 1=1";
                 
                 /*
                     Function location in : function.php
                 */            
-                $query .= buildCondition_item(@$name,@$pricemax,@$pricemin,@$rate,@$category,$subcategory);
+                $query .= buildCondition_item(@$name,@$pricemax,@$pricemin,@$rate,@$category,$subcategory,$province,$regency);
                 
                 $query .= ";";
                 
@@ -87,7 +91,7 @@
                 /*
                     Function location in : function.php
                 */
-                $query .= buildCondition_item(@$name,@$pricemax,@$pricemin,@$rate,@$category,$subcategory);
+                $query .= buildCondition_item(@$name,@$pricemax,@$pricemin,@$rate,@$category,$subcategory,$province,$regency);
                 
                 $query .= ' AND product_isactive=1';
                 
@@ -108,6 +112,14 @@
                                 shop
                             WHERE
                                 1=1";
+                if(@$province != ''){
+                    $query .= " AND shop_provinces = '".$province."'";
+                }
+                
+                if(@$regency != ''){
+                    $query .= " AND shop_regencies = '".$regency."'";
+                }
+        
                 if(@$name != ''){
                     $query .= " AND shop_name like '%".$name."%'";
                 }
@@ -120,13 +132,23 @@
                                     shop_icon,
                                     username,
                                     DATEDIFF(CURDATE(),CAST(shop_createdate AS DATE)) AS difdate,
-                                    @count_shop AS count_shop
+                                    @count_shop AS count_shop,
+                                    regencies.`name` as regency_name
                             FROM 
                                     shop
                                     LEFT JOIN `user` ON `user`.user_id = shop.user_id
+                                    LEFT JOIN regencies ON regencies.id=shop.shop_regencies
                             WHERE
                                     1=1";
+                                    
+                if(@$province != ''){
+                    $query .= " AND shop_provinces = '".$province."'";
+                }
                 
+                if(@$regency != ''){
+                    $query .= " AND shop_regencies = '".$regency."'";
+                }
+        
                 if(@$name != ''){
                     $query .= " AND shop_name like '%".$name."%'";
                 }
@@ -140,6 +162,7 @@
             /*
                 Function location in : functions.php
             */
+            
             dosearch($query,$con,$type,$pagesize);
         }catch(Exception $e){
             /*

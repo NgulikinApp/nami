@@ -13,73 +13,84 @@
                 - university
                 - user_photo
     */
-    function detail($stmt,$id){
+    function detail($stmt){
         $data = array();
         
+        $stmt->execute();
+        $stmt->store_result();
+        
         if($stmt->num_rows > 0){
-            $row = $stmt->fetch_object();
+            $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16, $col17, $col18, $col19, $col20, $col21, $col22, $col23, $col24, $col25, $col26, $col27, $col28, $col29);
             
-            $shopImageArray = explode(",",$row->shop_image_location);
+            $stmt->fetch();
+            
+            $shopImageArray = explode(",",$col25);
             $countShopImage = sizeof($shopImageArray);
             
-            if($row->shop_icon != ""){
-                $icon = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/shop/icon/'.$row->shop_icon));
+            if($col6 != ""){
+                $icon = IMAGES_URL.'/'.urlencode(base64_encode($col3.'/shop/icon/'.$col6));
             }else{
                 $icon = INIT_URL."/img/icontext.png";
             }
             
-            if($row->user_photo != "no-photo.jpg"){
-                $user_photo = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/'.$row->user_photo));
+            if($col10 != "no-photo.jpg"){
+                $user_photo = IMAGES_URL.'/'.urlencode(base64_encode($col3.'/'.$col10));
             }else{
-                $user_photo = INIT_URL."/img/".$row->user_photo;
+                $user_photo = INIT_URL."/img/".$col10;
             }
                 
-            if($row->shop_banner != ""){
-                $shop_banner = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/shop/banner/'.$row->shop_banner));
+            if($col8 != ""){
+                $shop_banner = IMAGES_URL.'/'.urlencode(base64_encode($col3.'/shop/banner/'.$col8));
             }else{
-                $shop_banner = $row->shop_banner;
+                $shop_banner = $col8;
             }
             
             $shop_image_location = array();
-            if($row->shop_image_location != ''){
-                $imageArray = explode(",",$row->shop_image_location);
+            if($col25 != ''){
+                $imageArray = explode(",",$col25);
                 $countImage = sizeof($imageArray);
                 for($i=0;$i<$countImage;$i++){
-                    $image = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/shop/notes/'.$imageArray[$i]));
+                    $image = IMAGES_URL.'/'.urlencode(base64_encode($col3.'/shop/notes/'.$imageArray[$i]));
                     array_push($shop_image_location,$image);
                 }   
             }
             
-            $canbecommented = (intval($row->shop_id) == intval($id)) ? false : true;
+            if(isset($_SESSION['user'])){
+                $id = intval($_SESSION['user']["shop_id"]);
+                $canbecommented = (intval($col1) == intval($id)) ? false : true;
+            }else{
+                $canbecommented = false;
+            }
                 
-            $data['shop_id'] = $row->shop_id;
-            $data['user_id'] = $row->user_id;
-            $data['username'] = $row->username;
-            $data['fullname'] = $row->fullname;
-            $data['shop_name'] = $row->shop_name;
+            $data['shop_id'] = $col1;
+            $data['user_id'] = $col2;
+            $data['username'] = $col3;
+            $data['fullname'] = $col4;
+            $data['shop_name'] = $col5;
             $data['shop_icon'] = $icon;
-            $data['shop_description'] = $row->shop_description;
+            $data['shop_description'] = $col7;
             $data['shop_banner'] = $shop_banner;
-            $data['university'] = $row->university;
+            $data['university'] = $col9;
             $data['user_photo'] = $user_photo;
-            $data['shop_op_from'] = intval($row->shop_op_from);
-            $data['shop_op_to'] = intval($row->shop_op_to);
-            $data['shop_sunday'] = intval($row->shop_sunday);
-            $data['shop_monday'] = intval($row->shop_monday);
-            $data['shop_tuesday'] = intval($row->shop_tuesday);
-            $data['shop_wednesday'] = intval($row->shop_wednesday);
-            $data['shop_thursday'] = intval($row->shop_thursday);
-            $data['shop_friday'] = intval($row->shop_friday);
-            $data['shop_saturday'] = intval($row->shop_saturday);
-            $data['shop_desc'] = $row->shop_desc;
-            $data['shop_close'] = $row->shop_close;
-            $data['shop_open'] = $row->shop_open;
-            $data['shop_closing_notes'] = $row->shop_closing_notes;
-            $data['shop_location'] = $row->shop_location;
-            $data['shop_notes_modifydate'] = $row->shop_notes_modifydate;
+            $data['phone'] = $col29;
+            $data['shop_op_from'] = intval($col11);
+            $data['shop_op_to'] = intval($col12);
+            $data['shop_sunday'] = intval($col13);
+            $data['shop_monday'] = intval($col14);
+            $data['shop_tuesday'] = intval($col15);
+            $data['shop_wednesday'] = intval($col16);
+            $data['shop_thursday'] = intval($col17);
+            $data['shop_friday'] = intval($col18);
+            $data['shop_saturday'] = intval($col19);
+            $data['shop_desc'] = $col20;
+            $data['shop_close'] = $col21;
+            $data['shop_open'] = $col22;
+            $data['shop_closing_notes'] = $col23;
+            $data['shop_location'] = $col24;
+            $data['shop_notes_modifydate'] = $col26;
             $data['canbecommented'] = $canbecommented;
-            $data['shop_total_review'] = $row->shop_total_review;
-            $data['shop_total_discuss'] = $row->shop_total_discuss;
+            $data['shop_total_review'] = $col27;
+            $data['shop_total_discuss'] = $col28;
             $data['shop_image_location'] = $shop_image_location;
         }
         
@@ -101,7 +112,12 @@
                 - shop_description
     */
     function editDetail($shop_id,$shop_name,$shop_desc,$shop_photo_name,$username){
-        $icon = IMAGES_URL.'/'.urlencode(base64_encode($username.'/shop/icon/'.$shop_photo_name));
+        if($shop_photo_name != ''){
+            $icon = IMAGES_URL.'/'.urlencode(base64_encode($username.'/shop/icon/'.$shop_photo_name));
+        }else{
+            $icon = IMAGES_URL.'/'.urlencode(base64_encode($username.'/shop/icon/'.$_SESSION['user']["shop_icon"]));
+        }
+        
         $data = array(
                 "shop_id" => $shop_id,
                 "shop_name" => $shop_name,
@@ -144,15 +160,41 @@
         credentialVerified((object)$data);
     }
     
-    /*
-        Function referred on : actionAccount.php
-        Used for getting the count of data
-        Return data: row count
-    */
-    function account_verify($stmt){
-        $countrow = $stmt->num_rows;
+    function actionAccountList($cache,$key_cache,$con,$user_id){
+        $query ="SELECT 
+                        account_id,
+                        account_name,
+                        account_no,
+                        bank_name,
+                        bank_icon,
+                        account.bank_id as bank_id
+                    FROM 
+                        account 
+                        JOIN bank ON account.bank_id=bank.bank_id 
+                    WHERE 
+                        user_id = ?";
         
-        return $countrow;
+        $data = array();
+            
+        $stmt = $con->prepare($query);
+        $stmt->bind_param("s", $user_id);
+        $stmt->execute();
+            
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6);
+            
+        while ($stmt->fetch()) {
+            $data[] = array(
+                          "account_id" => $col1,
+                          "account_name" => $col2,
+                          "account_no" => $col3,
+                          "bank_name" => $col4,
+                          "bank_icon" =>  "/img/".$col5,
+                          "bank_id" => $col6
+                        );
+        }
+            
+        setMemcached($key_cache,$cache,$data,0);
+        $stmt->close();
     }
     
     /*
@@ -204,16 +246,19 @@
                 - brand_name
     */
     function selectBrand($stmt,$username){
-        $row = $stmt->fetch_object();
+        $stmt->execute();
+        
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5);
+        $stmt->fetch();
         
         $data = array(
-                    "brand_id" => $row->shop_current_brand,
-                    "modify_date" => $row->modify_date,
-                    "brand_image" => IMAGES_URL.'/'.urlencode(base64_encode($username.'/brand/'.$row->brand_image)),
-                    "brand_name" => $row->brand_name,
-                    "brand_product_count" => $row->brand_product_count
+                    "brand_id" => $col1,
+                    "modify_date" => $col2,
+                    "brand_image" => IMAGES_URL.'/'.urlencode(base64_encode($username.'/brand/'.$col3)),
+                    "brand_name" => $col4,
+                    "brand_product_count" => $col5
                 );
-        $_SESSION['user']["brand_id"]=$row->shop_current_brand;
+        $_SESSION['user']["brand_id"]=$col1;
         /*
             Function location in : /model/general/functions.php
         */
@@ -306,33 +351,38 @@
     function detailNotes($stmt){
         $data = array();
         
+        $stmt->execute();
+        $stmt->store_result();
         if($stmt->num_rows > 0){
-            $row = $stmt->fetch_object();
+            
+            $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16);
+        
+            $stmt->fetch();
             
             $shop_image_location = array();
-            if($row->shop_image_location != ''){
-                $imageArray = explode(",",$row->shop_image_location);
+            if($col16 != ''){
+                $imageArray = explode(",",$col16);
                 $countImage = sizeof($imageArray);
                 for($i=0;$i<$countImage;$i++){
-                    $image = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/shop/location/'.$imageArray[$i]));
+                    $image = IMAGES_URL.'/'.urlencode(base64_encode($col1.'/shop/notes/'.$imageArray[$i]));
                     array_push($shop_image_location,$image);
                 }   
             }
                 
-            $data['shop_op_from'] = intval($row->shop_op_from);
-            $data['shop_op_to'] = intval($row->shop_op_to);
-            $data['shop_sunday'] = intval($row->shop_sunday);
-            $data['shop_monday'] = intval($row->shop_monday);
-            $data['shop_tuesday'] = intval($row->shop_tuesday);
-            $data['shop_wednesday'] = intval($row->shop_wednesday);
-            $data['shop_thursday'] = intval($row->shop_thursday);
-            $data['shop_friday'] = intval($row->shop_friday);
-            $data['shop_saturday'] = intval($row->shop_saturday);
-            $data['shop_desc'] = $row->shop_desc;
-            $data['shop_close'] = $row->shop_close;
-            $data['shop_open'] = $row->shop_open;
-            $data['shop_closing_notes'] = $row->shop_closing_notes;
-            $data['shop_location'] = $row->shop_location;
+            $data['shop_op_from'] = intval($col2);
+            $data['shop_op_to'] = intval($col3);
+            $data['shop_sunday'] = intval($col4);
+            $data['shop_monday'] = intval($col5);
+            $data['shop_tuesday'] = intval($col6);
+            $data['shop_wednesday'] = intval($col7);
+            $data['shop_thursday'] = intval($col8);
+            $data['shop_friday'] = intval($col9);
+            $data['shop_saturday'] = intval($col10);
+            $data['shop_desc'] = $col11;
+            $data['shop_close'] = $col12;
+            $data['shop_open'] = $col13;
+            $data['shop_closing_notes'] = $col14;
+            $data['shop_location'] = $col15;
             $data['shop_image_location'] = $shop_image_location;
         }
         

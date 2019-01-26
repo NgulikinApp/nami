@@ -25,6 +25,9 @@
 			    case 'activeAccount':
 					include('api/v1/auth/active_account.php');
 				break;
+				case 'administrative':
+					include('api/v1/general/list/administrative.php');
+				break;
 				case 'asking':
 					include('api/v1/general/asking/sendMail.php');
 				break;
@@ -44,9 +47,43 @@
 				case 'generateToken':
 					include('api/v1/general/system/generateToken.php');
 				break;
-				case 'pdf':
-					include('api/v1/general/system/delivery.php');
+				case 'mypurchases':
+					switch (@$routes[2]) {
+					    case 'list':
+					        switch (@$routes[3]) {
+					            default :
+							        include('api/v1/mypurchases/list/transactions.php');
+					        }
+					    break;
+					}
 				break;
+				case 'mysales':
+				    switch (@$routes[2]) {
+				        case 'detail':
+							switch (@$routes[3]) {
+							    case 's':
+        							include('api/v1/mysales/detail/statussending.php');
+        						break;
+        						case 't':
+        							include('api/v1/mysales/detail/transaction.php');
+        						break;
+							    default :
+							        include('api/v1/mysales/detail/neworder.php');
+							}
+						break;
+						case 'list':
+							switch (@$routes[3]) {
+							    case 's':
+        							include('api/v1/mysales/list/statussending.php');
+        						break;
+        						case 't':
+        							include('api/v1/mysales/list/transaction.php');
+        						break;
+							    default :
+							        include('api/v1/mysales/list/neworder.php');
+							}
+						break;
+				    }
 				case 'notif':
 				    include('api/v1/general/notification/getNotif.php');
 				break;
@@ -79,6 +116,19 @@
 						case 'category':
 							include('api/v1/product/list/category.php');
 						break;
+						case 'discuss':
+				            switch (@$routes[3]) {
+				                case 'c':
+        							include('api/v1/product/comment/discuss.php');
+        						break;
+        						case 'r':
+        							include('api/v1/product/comment/replyDiscuss.php');
+        						break;
+				                default:
+				                    include('api/v1/product/list/discuss.php');
+				                break;
+				            }
+						break;
 						case 'favorite':
 							include('api/v1/product/favorite/favoriteItem.php');
 						break;
@@ -90,11 +140,14 @@
 						break;
 						case 'invoice':
 						    switch (@$routes[3]) {
-						        case 'us':
-        							include('api/v1/product/invoice/changestatusinvoice.php');
-        						break;
 						        case 'a':
         							include('api/v1/product/invoice/addtoinvoice.php');
+        						break;
+						        case 'ss':
+        							include('api/v1/product/invoice/sendStatusProduct.php');
+        						break;
+						        case 'us':
+        							include('api/v1/product/invoice/changestatusinvoice.php');
         						break;
         						default :
 							        include('api/v1/product/invoice/getData.php');
@@ -102,6 +155,16 @@
 						break;
 						case 'rate':
 							include('api/v1/product/rate/rateItem.php');
+						break;
+						case 'review':
+						    switch (@$routes[3]) {
+						        case 'c':
+        							include('api/v1/product/comment/review.php');
+        						break;
+						        default: 
+						            include('api/v1/product/list/review.php');
+						        break;
+						    }
 						break;
 						case 'status':
 							include('api/v1/product/list/status.php');
@@ -113,11 +176,24 @@
 				break;
 				case 'profile':
 				    switch (@$routes[2]) {
+				        case 'address':
+				            switch (@$routes[3]) {
+						        case 'a':
+        							include('api/v1/profile/address/actionData.php');
+        						break;
+        						case 'ls':
+        							include('api/v1/profile/list/listaddress.php');
+        						break;
+						        default: 
+						            include('api/v1/profile/address/getData.php');
+						        break;
+						    }
+				        break;
 				        case 'cm':
 				            include('api/v1/profile/confirmPassword.php');
 				        break;
 				        case 'ls':
-				            include('api/v1/profile/listpendingSeller.php');
+				            include('api/v1/profile/list/listpendingSeller.php');
 				        break;
 				        case 'u':
 				            include('api/v1/profile/updateUser.php');
@@ -303,6 +379,9 @@
 		        case 'p':
 		            include('web/body/shop/myproduct/index.php');
 		        break;
+		        case 'pdf':
+                	include('web/body/shop/invoice/print.php');
+                break;
 		        case 's':
 		            include('web/body/shop/mysales/index.php');
 		        break;

@@ -31,6 +31,12 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $password = param($request['password']);
+    $email = param($request['email']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -50,7 +56,7 @@
                                     WHERE 
                                         email = ?");
             
-            $stmt->bind_param("ss", $request['password'], $request['email']);
+            $stmt->bind_param("ss", $password, $email);
                 
             $stmt->execute();
             

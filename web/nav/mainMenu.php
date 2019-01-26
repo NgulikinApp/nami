@@ -2,14 +2,11 @@
     if(isset($_SESSION['user'])){
         $fullname = $_SESSION['user']["fullname"];
 		$user_photo = $_SESSION['user']["user_photo"];
-		$user_seller = $_SESSION['user']["user_seller"];
 	}else{
 		$fullname = '';
 		$user_photo = '';
-		$user_seller = '';
 	}
 ?>
-<input type="hidden" class="user_seller" value="<?php echo $user_seller; ?>"/>
 <input type="hidden" class="fullname_popup" value="<?php echo $fullname; ?>"/>
 <input type="hidden" class="user_photo_popup" value="<?php echo $user_photo; ?>"/>
 <div class="header">

@@ -34,6 +34,11 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $shop_delivery = param($request['shop_delivery']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -58,13 +63,13 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
             $stmt = $con->prepare("UPDATE shop SET shop_delivery=?' where shop_id=?");
             
-            $stmt->bind_param("si", $request['shop_delivery'], $shop_id);
+            $stmt->bind_param("si", $shop_delivery, $shop_id);
             
             $stmt->execute();
                 
@@ -73,7 +78,7 @@
             /*
                 Function location in : functions.php
             */
-            editDelivery($shop_id,$request['shop_delivery']);
+            editDelivery($shop_id,$shop_delivery);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

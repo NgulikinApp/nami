@@ -87,6 +87,14 @@ function detail(){
                     dayData.saturday = data.result.shop_saturday;
                     dayData.sunday = data.result.shop_sunday;
                     
+                    $.each( data.result.shop_image_location , function( key, val ) {
+                        shopPhotoList.push(val);
+                    });
+                    
+                    if(shopPhotoList.length > 0){
+                        readPhotoLocationURL();
+                    }
+                    
                     dayline();
                     
                     $('#shop_op_from').val(sectohour(data.result.shop_op_from));
@@ -185,7 +193,7 @@ function uploadPhotoLocation(){
                         shopPhotoList.push(result.src);
                         $('.loaderProgress').addClass('hidden');
                         
-                        readProductURL();
+                        readPhotoLocationURL();
                     }
                 });
             }else{
@@ -197,12 +205,11 @@ function uploadPhotoLocation(){
     }
 }
 
-function readShoptURL() {
+function readPhotoLocationURL() {
     var fileListDisplay = document.getElementById('photoShopLocationList');
     fileListDisplay.innerHTML = '';
     
     shopPhotoList.forEach(function (file, index) {
-        
         var img = document.createElement("img");
             img.setAttribute("src", file);
             img.setAttribute("width", "60");
@@ -223,39 +230,50 @@ function doEditNotes(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(doEditNotes);
     }else{
-        var shop_banner = $('#tempBanner').attr('src');
-            
-        $.ajax({
-            type: 'POST',
-            url: SHOP_EDITNOTES_API,
-            data:JSON.stringify({ 
-                shop_op_from : hourtosec($('#shop_op_from').val()),
-                shop_op_to : hourtosec($('#shop_op_to').val()),
-                shop_sunday : dayData.sunday,
-                shop_monday : dayData.monday,
-                shop_tuesday : dayData.tuesday,
-                shop_wednesday : dayData.wednesday,
-                shop_thursday : dayData.thursday,
-                shop_friday : dayData.friday,
-                shop_saturday : dayData.saturday,
-                shop_desc : $('#shop_desc').val(),
-                shop_close : $('#shop_close').val(),
-                shop_open : $('#shop_open').val(),
-                shop_closing_notes : $('#shop_closing_notes').val(),
-                shop_location : $('#shop_location').val()
-            }),
-            dataType: 'json',
-            beforeSend: function(xhr, settings) { 
-                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
-            },
-            success: function(data,status) {
-                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(doEditNotes);
-                }else{
-                    sessionStorage.setItem('notesNgulikin',1);
-            	    location.href=url+"/shop/t";
+        var shop_op_from = hourtosec($('#shop_op_from').val()),
+            shop_op_to = hourtosec($('#shop_op_to').val()),
+            shop_close = new Date($('#shop_close').val()),
+            shop_open = new Date($('#shop_open').val());
+        
+        if(shop_op_from > shop_op_to){
+            notif("error","Jam opersional tidak benar","center","top");
+        }else if(shop_close > shop_open){
+            notif("error","Tanggal opersional tidak benar","center","top");
+        }else{
+            $.ajax({
+                type: 'POST',
+                url: SHOP_EDITNOTES_API,
+                data:JSON.stringify({ 
+                    shop_op_from : shop_op_from,
+                    shop_op_to : shop_op_to,
+                    shop_sunday : dayData.sunday,
+                    shop_monday : dayData.monday,
+                    shop_tuesday : dayData.tuesday,
+                    shop_wednesday : dayData.wednesday,
+                    shop_thursday : dayData.thursday,
+                    shop_friday : dayData.friday,
+                    shop_saturday : dayData.saturday,
+                    shop_desc : $('#shop_desc').val(),
+                    shop_close : $('#shop_close').val(),
+                    shop_open : $('#shop_open').val(),
+                    shop_closing_notes : $('#shop_closing_notes').val(),
+                    shop_location : $('#shop_location').val()
+                }),
+                dataType: 'json',
+                beforeSend: function(xhr, settings) { 
+                    xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+                },
+                success: function(data,status) {
+                    if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                        generateToken(doEditNotes);
+                    }else if(data.status == "NO"){
+                        notif("error",data.message,"center","top");
+                    }else{
+                        sessionStorage.setItem('notesNgulikin',1);
+                	    location.href=url+"/shop/t";
+                    }
                 }
-            }
-        });
+            });   
+        }
     }
 }

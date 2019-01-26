@@ -21,7 +21,7 @@
             		<textarea class="inputSignin" id="descQuestion" placeholder="Apa yang ingin kamu tanyakan?"></textarea>
             		<i class="fa fa-question-circle"></i>
             	</div>
-            	<div class="signinBodySub questionerBodySubBox" style="margin-top:30px;">
+            	<div class="signinBodySub questionerBodySubBox" style="margin-top:50px;">
             		<input type="file" name="fileQuestioner[]" id="fileQuestioner" class="inputfile" />
 					<label for="fileQuestioner">
                        <svg id="questionsvg" width="20" height="17" viewBox="0 0 20 17">

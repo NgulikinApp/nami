@@ -37,6 +37,11 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $comment = param($request['comment']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -64,26 +69,28 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
             $stmt = $con->prepare("INSERT INTO shop_discuss_reply(shop_discuss_id,user_id,shop_discuss_reply_comment) VALUES(?,?,?)");
                
-            $stmt->bind_param("iss", $id,$user_id,$request['comment']);
+            $stmt->bind_param("iss", $id,$user_id,$comment);
             
             $stmt->execute();
             
             $shop_discuss_reply_id = $con->insert_id;
             
-            $stmt = $con->query("SELECT 
+            $stmt = $con->prepare("SELECT 
                                         DATE_FORMAT(shop_discuss_reply_createdate, '%W, %d %M %Y') AS comment_date
                                     FROM 
                                         shop_discuss_reply
                                     WHERE
-                                        shop_discuss_reply_id = ".$shop_discuss_reply_id."");
+                                        shop_discuss_reply_id = ?");
+                                        
+            $stmt->bind_param("i", $shop_discuss_reply_id);
             
-            commentreply($stmt,$shop_discuss_reply_id,$id,$user_id,$request['comment'],$user_photo,$fullname);
+            commentreply($stmt,$shop_discuss_reply_id,$id,$user_id,$comment,$user_photo,$fullname);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

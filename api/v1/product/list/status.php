@@ -37,13 +37,15 @@
             //secretKey variabel getting from : /model/jwt.php
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            $stmt = $con->query("SELECT 
+            $i=1;
+            $stmt = $con->prepare("SELECT 
                                             status_id, 
                                             status_name
                                     FROM 
                                             status
-                                    WHERE 1=1");
+                                    WHERE 1=?");
             
+            $stmt->bind_param("i", $i);
             /*
                 Function location in : functions.php
             */

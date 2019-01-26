@@ -23,7 +23,7 @@
     /*
         Parameters
     */
-    $keyword = @$_GET['keyword'];
+    $keyword = @param($_GET['keyword']);
     
     /*
         Function location in : /model/general/get_auth.php
@@ -53,7 +53,7 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
@@ -72,14 +72,21 @@
                         LEFT JOIN shop ON shop.shop_id = brand.shop_id
                         LEFT JOIN `user` ON `user`.user_id = shop.user_id
                     WHERE
-                        notification.user_id = '".$user_id."'";
+                        notification.user_id = ?";
+            
             if($keyword != ''){
-                $sql .= " AND notification_desc LIKE '%".$keyword."%'";
+                $sql .= " AND notification_desc LIKE '%?%'";
             }
             $sql .= " ORDER BY 
                         notification_id DESC";
             
-            $stmt = $con->query($sql);
+            $stmt = $con->prepare($sql);
+            
+            if($keyword != ''){
+                $stmt->bind_param("ss", $user_id,$keyword);
+            }else{
+                $stmt->bind_param("s", $user_id);
+            }
     
             /*
                 Function location in : functions.php

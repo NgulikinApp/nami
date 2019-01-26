@@ -10,17 +10,21 @@
                 - shop_comment
                 - comment_date
     */
-    function comment($stmt,$id,$shop_id,$user_id,$comment,$user_photo,$fullname){
-        $row = $stmt->fetch_object();
+    function comment($stmt,$id,$shop_id,$user_id,$comment,$user_photo,$username){
+        $stmt->execute();
+        
+        $stmt->bind_result($col1);
+        
+        $stmt->fetch();
         
         $data = array(
                     "id" => intval($id),
                     "shop_id" => intval($shop_id),
                     "user_id" => $user_id,
-                    "fullname" => $fullname,
+                    "username" => $username,
                     "user_photo" => $user_photo,
                     "shop_comment" => $comment,
-                    "comment_date" => $row->comment_date
+                    "comment_date" => $col1
                 );
                         
         $stmt->close();
@@ -43,7 +47,11 @@
                 - comment_date
     */
     function commentreply($stmt,$id,$shop_discuss_id,$user_id,$comment,$user_photo,$fullname){
-        $row = $stmt->fetch_object();
+        $stmt->execute();
+        
+        $stmt->bind_result($col1);
+        
+        $stmt->fetch();
         
         $data = array(
                     "id" => intval($id),
@@ -52,7 +60,7 @@
                     "fullname" => $fullname,
                     "user_photo" => $user_photo,
                     "shop_comment" => $comment,
-                    "comment_date" => $row->comment_date
+                    "comment_date" => $col1
                 );
                         
         $stmt->close();
@@ -61,5 +69,47 @@
             Function location in : /model/general/functions.php
         */
         credentialVerified((object)$data);
+    }
+    
+    /*
+        Function referred on : discuss.php,review.php
+        Used for cheking user shop_id and current shop_id
+        Return data:
+                - status (NO)
+                - message
+                - result
+    */
+    function unauthComment(){
+        $dataout = array(
+                    "status" => "NO",
+                    "message" => "Unauthorized for commenting",
+                    "result" => array()
+                );
+        
+        /*
+            Function location in : /model/generatejson.php
+        */
+        return generateJSON($dataout);
+    }
+    
+    /*
+        Function referred on : discuss.php,review.php
+        Used for returning empty comment message
+        Return data:
+                - status (NO)
+                - message
+                - result
+    */
+    function emptyComment(){
+        $dataout = array(
+                    "status" => "NO",
+                    "message" => "Comment is empty",
+                    "result" => array()
+                );
+        
+        /*
+            Function location in : /model/generatejson.php
+        */
+        return generateJSON($dataout);
     }
 ?>

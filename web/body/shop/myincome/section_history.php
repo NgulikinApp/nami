@@ -1,11 +1,11 @@
 <div class="grid-incomehistory-left">
     <div class="profile">
         <div class="left">
-            <div id="photo_profile"></div>
-            <div id="name_profile">Reicha Sofi</div>
+            <div id="photo_profile" style='background-image: url("<?php echo $_SESSION['user']["user_photo"]; ?>");'></div>
+            <div id="name_profile"><?php echo $_SESSION['user']["fullname"]; ?></div>
         </div>
         <div class="right">
-            4 bulan bergabung
+            <?php echo $_SESSION['user']["time_signup"]; ?>
         </div>
     </div>
     <div class="menu">
@@ -36,13 +36,8 @@
     </div>
     <div class="footer">
         <div class="recbank">
-            <div class="left">
-                <div class="bluesky">rekening bank saya</div>
-                <div>Bank Central Asia</div>
-            </div>
-            <div class="right">
-                731 3884 848
-            </div>
+            <div class="bluesky">rekening bank saya</div>
+            <div class="list"></div>
         </div>
     </div>
     <div class="addrec bluesky">
@@ -58,7 +53,7 @@
             <div class="left">
                 Catatan Transaksi Januari
             </div>
-            <div class="right">
+            <div class="right print_incomemonth">
                 <img src="/img/download.png""/>
             </div>
         </div>
@@ -66,7 +61,7 @@
             <div class="left">
                 Catatan Transaksi Februari
             </div>
-            <div class="right">
+            <div class="right print_incomemonth">
                 <img src="/img/download.png"/>
             </div>
         </div>
@@ -74,7 +69,7 @@
             <div class="left">
                 Catatan Transaksi Maret
             </div>
-            <div class="right">
+            <div class="right print_incomemonth">
                 <img src="/img/download.png"/>
             </div>
         </div>

@@ -23,6 +23,17 @@
     $request = postraw();
     
     /*
+        Parameters
+    */
+    $user_address_id = param($request['user_address_id']);
+    $delivery_id = param($request['delivery_id']);
+    $delivery_price = param($request['delivery_price']);
+    $invoice_total_price = param($request['invoice_total_price']);
+    $product_id = param($request['product_id']);
+    $invoice_detail_sumproduct = param($request['invoice_detail_sumproduct']);
+    $invoice_detail_notes = param($request['invoice_detail_notes']);
+    
+    /*
         Function location in : /model/general/get_auth.php
     */
     $token = bearer_auth();
@@ -50,29 +61,43 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
-            $stmt = $con->prepare("INSERT INTO invoice(user_id,delivery_id,invoice_delivery_price,invoice_total_price) VALUES(?,?,?,?)");
+            $user_address_idarray = explode(',',$user_address_id);
+            $delivery_idarray = explode(',',$delivery_id);
+            $product_idarray = explode(',',$product_id);
+            $invoice_detail_notesarray = explode('~',$invoice_detail_notes);
             
-            $stmt->bind_param("siii", $user_id,$request['delivery_id'],$request['delivery_price'],$request['invoice_total_price']);
+            $product_idlen = count($product_idarray);
+            for($i=0;$i<$product_idlen;$i++){
+                $stmt = $con->prepare("INSERT INTO invoice(user_id,invoice_total_price) VALUES(?,?)");
             
-            $stmt->execute();
-            
-            $invoice_id = $con->insert_id;
-            
-            $stmt = $con->prepare("INSERT INTO invoice_detail(invoice_id,product_id,invoice_detail_sumproduct,invoice_detail_notes) VALUES(?,?,?,?)");
-            
-            $stmt->bind_param("iiis", $invoice_id,$request['product_id'],$request['invoice_detail_sumproduct'],$request['invoice_detail_notes']);
-            
-            $stmt->execute();
-            
-            $stmt = $con->prepare("INSERT INTO invoice_status_detail(invoice_id) VALUES(?)");
-            
-            $stmt->bind_param("i", $invoice_id);
-            
-            $stmt->execute();
+                $stmt->bind_param("si", $user_id,$invoice_total_price);
+                
+                $stmt->execute();
+                
+                $invoice_id = $con->insert_id;
+                
+                $stmt->close();
+                
+                $stmt = $con->prepare("INSERT INTO invoice_detail(invoice_id,product_id,delivery_id,user_address_id,invoice_detail_sumproduct,invoice_detail_notes,invoice_detail_delivery_price) VALUES(?,?,?,?,?,?,?)");
+                
+                $stmt->bind_param("iiiiisi", $invoice_id,$product_idarray[$i],$user_address_idarray[$i],$user_address_idarray[$i],$invoice_detail_sumproduct,$invoice_detail_notesarray[$i],$delivery_price);
+                
+                $stmt->execute();
+                
+                $stmt->close();
+                
+                $stmt = $con->prepare("INSERT INTO invoice_status_detail(invoice_id) VALUES(?)");
+                
+                $stmt->bind_param("i", $invoice_id);
+                
+                $stmt->execute();
+                
+                $stmt->close();
+            }
             
             addtoinvoice($invoice_id);
         }catch(Exception $e){

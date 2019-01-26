@@ -12,7 +12,7 @@
     
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
-    $q = base64_decode ($_GET['q']);
+    $q = base64_decode (param($_GET['q']));
     
     $qArray = explode('~',$q);
     $user_id = $qArray[0];

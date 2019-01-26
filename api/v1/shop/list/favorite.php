@@ -23,8 +23,8 @@
     /*
         Parameters
     */
-    $page = $_GET['page'];
-    $pagesize = $_GET['pagesize'];
+    $page = param($_GET['page']);
+    $pagesize = param($_GET['pagesize']);
     
     /*
         Function location in : /model/general/get_auth.php
@@ -54,11 +54,11 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
-            $stmt = $con->query("SELECT 
+            $stmt = $con->prepare("SELECT 
                                     shop.shop_id, 
                                     shop_name,
                                     shop_icon,
@@ -68,13 +68,14 @@
                         FROM 
                                     shop_favorite
                                     LEFT JOIN shop ON shop.shop_id = shop_favorite.shop_id
-                                    LEFT JOIN `user` ON `user`.user_id = shop_favorite.user_id
+                                    LEFT JOIN `user` ON `user`.user_id = shop.user_id
                                 WHERE
-                                    shop_favorite.user_id = '".$user_id."'
+                                    shop_favorite.user_id = ?
                         		ORDER BY 
                                     shop_favorite.shop_id DESC
-                        		LIMIT ".$page.",".$pagesize."");
+                        		LIMIT ?,?");
             
+            $stmt->bind_param("sii", $user_id,$page,$pagesize);
             /*
                 Function location in : functions.php
             */

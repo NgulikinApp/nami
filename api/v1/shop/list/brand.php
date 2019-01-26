@@ -56,12 +56,12 @@
                 /*
                     Function location in : /model/general/functions.php
                 */
-                if(checkingAuthKey($con,$user_id,$key,0) == 0){
+                if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                     return invalidKey();
                 }
             }
             
-            $stmt = $con->query("SELECT 
+            $stmt = $con->prepare("SELECT 
                                         brand_id,
                                         brand_name,
                                         brand_image,
@@ -73,10 +73,11 @@
                                         LEFT JOIN `user` ON `user`.user_id = shop.user_id
                                         LEFT JOIN brand ON brand.shop_id = shop.shop_id
                                     WHERE
-                                        shop.shop_name = '".$shop_name."'
+                                        shop.shop_name = ?
                                     ORDER BY 
                                         brand_id DESC");
             
+            $stmt->bind_param("s", $shop_name);
             /*
                 Function location in : function.php
             */

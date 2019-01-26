@@ -120,26 +120,24 @@ function buttonSignup(){
                     if(result.message == 'Invalid credential' || result.message == 'Token expired'){
                         generateToken(buttonSignup);
                     }else if(result.status == 'NO'){
-                        $.each( result.response, function( i, item ) {
-                            if(item.email == 'invalid'){
-                                $('#emailSignUp').addClass('invalidFormat');
-                                $('#emailSignUp').parent().next().next().html('Format email tidak benar').addClass('invalidFormat');
-                            }else if(item.email == 'exist'){
-                                $('#emailSignUp').addClass('invalidFormat');
-                                $('#emailSignUp').parent().next().next().html('Email sudah ada').addClass('invalidFormat');
-                            }
-                            if(item.dob == 'invalid'){
-                                $('#dateSignUp').addClass('invalidFormat');
-                                $('#dateSignUp').parent().next().html('Harus diisi sesuai KTP').addClass('invalidFormat');
-                            }
-                            if(item.username == 'invalid'){
-                                $('#usernameSignUp').addClass('invalidFormat');
-                                $('#usernameSignUp').parent().next().next().html('Username hanya boleh terdiri angka dan huruf dan minimal 3 karakter').addClass('invalidFormat');
-                            }else if(item.username == 'exist'){
-                                $('#usernameSignUp').addClass('invalidFormat');
-                                $('#usernameSignUp').parent().next().next().html('Username sudah ada').addClass('invalidFormat');
-                            }
-                        });
+                        if(result.response.email == 'invalid'){
+                            $('#emailSignUp').addClass('invalidFormat');
+                            $('#emailSignUp').parent().next().next().html('Format email tidak benar').addClass('invalidFormat');
+                        }else if(result.response.email == 'exist'){
+                            $('#emailSignUp').addClass('invalidFormat');
+                            $('#emailSignUp').parent().next().next().html('Email sudah ada').addClass('invalidFormat');
+                        }
+                        if(result.response.dob == 'invalid'){
+                            $('#dateSignUp').addClass('invalidFormat');
+                            $('#dateSignUp').parent().next().html('Harus diisi sesuai KTP').addClass('invalidFormat');
+                        }
+                        if(result.response.username == 'invalid'){
+                            $('#usernameSignUp').addClass('invalidFormat');
+                            $('#usernameSignUp').parent().next().next().html('Username hanya boleh terdiri angka dan huruf dan minimal 3 karakter').addClass('invalidFormat');
+                        }else if(result.response.username == 'exist'){
+                            $('#usernameSignUp').addClass('invalidFormat');
+                            $('#usernameSignUp').parent().next().next().html('Username sudah ada').addClass('invalidFormat');
+                        }
                     }else{
                         if(ismanual){
                             $('.inputSignup').removeClass('invalidFormat');

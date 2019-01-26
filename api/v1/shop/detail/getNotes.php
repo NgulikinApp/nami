@@ -49,11 +49,11 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
-            $stmt = $con->query("SELECT 
+            $stmt = $con->prepare("SELECT 
                                                     username,
                                                     shop_op_from,
                                                     shop_op_to,
@@ -74,7 +74,10 @@
                                                     shop
                                                     LEFT JOIN `user` ON `user`.user_id = shop.user_id
                                             WHERE
-                                                    shop.shop_id=".$shop_id."");
+                                                    shop.shop_id=?");
+            
+            
+            $stmt->bind_param("i", $shop_id);
             /*
                 Function location in : functions.php
             */

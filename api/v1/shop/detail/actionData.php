@@ -33,6 +33,12 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $shop_name = param($request['shop_name']);
+    $shop_desc = param($request['shop_desc']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -60,7 +66,7 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
@@ -86,16 +92,16 @@
                 if ($shop_photo_name != ''){
                     $stmt = $con->prepare("UPDATE shop SET shop_name= ?,shop_description=?,shop_icon=? where shop_id=?");
                     
-                    $stmt->bind_param("sssi", $request['shop_name'], $request['shop_desc'], $shop_photo_name, $shop_id);
+                    $stmt->bind_param("sssi", $shop_name, $shop_desc, $shop_photo_name, $shop_id);
                 }else{
                     $stmt = $con->prepare("UPDATE shop SET shop_name= ?,shop_description=? where shop_id=?");
                     
-                    $stmt->bind_param("sssi", $request['shop_name'], $request['shop_desc'], $shop_id);
+                    $stmt->bind_param("sssi", $shop_name, $shop_desc, $shop_id);
                 }   
             }else{
                 $stmt = $con->prepare("INSERT INTO shop(shop_name,shop_icon,shop_description) VALUES(?,?,?)");
                 
-                $stmt->bind_param("sss", $request['shop_name'], $shop_photo_name, $request['shop_desc']);   
+                $stmt->bind_param("sss", $shop_name, $shop_photo_name, $shop_desc);   
             }
                 
             $stmt->execute();
@@ -114,7 +120,7 @@
             /*
                 Function location in : functions.php
             */
-            editDetail($shop_id,$request['shop_name'],$request['shop_desc'],$shop_photo_name,$username);
+            editDetail($shop_id,$shop_name,$shop_desc,$shop_photo_name,$username);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

@@ -1,5 +1,6 @@
 var rateData = {},
-    addtocartSum = {};
+    addtocartSum = {},
+    productData = {};
 
 $( document ).ready(function() {
     initGeneral();
@@ -88,7 +89,7 @@ function detail(){
                             product += '                    <span>Terjual</span>';
                             product += '                </div>';
                             product += '                <div class="tabelList">';
-                            product += '                    <span id="rate">'+data.result.product_average_rate+'</span>';
+                            product += '                    <span id="rate">'+data.result.product_rate_value+'</span>';
                             product += '                    <span>Penilaian</span>';
                             product += '                </div>';
                             product += '                <div class="tabelList">';
@@ -101,8 +102,11 @@ function detail(){
                             product += '        </div>';
                             product += '    </div>';
                             product += '</div>';
-                            
-                        document.title = (data.result.product_name).toUpperCase() + '| Ngulikin';
+                        
+                        
+                    	productData.id = data.result.product_id;
+                    	productData.shop_id = data.result.shop_id;
+                        document.title = (data.result.product_name).toUpperCase() + ' | Ngulikin';
                         $('.grid-product-container:first-child').html(product);
                         
                         $.tosrus.defaults.media.image = {
@@ -119,11 +123,9 @@ function detail(){
                     		}
                     	});
                     	
-                    	if(data.result.product_rate_value != 0){
-                    	    $(".rateyo").rateYo({rating: data.result.product_rate_value,readOnly: true});
-                    	}
+                    	$(".rateyo").rateYo({rating: data.result.product_average_rate,readOnly: true});
                         
-                        $(".rateyo").rateYo({fullStar: true}).on("rateyo.set", function (e, data) {
+                        /*$(".rateyo").rateYo({fullStar: true}).on("rateyo.set", function (e, data) {
                             if($('.isSignin').val() === ''){
                     	        notif("error","Harap login terlebih dahulu","right","top");
                             }else if(israte == 1){
@@ -132,7 +134,7 @@ function detail(){
                     	        rateData.value = data.rating;
                     	        rateProduct();
                     	    }
-                        });
+                        });*/
                         
                         $('#btnCart').on( 'click', function( e ){
                             addtocartSum.sumproduct = $('#sumProduct').val();
@@ -162,14 +164,11 @@ function favoriteProduct(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(favoriteProduct);
     }else{
-        var url = window.location.href,
-            product_id = url.substr(url.lastIndexOf('/') + 1);
-            
         $.ajax({
             type: 'POST',
             url: PRODUCT_FAVORITE_API,
             data:JSON.stringify({ 
-                    product_id: product_id
+                    product_id: productData.id
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -195,14 +194,11 @@ function rateProduct(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(rateProduct);
     }else{
-        var url = window.location.href,
-            product_id = url.substr(url.lastIndexOf('/') + 1);
-            
         $.ajax({
             type: 'POST',
             url: PRODUCT_RATE_API,
             data:JSON.stringify({ 
-                    product_id: product_id,
+                    product_id: productData.id,
                     rate : rateData.value
             }),
             dataType: 'json',
@@ -227,14 +223,12 @@ function addtocartProduct(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(addtocartProduct);
     }else{
-        var url = window.location.href,
-            product_id = url.substr(url.lastIndexOf('/') + 1);
-            
         $.ajax({
             type: 'POST',
             url: PRODUCT_CART_ADD_API,
             data:JSON.stringify({ 
-                    product_id: product_id,
+                    product_id: productData.id,
+                    shop_id: productData.shop_id,
                     sum : addtocartSum.sumproduct
             }),
             dataType: 'json',

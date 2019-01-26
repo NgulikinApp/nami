@@ -42,15 +42,46 @@ function initShopMysales(){
 	});
 	
 	$('.order-container.right .grid:first-child .detail:last-child .head').on('click', function (e) {
-        var productId = $(this).data('productid');
-        location.href = url+"/product/"+productId;
+        var shopname = ($(this).data("shopname")).split(' ').join('-'),
+            productname = ($(this).data("productname")).split(' ').join('-');
+                            
+            location.href = url+"/product/"+shopname+"/"+productname;
     });
     
     listdelivery();
     liststatus();
     
-    $('.ui-loader,#filterStatusSender-button span,#filterDeliverySender-button span,#filterConfirmSender-button span,#filterStatusSender-button span,#filterTransactionSender-button span,#filterMysalesStatus-button span,#filterStatusSender-button span').remove();
+    $('.ui-loader,#filterStatusOrder-button span,#filterStatusSender-button span,#filterDeliverySender-button span,#filterConfirmSender-button span,#filterStatusSender-button span,#filterTransactionSender-button span,#filterMysalesStatus-button span,#filterStatusSender-button span').remove();
 	$('.button-container .ui-btn').text('');
+	
+	$('#filterStatusOrder').on( 'change', function( e ){
+	    $('#filterStatusOrder-button span').remove();
+	});
+	
+	$('#filterDeliverySender').on( 'change', function( e ){
+	    $('#filterDeliverySender-button span').remove();
+	});
+	
+	$('#filterConfirmSender').on( 'change', function( e ){
+	    $('#filterConfirmSender-button span').remove();
+	});
+	
+	$('#filterStatusSender').on( 'change', function( e ){
+	    $('#filterStatusSender-button span').remove();
+	});
+	
+	$('#filterTransactionSender').on( 'change', function( e ){
+	    $('#filterTransactionSender-button span').remove();
+	});
+	
+	$('#filterMysalesStatus').on( 'change', function( e ){
+	    $('#filterMysalesStatus-button span').remove();
+	});
+	
+	$('#print_neworder,#print_confirm').on( 'click', function( e ){
+	    var id = (SHA256('1')).toUpperCase();
+        window.open(url+'/shop/pdf/'+id, '_blank');
+	});
 }
 
 function listdelivery(){
@@ -72,6 +103,7 @@ function listdelivery(){
                     });
                     $('#filterDeliverySender').html(listdelivery);
                     $('#filterConfirmSender').html(listdelivery);
+                    $('#filterStatusSender').html(listdelivery);
                     $('#filterTransactionSender').html(listdelivery);
                 }else{
                     generateToken(listdelivery);

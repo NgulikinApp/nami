@@ -31,9 +31,17 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $token = param($request['token']);
+    $manual = param($request['manual']);
+    $socmed = param(@$request['socmed']);
+    $id_socmed = param(@$request['id_socmed']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
-    if($request['token'] == ''){
+    if($token == ''){
         /*
             Function location in : /model/general/functions.php
         */
@@ -41,26 +49,31 @@
     }else{
         try{
             //secretKey variabel got from : /model/jwt.php
-            $exp = JWT::decode($request['token'], $secretKey, array('HS256'));
+            $exp = JWT::decode($token, $secretKey, array('HS256'));
             
             $param = '';
             $password = '';
-            if(intval($request['manual']) == 1){
-                $password = "password";
+            if(intval($manual) == 1){
+                $stmt = $con->prepare("SELECT 
+                                        user_id,
+                                        user_isactive,
+                                        password
+                                    FROM 
+                                        user 
+                                    WHERE 
+                                        (email=? OR username=?)");
+                $stmt->bind_param("ss", $auth[0],$auth[0]);
             }else{
-                $password = "password_socmed";
+                $stmt = $con->prepare("SELECT 
+                                        user_id,
+                                        user_isactive,
+                                        IFNULL(password_".$socmed.",'') AS password
+                                    FROM 
+                                        user 
+                                    WHERE 
+                                        (email=? OR id_".$socmed."=?)");
+                $stmt->bind_param("ss", $auth[0],$id_socmed);
             }
-            
-            $stmt = $con->query("SELECT 
-                                    user_id,
-                                    user_isactive,
-                                    ".$password." AS password,
-                                    socmed,
-                                    id_socmed
-                                FROM 
-                                    user 
-                                WHERE 
-                                    (email='".$auth[0]."' OR username='".$auth[0]."')");
                 
             /*
                 Function location in : functions.php
@@ -71,37 +84,27 @@
                     Function location in : functions.php
                 */
                 notexist_account();
-            
-            /*
-                Function location in : /model/general/functions.php
-            */
-            }else if(($auth[1] != $verified[2] && intval($request['manual']) == '1') || (ListFindNoCase($verified[3],$request['socmed']) == false && intval($request['manual']) == 0)){
-                if(intval($request['manual']) == 0 && ListFindNoCase($verified[4],$request['id_socmed']) == false){
-                    $password = $verified[2].','.$auth['1'];
-                    $socmed = $verified[3].','.$request['socmed'];
-                    $idsocmed = $verified[4].','.$request['id_socmed'];
-                    
-                    $key = encrypt_hash('ngulik_'.$verified[0].date('Y-m-d H:i:s'));
-                    
-                    $stmt = $con->prepare("UPDATE 
+            }else if($verified[2] == ""){
+                $key = encrypt_hash('ngulik_'.$verified[0].date('Y-m-d H:i:s'));
+                
+                $stmt = $con->prepare("UPDATE 
                                                 user
                                             set
                                                 time_signin = NOW(),
-                                                password_socmed = ?,
-                                                socmed = ?,
-                                                id_socmed = ?,
+                                                password_".$socmed." = ?,
+                                                id_".$socmed." = ?,
                                                 user_key = ?
                                             WHERE 
                                                 user_id=?");
                     
-                    $stmt->bind_param("sssss", $password, $socmed, $idsocmed, $key, $verified[0]);
+                $stmt->bind_param("ssss", $auth['1'], $id_socmed, $key, $verified[0]);
                     
-                    $stmt->execute();
-                    /*
-                        Function location in : functions.php
-                    */
-                    returndata_signin($verified[0],$con);
-                }
+                $stmt->execute();
+                /*
+                    Function location in : functions.php
+                */
+                returndata_signin($verified[0],$con);
+            }else if($auth[1] != $verified[2]){
                 /*
                     Function location in : functions.php
                 */
@@ -128,7 +131,7 @@
                 /*
                     Function location in : functions.php
                 */
-                returndata_signin($verified[0],$con);
+                returndata_signin($verified[0],$con,$cache);
             }
         }catch(Exception $e){
             /*

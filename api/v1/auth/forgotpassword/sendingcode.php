@@ -33,6 +33,11 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $email = param($request['email']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -45,7 +50,7 @@
             //secretKey variabel got from : /model/jwt.php
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            $stmt = $con->query("SELECT 
+            $stmt = $con->prepare("SELECT 
                                         user_id,
                                         user_isactive,
                                         email,
@@ -53,8 +58,8 @@
                                     FROM 
                                             user 
                                     WHERE 
-                                            (email='".$request['email']."' OR username='".$request['email']."')");
-            
+                                            (email=? OR username=?)");
+            $stmt->bind_param("ss", $email, $email);
             /*
                 Function location in : /model/auth/function.php
             */
@@ -91,24 +96,11 @@
                 $stmt->close();
                 
                 /*
-                    Function location in : /model/general/function.php
+                    Function location in : /model/general/functions.php
                 */
-                $mail = new PHPMailer;
-                $mail->isSMTP();
-            	$mail->Debugoutput = 'html';
-            	$mail->Host = "mail.ngulikin.com";
-            	$mail->Port = 25;
-            	$mail->SMTPAuth = true;
-            	$mail->Username = "ngulikin";
-            	$mail->Password = "FD76889Ddt!";
-            	$mail->setFrom("info@ngulikin.com", "Ngulikin");
-            	$mail->addAddress($verified[2], $verified[3]);
-            	$mail->Subject = 'Ngulikin (Forgot Password)';
-            	$mail->Body = "Peringatan, jangan memberi tahu code berikut untuk menjaga kerahasiaan privasi anda.<br><br>Kode anda adalah <b>".$code."</b>";
-            	$mail->AltBody = 'This is a plain-text message body';
-            	
-            	//email sended successfully
-            	if ($mail->send()) {
+                $sendemail = sendEmail("info@ngulikin.com","Ngulikin",$verified[2],$verified[3],"Lupa Password","Peringatan, jangan memberi tahu code berikut untuk menjaga kerahasiaan privasi anda.<br><br>Kode anda adalah <b>".$code."</b>");
+                
+            	if ($sendemail) {
             	    $result = array(
             			'email' => $verified[2]
             		);

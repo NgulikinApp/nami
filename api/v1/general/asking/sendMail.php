@@ -18,9 +18,12 @@
         3. question
     */
     
-    $user_name	= $_POST['name'];
-	$user_email = $_POST['email'];
-	$question	= $_POST['question'];
+    /*
+        Parameters
+    */
+    $user_name	= param($_POST['name']);
+	$user_email = param($_POST['email']);
+	$question	= param($_POST['question']);
 	
 	//checking all parameter that should not be empty
 	if($user_name == "" || $user_email == "" || $question == ""){
@@ -51,10 +54,9 @@
 	    return generateJSON($data);
 	}
 	
-	$target_dir = "temp/";
 	$target_file = "";
 	if(!empty($_FILES["file"])){
-	    $target_file = $target_dir . basename($_FILES["file"]["name"]);
+	    $target_file = dirname($_SERVER["DOCUMENT_ROOT"])."/public_html/api/temp/". basename($_FILES["file"]["name"]);
 	    
         //upload file into 'temp' directory
         move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
@@ -67,7 +69,7 @@
 	$mail->Port = 25;
 	$mail->SMTPAuth = true;
 	$mail->Username = "ngulikin";
-	$mail->Password = "A98dNzn33n";
+	$mail->Password = "FD76889Ddt!";
 	$mail->setFrom($user_email, $user_name);
 	$mail->addAddress('hello.ngulik@gmail.com', 'Admin');
 	$mail->Subject = 'Tanya Ngulikin';
@@ -78,6 +80,7 @@
 	}
 	
 	//email sended successfully
+	
 	if ($mail->send()) {
 	    $result = array(
 			'name' => $user_name,

@@ -44,7 +44,7 @@
                 $brand_id = '';
             }
             
-            $stmt = $con->query("
+            $stmt = $con->prepare("
                                     SELECT 
                                             brand_name,
                                             brand_image,
@@ -57,7 +57,8 @@
                                             LEFT JOIN shop ON shop.shop_id=brand.shop_id
                                             LEFT JOIN `user` ON user.user_id=shop.user_id
                                         WHERE
-                                            brand_id=".$brand_id."");
+                                            brand_id=?");
+            $stmt->bind_param("i", $brand_id);
             /*
                 Function location in : functions.php
             */

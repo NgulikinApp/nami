@@ -4,11 +4,22 @@ $( document ).ready(function() {
 });
 
 function initProfile(){
-    var trackordertab = sessionStorage.getItem('track_orderNgulikin');
+    var trackordertab = sessionStorage.getItem('track_orderNgulikin'),
+        createshoptab = sessionStorage.getItem('create_shopNgulikin');
     
     $( "#accordionMyprofile" ).accordion();
     
     profile();
+    if($('.ishasShop').val() === '0'){
+        listbank();
+        $('#bankname_con span').remove();
+        $('.ui-select').css("width","100%");
+        
+        var cnt = $("#bankname").parent().contents();
+        $("#bankname").parent().replaceWith(cnt);
+        var cnt = $("#recno").parent().contents();
+        $("#recno").parent().replaceWith(cnt);
+    }
     
     $('#myaccounttab').on( 'click', function( e ){
         $('.myprofile').removeClass('active');
@@ -31,10 +42,28 @@ function initProfile(){
         $(this).addClass('greytab');
     });
     
-    $('#historytab').on( 'click', function( e ){
+    $('#transactiontab').on( 'click', function( e ){
+        $('.myprofile').removeClass('active');
+        $('#transaction').addClass('active');
+        
         $('.menuProfile ul li').removeClass('greytab');
         $(this).addClass('greytab');
+        transaction();
     });
+    
+    $('#filterMysalesDate').on( 'change', function( e ){
+        transaction();
+    });
+    
+    $('#filterMysalesInput').keypress(function(e) {
+	    if(e.which == 13) {
+    	    transaction();
+	    }
+	});
+	
+	$('#search-transaction').on( 'click', function( e ){
+	    transaction();
+	});
     
     $('#createshoptab').on( 'click', function( e ){
         $('.myprofile').removeClass('active');
@@ -67,6 +96,12 @@ function initProfile(){
     $("#malePrivate").parent().replaceWith(cnt);
     var cnt = $("#femalePrivate").parent().contents();
     $("#femalePrivate").parent().replaceWith(cnt);
+    var cnt = $("#studentPrivate").parent().contents();
+    $("#studentPrivate").parent().replaceWith(cnt);
+    var cnt = $("#othersPrivate").parent().contents();
+    $("#othersPrivate").parent().replaceWith(cnt);
+    var cnt = $("#filesCreateShopPrivate").parent().contents();
+    $("#filesCreateShopPrivate").parent().replaceWith(cnt);
     
     $('.ui-loader').remove();
     
@@ -93,6 +128,11 @@ function initProfile(){
     if(trackordertab !== null){
         $('#trackorderstab').trigger('click');
         sessionStorage.removeItem('track_orderNgulikin');
+	}
+	
+	if(createshoptab !== null){
+	    $('#createshoptab').trigger('click');
+        sessionStorage.removeItem('create_shopNgulikin');
 	}
 }
 
@@ -159,11 +199,18 @@ function profile(){
                         }else{
                             $('#femalePrivate').attr("checked","checked");
                         }
+                        if(data.result.user_status_id == '1'){
+                            $('#studentPrivate').attr("checked","checked");
+                        }else{
+                            $('#othersPrivate').attr("checked","checked");
+                        }
                         $('#phonePrivate').val(data.result.phone);
                         $('#emailPrivate').val(data.result.email);
                         $('#previewImagePrivate').attr("src",data.result.user_photo);
-                            
-                        document.title = (data.result.fullname).toUpperCase() + ' | Ngulikin';
+                        
+                        if(data.result.fullname !== ''){
+                            document.title = (data.result.fullname).toUpperCase() + ' | Ngulikin';
+                        }
                         $('.loaderProgress').addClass('hidden');
                     }
                 }else{
@@ -199,7 +246,8 @@ function updateProfile(){
                     fullname : $('#fullnamePrivate').val(),
                     dob : $('#dobPrivate').val(),
                     gender : $('input[name=sexPrivate]:checked').val(),
-                    phone : $('#phonePrivate').val()
+                    phone : $('#phonePrivate').val(),
+                    status : $('input[name=statusPrivate]:checked').val()
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -261,5 +309,94 @@ function updatePassword(){
                 }
             } 
         });
+    }
+}
+
+function transaction(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(transaction);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: LIST_MYPURCHASES_API,
+            data: { 
+                date: $('#filterMysalesDate').val(),
+                search: $('#filterMysalesInput').val()
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var listtransaction = '';
+                    if(data.result.length > 0){
+                        $.each( data.result, function( key, val ) {
+                            listtransaction += '<div class="listMyprofileTransaction">';
+                            listtransaction += '    <div class="dataTransaction">';
+                            listtransaction += '        <img src="'+val.product_image+'" height="70" width="70"/>';
+                            listtransaction += '    </div>';
+                            listtransaction += '    <div class="dataTransaction">';
+                            listtransaction += '        <div class="header">barang</div>';
+                            listtransaction += '        <div class="detail">"'+val.product_name+'"</div>';
+                            listtransaction += '    </div>';
+                            listtransaction += '    <div class="dataTransaction">';
+                            listtransaction += '        <div class="header">status pengiriman</div>';
+                            listtransaction += '        <div class="detail statusTransaction">"'+val.status_name+'"</div>';
+                            listtransaction += '    </div>';
+                            listtransaction += '    <div class="dataTransaction">';
+                            listtransaction += '        <div class="header">tanggal transaksi</div>';
+                            listtransaction += '        <div class="detail">"'+val.transaction_date+'"</div>';
+                            listtransaction += '    </div>';
+                            listtransaction += '    <div class="dataTransaction">';
+                            listtransaction += '        <div class="header">total tagihan</div>';
+                            listtransaction += '        <div class="detail">"'+val.product_name+'"</div>';
+                            listtransaction += '    </div>';
+                            listtransaction += '    <div class="dataTransaction viewDetailTransaction">';
+                            listtransaction += '        <i class="fa fa-eye"></i> Lihat';
+                            listtransaction += '    </div>';
+                            listtransaction += '</div>';
+                        });
+                    }else{
+                        listtransaction += '<div class="grid-favorite-body"></div>';
+                        listtransaction += '     <div class="grid-favorite-footer">';
+                        listtransaction += '         <div>';
+                        listtransaction += '             Belum ada data transaksi';
+                        listtransaction += '         </div>';
+                        listtransaction += '     </div>';
+                    }
+                    $(".bodyProfileTransaction").html(listtransaction);
+                }else{
+                    generateToken(transaction);
+                }
+            } 
+        });
+    }
+}
+
+function listbank(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(listbank);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: SHOP_BANK_API,
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.status == "OK"){
+                    
+                    var listbank = '';
+                    $.each( data.result, function( key, val ) {
+                        listbank += '<option value="'+val.bank_id+'">'+(val.bank_name).toUpperCase()+'</option>';
+                    });
+                    $('#bankname').append(listbank);
+                }else{
+                    generateToken(listbank);
+                }
+            }
+        });    
     }
 }

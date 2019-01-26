@@ -31,6 +31,12 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $code = param($request['code']);
+    $email = param($request['email']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
     
     if($token == ''){
@@ -43,14 +49,16 @@
             //secretKey variabel got from : /model/jwt.php
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            $stmt = $con->query("SELECT 
+            $stmt = $con->prepare("SELECT 
                                         user_id
                                     FROM 
                                         user 
                                     WHERE 
-                                        email='".$request['email']."' 
+                                        email=? 
                                         AND
-                                        code_forgotpassword='".$request['code']."'");
+                                        code_forgotpassword=?");
+            
+            $stmt->bind_param("ss", $email, $code);
             /*
                 Function location in : /v1/auth/functions.php
             */
@@ -63,7 +71,7 @@
                 wrong_code_verified();
             }else{
                 $result = array(
-            			'email' => $request['email']
+            			'email' => $email
             	);
             	$data = array(
             			'status' => "OK",

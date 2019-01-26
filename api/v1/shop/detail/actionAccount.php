@@ -34,10 +34,10 @@
     /*
         Parameters
     */
-    $password = $request['password'];
-    $account_name = $request['account_name'];
-    $account_no = $request['account_no'];
-    $bank_id = intval($request['bank_id']);
+    $password = param($request['password']);
+    $account_name = param($request['account_name']);
+    $account_no = param($request['account_no']);
+    $bank_id = intval(param($request['bank_id']));
     
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
@@ -61,24 +61,28 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
-            $stmt = $con->query("SELECT 
+            $stmt = $con->prepare("SELECT 
                                         1
                                     FROM 
                                         user 
                                     WHERE 
-                                        user_id='".$user_id."' 
+                                        user_id=? 
                                         AND
-                                        password='".$password."'");
+                                        password=?");
             
+            $stmt->bind_param("ss", $user_id,$password);
+            $stmt->execute();
+            $stmt->store_result();
+            
+            $count_rows = count_rows($stmt);
             /*
                 Function location in : functions.php
             */
-            $rowcount = account_verify($stmt);
-            if(intval($rowcount) == 0){
+            if($count_rows == 0){
                 /*
                     Function location in : functions.php
                 */
@@ -94,6 +98,8 @@
                 $stmt->execute();
                 
                 $stmt->close();
+                
+                actionAccountList($cache,"m_account".$user_id,$con,$user_id);
             }else{
                 $stmt = $con->prepare("INSERT INTO account(user_id,bank_id,account_name,account_no) VALUES('".$user_id."',".$bank_id.",'".$account_name."','".$account_no."')");
                 
@@ -107,6 +113,8 @@
                     Function location in : /model/general/functions.php
                 */
                 $account_id = runQuery_returnId($stmt);
+                
+                actionAccountList($cache,"m_account".$user_id,$con,$user_id);
             }
             
             /*

@@ -15,9 +15,16 @@
     use \Firebase\JWT\JWT;
     
     /*
+        Function location in : /model/connection.php
+    */
+    $con = conn();
+    
+    /*
         Function location in : /model/general/get_auth.php
     */
     $token = bearer_auth();
+    
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
     
     /*
         Get parameter with from ajax form
@@ -48,7 +55,7 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
         	
@@ -65,11 +72,11 @@
         	if(!empty($_FILES["file"])){
         	    if(intval($_FILES["file"]["size"]) / 1024 / 1024 < 2){
         	        $path = $_FILES['file']['name'];
-                    $ext = pathinfo($path, PATHINFO_EXTENSION);
+                    $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
                     
                     if($ext == 'jpg' || $ext == 'png'){
                         
-                        if($_POST['type'] != 'product'){
+                        if(param(@$_POST['type']) != 'product'){
                             $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/temp';
                             
                             //delete all file
@@ -82,7 +89,7 @@
                             unset($_SESSION['file']);
                         }
                         
-                        $filename = getID(16).".jpg";
+                        $filename = uniqid().".jpg";
                 	    $target_file = $target_dir ."/". $filename;
                 	    
                         //upload file into 'temp' directory
@@ -128,4 +135,11 @@
             tokenExpired();
         }
     }
+    
+    $con->commit();
+    
+    /*
+        Function location in : /model/connection.php
+    */
+    conn_close($con);
 ?>

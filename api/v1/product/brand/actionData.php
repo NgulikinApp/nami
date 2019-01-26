@@ -33,6 +33,11 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $brand_name = param($request['brand_name']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -62,7 +67,7 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
@@ -83,7 +88,7 @@
             if($request['method'] == 'add'){
                 $stmt = $con->prepare("INSERT INTO brand(brand_name,brand_image,shop_id) VALUES(?,?,?)");
                 
-                $stmt->bind_param("ssi", $request['brand_name'], $brand_photo_name, $shop_id);
+                $stmt->bind_param("ssi", $brand_name, $brand_photo_name, $shop_id);
                 
                 $stmt->execute();
                 
@@ -109,7 +114,7 @@
             }else{
                 $stmt = $con->prepare("UPDATE brand SET brand_name=?, brand_image=? WHERE brand_id=?");
                 
-                $stmt->bind_param("ssi", $request['brand_name'], $brand_photo_name,$brand_id);
+                $stmt->bind_param("ssi", $brand_name, $brand_photo_name,$brand_id);
                 
                 $stmt->execute();
                 

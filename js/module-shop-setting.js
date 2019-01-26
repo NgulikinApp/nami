@@ -176,6 +176,41 @@ function detail(){
                         	$('#address-shop').html(shop_location);
                         	
                         	$('#owner-shop').html(data.result.fullname);
+                        	$('#hp-shop').html(data.result.phone);
+                        	
+                        	var shop_image_location_len = data.result.shop_image_location.length;
+                        	if(shop_image_location_len > 0){
+                        	    var imageLocation = '<div class="image">';
+                        	        imageLocation += '      <img src="'+data.result.shop_image_location[0]+'" width="200" height="200"/>';
+                        	        imageLocation += '</div>';
+                        	        if(shop_image_location_len > 1){
+                        	            imageLocation += '<div class="listimage" style="margin-top:10px;">';
+                        	            imageLocation += '      <nav>';
+                        	            for(var i=0;i<shop_image_location_len;i++){
+                                	        imageLocation += '      <a href="'+data.result.shop_image_location[i]+'">';
+                                            imageLocation += '          <img src="'+data.result.shop_image_location[i]+'" width="50" height="50"/>';
+                                            imageLocation += '      </a>';
+                        	            }
+                                	    imageLocation += '      </nav>';
+                        	            imageLocation += '</div>';
+                        	        }
+                        	        
+                        	    $('.list-photo-location').html(imageLocation);
+                        	    
+                        	    $.tosrus.defaults.media.image = {
+                            		filterAnchors: function( $anchor ) {
+                            			return $anchor.attr( 'href' ).indexOf( 'images.ngulikin.com' ) > -1;
+                            		}
+                            	};
+                            	
+                        	    $('.listimage a').tosrus({
+                            		buttons: 'inline',
+                            		pagination	: {
+                            			add			: true,
+                            			type		: 'thumbnails'
+                            		}
+                            	});
+                        	}
                     }
                     
                     $('.loaderProgress').addClass('hidden');
@@ -554,7 +589,7 @@ function brandShop(){
                         var listProduct = '';
                         $.each( response, function( key, val ) {
                             var isSelected = val.shop_current_brand === val.brand_id ? 'chosen' : '';
-                            listProduct += '<div class="list-brandseller brand'+val.brand_id+' '+isSelected+'" datainternal-id="'+val.brand_id+'">';
+                            listProduct += '<div class="list-brandseller brand'+val.brand_id+' '+isSelected+'" title="'+val.brand_name+'" datainternal-id="'+val.brand_id+'">';
                             listProduct += '    <img src="'+val.brand_image+'" height="150" width="150"/>';
                             listProduct += '    <div>'+val.brand_name+'</div>';
                             listProduct += '</div>';
@@ -784,7 +819,7 @@ function productShop(){
                     if(response.length > 0){
                         var listProduct = '';
                         $.each( response, function( key, val ) {
-                            listProduct += '<div class="list-productseller" data-id="'+val.product_id+'">';
+                            listProduct += '<div class="list-productseller" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">';
                             listProduct += '    <img src="'+val.product_image+'" height="150" width="150"/>';
                             listProduct += '    <div>';
                             listProduct += '        <label>'+val.product_name+'</label>';
@@ -826,7 +861,11 @@ function productShop(){
                         
                         $(".list-productseller").on( 'click', function( e ){
                             productLayerAction.do = "edit";
-                            productLayerId.id = $(this).data("id");
+                            
+                            var shopname = ($(this).data("shopname")).split(' ').join('-'),
+                            productname = ($(this).data("productname")).split(' ').join('-');
+                        
+                            productLayerId.id = shopname+"/"+productname;
                             productLayer();
                             productList = [];
                             productListUrl = [];
@@ -1362,7 +1401,7 @@ function listbank(){
                     var listbank = '';
                     $.each( data.result, function( key, val ) {
                         var selectedbank = (parseInt(val.bank_id) == bank_id)?'selected':'';
-                        listbank += '<option value="'+val.bank_id+'" '+selectedbank+'>'+val.bank_name+'</option>';
+                        listbank += '<option value="'+val.bank_id+'" '+selectedbank+'>'+(val.bank_name).toUpperCase()+'</option>';
                     });
                     $('#bankname').append(listbank);
                     

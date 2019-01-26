@@ -37,26 +37,26 @@
                 <div class="right">
                     <div class="head">PEMBELIAN OLEH</div>
                     <div class="body">
-                        <strong>Reicha Sofi</strong>
+                        Reicha Sofi
                     </div>
                 </div>
             </div>
             <div class="detail">
                 <div class="head">PHONE</div>
                 <div class="body" id="phoneTransactionMysales">
-                    <strong>0857246422217</strong>
+                    0857246422217
                 </div>
             </div>
             <div class="detail">
                 <div class="head">INVOICE</div>
                 <div class="body" id="invoiceTransactionMysales">
-                    <strong>9999 999 999</strong>
+                    9999 999 999
                 </div>
             </div>
             <div class="detail">
                 <div class="head">TANGGAL PESANAN</div>
                 <div class="body">
-                    <strong>04 November 2017</strong>
+                    04 November 2017
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
                 <div class="left">
                     <div class="head">TANGGAL PESANAN</div>
                     <div class="body">
-                        <strong>04 November 2017</strong>
+                        04 November 2017
                     </div>
                 </div>
                 <div class="right">
@@ -77,13 +77,13 @@
             <div class="detail transaction">
                 <div class="head">NO.RESI</div>
                 <div class="body" id="noresiTransactionMysales">
-                    <strong>9999 999 9999</strong>
+                    9999 999 9999
                 </div>
             </div>
             <div class="detail transaction status">
                 <div class="head">STATUS</div>
                 <div class="body" id="statusTransactionMysales">
-                    <strong>Menunggu pengiriman</strong>
+                    Menunggu pengiriman
                 </div>
             </div>
             <div class="detail transaction askCustomerTransactionMysales bluesky">
@@ -96,19 +96,19 @@
             <div class="detail transaction">
                 <div class="head">PEMBELI</div>
                 <div class="body">
-                    <strong>Agung Prabontot</strong>
+                    Agung Prabontot
                 </div>
             </div>
             <div class="detail transaction">
                 <div class="head">TANGGAL TRANSAKSI</div>
                 <div class="body">
-                    <strong>04 November 2017</strong>
+                    04 November 2017
                 </div>
             </div>
             <div class="detail transaction">
                 <div class="head">JASA KURIR</div>
                 <div class="body">
-                    <strong>JNE</strong>
+                    JNE
                 </div>
             </div>
         </div>
@@ -201,18 +201,18 @@
                 <div class="left">
                     <div class="head">TANGGAL PESANAN</div>
                     <div class="body">
-                        <strong>04 November 2017</strong>
+                        04 November 2017
                     </div>
                 </div>
                 <div class="right">
                     <div class="time">
-                        <strong>Jam 09.00</strong>
+                        Jam 09.00
                     </div>
                 </div>
             </div>
             <div class="detail statusline" id="statusOrderMysales">
                 <div class="body">
-                    <strong>Pesanan di proses</strong>
+                    Pesanan di proses
                 </div>
             </div>
         </div>
@@ -223,18 +223,18 @@
                 <div class="left">
                     <div class="head">TANGGAL PESANAN</div>
                     <div class="body">
-                        <strong>04 November 2017</strong>
+                        04 November 2017
                     </div>
                 </div>
                 <div class="right">
                     <div class="time">
-                        <strong>Jam 09.00</strong>
+                        Jam 09.00
                     </div>
                 </div>
             </div>
             <div class="detail statusline" id="statusOrderMysales">
                 <div class="body">
-                    <strong>Pesanan telah tiba ditujuan menunggu konfirmasi dari pembeli</strong>
+                    Pesanan telah tiba ditujuan menunggu konfirmasi dari pembeli
                 </div>
             </div>
         </div>

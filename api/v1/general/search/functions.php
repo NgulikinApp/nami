@@ -3,7 +3,7 @@
         Function referred on : searchItem.php
         Used for returning query string
     */
-    function buildCondition_item($name,$pricemax,$pricemin,$rate,$category,$subcategory){
+    function buildCondition_item($name,$pricemax,$pricemin,$rate,$category,$subcategory,$province,$regency){
         $query = '';
         
         if(@$category != ''){
@@ -12,6 +12,14 @@
         
         if(@$subcategory != ''){
             $query .= " AND subcategory_id = ".$subcategory;
+        }
+        
+        if(@$province != ''){
+            $query .= " AND shop_provinces = '".$province."'";
+        }
+        
+        if(@$regency != ''){
+            $query .= " AND shop_regencies = '".$regency."'";
         }
                 
         if(@$pricemax != '' && @$pricemin != ''){
@@ -23,7 +31,7 @@
         }
                 
         if(@$rate != ''){
-            $query .= " AND product_rate in(".$rate.")";
+            $query .= " AND product_average_rate in(".$rate.")";
         }
         
         if(@$name != ''){
@@ -80,7 +88,8 @@
                                       "shop_id" => $row[0],
                                       "shop_name" => $row[1],
                                       "shop_icon" =>  $icon,
-                                      "shop_difdate" =>  $row[4]
+                                      "shop_difdate" =>  $row[4],
+                                      "regency_name" =>  $row[6]
                                     );
                     };
                 }

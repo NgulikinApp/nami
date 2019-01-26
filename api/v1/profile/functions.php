@@ -15,21 +15,26 @@
     function user($stmt){
         $data = array();
         
-        $row = $stmt->fetch_object();
+        $stmt->execute();
         
-        if($row->user_photo != "no-photo.jpg"){
-            $user_photo = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/'.$row->user_photo));
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8);
+        
+        $stmt->fetch();
+        
+        if($col7 != "no-photo.jpg"){
+            $user_photo = IMAGES_URL.'/'.urlencode(base64_encode($col3.'/'.$col7));
         }else{
-            $user_photo = INIT_URL."/img/".$row->user_photo;
+            $user_photo = INIT_URL."/img/".$col7;
         }
         
-        $data['fullname'] = $row->fullname;
-        $data['dob'] = $row->dob;
-        $data['username'] = $row->username;
-        $data['gender'] = $row->gender;
-        $data['phone'] = $row->phone;
-        $data['email'] = $row->email;
+        $data['fullname'] = $col1;
+        $data['dob'] = $col2;
+        $data['username'] = $col3;
+        $data['gender'] = $col4;
+        $data['phone'] = $col5;
+        $data['email'] = $col6;
         $data['user_photo'] = $user_photo;
+        $data['user_status_id'] = $col8;
         
         $stmt->close();
         
@@ -51,7 +56,7 @@
                 - user_photo
     */
     function updateUser($user_id,$con){
-        $stmt = $con->query("SELECT 
+        $stmt = $con->prepare("SELECT 
                                         inner1.*,
                                         IFNULL(shop_id,0) as shop_id,
                                         shop_current_brand,
@@ -71,32 +76,37 @@
                                         FROM 
                                             user 
                                         WHERE 
-                                            user_id='".$user_id."'
+                                            user_id=?
                                 )as inner1 
                                     LEFT JOIN shop ON inner1.user_id=shop.user_id");
+        $stmt->bind_param("s", $user_id);
         
-        $row = $stmt->fetch_object();
+        $stmt->execute();
         
-        if($row->user_photo != "no-photo.jpg"){
-            $photo = IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/'.$row->user_photo));
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13);
+        
+        $stmt->fetch();
+        
+        if($col9 != "no-photo.jpg"){
+            $photo = IMAGES_URL.'/'.urlencode(base64_encode($col2.'/'.$col9));
         }else{
-            $photo = INIT_URL."/img/".$row->user_photo;
+            $photo = INIT_URL."/img/".$col9;
         }
         
         $data = array(
-                        "user_id"=>$row->user_id,
-                        "username"=>$row->username,
-                        "fullname"=>$row->fullname,
-                        "email"=>$row->email,
-                        "nohp"=>$row->phone,
-                        "dob"=>$row->dob,
-                        "gender"=>$row->gender,
-                        "key"=>$row->user_key,
+                        "user_id"=>$col1,
+                        "username"=>$col2,
+                        "fullname"=>$col3,
+                        "email"=>$col4,
+                        "nohp"=>$col5,
+                        "dob"=>$col6,
+                        "gender"=>$col7,
+                        "key"=>$col8,
                         "user_photo"=>$photo,
-                        "shop_id"=>$row->shop_id,
-                        "shop_name"=>$row->shop_name,
-                        "brand_id"=>$row->shop_current_brand,
-                        "delivery_id"=>$row->shop_delivery
+                        "shop_id"=>$col10,
+                        "shop_name"=>$col13,
+                        "brand_id"=>$col11,
+                        "delivery_id"=>$col12
                     );
         
         $_SESSION['user'] = $data;
@@ -151,41 +161,6 @@
             Function location in : /model/generatejson.php
         */        
         generateJSON($dataout);
-    }
-    
-    /*
-        Function referred on : listPendingUser.php
-        Used for returning array data
-    */
-    function listPendingUser($stmt,$stmtCount,$pagesize){
-        $data = array();
-        
-        $i = 0;
-        $rowCount = $stmtCount->fetch_object();
-        $total = intval($rowCount['user_count']);
-        
-        do {
-            $result = $con->store_result();
-            
-            while ($row = $result->fetch_row()) {
-                if($i > 0){
-                    $data[] = array(
-                          "user_id" => $row[0],
-                          "username" => $row[1],
-                          "photo_card" => IMAGES_URL.'/'.urlencode(base64_encode($row[1].'/seller/'.$row[2])),
-                          "photo_selfie" => IMAGES_URL.'/'.urlencode(base64_encode($row[1].'/seller/'.$row[3])),
-                          "user_asked_seller_date" => $row[4]
-                        );
-                }
-                $i++;
-            }
-            $result->free();
-        }while ($con->more_results() && $con->next_result());
-        
-        /*
-            Function location in : /model/general/functions.php
-        */
-        credentialVerifiedCalc($data,$total,$pagesize);
     }
     
     /*

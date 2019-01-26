@@ -1,3 +1,5 @@
+var search = {};
+
 $( document ).ready(function() {
     initGeneral();
     initCart();
@@ -23,7 +25,6 @@ function initCart(){
     detailCart();
         
     $('#cart-filledlist').show();
-    $('.container').addClass('cart');
     
     $('#buttonSignInCart').on( 'click', function( e ){
 	   var email = $('#emailSigninCart').val();
@@ -56,6 +57,42 @@ function initCart(){
     		}
     	}, {scope: 'email,public_profile', return_scopes: true});
     });
+    
+    if($('.isSignin').val() === '1'){
+        provinces();
+        search.province = 11;
+        regencies();
+        search.regency = 1101;
+        districts();
+        search.district = 1101010;
+        villages();
+    }
+    
+    $('#cart_province').on('change', function (e) {
+	    search.province = $(this).val();
+	    search.regency = '';
+	    search.district = '';
+	    regencies();
+	});
+	
+	$('#cart_regency').on('change', function (e) {
+	    search.regency = $(this).val();
+	    search.district = '';
+	    districts();
+	});
+	
+	$('#cart_district').on('change', function (e) {
+	    search.district = $(this).val();
+	    villages();
+	});
+	
+	$('#cartadd_btn').on('click', function (e) {
+	    if($('#cart_address').val() === ''){
+	        notif("error","alamat tidak boleh kosong","center","top"); 
+	    }else{
+	        actionAddress();
+	    }
+	});
 }
 
 function detailCart(){
@@ -267,4 +304,176 @@ function getUserData() {
 		sessionStorage.setItem('loginNgulikin',1);
         location.href = url+"/cart";
 	});
+}
+
+function provinces(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(provinces);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: ADMINISTRATIVE_API,
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var response = data.result;
+                    
+                    var listElement = '';
+                    $.each( response, function( key, val ) {
+                        listElement += '<option value="'+val.id+'">'+val.name+'</option>';
+                    });
+                    
+                    $("#cart_province").html(listElement);
+                }else{
+                    generateToken(provinces);
+                }
+            } 
+        });
+    }
+}
+
+function regencies(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(regencies);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: ADMINISTRATIVE_API,
+            data:{
+                id : search.province
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var response = data.result;
+                    
+                    var listElement = '';
+                    $.each( response, function( key, val ) {
+                        listElement += '<option value="'+val.id+'">'+val.name+'</option>';
+                        
+                        if(search.regency === ''){
+                            search.regency = val.id;
+                            districts();   
+                        }
+                    });
+                    
+                    $("#cart_regency").html(listElement);
+                }else{
+                    generateToken(regencies);
+                }
+            } 
+        });
+    }
+}
+
+function districts(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(districts);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: ADMINISTRATIVE_API,
+            data:{
+                id : search.regency
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var response = data.result;
+                    
+                    var listElement = '';
+                    $.each( response, function( key, val ) {
+                        listElement += '<option value="'+val.id+'">'+val.name+'</option>';
+                        
+                        if(search.district === ''){
+                            search.district = val.id;
+                            villages();   
+                        }
+                    });
+                    
+                    $("#cart_district").html(listElement);
+                }else{
+                    generateToken(districts);
+                }
+            } 
+        });
+    }
+}
+
+function villages(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(villages);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: ADMINISTRATIVE_API,
+            data:{
+                id : search.district
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var response = data.result;
+                    
+                    var listElement = '';
+                    $.each( response, function( key, val ) {
+                        listElement += '<option value="'+val.id+'">'+val.name+'</option>';
+                    });
+                    
+                    $("#cart_village").html(listElement);
+                }else{
+                    generateToken(villages);
+                }
+            } 
+        });
+    }
+}
+
+function actionAddress(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(actionAddress);
+    }else{
+        
+        $.ajax({
+            type: 'POST',
+            url: PROFILE_ADDRESS_ACTION_API,
+            data:JSON.stringify({ 
+                    provinces_id : $('#cart_province').val(),
+                    regencies_id : $('#cart_regency').val(),
+                    districts_id : $('#cart_district').val(),
+                    villages_id : $('#cart_village').val(),
+                    address : $('#cart_address').val(),
+                    type : 'insert'
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                    generateToken(actionAddress);
+                }else if(data.message == 'Invalid key'){
+                    localStorage.removeItem('emailNgulikin');
+                    sessionStorage.setItem("logoutNgulikin", 1);
+                    localStorage.removeItem('authNgulikin');
+                    location.href = url;
+                    localStorage.getItem('authNgulikin');
+                }else{
+                    notif("success","Data sudah disimpan","center","top");
+                }
+            } 
+        });
+    }
 }

@@ -1,8 +1,5 @@
 <?php
     session_start();
-    if(!isset($_SESSION['productcart'])){
-        header("Location: .");
-    }
     include 'web/system/minify.php';
 ?>
 <!DOCTYPE html>

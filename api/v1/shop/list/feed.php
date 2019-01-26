@@ -36,7 +36,8 @@
         try{
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            $stmt = $con->query("SELECT 
+            $i=1;
+            $stmt = $con->prepare("SELECT 
                                     shop_id, 
                                     shop_name,
                                     shop_icon,
@@ -44,10 +45,13 @@
                             FROM 
                                     shop
                                     LEFT JOIN `user` ON `user`.user_id = shop.user_id
+                            WHERE
+                                    1=?
                             ORDER BY 
                                     shop_id DESC
                             LIMIT 4");
             
+            $stmt->bind_param("i", $i);
             /*
                 Function location in : function.php
             */

@@ -5,14 +5,18 @@
     */
     function notification($stmt){
         $data = array();
-    
-        while ($row = $stmt->fetch_object()) {
+        
+        $stmt->execute();
+        
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6);
+        
+        while ($stmt->fetch()) {
             $data[] = array(
-                      "notification_id" => $row->notification_id,
-                      "brand_name" => $row->brand_name,
-                      "notification_desc" => $row->notification_desc,
-                      "notification_photo" => IMAGES_URL.'/'.urlencode(base64_encode($row->username.'/product/'.$row->product_image)),
-                      "notification_createdate" => $row->notification_createdate
+                      "notification_id" => $col1,
+                      "brand_name" => $col3,
+                      "notification_desc" => $col2,
+                      "notification_photo" => IMAGES_URL.'/'.urlencode(base64_encode($col6.'/product/'.$col4)),
+                      "notification_createdate" => $col5
                     );
         }
         

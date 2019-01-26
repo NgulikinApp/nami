@@ -30,6 +30,13 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $user_id = param($request['user_id']);
+    $email = param($request['email']);
+    $fullname = param($request['fullname']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -53,17 +60,22 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,1) == 0){
+            if(checkingAuthKey($con,$user_id,$key,1,$cache) == 0){
                 return invalidKey();
             }
             
             $stmt = $con->prepare("UPDATE user SET user_seller=2, user_admin_confirm_seller=?, user_admin_confirm_seller_date=NOW() WHERE user_id=?");   
                 
-            $stmt->bind_param("ss", $user_id,$request['user_id']);
+            $stmt->bind_param("ss", $user_id,$user_id);
                 
             $stmt->execute();
             
             $stmt->close();
+            
+            /*
+                Function location in : /model/general/functions.php
+            */
+            sendEmail("info@ngulikin.com","Ngulikin",$email,$fullname,"Permintaan konfirmasi sebagai penjual","Selamat anda sekarang sudah bisa berjualan di Ngulikin");
             
             /*
                 Function location in : functions.php

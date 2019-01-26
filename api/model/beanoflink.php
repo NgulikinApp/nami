@@ -1,4 +1,13 @@
 <?php
+    /*
+        Modify php.ini
+    */
+    ini_set( 'session.use_only_cookies', TRUE );				
+    ini_set( 'session.use_trans_sid', FALSE );
+    ini_set( 'session.cookie_httponly', TRUE );				
+    ini_set( 'session.cookie_secure', TRUE );
+    ini_set( 'session.cookie_domain', "ngulikin.com" );
+    
     session_start();
     date_default_timezone_set("Asia/Jakarta");
     //--------------------------------------------------------------------------
@@ -9,6 +18,7 @@
     include 'jwt.php';
     include 'getUrl.php';
     include 'ipaddress.php';
+    include 'check_user_agent.php';
     //include 'checkajax.php';
 	include $_SERVER['DOCUMENT_ROOT'].'/api/model/mail/PHPMailerAutoload.php';
     include $_SERVER['DOCUMENT_ROOT'].'/api/model/general/functions.php';

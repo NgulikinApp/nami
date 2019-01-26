@@ -1,26 +1,17 @@
 <?php
     $cache = new Memcached();
-    $cache->addServer('ngulikin.com', 0);
-    
-    /*
-        Function referred on : all
-        Used for checking the data memcache is exist or not
-        Return data : true or false
-    */
-    function checkMemcached($key,$cache){
-        return $cache->get($key);
-    }
+    $cache->addServer('localhost', 11211) or die ("Unable to connect");
     
     /*
         Function referred on : all
         Used for getting the data memcache
         Return data : string
     */
-    function writeMemcached($key,$cache){
+    function getMemcached($key,$cache){
         /*
             Function location in : generatejson.php
         */
-        generateJSON($cache->get($key));
+        return $cache->get($key);
     }
     
     function setMemcached($key,$cache,$data,$exp){

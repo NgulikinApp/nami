@@ -32,7 +32,7 @@
 	display:inline-block;
 	position:absolute;
 	top:30px;
-	font-family: 'proxima_nova_altbold';
+	font-weight: unset;
     color: #414141;
 }
 .progress-bar{

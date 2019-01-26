@@ -51,24 +51,29 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
-            $stmt = $con->query("SELECT 
+            $i=1;
+            $stmt = $con->prepare("SELECT 
                                         delivery_id,
                                         delivery_icon,
                                         delivery_ismid,
                                         delivery_name
                                     FROM 
-                                        delivery");
+                                        delivery
+                                    WHERE
+                                        1=?");
+            $stmt->bind_param("i", $i);
             
-            $stmtdel = $con->query(" SELECT
+            $stmtdel = $con->prepare(" SELECT
                                             CONCAT('Terakhir diganti tanggal ',DATE_FORMAT(shop_delivery_modifydate, '%d %M %Y'),', pukul ',DATE_FORMAT(shop_delivery_modifydate, '%H.%i')) AS modify_date
                                         FROM 
                                             shop 
                                         WHERE 
-                                            shop_id=".$shop_id."");
+                                            shop_id=?");
+            $stmtdel->bind_param("i", $shop_id);
             
             /*
                 Function location in : function.php

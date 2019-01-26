@@ -25,9 +25,9 @@
     $shop_nametemp = array_values(array_slice($linkArray, -1))[0];
     $shop_nameArray = explode('?',$shop_nametemp);
     $shop_name = $shop_nameArray[0];
-    $page = $_GET['page'];
-    $pagesize = $_GET['pagesize'];
-    $type = $_GET['type'];
+    $page = param($_GET['page']);
+    $pagesize = param($_GET['pagesize']);
+    $type = param($_GET['type']);
     
     /*
         Function location in : /model/general/get_auth.php
@@ -45,8 +45,14 @@
         try{
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
+            $localname = 'id_ID';
+            $stmt = $con->prepare("SET lc_time_names = ?");
+            $stmt->bind_param("s", $localname);
+            $stmt->execute();
+            $stmt->close();
+            
             if($type == 0){
-                $stmt = $con->query(" SELECT 
+                $stmt = $con->prepare(" SELECT 
                                             * 
                                         FROM (
                                             SELECT 
@@ -55,7 +61,6 @@
                                                 shop_review_comment,
                                                 username,
                                                 user_photo,
-                                                fullname,
                                                 DATE_FORMAT(shop_review_createdate, '%d %M %Y, %H:%i') AS comment_date,
                                                 shop_total_review
                                             FROM 
@@ -63,21 +68,22 @@
                                                 LEFT JOIN shop_review ON shop_review.shop_id = `shop`.shop_id
                                                 LEFT JOIN `user` ON `user`.user_id = shop_review.user_id
                                             WHERE
-                                                shop.shop_name = '".$shop_name."'
+                                                shop.shop_name = ?
                                             ORDER BY 
                                                 shop_review_id DESC
-                                            LIMIT ".$pagesize."
+                                            LIMIT ?
                                         ) sub
                                         ORDER BY 
                                             shop_review_id ASC");
+                
+                $stmt->bind_param("si", $shop_name,$pagesize);
             }else{
-                $stmt = $con->query(" SELECT 
+                $stmt = $con->prepare(" SELECT 
                                                 shop_review_id,
                                                 shop_review.user_id,
                                                 shop_review_comment,
                                                 username,
                                                 user_photo,
-                                                fullname,
                                                 DATE_FORMAT(shop_review_createdate, '%d %M %Y, %H:%i') AS comment_date,
                                                 shop_total_review
                                             FROM 
@@ -85,10 +91,12 @@
                                                 LEFT JOIN shop_review ON shop_review.shop_id = `shop`.shop_id
                                                 LEFT JOIN `user` ON `user`.user_id = shop_review.user_id
                                             WHERE
-                                                shop.shop_name = '".$shop_name."'
+                                                shop.shop_name = ?
                                             ORDER BY 
                                                 shop_review_id DESC
-                                            LIMIT ".$page.",".$pagesize."");
+                                            LIMIT ?,?");
+                                            
+                $stmt->bind_param("sii", $shop_name,$page,$pagesize);
             }
             
             /*

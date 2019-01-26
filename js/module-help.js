@@ -41,11 +41,8 @@ function asking(){
                 processData: false,
                 dataType: 'json',
                 success: function(result){
-                    var message_email = result.message;
-                    notif(status_email,message_email,"right","bottom");
-                    
                     $('.error_message').show();
-	                $('.error_message').html(message_email);
+	                $('.error_message').html('Email sudah terkirim');
 	                
 	                if(result.status == "OK")
 	                    $('.error_message').addClass('green');

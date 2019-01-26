@@ -33,6 +33,19 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $product_name = param($request['product_name']);
+    $product_description = param($request['product_description']);
+    $product_price = param($request['product_price']);
+    $product_weight = param($request['product_weight']);
+    $product_stock = param($request['product_stock']);
+    $product_minimum = param($request['product_minimum']);
+    $product_condition = param($request['product_condition']);
+    $product_category = param($request['product_category']);
+    $product_subcategory = param($request['product_subcategory']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -58,7 +71,7 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
@@ -93,20 +106,22 @@
             if($request['method'] == 'add'){
                 $stmt = $con->query("INSERT INTO product(product_name,product_description,product_price,product_weight,product_stock,product_minimum,product_condition,product_image,category_id,subcategory_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 
-                $stmt->bind_param("ssiiiiisii", $request['product_name'], $request['product_description'], $request['product_price'], $request['product_weight'], $request['product_stock'],$request['product_minimum'],$request['product_condition'],$product_photo_nameList,$request['product_category'],$request['product_subcategory']);
+                $stmt->bind_param("ssiiiiisii", $product_name, $product_description, $product_price, $product_weight, $product_stock,$product_minimum,$product_condition,$product_photo_nameList,$product_category,$product_subcategory);
                 
                 $stmt->execute();
                 
                 $product_id = runQuery_returnId($stmt);
             }else{
+                $product_id = param($request['product_id']);
+                
                 if($product_photo_nameList == ''){
-                    $stmt = $con->prepare("UPDATE product SET product_name=?, product_description=?, product_price=?, product_weight=?,product_stock=?,product_minimum=?,product_condition=?,category_id=?,subcategory_id=? WHERE product_id=?");   
+                    $stmt = $con->prepare("UPDATE product SET product_name=?, product_description=?, product_price=?, product_weight=?,product_stock=?,product_minimum=?,product_condition=?,category_id=?,subcategory_id=?,product_modifydate=NOW() WHERE product_id=?");   
                 
-                    $stmt->bind_param("ssiiiiiiii", $request['product_name'], $request['product_description'], $request['product_price'], $request['product_weight'], $request['product_stock'],$request['product_minimum'],$request['product_condition'],$request['product_category'],$request['product_subcategory'],$request['product_id']);
+                    $stmt->bind_param("ssiiiiiiii", $product_name, $product_description, $product_price, $product_weight, $product_stock,$product_minimum,$product_condition,$product_category,$product_subcategory,$product_id);
                 }else{
-                    $stmt = $con->prepare("UPDATE product SET product_name=?, product_description=?, product_price=?, product_weight=?,product_stock=?,product_minimum=?,product_condition=?,product_image=?,category_id=?,subcategory_id=? WHERE product_id=?");   
+                    $stmt = $con->prepare("UPDATE product SET product_name=?, product_description=?, product_price=?, product_weight=?,product_stock=?,product_minimum=?,product_condition=?,product_image=?,category_id=?,subcategory_id=?,product_modifydate=NOW() WHERE product_id=?");   
                 
-                    $stmt->bind_param("ssiiiiisiii", $request['product_name'], $request['product_description'], $request['product_price'], $request['product_weight'], $request['product_stock'],$request['product_minimum'],$request['product_condition'],$product_photo_nameList,$request['product_category'],$request['product_subcategory'],$request['product_id']);
+                    $stmt->bind_param("ssiiiiisiii", $product_name, $product_description, $product_price, $product_weight, $product_stock,$product_minimum,$product_condition,$product_photo_nameList,$product_category,$product_subcategory,$product_id);
                 }
                 
                 $stmt->execute();
@@ -119,7 +134,7 @@
             /*
                 Function location in : functions.php
             */
-            actionData($request['product_name'],$request['product_description'],$product_photo_nameMain,$request['product_price'],$request['product_weight'],$request['product_stock'],$request['product_minimum'],$request['product_condition'],$request['product_category'],$request['product_subcategory'],$request['product_id']);
+            actionData($product_name,$product_description,$product_photo_nameMain,$product_price,$product_weight,$product_stock,$product_minimum,$product_condition,$product_category,$product_subcategory,$product_id);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

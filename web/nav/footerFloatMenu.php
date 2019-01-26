@@ -1,19 +1,25 @@
 <div class="footerFloat">
     <nav>
+        <?php
+            if(isset($_SESSION['user'])){
+        ?>
+                <a>
+                    <span id="footerSell">Berjualan di Ngulikin</span>
+                </a>
+        <?php
+            }
+        ?>
         <a>
-            <span>Berjualan di Ngulikin</span>
+            <span id="footerBlog">Blog</span>
         </a>
         <a>
-            <span>Blog</span>
-        </a>
-        <a>
-            <span>Bantuan</span>
+            <span id="footerHelp">Bantuan</span>
         </a>
         <?php
             if(isset($_SESSION['user'])){
         ?>
                 <a>
-                    <span id="track_orders">Lacak Pesanan</span>
+                    <span id="footerOrders">Lacak Pesanan</span>
                 </a>
         <?php
             }

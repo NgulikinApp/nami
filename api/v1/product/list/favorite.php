@@ -23,8 +23,8 @@
     /*
         Parameters
     */
-    $page = $_GET['page'];
-    $pagesize = $_GET['pagesize'];
+    $page = param($_GET['page']);
+    $pagesize = param($_GET['pagesize']);
     
     /*
         Function location in : /model/general/get_auth.php
@@ -54,11 +54,11 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
-            $stmt = $con->query("SELECT 
+            $stmt = $con->prepare("SELECT 
                                         product.product_id,
                                         product_name,
                                         product_image,
@@ -66,19 +66,20 @@
                                         username,
                                         DATEDIFF(CURDATE(),CAST(product_createdate AS DATE)) AS product_difdate,
                                         user_product_favorites AS count_product,
-								        shop_name
+								        shop_name,
+								        product_average_rate
                                     FROM 
                                         product_favorite
                                         LEFT JOIN product ON product.product_id = product_favorite.product_id
-                                        LEFT JOIN `user` ON `user`.user_id = product_favorite.user_id
                                         LEFT JOIN brand ON brand.brand_id = product.brand_id
                                         LEFT JOIN shop ON shop.shop_id = brand.shop_id
+                                        LEFT JOIN `user` ON `user`.user_id = shop.user_id
                                     WHERE
-                                        product_favorite.user_id = '".$user_id."'
+                                        product_favorite.user_id = ?
                                     ORDER BY 
                                         product_favorite.product_id DESC
-                                    	LIMIT ".$page.",".$pagesize."");
-            
+                                    	LIMIT ?,?");
+            $stmt->bind_param("sii", $user_id,$page,$pagesize);
             /*
                 Function location in : functions.php
             */

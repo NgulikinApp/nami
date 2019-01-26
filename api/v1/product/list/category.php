@@ -36,8 +36,8 @@
        try{
             //secretKey variabel got from : /model/jwt.php
             $exp = JWT::decode($token, $secretKey, array('HS256'));
-        
-            $stmt = $con->query("SELECT 
+            
+            $query = "SELECT 
                                             category.category_id, 
                                             category_name, 
                                             category_icon,
@@ -57,13 +57,14 @@
                                                       )
                                             subcategory ON category.category_id=subcategory.category_id
                                     WHERE
-                                            category_isactive=1");
-            
+                                            1=?
+                                            AND
+                                            category_isactive=1";
             /*
                 Function location in : functions.php
                 Cache variabel got from : /model/memcache.php
             */
-            listcategory($stmt,$cache);
+            listcategory($query,$cache,"m_productcategory",$con);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

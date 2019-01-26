@@ -69,17 +69,32 @@
                     WHERE ";
             
             if($type == "product"){
-                $sql .="product.brand_id = ".intval($id)."";
+                $sql .="product.brand_id = ?";
             }else{
                 $shop_nameArray = explode('?',$id);
                 $shop_name = $shop_nameArray[0];
-                $sql .="shop.shop_name = '".$shop_name."'";
+                if($shop_name == "product"){
+                    $id = $_SESSION['user']["brand_id"];
+                    $sql .="shop.shop_id = ?";
+                }else{
+                    $sql .="shop.shop_name = ?";
+                }
             }
             
             $sql .=" ORDER BY 
                             product_id DESC
-                     LIMIT ".$page.",".$pagesize."";
-            $stmt = $con->query($sql);
+                     LIMIT ?,?";
+            $stmt = $con->prepare($sql);
+            
+            if($type == "product"){
+                $stmt->bind_param("iii", $id,$page,$pagesize);
+            }else{
+                if($shop_name == "product"){
+                    $stmt->bind_param("iii", $id,$page,$pagesize);
+                }else{
+                    $stmt->bind_param("sii", $shop_name,$page,$pagesize);
+                }
+            }
             /*
                 Function location in : function.php
             */

@@ -48,44 +48,12 @@
                 <div class="title">
                     Isi Alamat Pengiriman
                 </div>
-                <select>
-    			    <option>Aceh</option>
-    			    <option>Bali</option>
-    			    <option>Banten</option>
-    			            <option>Bengkulu</option>
-    			            <option>Gorontalo</option>
-    			            <option>Jakarta</option>
-    			            <option>Jambi</option>
-    			            <option>Jawa Barat</option>
-    			            <option>Jawa Tengah</option>
-    			            <option>Jawa Timur</option>
-    			            <option>Kalimantan Barat</option>
-    			            <option>Kalimantan Selatan</option>
-    			            <option>Kalimantan Tengah</option>
-    			            <option>Kalimantan Timur</option>
-    			            <option>Kalimantan Utara</option>
-    			            <option>Kepulauan Bangka Belitung</option>
-    			            <option>Kepulauan Riau</option>
-    			            <option>Bali</option>
-    			            <option>Lampung</option>
-    			            <option>Maluku</option>
-    			            <option>Maluku Utara</option>
-    			            <option>Nusa Tenggara Barat</option>
-    			            <option>Nusa Tenggara Timur</option>
-    			            <option>Papua</option>
-    			            <option>Papua Barat</option>
-    			            <option>Riau</option>
-    			            <option>Sulawesi Barat</option>
-    			            <option>Sulawesi Selatan</option>
-    			            <option>Sulawesi Tengah</option>
-    			            <option>Sulawesi Tenggara</option>
-    			            <option>Sulawesi Utara</option>
-    			            <option>Sumatra Barat</option>
-    			            <option>Sumatra Selatan</option>
-    			            <option>Sumatra Utara</option>
-    			            <option>Yogyakarta</option>
-    			 </select>
-    			 <textarea id="descProductCart" placeholder="Alamat Lengkap"rows="7" cols="83"></textarea>
+                <select id="cart_province"></select>
+                <select id="cart_regency"></select>
+                <select id="cart_district"></select>
+                <select id="cart_village"></select>
+    			<textarea id="cart_address" placeholder="Alamat Lengkap"rows="7" cols="83"></textarea>
+    			<input type="button" id="cartadd_btn" value="Simpan"/>
             </div>
         </div>
     </div>

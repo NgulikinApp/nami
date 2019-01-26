@@ -30,6 +30,15 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $fullname = param($request['fullname']);
+    $dob = param($request['dob']);
+    $gender = param($request['gender']);
+    $phone = param($request['phone']);
+    $status = param($request['status']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -55,7 +64,7 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
@@ -78,13 +87,13 @@
             }
             
             if ($user_photo_name != ''){
-                $stmt = $con->prepare("UPDATE user SET fullname=?, dob=?, gender=?, phone=?,user_photo=? WHERE user_id=?");   
+                $stmt = $con->prepare("UPDATE user SET fullname=?, dob=?, gender=?, phone=?,user_photo=?,user_status_id=? WHERE user_id=?");   
                 
-                $stmt->bind_param("ssssss", $request['fullname'],$request['dob'],$request['gender'],$request['phone'],$user_photo_name,$user_id);
+                $stmt->bind_param("sssssis", $fullname,$dob,$gender,$phone,$user_photo_name,$status,$user_id);
             }else{
-                $stmt = $con->prepare("UPDATE user SET fullname=?, dob=?, gender=?, phone=? WHERE user_id=?");   
+                $stmt = $con->prepare("UPDATE user SET fullname=?, dob=?, gender=?, phone=?,user_status_id=? WHERE user_id=?");   
                 
-                $stmt->bind_param("ssssss", $request['fullname'],$request['dob'],$request['gender'],$request['phone'],$user_id);
+                $stmt->bind_param("ssssis", $fullname,$dob,$gender,$phone,$status,$user_id);
             }
                 
             $stmt->execute();

@@ -23,7 +23,7 @@
     /*
         Parameters
     */
-    $filter = $_GET['filter'];
+    $filter = param($_GET['filter']);
     
     /*
         Function location in : /model/general/get_auth.php
@@ -62,9 +62,10 @@
                                                 WHERE 
                                                     product_favorite.product_id=product.product_id 
                                                     AND 
-                                                    user_id = '".$user_id."'
+                                                    user_id = ?
                                             ) AS product_isfavorite,
-											shop_name
+											shop_name,
+											shop.shop_id
                                     FROM 
                                             product
                                             LEFT JOIN brand ON brand.brand_id = product.brand_id
@@ -80,7 +81,9 @@
             }
             
             $sql .= " LIMIT 6";
-            $stmt = $con->query($sql);
+            $stmt = $con->prepare($sql);
+            
+            $stmt->bind_param("s", $user_id);
             
             /*
                 Function location in : functions.php

@@ -31,6 +31,12 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $product_id = param($request['product_id']);
+    $rate = param($request['rate']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -54,7 +60,7 @@
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
             }
             
@@ -65,7 +71,9 @@
                                     WHERE 
                                         product_id=? AND user_id=?");
                
-            $stmt->bind_param("is", $request['product_id'],$user_id);
+            $stmt->bind_param("is", $product_id,$user_id);
+            $stmt->execute();
+            $stmt->store_result();
             
              /*
                 Function location in : /model/general/functions.php
@@ -78,29 +86,34 @@
             
             $stmt = $con->prepare("INSERT INTO product_rate(product_id,user_id,product_rate_value) VALUES(?,?,?)");
             
-            $stmt->bind_param("isi", $request['product_id'],$user_id,$request['rate']);
+            $stmt->bind_param("isi", $product_id,$user_id,$rate);
                 
             $stmt->execute();
+            
+            $stmt->close();
             
             $stmt = $con->prepare("UPDATE product SET product_average_rate=(product_average_rate+?)/(product_count_rate+1),product_count_rate=product_count_rate+1 where product_id=?");
             
-            $stmt->bind_param("ii", $request['rate'],$request['product_id']);
+            $stmt->bind_param("ii", $rate,$product_id);
                 
             $stmt->execute();
             
-            $stmt = $con->query("SELECT 
+            $stmt->close();
+            
+            $stmt = $con->prepare("SELECT 
                                         product_average_rate
                                     FROM 
                                         product 
                                     WHERE 
-                                        product_id=".$request['product_id']."");
+                                        product_id=?");
             
+            $stmt->bind_param("i", $product_id);
             /*
                 Function location in : /model/general/functions.php
             */
             $count_val = calc_val($stmt);
             
-            rate($request['product_id'],$user_id,$count_val);
+            rate($product_id,$user_id,$count_val);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

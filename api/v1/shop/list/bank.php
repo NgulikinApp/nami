@@ -36,17 +36,18 @@
         try{
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            $stmt = $con->query("SELECT 
+            $query = "SELECT 
                                     bank_id, 
                                     bank_name,
                                     bank_icon
                                   FROM 
-                                    bank");
-            
+                                    bank
+                                  WHERE
+                                    1=?";
             /*
                 Function location in : function.php
             */
-            bank($stmt);
+            bank($query,$cache,"m_bank",$con);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

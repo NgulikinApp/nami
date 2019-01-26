@@ -85,6 +85,8 @@
                 
                 $stmt->execute();
                 
+                setMemcached("m_user_".$verified[0]."_".$key."_1",$cache,1,3600);
+                
                 /*
                     Function location in : functions.php
                 */

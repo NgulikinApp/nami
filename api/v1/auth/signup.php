@@ -31,6 +31,20 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $username = param($request['username']);
+    $socmed = param($request['socmed']);
+    $name = param($request['name']);
+    $password = param($request['password']);
+    $email = param($request['email']);
+    $nohp = param($request['nohp']);
+    $dob = param($request['dob']);
+    $gender = param($request['gender']);
+    $source = param($request['source']);
+    $id_socmed = param($request['id_socmed']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -52,7 +66,10 @@
                 }else if($key == 'username'){
                     $stmt = $con->prepare("SELECT 1 FROM user WHERE username=?");
                     $stmt->bind_param("s", $value);
-                    if(preg_match('/^[\w]+$/', $value) == false && strlen($value) <= 3){
+                    $stmt->execute();
+                    $stmt->store_result();
+                    
+                    if(strlen($value) <= 3){
                         $data[$key] = "invalid";
                         $arrayCheck = false;
                     /*
@@ -67,6 +84,8 @@
                 }else if($key == 'email'){
                     $stmt = $con->prepare("SELECT 1 FROM user WHERE email=?");
                     $stmt->bind_param("s", $value);
+                    $stmt->execute();
+                    $stmt->store_result();
                     
                     /*
                         Function location in : /model/general/functions.php
@@ -83,7 +102,7 @@
                     }else{
                         $data[$key] = "valid";
                     }
-                }else if($key == 'dob' && checkdate(explode("-", $value)[2], explode("-", $value)[1], explode("-", $value)[0]) == false){
+                }else if($key == 'dob' && checkdate(explode("-", $value)[1], explode("-", $value)[2], explode("-", $value)[0]) == false){
                     $data[$key] = "invalid";
                     $arrayCheck = false;
                 }else{
@@ -95,7 +114,7 @@
                 /*
                     Function location in : /v1/auth/function.php
                 */
-                $key = encrypt_hash('ngulik_'.$request['username'].date('Y-m-d H:i:s'));
+                $key = encrypt_hash('ngulik_'.$username.date('Y-m-d H:i:s'));
                 /*
                     Function location in : /model/general/functions.php
                 */
@@ -104,13 +123,14 @@
                 
                 $passwordSocmed = '';
                 $user_isactive = 0;
-                if($request['socmed'] == 'facebook'){
+                if($socmed == 'facebook'){
                     $user_isactive = 1;
                     $passwordSocmed = encrypt_hash('Facebook_Ngulikin');
-                }else if($request['socmed'] == 'googleplus'){
+                }else if($socmed == 'googleplus'){
                     $user_isactive = 1;
                     $passwordSocmed = encrypt_hash('GooglePlus_Ngulikin');
                 }
+                $user_photo = 'no-photo.jpg';
                 
                 $stmt = $con->prepare("INSERT INTO 
                                                     user(
@@ -124,14 +144,14 @@
                                                         gender,
                                                         user_key,
                                                         source,
-                                                        socmed,
-                                                        password_socmed,
+                                                        password_".$socmed.",
                                                         user_isactive,
-                                                        id_socmed
+                                                        id_".$socmed.",
+                                                        user_photo
                                                     ) 
                                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 
-                $stmt->bind_param("ssssssssssssss", $user_id, $request['username'], $request['name'], $request['password'], $request['email'], $request['nohp'], $request['dob'], $request['gender'], $key, $request['source'], $request['socmed'], $passwordSocmed, $user_isactive,$request['id_socmed']);
+                $stmt->bind_param("ssssssssssssss", $user_id, $username, $name, $password, $email, $nohp, $dob, $gender, $key, $source, $passwordSocmed, $user_isactive,$id_socmed,$user_photo);
 
                 $stmt->execute();
                 
@@ -140,69 +160,66 @@
                 $param = base64_encode($user_id.'~'.$key);
                 
                 if($user_isactive == 0){
-                    $mail = new PHPMailer;
-                    $mail->isSMTP();
-                	$mail->Debugoutput = 'html';
-                	$mail->Host = "mail.ngulikin.com";
-                	$mail->Port = 25;
-                	$mail->SMTPAuth = true;
-                	$mail->Username = "ngulikin";
-                	$mail->Password = "FD76889Ddt!";
-                	$mail->setFrom("info@ngulikin.com", "Ngulikin");
-                	$mail->addAddress($request['email'], $request['name']);
-                	$mail->Subject = 'Ngulikin (Aktifasi Akun)';
-                	$mail->Body = "Klik tombol aktif dibawah ini, untuk mengaktifkan akun anda.<br><br><a href='".INIT_URL."/v1/activeAccount?q=".$param."'><div style='background-color:#004E82;border-radius: 10px;width: 30px;font-weight: bold;padding:8px;color:#FFFFFF;'>Aktif</div></a>";
-                	$mail->AltBody = 'This is a plain-text message body';
-                	
-                	//email sended successfully
-                	$mail->send();
+                    /*
+                        Function location in : /model/general/functions.php
+                    */
+                    sendEmail("info@ngulikin.com","Ngulikin",$email,$name,"Aktifasi Akun","Klik tombol aktif dibawah ini, untuk mengaktifkan akun anda.<br><br><a href='".INIT_URL."/v1/activeAccount?q=".$param."'><div style='background-color:#004E82;border-radius: 10px;width: 30px;font-weight: bold;padding:8px;color:#FFFFFF;'>Aktif</div></a>");
+                }else{
+                    sessionCart($user_id,$con);
+                
+                    $result = array(
+                                    "user_id"=>$user_id,
+                                    "username"=>$username,
+                                    "fullname"=>$name,
+                                    "email"=>$email,
+                                    "nohp"=>$nohp,
+                                    "dob"=>$dob,
+                                    "gender"=>$gender,
+                                    "key"=>$key,
+                                    "user_photo"=>INIT_URL."/img/".$user_photo,
+                                    "shop_id"=>0,
+                                    "shop_name"=>'',
+                                    "shop_icon"=>'',
+                                    "shop_banner"=>'',
+                                    "brand_id"=>0,
+                                    "delivery_id"=>'1,2',
+                                    "time_signup"=>"1 hari bergabung"
+                                );
+                    
+                    $_SESSION['user'] = $result;
+                    
+                    setMemcached("m_user_".$user_id."_".$key."_0",$cache,1,3600);
+                    
+                    session_regenerate_id();
+                    session_regenerate_id(true);
                 }
                 
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'];
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username;
                 mkdir($path, 0700, true);
                 
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/temp';
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/temp';
                 mkdir($path, 0700, true);
                 
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/shop';
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop';
                 mkdir($path, 0700, true);
                 
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/shop/icon';
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop/icon';
                 mkdir($path, 0700, true);
                 
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/shop/banner';
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop/banner';
                 mkdir($path, 0700, true);
                 
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/product';
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/product';
                 mkdir($path, 0700, true);
                 
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/brand';
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/brand';
                 mkdir($path, 0700, true);
                 
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/shop/notes';
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop/notes';
                 mkdir($path, 0700, true);
                 
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/'.IMAGES_URL.'/'.$request['username'].'/seller';
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/seller';
                 mkdir($path, 0700, true);
-                
-                sessionCart($user_id,$con);
-                
-                $result = array(
-                                "user_id"=>$user_id,
-                                "username"=>$request['username'],
-                                "fullname"=>$request['name'],
-                                "email"=>$request['email'],
-                                "nohp"=>$request['nohp'],
-                                "dob"=>$dob,
-                                "gender"=>$request['gender'],
-                                "key"=>$key,
-                                "user_photo"=>"",
-                                "shop_id"=>0,
-                                "brand_id"=>0,
-                                "delivery_id"=>'1,2'
-                            );
-                
-                $_SESSION['user'] = $result;
                 
                 $data = array(
         			'status' => "OK",

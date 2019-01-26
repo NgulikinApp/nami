@@ -37,6 +37,11 @@
     */
     $request = postraw();
     
+    /*
+        Parameters
+    */
+    $comment = param($request['comment']);
+    
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
@@ -53,24 +58,40 @@
                 $user_id = $_SESSION['user']["user_id"];
                 $key = $_SESSION['user']["key"];
                 $user_photo = $_SESSION['user']["user_photo"];
-                $fullname = $_SESSION['user']["fullname"];
+                $username = $_SESSION['user']["username"];
+                $shop_id = intval($_SESSION['user']["shop_id"]);
             }else{
                 $user_id = '';
                 $key = '';
-                $user_photo = $_SESSION['user']["user_photo"];
-                $fullname = $_SESSION['user']["fullname"];
+                $user_photo = '';
+                $username = '';
+                $shop_id = 0;
             }
             
             /*
                 Function location in : /model/general/functions.php
             */
-            if(checkingAuthKey($con,$user_id,$key,0) == 0){
+            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
                 return invalidKey();
+            }
+            
+            if($id == 0 || $id == $shop_id){
+                /*
+                    Function location in : functions.php
+                */
+                unauthComment();
+            }
+            
+            if($comment == ''){
+                /*
+                    Function location in : functions.php
+                */
+                emptyComment();
             }
             
             $stmt = $con->prepare("INSERT INTO shop_discuss(shop_id,user_id,shop_discuss_comment) VALUES(?,?,?)");
                
-            $stmt->bind_param("iss", $id,$user_id,$request['comment']);
+            $stmt->bind_param("iss", $id,$user_id,$comment);
             
             $stmt->execute();
             
@@ -82,14 +103,16 @@
             
             $stmt->execute();
             
-            $stmt = $con->query("SELECT 
+            $stmt = $con->prepare("SELECT 
                                         DATE_FORMAT(shop_discuss_createdate, '%W, %d %M %Y') AS comment_date
                                     FROM 
                                         shop_discuss
                                     WHERE
-                                        shop_discuss_id = ".$shop_discuss_id."");
+                                        shop_discuss_id = ?");
+                                        
+            $stmt->bind_param("i", $shop_discuss_id);
             
-            comment($stmt,$shop_discuss_id,$id,$user_id,$request['comment'],$user_photo,$fullname);
+            comment($stmt,$shop_discuss_id,$id,$user_id,$comment,$user_photo,$username);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php
