@@ -68,7 +68,7 @@
         </div>
         <div class="note-body">
             <div class="note-body-content">
-                <div class="note-body-content-left">
+                <div class="note-body-content-left" id="address-shop-con">
                     <div class="note-body-content-grid1">
                         Alamat penjual/toko
                     </div>
@@ -93,7 +93,7 @@
                         <div class="pinkyoung">Cantumkan jika ada</div>
                     </div>
                 </div>
-                <div class="note-body-content-right" id="address-shop-con">
+                <div class="note-body-content-right">
                     <div class="note-body-content-grid1 photo-location-shop">
                         Foto Lokasi Toko
                     </div>

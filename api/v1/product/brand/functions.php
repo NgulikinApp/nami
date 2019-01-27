@@ -12,16 +12,27 @@
         
         $stmt->fetch();
         
+        $brand_name = ($col1 != "")?$col1:'Buat brand dahulu';
+        
+        if($col2 != ""){
+            $brand_image = IMAGES_URL.'/'.urlencode(base64_encode($col5.'/brand/'.$col2));
+        }else{
+            $brand_image = INIT_URL.'/img/no-image.jpg';
+        }
+        
+        $brand_product_count = ($col3 != "")?$col3:'';
+        $brand_createdate = ($col4 != "")?$col4:'';
+        
         if($col6 != ""){
             $shop_banner = IMAGES_URL.'/'.urlencode(base64_encode($col5.'/shop/banner/'.$col6));
         }else{
             $shop_banner = '';
         }
         
-        $data['brand_name'] = $col1;
-        $data['brand_image'] = IMAGES_URL.'/'.urlencode(base64_encode($col5.'/brand/'.$col2));
-        $data['brand_product_count'] = $col3;
-        $data['brand_createdate'] = $col4;
+        $data['brand_name'] = $brand_name;
+        $data['brand_image'] = $brand_image;
+        $data['brand_product_count'] = $brand_product_count;
+        $data['brand_createdate'] = $brand_createdate;
         $data['shop_banner'] = $shop_banner;
         
         $stmt->close();

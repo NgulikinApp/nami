@@ -20,7 +20,7 @@
         $stmt->store_result();
         
         if($stmt->num_rows > 0){
-            $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16, $col17, $col18, $col19, $col20, $col21, $col22, $col23, $col24, $col25, $col26, $col27, $col28, $col29);
+            $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16, $col17, $col18, $col19, $col20, $col21, $col22, $col23, $col24, $col25, $col26, $col27, $col28);
             
             $stmt->fetch();
             
@@ -39,14 +39,14 @@
                 $user_photo = INIT_URL."/img/".$col10;
             }
                 
-            if($col8 != ""){
+            if($col8 != "no_banner.png"){
                 $shop_banner = IMAGES_URL.'/'.urlencode(base64_encode($col3.'/shop/banner/'.$col8));
             }else{
-                $shop_banner = $col8;
+                $shop_banner = INIT_URL."/img/".$col8;
             }
             
             $shop_image_location = array();
-            if($col25 != ''){
+            if($col24 != ''){
                 $imageArray = explode(",",$col25);
                 $countImage = sizeof($imageArray);
                 for($i=0;$i<$countImage;$i++){
@@ -72,7 +72,7 @@
             $data['shop_banner'] = $shop_banner;
             $data['university'] = $col9;
             $data['user_photo'] = $user_photo;
-            $data['phone'] = $col29;
+            $data['phone'] = $col28;
             $data['shop_op_from'] = intval($col11);
             $data['shop_op_to'] = intval($col12);
             $data['shop_sunday'] = intval($col13);
@@ -82,15 +82,14 @@
             $data['shop_thursday'] = intval($col17);
             $data['shop_friday'] = intval($col18);
             $data['shop_saturday'] = intval($col19);
-            $data['shop_desc'] = $col20;
-            $data['shop_close'] = $col21;
-            $data['shop_open'] = $col22;
-            $data['shop_closing_notes'] = $col23;
-            $data['shop_location'] = $col24;
-            $data['shop_notes_modifydate'] = $col26;
+            $data['shop_close'] = $col20;
+            $data['shop_open'] = $col21;
+            $data['shop_closing_notes'] = $col22;
+            $data['shop_location'] = $col23;
+            $data['shop_notes_modifydate'] = $col25;
             $data['canbecommented'] = $canbecommented;
-            $data['shop_total_review'] = $col27;
-            $data['shop_total_discuss'] = $col28;
+            $data['shop_total_review'] = $col26;
+            $data['shop_total_discuss'] = $col27;
             $data['shop_image_location'] = $shop_image_location;
         }
         

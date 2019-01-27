@@ -64,7 +64,7 @@
                                         			shop_thursday,
                                         			shop_friday,
                                         			shop_saturday,
-                                        			shop_desc,
+                                        			shop_description,
                                         			shop_close,
                                         			shop_open,
                                         			shop_closing_notes,

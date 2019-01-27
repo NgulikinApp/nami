@@ -149,12 +149,12 @@ function detail(){
                         	$('#time_op_from').html('Jam '+sectohour(data.result.shop_op_from));
                         	$('#time_op_to').html('Jam '+sectohour(data.result.shop_op_to));
                         	
-                        	var shop_desc = (data.result.shop_desc !== '')?data.result.shop_desc !== '':'Tidak ada keterangan';
+                        	var shop_desc = (data.result.shop_desc !== '')?data.result.shop_description:'Tidak ada keterangan';
                         	$('#note-seller-info').html(shop_desc);
                         	
                         	$('.note-footer span').html(data.result.shop_notes_modifydate);
                         	
-                        	var shop_closing_notes = (data.result.shop_closing_notes !== '')?data.result.shop_closing_notes !== '':'Tidak ada keterangan';
+                        	var shop_closing_notes = (data.result.shop_closing_notes !== '')?data.result.shop_closing_notes:'Tidak ada keterangan';
                         	$('#close-info').html(shop_closing_notes);
                         	
                         	if(data.result.shop_close !== ''){
@@ -172,7 +172,7 @@ function detail(){
                         	$('#shop_close_date').html(data.result.shop_close);
                         	$('#shop_open_date').html(data.result.shop_open);
                         	
-                        	var shop_location = (data.result.shop_location !== '')?data.result.shop_location !== '':'Belum diisi';
+                        	var shop_location = (data.result.shop_location !== '')?data.result.shop_location:'Belum diisi';
                         	$('#address-shop').html(shop_location);
                         	
                         	$('#owner-shop').html(data.result.fullname);
@@ -251,6 +251,8 @@ function detailBrand(){
             success: function(data, status) {
                 if(data.status == "OK"){
                     if($.isEmptyObject(data.result) === false){
+                        var text_sum_product = (data.result.brand_product_count !== '')?'jumlah produk':'';
+                        
                         var brand = '<div class="profile-seller-grid1">';
                             brand += '   <div class="grid-shop-banner"></div>';
                             brand += '   <div class="grid-shop-content-menu">';
@@ -259,7 +261,7 @@ function detailBrand(){
                             brand += '               <img src="'+data.result.brand_image+'" id="brand_image" height="130" width="130"/>';
                             brand += '           </div>';
                             brand += '           <div class="shop-name" id="brand_name">'+data.result.brand_name+'</div>';
-                            brand += '           <div class="shop-sum-text-brand">jumlah produk</div>';
+                            brand += '           <div class="shop-sum-text-brand">'+text_sum_product+'</div>';
                             brand += '           <div class="shop-sum-brand">'+data.result.brand_product_count+'</div>';
                             brand += '       </div>';
                             brand += '   </div>';
@@ -573,7 +575,7 @@ function brandShop(){
         $('#pagingShopSellerBrand').removeData("twbs-pagination");
         $('#pagingShopSellerBrand').unbind("page");
         
-        $(".grid-shop-seller-body .brand .left").empty();
+        $(".grid-shop-seller-body .brand .right").empty();
         
         $.ajax({
             type: 'GET',
@@ -586,16 +588,16 @@ function brandShop(){
                 if(data.status == "OK"){
                     var response = data.result;
                     if(response.length > 0){
-                        var listProduct = '';
+                        var listBrand = '';
                         $.each( response, function( key, val ) {
                             var isSelected = val.shop_current_brand === val.brand_id ? 'chosen' : '';
-                            listProduct += '<div class="list-brandseller brand'+val.brand_id+' '+isSelected+'" title="'+val.brand_name+'" datainternal-id="'+val.brand_id+'">';
-                            listProduct += '    <img src="'+val.brand_image+'" height="150" width="150"/>';
-                            listProduct += '    <div>'+val.brand_name+'</div>';
-                            listProduct += '</div>';
+                            listBrand += '<div class="list-brandseller brand'+val.brand_id+' '+isSelected+'" title="'+val.brand_name+'" datainternal-id="'+val.brand_id+'">';
+                            listBrand += '    <img src="'+val.brand_image+'" height="150" width="150"/>';
+                            listBrand += '    <div>'+val.brand_name+'</div>';
+                            listBrand += '</div>';
                         });
                         
-                        $(".grid-shop-seller-body .brand .left").html(listProduct);
+                        $(".grid-shop-seller-body .brand .right").html(listBrand);
                         
                         $(".grid-shop-seller-body .brand .image div").mouseover(function(){
                             $(this).children('.hover').show();
@@ -1372,7 +1374,7 @@ function accountBank(){
 	});
 	$('#bankname').on( 'change', function( e ){
 	    var bankname_selected = $("#bankname option:selected").text();
-	    $('#recbankimg').attr('src','/img/'+bankname_selected.toLowerCase()+'.png');
+	    $('#recbanking').attr('src','/img/'+bankname_selected.toLowerCase()+'.png');
 	});
 }
 

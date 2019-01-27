@@ -4419,7 +4419,7 @@ input.radioPaymentOthers:empty ~ label:before{
     float:left;
 }
 .grid-shop-seller-body .note .note-body .note-body-content #address-shop-con,#notesShopSection .note .note-body .note-body-content #address-shop-con{
-    border-left: 1px solid #DFDFDF;
+    border-right: 1px solid #DFDFDF;
 }
 .grid-shop-seller-body .note .note-body .note-body-content .note-body-content-grid1,#notesShopSection .note .note-body .note-body-content .note-body-content-grid1,.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-grid4,#notesShopSection .note .note-body .note-body-content .note-body-content-grid4{
     color:#807F7F;
@@ -4586,10 +4586,8 @@ input.radioPaymentOthers:empty ~ label:before{
 .grid-shop-seller-body .brand .image img,.grid-shop-seller-body .product .image img{
     margin:10px;
 }
-.grid-shop-seller-body .brand .left,.grid-shop-seller-body .product .right{
+.grid-shop-seller-body .brand .right,.grid-shop-seller-body .product .right{
     width: calc(100% - 190px);
-}
-.grid-shop-seller-body .brand .left,.grid-shop-seller-body .product .right{
     overflow-x: hidden;
 }
 .grid-shop-seller-body .brand .left .list-brandseller,.grid-shop-seller-body .product .right .list-productseller{
@@ -4602,10 +4600,8 @@ input.radioPaymentOthers:empty ~ label:before{
 .grid-shop-seller-body .product .right .list-productseller label{
     display:block;
 }
-.grid-shop-seller-body .brand .right,.grid-shop-seller-body .product .left{
+.grid-shop-seller-body .brand .left,.grid-shop-seller-body .product .left{
     width:150px;
-}
-.grid-shop-seller-body .product .left{
     margin-left: 20px;
 }
 .grid-shop-seller-body .brand .image .create-data,.grid-shop-seller-body .product .image .create-data{

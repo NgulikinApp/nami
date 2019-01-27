@@ -6,7 +6,14 @@
 	            <li id="trackorderstab">Lacak Pesanan</li>
 	            <li id="changepasswordtab">Ubah Kata Sandi</li>
 	            <li id="transactiontab">Transaksi</li>
-	            <li id="createshoptab">Buat Toko</li>
+	            <?php
+	                if(intval($_SESSION['user']["shop_id"]) == 0){
+	            ?>  
+	                    <li id="createshoptab">Buat Toko</li>
+	            <?php
+	                }
+	            ?>
+	            
 	        </ul>
 	    </div>
 	    <div class="contentProfile">
@@ -14,7 +21,11 @@
 	            include 'myaaccount/index.php';
 	            include 'section_changepassword.php';
 	            include 'section_transaction.php';
-	            include 'section_createshop.php';
+	            if(intval($_SESSION['user']["shop_id"]) == 0){
+	                include 'section_createshop.php';
+	        ?>
+	        <?php
+	            }
 	        ?>
 	    </div>
 	</section>

@@ -19,6 +19,19 @@ function initProfile(){
         $("#bankname").parent().replaceWith(cnt);
         var cnt = $("#recno").parent().contents();
         $("#recno").parent().replaceWith(cnt);
+        
+        $('#bank_id-button').css({"width":"100%","margin":"0px"});
+        
+        $('#bank_id').on( 'change', function( e ){
+            $('#bank_id-button span').remove();
+            
+            var bankname_selected = $("#bank_id option:selected").text();
+    	    $('#recbanking').attr('src','/img/'+bankname_selected.toLowerCase()+'.png');
+        });
+        
+        $('#btnSubmitCreateShop').on( 'click', function( e ){
+            doCreateShop();
+        });
     }
     
     $('#myaccounttab').on( 'click', function( e ){
@@ -80,6 +93,10 @@ function initProfile(){
     
     $('#btnSubmitMyprofile').on( 'click', function( e ){
         updateProfile();
+    });
+    
+    $("#filesCreateShopPrivate").change(function(){
+        uploadPhotoShop();
     });
     
     var cnt = $("#fullnameField").contents();
@@ -392,11 +409,86 @@ function listbank(){
                     $.each( data.result, function( key, val ) {
                         listbank += '<option value="'+val.bank_id+'">'+(val.bank_name).toUpperCase()+'</option>';
                     });
-                    $('#bankname').append(listbank);
+                    $('#bank_id').append(listbank);
                 }else{
                     generateToken(listbank);
                 }
             }
         });    
+    }
+}
+
+function uploadPhotoShop(){
+    var data = new FormData(),
+        filePath = $('#filesCreateShopPrivate').val(),
+        fileExt = (filePath.substr(filePath.lastIndexOf('\\') + 1).split('.')[1]).toLowerCase(),
+        filePhoto = $('#filesCreateShopPrivate')[0].files[0],
+        fileSize = filePhoto.size/ 1024 / 1024;
+        
+        data.append('type', 'shop');
+        data.append('file', filePhoto);
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(uploadPhotoShop);
+    }else{
+        if(fileSize < 2){
+            if(fileExt === 'jpg' || fileExt === 'png'){
+                $('.loaderProgress').removeClass('hidden');
+                $.ajax({
+                    type: 'POST',
+                    url: PUTFILE_API,
+                    data: data,
+                    async: true,
+                    contentType: false, 
+                    processData: false,
+                    dataType: 'json',
+                    beforeSend: function(xhr, settings) { 
+                        xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+                    },
+                    success: function(result){
+                        $('#previewImageCreateShopPrivate').attr('src',result.src);
+                        $('.loaderProgress').addClass('hidden');
+                    }
+                });
+            }else{
+                notif("error","Format file hanya boleh jpg atau png","center","top");
+            }
+        }else{
+            notif("error","File tidak boleh lebih dari 2 MB","center","top");
+        }
+    }
+}
+
+function doCreateShop(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(doEditProfile);
+    }else{
+        var shop_name = $("#shopname").val(),
+            shop_desc = $("#shopdesc").val(),
+            bank_id = $("#bank_id").val(),
+            recname = $("#recname").val(),
+            recno = $("#recno").val();
+            
+        $.ajax({
+            type: 'POST',
+            url: SHOP_ACTION_API,
+            data:JSON.stringify({ 
+                    shop_name: shop_name,
+                    shop_desc : shop_desc,
+                    account_name : recname,
+                    account_no : recno,
+                    bank_id : bank_id
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                    generateToken(doCreateShop);
+                }else{
+            	    location.reload();
+                }
+            }
+        });
     }
 }

@@ -125,11 +125,11 @@
             }
             
             if($notes_photo_nameList != ''){
-                $stmt = $con->prepare("UPDATE shop SET shop_op_from= ?,shop_op_to=?,shop_sunday=?,shop_monday=?,shop_tuesday=?,shop_wednesday=?,shop_thursday=?,shop_friday=?,shop_saturday=?,shop_desc=?,shop_close=?,shop_open=?,shop_closing_notes=?,shop_location=?,shop_image_location=? where shop_id=?");
+                $stmt = $con->prepare("UPDATE shop SET shop_op_from= ?,shop_op_to=?,shop_sunday=?,shop_monday=?,shop_tuesday=?,shop_wednesday=?,shop_thursday=?,shop_friday=?,shop_saturday=?,shop_description=?,shop_close=?,shop_open=?,shop_closing_notes=?,shop_location=?,shop_image_location=? where shop_id=?");
             
                 $stmt->bind_param("iiiiiiiiissssssi", $shop_op_from, $shop_op_to, $shop_sunday, $shop_monday, $shop_tuesday, $shop_wednesday, $shop_thursday, $shop_friday, $shop_saturday, $shop_desc, $shop_close, $shop_open, $shop_closing_notes, $shop_location,$notes_photo_nameList, $shop_id);   
             }else{
-                $stmt = $con->prepare("UPDATE shop SET shop_op_from= ?,shop_op_to=?,shop_sunday=?,shop_monday=?,shop_tuesday=?,shop_wednesday=?,shop_thursday=?,shop_friday=?,shop_saturday=?,shop_desc=?,shop_close=?,shop_open=?,shop_closing_notes=?,shop_location=? where shop_id=?");
+                $stmt = $con->prepare("UPDATE shop SET shop_op_from= ?,shop_op_to=?,shop_sunday=?,shop_monday=?,shop_tuesday=?,shop_wednesday=?,shop_thursday=?,shop_friday=?,shop_saturday=?,shop_description=?,shop_close=?,shop_open=?,shop_closing_notes=?,shop_location=? where shop_id=?");
             
                 $stmt->bind_param("iiiiiiiiisssssi", $shop_op_from, $shop_op_to, $shop_sunday, $shop_monday, $shop_tuesday, $shop_wednesday, $shop_thursday, $shop_friday, $shop_saturday, $shop_desc, $shop_close, $shop_open, $shop_closing_notes, $shop_location, $shop_id);
             }

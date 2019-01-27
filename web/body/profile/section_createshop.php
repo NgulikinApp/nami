@@ -29,7 +29,7 @@
             </div>
             <div style="margin: 0px;">
                 <div class="select" id="bankname_con" style="width: 15%;overflow: hidden;">
-                    <select id="bankname"></select>
+                    <select id="bank_id"></select>
                 </div>
             </div>
             <div>
@@ -39,7 +39,7 @@
             <div>
                 <span>No. Rekening</span>
             </div>
-            <img src="/img/bca.png" id="recbanking"/>
+            <img src="/img/bca.png" id="recbanking" style="height:38px;"/>
             <input type="text" id="recno" class="inputCreateShopPrivate" style="width: 20%;"/>
         </div>
     </div>

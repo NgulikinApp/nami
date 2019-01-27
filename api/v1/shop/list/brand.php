@@ -76,7 +76,7 @@
                                         shop.shop_name = ?
                                     ORDER BY 
                                         brand_id DESC");
-            
+       
             $stmt->bind_param("s", $shop_name);
             /*
                 Function location in : function.php

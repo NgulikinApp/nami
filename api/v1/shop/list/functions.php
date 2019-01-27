@@ -225,13 +225,15 @@
         $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6);
         
         while ($stmt->fetch()) {
-            $data[] = array(
+            if($col1 != ''){
+               $data[] = array(
                       "brand_id" => $col1,
                       "brand_name" => $col2,
                       "brand_image" => IMAGES_URL.'/'.urlencode(base64_encode($col4.'/brand/'.$col3)),
                       "shop_current_brand" => $col5,
                       "shop_total_brand" => $col6
-                    );
+                    ); 
+            }
         }
         
         $stmt->close();

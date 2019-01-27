@@ -103,7 +103,7 @@
                 /*
                     Function location in : functions.php
                 */
-                returndata_signin($verified[0],$con);
+                returndata_signin($verified[0],$con,$cache);
             }else if($auth[1] != $verified[2]){
                 /*
                     Function location in : functions.php
