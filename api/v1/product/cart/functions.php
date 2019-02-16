@@ -111,17 +111,18 @@
                             );
                 }
                 
-                $data[] = array(
+                $dataShops[] = array(
                           "shop_id" => $col9,
                           "shop_name" => $col6,
                           "products" => $dataProduct
                         );
             }
+            
             $stmt->close();
-            $countArray = count($data);
+            $countArray = count($dataShops);
             for($i=0;$i<$countArray;$i++){
                 $datadel = listdelivery($con,$dataDelivery[$i]);
-                $data[$i]['product_delivery'] = $datadel;
+                $dataShops[$i]['product_delivery'] = $datadel;
             }
             
             $data = array(
