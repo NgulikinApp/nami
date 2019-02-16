@@ -32,6 +32,8 @@
         1. file
     */
     
+    $type = param(@$_POST['type']);
+    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -76,7 +78,7 @@
                     
                     if($ext == 'jpg' || $ext == 'png'){
                         
-                        if(param(@$_POST['type']) != 'product'){
+                        if($type != 'product' && $type != 'createshop' && $type != 'uploadcard' && $type != 'uploadselfie'){
                             $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/temp';
                             
                             //delete all file
@@ -89,13 +91,22 @@
                             unset($_SESSION['file']);
                         }
                         
+                        
                         $filename = uniqid().".jpg";
                 	    $target_file = $target_dir ."/". $filename;
                 	    
                         //upload file into 'temp' directory
                         move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
                         
-                        $_SESSION['file'][] = $filename;
+                        if($type != 'createshop'){
+                            $_SESSION['file'][0] = $filename;
+                        }else if($type != 'uploadcard'){
+                            $_SESSION['file'][1] = $filename;
+                        }else if($type != 'uploadselfie'){
+                            $_SESSION['file'][2] = $filename;
+                        }else{
+                            $_SESSION['file'][] = $filename;
+                        }
                         
                         $data = array(
             			    'status' => "OK",

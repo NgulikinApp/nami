@@ -481,7 +481,7 @@ select::-ms-expand {
     overflow:hidden;
     outline:none;
 }
-#menuLogin:hover{
+#menuLogin:hover,#btnSubmitMyprofile:hover,#btnSubmitPassMyprofile:hover,#btnSubmitCreateShop:hover{
     color: #FFFFFF;
     background-color: #007ec1;
 }
@@ -1829,7 +1829,7 @@ section div h1{
     text-align: center;
     color:#808080;
 }
-.inputSignup,.inputSignin{
+.inputSignup,.inputSignin,.addressInput{
     color: #000;
     padding: 8px;
     border-radius: 3px;
@@ -1974,7 +1974,7 @@ section div h1{
     font-size: 10px;
     font-weight: unset;
 }
-#buttonSignIn,#buttonSignup,#buttonReset,#buttonForgotSend,#buttonForgotVerified,#buttonForgotChange,#processMysalesButton,#buttonListTransactionIncome{
+#buttonSignIn,#buttonSignup,#buttonReset,#buttonForgotSend,#buttonForgotVerified,#buttonForgotChange,#processMysalesButton,#buttonListTransactionIncome,#buttonCartAddress{
 	background-color: #3FC3FF;
 	border-radius: 3px;
 	border: none;
@@ -1988,7 +1988,7 @@ section div h1{
 	font-family: proxima_nova;
 	box-shadow: 3px 3px 5px #888888;
 }
-#buttonSignIn:hover,#buttonSignup:hover,#buttonReset:hover,#buttonForgotSend:hover,#buttonForgotVerified:hover,#buttonForgotChange:hover,#processMysalesButton:hover,#buttonListTransactionIncome:hover{
+#buttonSignIn:hover,#buttonSignup:hover,#buttonReset:hover,#buttonForgotSend:hover,#buttonForgotVerified:hover,#buttonForgotChange:hover,#processMysalesButton:hover,#buttonListTransactionIncome:hover,#buttonCartAddress:hover{
     background-color: #007ec1;
 }
 #buttonSignIn{
@@ -2135,6 +2135,57 @@ hr{
     font-size:12px;
 }
 /*Cart Page*/
+.grid-shop-seller-menu .cart-menu{
+    float: left;
+    padding: 10px;
+    font-family: 'proxima_nova_ltsemibold';
+    border-right: 1px solid #DFDFDF;
+    background: #FFF;
+    cursor: default;
+    width: 50%;
+    text-align: center;
+}
+.grid-shop-seller-menu .cart-menu:first-child{
+    border-left: 0px;
+}
+.grid-shop-seller-menu .cart-menu:last-child{
+    border-right: 0px;
+    border-left: 0px;
+}
+.grid-shop-seller-menu .cart-menu:hover{
+    color:#848484;
+}
+.cartSignin{
+    cursor:pointer;
+}
+.cartSignin:hover{
+    color: #004E82 !important;
+}
+.cart-detail{
+    margin-top: 20px;
+    background: #FFF;
+    border-top: 1px solid #DFDFDF;
+}
+.iconSosmedCart{
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    margin-right: 10px;
+    border: 1px solid #DFDFDF;
+}
+#buttonCartAddress{
+    margin: 4px 0px;
+}
+.iconSosmedCart.fb{
+    background: #3b5998;
+}
+.iconSosmedCart span{
+    display: block;
+    margin-top: -3px;
+}
+.iconSosmedCart #iconSigninGplus{
+    margin-left: -3px;
+}
 .sumManinMenuCart,.sumNotifinMenuCart{
     color: red;
     bottom: 0;
@@ -2142,6 +2193,10 @@ hr{
     left: 50%;
     margin-left: -2px;
     margin-bottom: 5px;
+}
+#chooseallShopCart{
+    margin-left: 10px;
+    font-family: proxima_nova_altbold;
 }
 .no-cart{
     text-align:center;
@@ -2238,10 +2293,8 @@ hr{
     float:left;
     padding: 20px;
 }
-.grid-cartsum-left #detail-shopping,.grid-cartsum-left #detail-shoppingaccount,.grid-cartsum-right #detail-summary{
-    background-color:#FFFFFF;
-    border-radius:5px;
-    box-shadow: 3px 3px 5px #888888;
+.grid-cartsum-right #detail-summary{
+    background-color:#FEBD18;
 }
 .grid-cartsum-left #detail-shopping{
     margin-bottom:15px;
@@ -2251,13 +2304,13 @@ hr{
     width:100%;
     overflow: auto;
 }
-.grid-cartsum-left #detail-shopping .detail-shopping-header,.grid-cartsum-right #detail-summary .detail-summary-header,.grid-cartsum-left #detail-shoppingaccount .detail-shoppingaccount-header{
+.detail-shopping-header,.grid-cartsum-right #detail-summary .detail-summary-header,.grid-cartsum-left #detail-shoppingaccount .detail-shoppingaccount-header{
     text-align:center;
     padding: 15px;
     font-family: proxima_nova_altbold;
     letter-spacing: 1px;
 }
-.grid-cartsum-left #detail-shopping .detail-shopping-header,.grid-cartsum-left #detail-shoppingaccount .detail-shoppingaccount-header{
+.detail-shopping-header,.grid-cartsum-left #detail-shoppingaccount .detail-shoppingaccount-header{
     border-bottom: 2px solid #F5F5F5;
     margin-top: 0px !important;
     margin-bottom: 0px !important;
@@ -2269,31 +2322,29 @@ hr{
     border-bottom:1px solid #FFFFFF;
 }
 .detail-shopping-body-title,.detail-shopping-body-content{
-    border-top:0px;
-    border-left:1px;
-    border-right:1px;
-    border-bottom:1px;
+    border:1px;
     border-style:solid;
     border-color:#F5F5F5;
     font-family: proxima_nova_altbold;
     overflow:auto;
     display:block;
 }
-.detail-shopping-body-title #detail-shopping-icon,.detail-shopping-body-title #detail-shopping-sellername{
-    float:left;
+.detail-shopping-body-title .detail-shopping-icon,.detail-shopping-body-title .detail-shopping-sellername{
+    float:right;
     padding: 10px;
 }
-.detail-shopping-body-title #detail-shopping-icon{
+.detail-shopping-body-title .detail-shopping-choose{
+    float:left;
+    font-family: proxima_nova_altbold;
+    margin: 7px 10px;
+}
+.detail-shopping-body-title .detail-shopping-icon{
     height:37px;
     border-top: 1px solid #F5F5F5;
 }
-.detail-shopping-body-title #detail-shopping-sellername{
+.detail-shopping-body-title .detail-shopping-sellername{
     background-color:#3FC3FF;
     font-size: 12px;
-}
-
-.grid-cartsum-left #detail-shopping .detail-shopping-body{
-    padding:20px;
 }
 .detail-shopping-body-content{
     font-size:12px;
@@ -2303,11 +2354,16 @@ hr{
     overflow: auto;
     padding: 20px;
 }
-.detail-shopping-body-content .detail-shopping-body-content1 .disaligner,.detail-shopping-body-content .detail-shopping-body-content1 .aligner{
+.detail-shopping-body-content .detail-shopping-body-content1 .disaligner,.detail-shopping-body-content .detail-shopping-body-content1 .aligner,.chooseProductCartTemp{
     float:left;
-    width: 33.32%;
+}
+.chooseProductCartTemp{
+    width: 5%;
 }
 .detail-shopping-body-content .detail-shopping-body-content1 .aligner{
+    width: 39.32%;
+}
+.detail-shopping-body-content .detail-shopping-body-content1 .aligner,.chooseProductCartTemp{
     line-height: 95px;
     text-align: center;
 }
@@ -2336,7 +2392,7 @@ hr{
     height: 23px;
 }
 .detail-shopping-body-content2 .minCart{
-    margin-left: 23px;
+    margin-left: 55px;
 }
 .detail-shopping-body-content2 hr{
     width: 555px;
@@ -2361,22 +2417,25 @@ hr{
 }
 .detail-shopping-body-content3 div textarea{
     resize: none;
-    background: #F5F5F5;
-    border: 0;
+    border: 1px solid #DFDFDF;
     padding: 10px;
+    width: 100%;
+}
+.detail-shopping-body-content4 .inputDesc .select{
+    width: 65%;
+}
+.detail-shopping-body-content4 .inputDesc div{
+    float:left;
+}
+.detail-shopping-body-content4 .inputDesc div:last-child{
+    line-height: 35px;
 }
 .detail-shopping-body-content4 div select{
-    width: 350px;
     height: 30px;
 }
 .detail-shopping-body-content4 .inputDesc span{
-    border-left: 1px solid #F5F5F5;
     padding-left: 50px;
     margin-left: 50px;
-}
-.grid-cartsum-right #detail-summary .detail-summary-header{
-    background-color:#5f5f5f;
-    color:#FFF;
 }
 .grid-cartsum-right #detail-summary .detail-summary-body{
     padding: 15px;
@@ -3464,10 +3523,10 @@ Product page
     background-repeat: no-repeat;
     background-position: 98%;
 }
-#myaccount,#changepassword,#createshop,#transaction,#filesCreateShopPrivate{
+#myaccount,#changepassword,#createshop,#transaction,.btnFilePhoto{
     display:none;
 }
-#myaccount.active,#changepassword.active,#createshop.active,#transaction.active,label[for="filesCreateShopPrivate"]{
+#myaccount.active,#changepassword.active,#createshop.active,#transaction.active{
     display:block;
 }
 #changepassword.active{
@@ -3635,11 +3694,11 @@ Product page
     padding: 3px;
     width: 100%;
 }
-.privateRight div input,#filesCreateShopPrivate{
+.privateRight div input,.btnFilePhoto{
     visibility:hidden;
     width:100px;
 }
-.privateRight div label,.midProductLayer div label,#createshop .body div label{
+.privateRight div label,.midProductLayer div label{
     background-color: #3FC3FF;
     padding: 3px;
     color: #FFF;
@@ -3648,6 +3707,20 @@ Product page
     text-align: center;
     margin-top: 15px;
     cursor: pointer;
+}
+
+.photoDataProfile{
+    position: relative;
+    display: inline-block;
+    width: auto !important;
+    margin-right: 70px !important;
+}
+
+.photoDataProfile span{
+    color: #3FC3FF;
+    font-size: 10px;
+    width: 150px;
+    display: block;
 }
 
 @media screen and (max-width:1277px){
@@ -4290,6 +4363,7 @@ input.radioPaymentOthers:empty ~ label:before{
     border-right: 1px solid #DFDFDF;
     border-left: 1px solid #DFDFDF;
     overflow: auto;
+    border-bottom: 1px solid #DFDFDF;
 }
 .grid-shop-seller-menu div{
     display:inline-block;
@@ -4311,9 +4385,10 @@ input.radioPaymentOthers:empty ~ label:before{
     color: #414141;
     font-family: 'proxima_nova_ltsemibold';
     font-size: 17px;
-    border-top: 1px solid #DFDFDF;
-    border-bottom: 1px solid #DFDFDF;
     margin: 0px 15px;
+}
+.grid-shop-seller-body .title.cart{
+    text-align: left;
 }
 .grid-shop-seller-body .note,#notesShopSection .note{
     color :#F97C64;
@@ -4695,6 +4770,17 @@ input.radioPaymentOthers:empty ~ label:before{
 /*
     Edit Shop Profile Popup
 */
+.editPhoto{
+    display: block;
+    position: absolute;
+    top: 0;
+    padding: 5px 10px;
+    background-color: #3FC3FF;
+    text-align: center;
+    color: #FFF;
+    cursor: pointer;
+    margin-left: 118px;
+}
 .editProfileSellerContainer{
     background: #FFFFFF;
     width: 800px;
@@ -4763,6 +4849,13 @@ input.radioPaymentOthers:empty ~ label:before{
     border-radius: 5px;
     outline: none;
     padding: 5px;
+}
+.editProfileSellerContainer .body .content .addressLabel{
+    display:block;
+    margin-top: 5px;
+}
+.editProfileSellerContainer .body .content .addressInput{
+    width:100%;
 }
 .editProfileSellerContainer .footer,.accountSellerContainer .footer,.grid-shop-seller-footer{
     color:#FFF;

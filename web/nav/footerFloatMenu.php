@@ -1,7 +1,7 @@
 <div class="footerFloat">
     <nav>
         <?php
-            if(isset($_SESSION['user'])){
+            if(isset($_SESSION['user']) && $_SESSION['user']['shop_id'] == 0 && $_SESSION['user']['user_seller'] != '2'){
         ?>
                 <a>
                     <span id="footerSell">Berjualan di Ngulikin</span>

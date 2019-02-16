@@ -177,6 +177,7 @@
                                     "gender"=>$gender,
                                     "key"=>$key,
                                     "user_photo"=>INIT_URL."/img/".$user_photo,
+                                    "user_seller"=>'0',
                                     "shop_id"=>0,
                                     "shop_name"=>'',
                                     "shop_icon"=>'',
@@ -219,6 +220,12 @@
                 mkdir($path, 0700, true);
                 
                 $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/seller';
+                mkdir($path, 0700, true);
+                
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/seller/card';
+                mkdir($path, 0700, true);
+                
+                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/seller/selfie';
                 mkdir($path, 0700, true);
                 
                 $data = array(

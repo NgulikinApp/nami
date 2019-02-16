@@ -230,30 +230,33 @@ function bubbleCart(){
             },
             success: function(data, status) {
                 if(data.status == "OK"){
+                    var product_length = 0;
                     var templatePopUpCart = '';
                         templatePopUpCart += '<div class="popover popover-bubble" role="tooltip">';
                         templatePopUpCart += '  <div class="arrow"></div>';
                         templatePopUpCart += '  <div class="bubble-container">';
-                    	if(data.result.length>0){
+                    	if(data.result.totalproducts>0){
                             templatePopUpCart += '      <ul class="bubble-list-cart">';
-                            templatePopUpCart += '          <li>Jumlah <div class="bubble-sum-cart">'+data.result.length+'<img src="/img/button_cart.png" width="15" height="15"/></div></li>';
+                            templatePopUpCart += '          <li>Jumlah <div class="bubble-sum-cart"><font id="productsbubbletotal">'+data.result.totalproducts+'</font><img src="/img/button_cart.png" width="15" height="15"/></div></li>';
                             templatePopUpCart += '      </ul>';
                             templatePopUpCart += '      <div class="no-cart">';
-                            $.each( data.result, function( key, val ) {
-                            	templatePopUpCart += '          <div class="list-cart" data-id="'+val.product_id+'">';
-                                templatePopUpCart += '              <div class="list-cart-cont">';
-                                templatePopUpCart += '                  <div class="list-cart-content">'+val.brand_name+'</div>';
-                                templatePopUpCart += '                  <div class="list-cart-content">'+val.product_name+'</div>';
-                                templatePopUpCart += '                  <div class="list-cart-content">Total '+val.sum_product+'</div>';
-                                templatePopUpCart += '                  <div class="list-cart-content">'+val.cart_createdate+'</div>';
-                                templatePopUpCart += '              </div>';
-                                templatePopUpCart += '              <div class="list-cart-cont">';
-                                templatePopUpCart += '                  <img src="'+val.product_image+'" width="65" height="65"/>';
-                                templatePopUpCart += '              </div>';
-                                templatePopUpCart += '              <div class="list-cart-cont">';
-                                templatePopUpCart +=                    val.product_price;
-                                templatePopUpCart += '              </div>';
-                                templatePopUpCart += '          </div>';
+                            $.each( data.result.listshops, function( key, val ) {
+                                $.each( val.products, function( keyproduct, valproduct ) {
+                                    templatePopUpCart += '          <div class="list-cart" data-id="'+valproduct.product_id+'">';
+                                    templatePopUpCart += '              <div class="list-cart-cont">';
+                                    templatePopUpCart += '                  <div class="list-cart-content">'+valproduct.brand_name+'</div>';
+                                    templatePopUpCart += '                  <div class="list-cart-content">'+valproduct.product_name+'</div>';
+                                    templatePopUpCart += '                  <div class="list-cart-content">Total '+valproduct.cart_sumproduct+'</div>';
+                                    templatePopUpCart += '                  <div class="list-cart-content">'+valproduct.cart_createdate+'</div>';
+                                    templatePopUpCart += '              </div>';
+                                    templatePopUpCart += '              <div class="list-cart-cont">';
+                                    templatePopUpCart += '                  <img src="'+valproduct.product_image+'" width="65" height="65"/>';
+                                    templatePopUpCart += '              </div>';
+                                    templatePopUpCart += '              <div class="list-cart-cont">';
+                                    templatePopUpCart +=                    valproduct.product_price;
+                                    templatePopUpCart += '              </div>';
+                                    templatePopUpCart += '          </div>';
+                                });
                             });
                             templatePopUpCart += '      </div>';
                             templatePopUpCart += '      <div class="bubble-cart-button">';
@@ -284,7 +287,7 @@ function bubbleCart(){
                     	$('#iconProfileTemp').popover('hide');
                     });
                     
-                    $(".sumManinMenuCart").html(data.result.length);
+                    $(".sumManinMenuCart").html(data.result.totalproducts);
                 }else{
                     generateToken(bubbleCart);
                 }

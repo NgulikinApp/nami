@@ -10,16 +10,20 @@ function initCart(){
     var cartNgulikin = 0,
         loginsession = sessionStorage.getItem('loginNgulikin');
     
-    $( "#RegisOrNotCart" ).accordion();
-    
     if(loginsession !== null){
         var fullname_popup = $('.fullname_popup').val();
         notif("info","Anda telah login sebagai "+fullname_popup,"center","center");
         sessionStorage.removeItem('loginNgulikin');
     }
     
-    if($('.isSignin').val() === '1'){
-        $('#RegisOrNotCart').hide();
+    if($('.isSignin').val() !== '1'){
+        $('.cartSignin').on('click', function (e) {
+            location.href= url+'/signin';
+        });
+        
+        $('#buttonCartAddress').on('click', function (e) {
+            actionAddress();
+        });
     }
     
     detailCart();
@@ -57,42 +61,6 @@ function initCart(){
     		}
     	}, {scope: 'email,public_profile', return_scopes: true});
     });
-    
-    if($('.isSignin').val() === '1'){
-        provinces();
-        search.province = 11;
-        regencies();
-        search.regency = 1101;
-        districts();
-        search.district = 1101010;
-        villages();
-    }
-    
-    $('#cart_province').on('change', function (e) {
-	    search.province = $(this).val();
-	    search.regency = '';
-	    search.district = '';
-	    regencies();
-	});
-	
-	$('#cart_regency').on('change', function (e) {
-	    search.regency = $(this).val();
-	    search.district = '';
-	    districts();
-	});
-	
-	$('#cart_district').on('change', function (e) {
-	    search.district = $(this).val();
-	    villages();
-	});
-	
-	$('#cartadd_btn').on('click', function (e) {
-	    if($('#cart_address').val() === ''){
-	        notif("error","alamat tidak boleh kosong","center","top"); 
-	    }else{
-	        actionAddress();
-	    }
-	});
 }
 
 function detailCart(){
@@ -105,101 +73,158 @@ function detailCart(){
         },
         success: function(data, status) {
             if(data.status == "OK"){
-                var response = data.result;
-                var listElement = '';
+                var response = data.result.listshops,
+                    listElement = '',
+                    totalPrice = 0;
                 
-                var totalPrice = 0;
                 $.each( response, function( key, val ) {
-                    cartNgulikin = val.sum_product;
-                    var list_delivery = val.product_delivery;
+                    var list_delivery = val.product_delivery,
+                        list_products = val.products,
+                        listlen_products = list_products.length-1;
                     
                     listElement += '<div class="detail-shopping-body-title">';
-                    listElement += '    <div id="detail-shopping-icon">';
+                    listElement += '    <div class="detail-shopping-choose">';
+                    listElement += '        <input type="checkbox" id="shopcart'+key+'" class="chooseShopCart chooseProductCart"/> Pilih yang dibayar';
+                    listElement += '    </div>';
+                    listElement += '    <div class="detail-shopping-icon">';
                     listElement += '        <i class="fa fa-shopping-cart"></i>';
                     listElement += '    </div>';
-                    listElement += '    <div id="detail-shopping-sellername">'+val.shop_name+'</div>';
+                    listElement += '    <div class="detail-shopping-sellername">'+val.shop_name+'</div>';
                     listElement += '</div>';
                     listElement += '<div class="detail-shopping-body-content">';
-                    listElement += '    <div class="detail-shopping-body-content1">';
-                    listElement += '        <div class="disaligner">';
-                    listElement += '            <img src="'+val.product_image+'" width="100" height="100"/>';
-                    listElement += '        </div>';
-                    listElement += '        <div class="aligner">';
-                    listElement += '            <div>'+val.product_name+'</div>';
-                    listElement += '        </div>';
-                    listElement += '        <div class="aligner">';
-                    listElement += '            <div class="productPriceCart">'+numberFormat(val.product_price)+'</div>';
-                    listElement += '        </div>';
-                    listElement += '    </div>';
-                    listElement += '    <div class="detail-shopping-body-content2">';
-                    if(parseInt(val.sum_product) === 1){
-                        listElement += '        <div class="minCart">';
-                        listElement += '            <button style="opacity:0.5;" disabled>-</button>';
-                        listElement += '        </div>';
-                    }else{
-                        listElement += '        <div class="minCart">';
-                        listElement += '            <button>-</button>';
-                        listElement += '        </div>';
-                    }
-                    listElement += '        <div class="inputSumCartTemp">';
-                    listElement += '            <input type="text" id="sumProductCart" value="'+val.sum_product+'"/>';
-                    listElement += '        </div>';
-                    listElement += '        <div class="plusCart">';
-                    listElement += '            <button>+</button>';
-                    listElement += '        </div>';
-                    listElement += '    </div>';
-                    listElement += '    <hr/>';
-                    listElement += '    <div class="detail-shopping-body-content3">';
-                    listElement += '        <div class="title">Catatan</div>';
-                    listElement += '        <div class="inputDesc">';
-                    listElement += '            <textarea id="descProductCart" placeholder="Contoh:Warna, Jenis, Ukuran" rows="7" cols="86"></textarea>';
-                    listElement += '        </div>';
-                    listElement += '    </div>';
-                    listElement += '    <div class="detail-shopping-body-content4">';
-                    listElement += '        <div class="title">Pilih Jasa Pengiriman</div>';
-                    listElement += '        <div class="inputDesc">';
-                    listElement += '            <select id="senderProductCart">';
-                    var delivery_id = '0';
-                    var delivery_idflag = 0;
-                    $.each( list_delivery, function( key, val ) {
-                        if(delivery_idflag === 0)delivery_id = val.delivery_id;
-                        listElement += '        <option value="'+val.delivery_id+'">'+val.delivery_name+'</option>';
-                        delivery_idflag++;
-                    });
-                    listElement += '            </select>';
-                    listElement += '            <span class="senderPriceProductCart">Rp 18.000</span>';
-                    listElement += '        </div>';
-                    listElement += '    </div>';
-                    listElement += '</div>';
                     
-                    totalPrice = totalPrice + (val.product_price * val.sum_product);
-                    var price = senderPriceCart(delivery_id).toString();
-                    $('#sumProductSummaryCart').html(numberFormat(price));
-                    totalCartText(val.sum_product,totalPrice,delivery_id);
+                    $.each( list_products, function(keyproduct , valproduct ) {
+                        cartNgulikin = valproduct.sum_product;
+                        var second_product_style = (keyproduct === 0) ? "" : 'margin-top: 15px;border-top: 1px solid #F5F5F5;';
+                        
+                        listElement += '<div style="overflow:auto;'+second_product_style+'">';
+                        listElement += '    <div class="detail-shopping-body-content1">';
+                        listElement += '        <div class="chooseProductCartTemp">';
+                        listElement += '            <input type="checkbox" class="chooseProductCart productcart'+key+'"/>';
+                        listElement += '        </div>';
+                        listElement += '        <div class="disaligner">';
+                        listElement += '            <img src="'+valproduct.product_image+'" width="100" height="100"/>';
+                        listElement += '        </div>';
+                        listElement += '        <div class="aligner">';
+                        listElement += '            <div>'+valproduct.product_name+'</div>';
+                        listElement += '        </div>';
+                        listElement += '        <div class="aligner">';
+                        listElement += '            <div class="productPriceCart" id="productPriceCart'+keyproduct+'" datainternal-id="'+valproduct.product_price+'">'+numberFormat(valproduct.product_price)+'</div>';
+                        listElement += '        </div>';
+                        listElement += '    </div>';
+                        listElement += '    <div class="detail-shopping-body-content2">';
+                        if(parseInt(valproduct.cart_sumproduct) === 1){
+                            listElement += '        <div class="minCart" id="productmincart'+keyproduct+'">';
+                            listElement += '            <button style="opacity:0.5;" disabled>-</button>';
+                            listElement += '        </div>';
+                        }else{
+                            listElement += '        <div class="minCart" id="productmincart'+keyproduct+'">';
+                            listElement += '            <button>-</button>';
+                            listElement += '        </div>';
+                        }
+                        listElement += '        <div class="inputSumCartTemp">';
+                        listElement += '            <input type="text" id="sumProductCart'+keyproduct+'" value="'+valproduct.cart_sumproduct+'"/>';
+                        listElement += '        </div>';
+                        listElement += '        <div class="plusCart" id="productmaxcart'+keyproduct+'">';
+                        listElement += '            <button>+</button>';
+                        listElement += '        </div>';
+                        listElement += '    </div>';
+                        if(keyproduct == listlen_products){
+                            listElement += '    <hr/>';
+                            listElement += '    <div class="detail-shopping-body-content3">';
+                            listElement += '        <div class="title cart">Deskripsi Barang</div>';
+                            listElement += '        <div class="inputDesc">';
+                            listElement += '            <textarea id="descProductCart'+key+'" placeholder="Contoh:Warna, Jenis, Ukuran" rows="7"></textarea>';
+                            listElement += '        </div>';
+                            listElement += '    </div>';
+                            listElement += '    <div class="detail-shopping-body-content4">';
+                            listElement += '        <div class="title cart">Kurir</div>';
+                            listElement += '        <div class="inputDesc">';
+                            listElement += '            <div class="select">';
+                            listElement += '                <select id="senderProductCart'+key+'">';
+                            var delivery_id = '0';
+                            var delivery_idflag = 0;
+                            $.each( list_delivery, function( keydelivery, valdelivery ) {
+                                if(delivery_idflag === 0)delivery_id = valdelivery.delivery_id;
+                                listElement += '        <option value="'+valdelivery.delivery_id+'">'+valdelivery.delivery_name+'</option>';
+                                delivery_idflag++;
+                            });
+                            listElement += '                </select>';
+                            listElement += '            </div>';
+                            listElement += '            <div>';
+                            listElement += '                <span class="senderPriceProductCart">Rp 18.000</span>';
+                            listElement += '            </div>';
+                            listElement += '        </div>';
+                            listElement += '    </div>';
+                        }
+                        listElement += '</div>';
+                        
+                        totalPrice = totalPrice + (valproduct.product_price * valproduct.cart_sumproduct);
+                        var price = senderPriceCart(delivery_id).toString();
+                        
+                        $('#sumProductSummaryCart').html(numberFormat(price));
+                        var totalPriceCart = valproduct.cart_sumproduct * parseInt(totalPrice);
+                        var totalShoppingCart = totalPriceCart + senderPriceCart(delivery_id);
+                                
+                        $('.totalPriceCart').html(numberFormat(totalPriceCart.toString()));
+                        $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                    });
+                    listElement += '</div>';
                 });
                 
                 $(".detail-shopping-body").html(listElement);
                 $('.loaderProgress').addClass('hidden');
                 $('body').removeClass('hiddenoverflow');
                 
-                $('.minCart button').on('click', function (e) {
-                    cartNgulikin = parseInt($('#sumProductCart').val()) - 1;
-                    if(cartNgulikin == 1){
-                        minCart(cartNgulikin);
-                    }
-                    $('#sumProductCart').val(cartNgulikin);
-                    
-                    totalCartText(cartNgulikin,totalPrice,$('#senderProductCart').val());
-                });
-                
-                $('.plusCart button').on('click', function (e) {
-                    cartNgulikin = parseInt($('#sumProductCart').val()) + 1;
-                    $('.minCart button').prop('disabled',false);
-                    $('.minCart button').css('opacity','1');
-                    $('#sumProductCart').val(cartNgulikin);
-                    $('#sumProductSummaryCart').val(cartNgulikin);
-                    
-                    totalCartText(cartNgulikin,totalPrice,$('#senderProductCart').val());
+                $.each( response, function( key, val ) {
+                    $('#shopcart'+key).on('click', function (e) {
+                        if ($(this).prop("checked")) {
+                            $('.productcart'+key).prop("checked",true);
+                        }else{
+                            $('.productcart'+key).prop("checked",false);
+                        }
+                    });
+                    $.each( val.products, function( keyproduct, valproduct ) {
+                        $('#productmincart'+keyproduct).on('click', function (e) {
+                            cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val()) - 1;
+                            if(cartNgulikin == 1){
+                                minCart(cartNgulikin);
+                            }
+                            $('#sumProductCart'+keyproduct).val(cartNgulikin);
+                            
+                            var totalsumcart = 0;
+                            $(".inputSumCartTemp input").each(function(key,val) {
+                                var sumcartval = parseInt($(this).val()) * parseInt($('#productPriceCart'+key).attr('datainternal-id'));
+                                totalsumcart = totalsumcart + sumcartval;
+                            });
+                            var totalPriceCart = cartNgulikin * parseInt(totalPrice);
+    
+                            var totalShoppingCart = totalsumcart + senderPriceCart($('#senderProductCart'+key).val());
+                                
+                            $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
+                            $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                        });
+                        
+                        $('#productmaxcart'+keyproduct).on('click', function (e) {
+                            cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val()) + 1;
+                            $('#productmincart'+keyproduct+' button').prop('disabled',false);
+                            $('#productmincart'+keyproduct+' button').css('opacity','1');
+                            $('#sumProductCart'+keyproduct).val(cartNgulikin);
+                            //$('#sumProductSummaryCart').val(cartNgulikin);
+                            
+                            var totalsumcart = 0;
+                            $(".inputSumCartTemp input").each(function(key,val) {
+                                var sumcartval = parseInt($(this).val()) * parseInt($('#productPriceCart'+key).attr('datainternal-id'));
+                                totalsumcart = totalsumcart + sumcartval;
+                            });
+                            var totalPriceCart = cartNgulikin * parseInt(totalPrice);
+    
+                            var totalShoppingCart = totalsumcart + senderPriceCart($('#senderProductCart'+key).val());
+                                
+                            $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
+                            $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                        });
+                    });
                 });
                 
                 $('#senderProductCart').on('change', function (e) {
@@ -217,6 +242,14 @@ function detailCart(){
                         notif("error","Harap login terlebih dahulu","right","top");
                     }
                 });
+                
+                $('#chooseallCart').on('click', function (e) {
+                    if ($(this).prop("checked")) {
+                        $('.chooseProductCart').prop("checked",true);
+                    }else{
+                        $('.chooseProductCart').prop("checked",false);
+                    }
+                });
             }else{
                 generateToken(detailCart);
             }
@@ -232,12 +265,7 @@ function minCart(cartNgulikin){
 }
 
 function totalCartText(cartNgulikin,productPrice,senderProductCart){
-    var totalPriceCart = cartNgulikin * parseInt(productPrice);
-        
-    var totalShoppingCart = totalPriceCart + senderPriceCart(senderProductCart);
-        
-    $('.totalPriceCart').html(numberFormat(totalPriceCart.toString()));
-    $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+    
 }
 
 function senderPriceCart(val){
@@ -265,7 +293,7 @@ function initClient() {
         clientId: CLIENT_ID,
         scope: SCOPES
     }).then(function () {
-        var authorizeButton = document.getElementById('signinGPlusCart');
+        var authorizeButton = document.getElementById('iconSigninGplus');
         authorizeButton.onclick = handleAuthClick;
     });
 }
@@ -441,7 +469,7 @@ function villages(){
     }
 }
 
-function actionAddress(){
+function doAddress(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(actionAddress);
     }else{
@@ -476,4 +504,85 @@ function actionAddress(){
             } 
         });
     }
+}
+
+function actionAddress(){
+     var actionAddress = '<div class="layerPopup">';
+         actionAddress += '     <div class="editProfileSellerContainer" style="height: 560px;margin-top: -290px;">';
+         actionAddress += '         <div class="title">Masukan Alamat</div>';
+         actionAddress += '         <div style="overflow-y:auto;height: 475px;">';
+         actionAddress += '             <div class="body">';
+         actionAddress += '                 <div class="content">';
+         actionAddress += '                     <label class="addressLabel">Nama Penerima</label>';
+         actionAddress += '                     <input type="text" id="recipientname" class="addressInput"/>';
+         actionAddress += '                 </div>';
+         actionAddress += '                 <div class="content">';
+         actionAddress += '                     <label class="addressLabel">Telepon/Handphone</label>';
+         actionAddress += '                     <input type="text" id="notlp" class="addressInput"/>';
+         actionAddress += '                 </div>';
+         actionAddress += '                 <div class="content">';
+         actionAddress += '                     <label class="addressLabel">Alamat Lengkap</label>';
+         actionAddress += '                     <textarea id="completeaddress" class="addressInput"></textarea>';
+         actionAddress += '                 </div>';
+         actionAddress += '                 <div class="content">';
+         actionAddress += '                     <label class="addressLabel">Pilih Provinsi</label>';
+         actionAddress += '                     <select id="cart_province"></select>';
+         actionAddress += '                 </div>';
+         actionAddress += '                 <div class="content">';
+         actionAddress += '                     <label class="addressLabel">Pilih Kota</label>';
+         actionAddress += '                     <select id="cart_regency"></select>';
+         actionAddress += '                 </div>';
+         actionAddress += '                 <div class="content">';
+         actionAddress += '                     <label class="addressLabel">Pilih Kecamatan</label>';
+         actionAddress += '                     <select id="cart_district"></select>';
+         actionAddress += '                 </div>';
+         actionAddress += '                 <div class="content">';
+         actionAddress += '                     <label class="addressLabel">Pilih Kelurahan</label>';
+         actionAddress += '                     <select id="cart_village"></select>';
+         actionAddress += '                 </div>';
+         actionAddress += '             </div>';
+         actionAddress += '         </div>';
+         actionAddress += '         <div class="footer">';
+	     actionAddress += '            <input type="button" value="Batal" id="cancel"/>';
+	     actionAddress += '            <input type="button" value="Simpan" id="save"/>';
+	     actionAddress += '         </div>';
+         actionAddress += '     </div>';
+         actionAddress += '</div>';
+         
+    $("body").append(actionAddress);
+    
+    provinces();
+    search.province = 11;
+    regencies();
+    search.regency = 1101;
+    districts();
+    search.district = 1101010;
+    villages();
+    
+    $('#cart_province').on('change', function (e) {
+	    search.province = $(this).val();
+	    search.regency = '';
+	    search.district = '';
+	    regencies();
+	});
+	
+	$('#cart_regency').on('change', function (e) {
+	    search.regency = $(this).val();
+	    search.district = '';
+	    districts();
+	});
+	
+	$('#cart_district').on('change', function (e) {
+	    search.district = $(this).val();
+	    villages();
+	});
+    
+    $('.editProfileSellerContainer .footer #save').on( 'click', function( e ){
+        doAddress();
+	});
+	
+	$('.editProfileSellerContainer .footer #cancel').on( 'click', function( e ){
+	    $(".layerPopup").fadeOut();
+	    $(".layerPopup").remove();
+	});
 }

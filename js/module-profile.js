@@ -19,8 +19,12 @@ function initProfile(){
         $("#bankname").parent().replaceWith(cnt);
         var cnt = $("#recno").parent().contents();
         $("#recno").parent().replaceWith(cnt);
+        var cnt = $("#filesSelfieCreateShopPrivate").parent().contents();
+        $("#filesSelfieCreateShopPrivate").parent().replaceWith(cnt);
+        var cnt = $("#filesCardCreateShopPrivate").parent().contents();
+        $("#filesCardCreateShopPrivate").parent().replaceWith(cnt);
         
-        $('#bank_id-button').css({"width":"100%","margin":"0px"});
+        $('#bank_id-button').css({"width":"100%","margin":"-5px 0px"});
         
         $('#bank_id').on( 'change', function( e ){
             $('#bank_id-button span').remove();
@@ -29,8 +33,30 @@ function initProfile(){
     	    $('#recbanking').attr('src','/img/'+bankname_selected.toLowerCase()+'.png');
         });
         
+        $("#filesCardCreateShopPrivate").change(function(){
+            uploadCardPhotoShop();
+        });
+        
+        $("#filesSelfieCreateShopPrivate").change(function(){
+            uploadSelfiePhotoShop();
+        });
+        
         $('#btnSubmitCreateShop').on( 'click', function( e ){
-            doCreateShop();
+            if($('#recno').val() === ''){
+                notif("error","Nomor rekening harus diisi","center","top");
+            }else if($('#recname').val() === ''){
+                notif("error","Nama pemilik rekening harus diisi","center","top");
+            }else if($('#filesCreateShopPrivate').val() === ''){
+                notif("error","Nama toko harus diisi","center","top");
+            }else if($('#filesCreateShopPrivate').val() === ''){
+                notif("error","Logo toko harus dilampirkan","center","top");
+            }else if($('#filesCardCreateShopPrivate').val() === ''){
+                notif("error","Foto KTP/Kartu Pelajar/SIM harus dilampirkan ","center","top");
+            }else if($('#filesSelfieCreateShopPrivate').val() === ''){
+                notif("error","Foto selfie dengan KTP/Kartu Pelajar/SIM harus dilampirkan ","center","top");
+            }else{
+                doCreateShop();
+            }
         });
     }
     
@@ -425,7 +451,7 @@ function uploadPhotoShop(){
         filePhoto = $('#filesCreateShopPrivate')[0].files[0],
         fileSize = filePhoto.size/ 1024 / 1024;
         
-        data.append('type', 'shop');
+        data.append('type', 'createshop');
         data.append('file', filePhoto);
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(uploadPhotoShop);
@@ -446,6 +472,86 @@ function uploadPhotoShop(){
                     },
                     success: function(result){
                         $('#previewImageCreateShopPrivate').attr('src',result.src);
+                        $('.loaderProgress').addClass('hidden');
+                    }
+                });
+            }else{
+                notif("error","Format file hanya boleh jpg atau png","center","top");
+            }
+        }else{
+            notif("error","File tidak boleh lebih dari 2 MB","center","top");
+        }
+    }
+}
+
+function uploadCardPhotoShop(){
+    var data = new FormData(),
+        filePath = $('#filesCardCreateShopPrivate').val(),
+        fileExt = (filePath.substr(filePath.lastIndexOf('\\') + 1).split('.')[1]).toLowerCase(),
+        filePhoto = $('#filesCardCreateShopPrivate')[0].files[0],
+        fileSize = filePhoto.size/ 1024 / 1024;
+        
+        data.append('type', 'uploadcard');
+        data.append('file', filePhoto);
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(uploadCardPhotoShop);
+    }else{
+        if(fileSize < 2){
+            if(fileExt === 'jpg' || fileExt === 'png'){
+                $('.loaderProgress').removeClass('hidden');
+                $.ajax({
+                    type: 'POST',
+                    url: PUTFILE_API,
+                    data: data,
+                    async: true,
+                    contentType: false, 
+                    processData: false,
+                    dataType: 'json',
+                    beforeSend: function(xhr, settings) { 
+                        xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+                    },
+                    success: function(result){
+                        $('#previewCardCreateShopPrivate').attr('src',result.src);
+                        $('.loaderProgress').addClass('hidden');
+                    }
+                });
+            }else{
+                notif("error","Format file hanya boleh jpg atau png","center","top");
+            }
+        }else{
+            notif("error","File tidak boleh lebih dari 2 MB","center","top");
+        }
+    }
+}
+
+function uploadSelfiePhotoShop(){
+    var data = new FormData(),
+        filePath = $('#filesSelfieCreateShopPrivate').val(),
+        fileExt = (filePath.substr(filePath.lastIndexOf('\\') + 1).split('.')[1]).toLowerCase(),
+        filePhoto = $('#filesSelfieCreateShopPrivate')[0].files[0],
+        fileSize = filePhoto.size/ 1024 / 1024;
+        
+        data.append('type', 'uploadselfie');
+        data.append('file', filePhoto);
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(uploadSelfiePhotoShop);
+    }else{
+        if(fileSize < 2){
+            if(fileExt === 'jpg' || fileExt === 'png'){
+                $('.loaderProgress').removeClass('hidden');
+                $.ajax({
+                    type: 'POST',
+                    url: PUTFILE_API,
+                    data: data,
+                    async: true,
+                    contentType: false, 
+                    processData: false,
+                    dataType: 'json',
+                    beforeSend: function(xhr, settings) { 
+                        xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+                    },
+                    success: function(result){
+                        $('#previewSelfieCreateShopPrivate').attr('src',result.src);
                         $('.loaderProgress').addClass('hidden');
                     }
                 });
@@ -486,7 +592,7 @@ function doCreateShop(){
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
                     generateToken(doCreateShop);
                 }else{
-            	    location.reload();
+            	    notif("success","Silahkan tunggu konfirmasi dari admin","center","top");
                 }
             }
         });

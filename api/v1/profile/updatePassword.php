@@ -92,22 +92,10 @@
             }else{
                 $param = base64_encode($user_id.'~'.$newpassword);
                 
-                $mail = new PHPMailer;
-                $mail->isSMTP();
-                $mail->Debugoutput = 'html';
-                $mail->Host = "mail.ngulikin.com";
-                $mail->Port = 25;
-                $mail->SMTPAuth = true;
-                $mail->Username = "ngulikin";
-                $mail->Password = "FD76889Ddt!";
-                $mail->setFrom("info@ngulikin.com", "Ngulikin");
-                $mail->addAddress($email, $fullname);
-                $mail->Subject = 'Ngulikin (Ganti Password)';
-                $mail->Body = "Klik tombol aktif dibawah ini, untuk mengubah password anda.<br><br><a href='".INIT_URL."/v1/profile/cm?q=".$param."'><div style='background-color:#004E82;border-radius: 10px;width: 50px;font-weight: bold;padding:8px;color:#FFFFFF;'>Ubah</div></a>";
-                $mail->AltBody = 'This is a plain-text message body';
-                	
-                //email sended successfully
-                $mail->send();
+                /*
+                    Function location in : /model/general/functions.php
+                */
+                sendEmail("info@ngulikin.com","Ngulikin",$email,$fullname,"Ganti Password","Klik tombol aktif dibawah ini, untuk mengubah password anda.<br><br><a href='".INIT_URL."/v1/profile/cm?q=".$param."'><div style='background-color:#004E82;border-radius: 5px;width: 35px;font-weight: bold;padding:8px;color:#FFFFFF;'>Ubah</div></a>");
                 
                 /*
                     Function location in : functions.php

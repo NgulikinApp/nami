@@ -171,7 +171,7 @@
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16, $col17);
         
         $stmt->fetch();
         
@@ -210,12 +210,13 @@
                         "gender"=>$col7,
                         "key"=>$col8,
                         "user_photo"=>$photo,
-                        "shop_id"=>$col11,
-                        "shop_name"=>$col14,
-                        "shop_icon"=>$col15,
-                        "shop_banner"=>$col16,
-                        "brand_id"=>$col12,
-                        "delivery_id"=>$col13,
+                        "user_seller"=>$col11,
+                        "shop_id"=>$col12,
+                        "shop_name"=>$col15,
+                        "shop_icon"=>$col16,
+                        "shop_banner"=>$col17,
+                        "brand_id"=>$col13,
+                        "delivery_id"=>$col14,
                         "time_signup"=>$time_signup
                     );
                     
@@ -331,7 +332,8 @@
                                             gender,
                                             user_key,
                                             user_photo,
-                                            time_signup
+                                            time_signup,
+                                            user_seller
                                         FROM 
                                             user 
                                         WHERE 

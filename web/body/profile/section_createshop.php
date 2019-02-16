@@ -10,16 +10,31 @@
             <div>
                 <span>Logo</span>
             </div>
-            <div>
+            <div style="position: relative;">
                 <img src="../../img/no-photo.jpg" id="previewImageCreateShopPrivate" width="150" height="150"/>
-                <label for="filesCreateShopPrivate" style="display: block;">Unggah Foto</label>
-                <input id="filesCreateShopPrivate" type="file">
+                <label for="filesCreateShopPrivate" class="editPhoto"><i class="fa fa-pencil"></i></label>
+                <input id="filesCreateShopPrivate" type="file" class="btnFilePhoto">
             </div>
             <div>
                 <span>Deskripsi</span>
             </div>
             <div>
                 <textarea id="shopdesc" class="inputCreateShopPrivate" cols="50" rows="5"></textarea>
+            </div>
+            <div> </div>
+            <div>
+                <div class="photoDataProfile">
+                    <img src="../../img/ktp.png" id="previewCardCreateShopPrivate" width="150" height="150"/>
+                    <label for="filesCardCreateShopPrivate" class="editPhoto"><i class="fa fa-pencil"></i></label>
+                    <input id="filesCardCreateShopPrivate" type="file" class="btnFilePhoto">
+                    <span>Unggah foto KTP/Kartu Pelajar/SIM</span>
+                </div>
+                <div class="photoDataProfile">
+                    <img src="../../img/selfie.png" id="previewSelfieCreateShopPrivate" width="150" height="150"/>
+                    <label for="filesSelfieCreateShopPrivate" class="editPhoto"><i class="fa fa-pencil"></i></label>
+                    <input id="filesSelfieCreateShopPrivate" type="file" class="btnFilePhoto">
+                    <span>Unggah foto selfie dengan KTP/Kartu Pelajar/SIM</span>
+                </div>
             </div>
         </div>
         <div class="head">Rekening</div>

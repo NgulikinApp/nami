@@ -72,7 +72,10 @@
     function feed($stmt,$con){
         
         $data = array();
+        $dataShops = array();
         $dataDelivery = array();
+        
+        $totalproduct = 0;
         
         if(isset($_SESSION['user'])){
             $stmt->execute();
@@ -80,17 +83,38 @@
             $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11);
             
             while ($stmt->fetch()) {
+                $dataProduct = array();
+                
                 $dataDelivery[] = $col8;
+                
+                $product_idarray = explode('~', $col1);
+                $product_namearray = explode('~', $col2);
+                $brand_namearray = explode('~', $col3);
+                $product_imagearray = explode('~', $col4);
+                $product_pricearray = explode('~', $col7);
+                $cart_sumproductarray = explode('~', $col10);
+                $cart_adddatearray = explode('~', $col11);
+                
+                $product_count = count($product_idarray);
+                
+                for($i=0;$i<$product_count;$i++) //loop over values
+                {
+                    $totalproduct++;
+                    $dataProduct[] = array(
+                              "product_id" => $product_idarray[$i],
+                              "brand_name" => $brand_namearray[$i],
+                              "product_name" => $product_namearray[$i],
+                              "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($col5.'/product/'.$product_imagearray[$i])),
+                              "product_price" => $product_pricearray[$i],
+                              "cart_sumproduct" => $cart_sumproductarray[$i],
+                              "cart_createdate" => $cart_adddatearray[$i]
+                            );
+                }
+                
                 $data[] = array(
-                          "product_id" => $col1,
-                          "product_name" => $col2,
-                          "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($col5.'/product/'.$col4)),
-                          "brand_name" => $col3,
-                          "sum_product" => $col10,
-                          "cart_createdate" => $col11,
+                          "shop_id" => $col9,
                           "shop_name" => $col6,
-                          "product_price" => $col7,
-                          "shop_id" => $col9
+                          "products" => $dataProduct
                         );
             }
             $stmt->close();
@@ -100,38 +124,62 @@
                 $data[$i]['product_delivery'] = $datadel;
             }
             
+            $data = array(
+                          "totalproducts" => $totalproduct,
+                          "listshops" => $dataShops
+                        );
+            
             if(count($data)>0){
                 $_SESSION['productcart'] = $data;
             }
         }else{
             if(isset($_SESSION['productcart'])){
-                $stmt->execute();
-                
-                $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9);
                 $dataArray = $_SESSION['productcart'];
-                $i=0;
-                while ($stmt->fetch()) {
-                    $dataDelivery[] = $col8;
-                    $data[] = array(
-                              "product_id" => $col1,
-                              "product_name" => $col2,
-                              "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($col5.'/product/'.$col4)),
-                              "brand_name" => $col3,
-                              "sum_product" => $dataArray[$i]['sum'],
-                              "cart_createdate" => $dataArray[$i]['date'],
-                              "shop_name" => $col6,
-                              "product_price" => $col7,
-                              "shop_id" => $col9
-                            );
-                    $i++;
+                
+                while ($row = $stmt->fetch_assoc()) {
+                    $dataProduct = array();
+                    
+                    $dataDelivery[] = $row["shop_delivery"];
+                    $product_idarray = explode('~', $row["product_id"]);
+                    $product_namearray = explode('~', $row["product_name"]);
+                    $brand_namearray = explode('~', $row["brand_name"]);
+                    $product_imagearray = explode('~', $row["product_images"]);
+                    $product_pricearray = explode('~', $row["product_price"]);
+                    
+                    $product_count = count($product_idarray);
+                    
+                    for($i=0;$i<$product_count;$i++) //loop over values
+                    {
+                        $totalproduct++;
+                        $dataProduct[] = array(
+                                  "product_id" => $product_idarray[$i],
+                                  "brand_name" => $brand_namearray[$i],
+                                  "product_name" => $product_namearray[$i],
+                                  "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($row["username"].'/product/'.$product_imagearray[$i])),
+                                  "product_price" => $product_pricearray[$i],
+                                  "cart_sumproduct" => $dataArray[$i]['sum'],
+                                  "cart_createdate" => $dataArray[$i]['date']
+                                );
+                    }
+                    
+                    $dataShops[] = array(
+                          "shop_id" => $row["shop_id"],
+                          "shop_name" => $row["shop_name"],
+                          "products" => $dataProduct
+                        );
                 }
                 
                 $stmt->close();
-                $countArray = count($data);
+                $countArray = count($dataShops);
                 for($j=0;$j<$countArray;$j++){
                     $datadel = listdelivery($con,$dataDelivery[$j]);
-                    $data[$j]['product_delivery'] = $datadel;
+                    $dataShops[$j]['product_delivery'] = $datadel;
                 }
+                
+                $data = array(
+                          "totalproducts" => $totalproduct,
+                          "listshops" => $dataShops
+                        );
             }
         }
         

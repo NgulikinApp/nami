@@ -41,17 +41,17 @@
                 $user_id = $_SESSION['user']["user_id"];
                 
                 $stmt = $con->prepare("SELECT 
-                                            cart.product_id, 
-                                            product_name,
-                                            brand_name,
-                                            product_image,
+                                            GROUP_CONCAT(cart.product_id separator '~') AS product_id, 
+                                            GROUP_CONCAT(product_name separator '~') AS product_name,
+                                            GROUP_CONCAT(brand_name separator '~') AS brand_name,
+                                            GROUP_CONCAT(SUBSTRING_INDEX(product_image,',',1) separator '~') AS product_images,
                                             username,
                                             shop_name,
-                                            product_price,
+                                            GROUP_CONCAT(product_price separator '~') AS product_price,
                                             shop_delivery,
                                             shop.shop_id,
-                                            cart_sumproduct AS sum_product,
-                                            cart_adddate
+                                            GROUP_CONCAT(cart_sumproduct separator '~') AS cart_sumproduct,
+                                            GROUP_CONCAT(cart_adddate separator '~') AS cart_adddate
                                     FROM 
                                             cart
                                             LEFT JOIN product ON product.product_id = cart.product_id
@@ -61,7 +61,11 @@
                                     WHERE 
                                             cart.user_id = ?
                                             AND
-                                            cart_isactive = '1'");
+                                            cart_isactive = '1'
+                                    GROUP BY 
+                                            shop.shop_id
+                                    ORDER BY 
+                                            shop.shop_id");
                 
                 $stmt->bind_param("s", $user_id);
                 /*
@@ -77,22 +81,21 @@
                 
                 $i = 0;
                 $list_productid = "";
-                foreach($data as &$value){
-                    $list_productid = ($i != 0)?','.$list_productid:'';
+                foreach($data as $value){
+                    $list_productid = ($i != 0)?$list_productid.',':'';
                     $list_productid = $list_productid.$value['product_id'];
                     $i++;
                 }
-                
                 $list_productid = $list_productid == ""? "''":$list_productid;
                 
-                $stmt = $con->prepare("SELECT 
-                                            product_id, 
-                                            product_name,
-                                            brand_name,
-                                            product_image,
+                $stmt = $con->query("SELECT 
+                                            GROUP_CONCAT(product_id separator '~') AS product_id, 
+                                            GROUP_CONCAT(product_name separator '~') AS product_name,
+                                            GROUP_CONCAT(brand_name separator '~') AS brand_name,
+                                            GROUP_CONCAT(SUBSTRING_INDEX(product_image,',',1) separator '~') AS product_images,
                                             username,
                                             shop_name,
-                                            product_price,
+                                            GROUP_CONCAT(product_price separator '~') AS product_price,
                                             shop_delivery,
                                             shop.shop_id
                                     FROM 
@@ -101,9 +104,12 @@
                                             LEFT JOIN shop ON shop.shop_id = brand.shop_id
                                             LEFT JOIN `user` ON `user`.user_id = shop.user_id
                                     WHERE 
-                                            product_id IN (?)");
+                                            product_id IN (".$list_productid.")
+                                    GROUP BY 
+                                            shop.shop_id
+                                    ORDER BY 
+                                            shop.shop_id");
                 
-                $stmt->bind_param("s", $list_productid);
                 /*
                     Function location in : functions.php
                 */
