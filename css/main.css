@@ -2230,6 +2230,10 @@ hr{
 }
 .list-cart-content{
     text-align: left;
+    width: 119px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .bubble-sum-cart{
     float:right;
