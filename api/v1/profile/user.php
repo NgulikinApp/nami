@@ -75,7 +75,9 @@
                                             phone,
                     						email,
                     						user_photo,
-                    						user_status_id
+                    						user_status_id,
+                    						photo_card,
+                    						photo_selfie 
                                     FROM 
                                             user
                     		        WHERE

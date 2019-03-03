@@ -50,10 +50,14 @@ function initProfile(){
                 notif("error","Nama toko harus diisi","center","top");
             }else if($('#filesCreateShopPrivate').val() === ''){
                 notif("error","Logo toko harus dilampirkan","center","top");
-            }else if($('#filesCardCreateShopPrivate').val() === ''){
-                notif("error","Foto KTP/Kartu Pelajar/SIM harus dilampirkan ","center","top");
-            }else if($('#filesSelfieCreateShopPrivate').val() === ''){
-                notif("error","Foto selfie dengan KTP/Kartu Pelajar/SIM harus dilampirkan ","center","top");
+            }else if($('#previewCardCreateShopPrivate').attr('src') === url+'/img/ktp.png'){
+                $('#myaccounttab').trigger('click');
+                $('#ui-id-2').trigger('click');
+                notif("error","Foto KTP/Kartu Pelajar/SIM harus diupdate dahulu","center","top");
+            }else if($('#previewSelfieCreateShopPrivate').attr('src') === url+'/img/selfie.png'){
+                $('#myaccounttab').trigger('click');
+                $('#ui-id-2').trigger('click');
+                notif("error","Foto selfie dengan KTP/Kartu Pelajar/SIM harus diupdate dahulu","center","top");
             }else{
                 doCreateShop();
             }
@@ -250,6 +254,8 @@ function profile(){
                         $('#phonePrivate').val(data.result.phone);
                         $('#emailPrivate').val(data.result.email);
                         $('#previewImagePrivate').attr("src",data.result.user_photo);
+                        $('#previewCardCreateShopPrivate').attr("src",data.result.user_card);
+                        $('#previewSelfieCreateShopPrivate').attr("src",data.result.user_selfie);
                         
                         if(data.result.fullname !== ''){
                             document.title = (data.result.fullname).toUpperCase() + ' | Ngulikin';

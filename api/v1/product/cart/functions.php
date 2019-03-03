@@ -215,4 +215,18 @@
         
         return $datadel;
     }
+    
+    /*
+        Function referred on : module-cart.js
+        Used for calling the json data 
+        Return data:
+                - product_id
+    */
+    function deletecart($product_id){
+        $data = array("product_id" => $product_id);
+        /*
+            Function location in : /model/general/functions.php
+        */
+        credentialVerified($data);
+    }
 ?>

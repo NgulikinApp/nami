@@ -1,6 +1,6 @@
 <div id="cart-emptylist">
     <div class="grid-cart-header">
-        Detail Keranjang
+        Detail Belanja
     </div>
     <div class="grid-cart-body"></div>
     <div class="grid-cart-footer">

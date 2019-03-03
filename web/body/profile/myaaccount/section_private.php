@@ -40,17 +40,6 @@
     <div id="emailField">
         <input type="text"  id="emailPrivate" class="inputPrivate"/>
     </div>
-    <div id="statusLabel">
-        <span>Status</span>
-    </div>
-    <div id="statusField">
-        <span id="statusCon">
-            <input type="radio" name="statusPrivate" id="studentPrivate" value="1"/>
-            <span>Pelajar</span>
-            <input type="radio" name="statusPrivate" id="othersPrivate" value="2"/>
-            <span>Lainnya</span>
-        </span>
-    </div>
 </div>
 <div class="privateRight">
     <img src="../../img/no-photo.jpg" id="previewImagePrivate" width="150" height="150"/>

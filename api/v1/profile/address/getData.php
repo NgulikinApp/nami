@@ -37,9 +37,9 @@
             //secretKey variabel getting from : /model/jwt.php
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            if(isset($_SESSION['user_admin'])){
-                $user_id = $_SESSION['user_admin']["user_id"]; 
-                $key = $_SESSION['user_admin']["key"];
+            if(isset($_SESSION['user'])){
+                $user_id = $_SESSION['user']["user_id"]; 
+                $key = $_SESSION['user']["key"];
             }else{
                 $user_id = '';
                 $key = '';
@@ -58,11 +58,15 @@
                         provinces_id,
                         regencies_id,
                         districts_id,
-                        villages_id
+                        villages_id,
+                        recipientname,
+                        user_address_phone
                     FROM 
                         `user_address`
                     WHERE 
                         user_id=?
+                        AND
+                        priority='1'
                         AND
                         user_address_isactive=1";
             

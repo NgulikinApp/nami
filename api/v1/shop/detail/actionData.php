@@ -71,15 +71,11 @@
             }
             
             $shop_photo_name = "";
-            if (isset($_SESSION['file'])){
+            if (isset($_SESSION['shop'])){
                 
                 $source_dir = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/temp';
                 $dest_dir = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop/icon';
-                $shop_photo_name = $_SESSION['file'][0];
-                if($shop_id == ''){
-                    $card_photo_name = $_SESSION['file'][1];
-                    $selfie_photo_name = $_SESSION['file'][2];
-                }
+                $shop_photo_name = $_SESSION['shop'];
                 
                 $source = $source_dir.'/'.$shop_photo_name;
                 $dest = $dest_dir.'/'.$shop_photo_name;
@@ -120,9 +116,9 @@
                 $stmt->close();
                 
                 $status_seller = '2';
-                $stmt = $con->prepare("UPDATE `user` SET photo_card=?,photo_selfie=?,user_seller=? WHERE user_id=?");
+                $stmt = $con->prepare("UPDATE `user` SET user_seller=? WHERE user_id=?");
                 
-                $stmt->bind_param("ssss", $card_photo_name,$selfie_photo_name,$status_seller,$user_id);
+                $stmt->bind_param("ss", $status_seller,$user_id);
             
                 $stmt->execute();
                 

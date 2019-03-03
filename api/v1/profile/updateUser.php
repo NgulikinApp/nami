@@ -86,15 +86,107 @@
                 rename($source,$dest);
             }
             
-            if ($user_photo_name != ''){
-                $stmt = $con->prepare("UPDATE user SET fullname=?, dob=?, gender=?, phone=?,user_photo=?,user_status_id=? WHERE user_id=?");   
+            $user_card_name = '';
+            if (isset($_SESSION['card'])){
                 
-                $stmt->bind_param("sssssis", $fullname,$dob,$gender,$phone,$user_photo_name,$status,$user_id);
-            }else{
-                $stmt = $con->prepare("UPDATE user SET fullname=?, dob=?, gender=?, phone=?,user_status_id=? WHERE user_id=?");   
+                $source_dir = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/temp';
+                $dest_dir = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/seller/card';
+                $user_card_name = $_SESSION['card'];
                 
-                $stmt->bind_param("ssssis", $fullname,$dob,$gender,$phone,$status,$user_id);
+                $source = $source_dir.'/'.$user_card_name;
+                $dest = $dest_dir.'/'.$user_card_name;
+                
+                /*
+                    Function location in : /model/general/functions.php
+                */
+                emptyFolder($dest_dir);
+                
+                rename($source,$dest);
             }
+            
+            $user_selfie_name = '';
+            if (isset($_SESSION['selfie'])){
+                
+                $source_dir = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/temp';
+                $dest_dir = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/seller/selfie';
+                $user_selfie_name = $_SESSION['selfie'];
+                
+                $source = $source_dir.'/'.$user_selfie_name;
+                $dest = $dest_dir.'/'.$user_selfie_name;
+                
+                /*
+                    Function location in : /model/general/functions.php
+                */
+                emptyFolder($dest_dir);
+                
+                rename($source,$dest);
+            }
+            
+            $a_param_type = array();
+            $a_bind_params = array();
+            
+            $sql = "UPDATE user SET fullname=?, dob=?, gender=?, phone=?,user_status_id=?";
+            
+            array_push($a_param_type,"s");
+            array_push($a_param_type,"s");
+            array_push($a_param_type,"s");
+            array_push($a_param_type,"s");
+            array_push($a_param_type,"i");
+            
+            array_push($a_bind_params,$fullname);
+            array_push($a_bind_params,$dob);
+            array_push($a_bind_params,$gender);
+            array_push($a_bind_params,$phone);
+            array_push($a_bind_params,$status);
+            
+            if ($user_photo_name != ''){
+                $sql .= ",user_photo=?";
+                
+                array_push($a_param_type,"s");
+                array_push($a_bind_params,$user_photo_name);
+            }
+            
+            if ($user_card_name != ''){
+                $sql .= ",photo_card=?";
+                
+                array_push($a_param_type,"s");
+                array_push($a_bind_params,$user_card_name);
+            }
+            
+            if ($user_selfie_name != ''){
+                $sql .= ",photo_selfie=?";
+                
+                array_push($a_param_type,"s");
+                array_push($a_bind_params,$user_selfie_name);
+            }
+            
+            $sql .= " WHERE user_id=?";
+            
+            
+            array_push($a_param_type,"s");
+            array_push($a_bind_params,$user_id);
+            
+            $a_params = array();
+ 
+            $param_type = '';
+            $n = count($a_param_type);
+            for($i = 0; $i < $n; $i++) {
+              $param_type .= $a_param_type[$i];
+            }
+             
+            /* with call_user_func_array, array params must be passed by reference */
+            $a_params[] = & $param_type;
+             
+            for($i = 0; $i < $n; $i++) {
+              /* with call_user_func_array, array params must be passed by reference */
+              $a_params[] = & $a_bind_params[$i];
+            }
+             
+            /* Prepare statement */
+            $stmt = $con->prepare($sql);
+             
+            /* use call_user_func_array, as $stmt->bind_param('s', $param); does not accept params array */
+            call_user_func_array(array($stmt, 'bind_param'), $a_params);
                 
             $stmt->execute();
             

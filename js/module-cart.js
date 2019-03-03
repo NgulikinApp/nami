@@ -1,9 +1,10 @@
-var search = {};
+var search = {},
+    cartData = {},
+    doAddress = {};
 
 $( document ).ready(function() {
     initGeneral();
     initCart();
-    handleClientLoad();
 });
 
 function initCart(){
@@ -27,9 +28,13 @@ function initCart(){
     }
     
     if($('.isSignin').val() === '1'){
+        detailAddress();
         $('#buttonCartAddress').on('click', function (e) {
+            doAddress.action = "add";
             actionAddress();
         });
+    }else{
+        handleClientLoad();
     }
     
     detailCart();
@@ -117,6 +122,9 @@ function detailCart(){
                         listElement += '        <div class="aligner">';
                         listElement += '            <div class="productPriceCart" id="productPriceCart'+keyproduct+'" datainternal-id="'+valproduct.product_price+'">'+numberFormat(valproduct.product_price)+'</div>';
                         listElement += '        </div>';
+                        listElement += '        <div class="aligner">';
+                        listElement += '            <span class="deleteCart" id="deleteCart'+keyproduct+'" datainternal-id="'+valproduct.product_id+'"><img src="/img/note-delete.png"/> Hapus</span>';
+                        listElement += '        </div>';
                         listElement += '    </div>';
                         listElement += '    <div class="detail-shopping-body-content2">';
                         if(parseInt(valproduct.cart_sumproduct) === 1){
@@ -129,7 +137,7 @@ function detailCart(){
                             listElement += '        </div>';
                         }
                         listElement += '        <div class="inputSumCartTemp">';
-                        listElement += '            <input type="text" id="sumProductCart'+keyproduct+'" value="'+valproduct.cart_sumproduct+'"/>';
+                        listElement += '            <input type="text" id="sumProductCart'+keyproduct+'" value="'+valproduct.cart_sumproduct+'" maxlength="3"/>';
                         listElement += '        </div>';
                         listElement += '        <div class="plusCart" id="productmaxcart'+keyproduct+'">';
                         listElement += '            <button>+</button>';
@@ -193,9 +201,7 @@ function detailCart(){
                     $.each( val.products, function( keyproduct, valproduct ) {
                         $('#productmincart'+keyproduct).on('click', function (e) {
                             cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val()) - 1;
-                            if(cartNgulikin == 1){
-                                minCart(cartNgulikin);
-                            }
+                            minCart(cartNgulikin);
                             $('#sumProductCart'+keyproduct).val(cartNgulikin);
                             
                             var totalsumcart = 0;
@@ -213,10 +219,15 @@ function detailCart(){
                         
                         $('#productmaxcart'+keyproduct).on('click', function (e) {
                             cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val()) + 1;
+                            
+                            if(cartNgulikin > 123){
+                                cartNgulikin = 123;
+                                $(this).val(cartNgulikin);
+                            }
+                            
                             $('#productmincart'+keyproduct+' button').prop('disabled',false);
                             $('#productmincart'+keyproduct+' button').css('opacity','1');
                             $('#sumProductCart'+keyproduct).val(cartNgulikin);
-                            //$('#sumProductSummaryCart').val(cartNgulikin);
                             
                             var totalsumcart = 0;
                             $(".inputSumCartTemp input").each(function(key,val) {
@@ -230,6 +241,67 @@ function detailCart(){
                             $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
                             $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
                         });
+                        
+                        $('#sumProductCart'+keyproduct).on('change', function (e) {
+                            if($(this).val() == ''){
+                                $(this).val(1);
+                            }
+                            
+                            if(parseInt($(this).val()) > 123){
+                                $(this).val(123);
+                            }
+                            cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val());
+                            minCart(cartNgulikin);
+                            
+                            var totalsumcart = 0;
+                            $(".inputSumCartTemp input").each(function(key,val) {
+                                var sumcartval = parseInt($(this).val()) * parseInt($('#productPriceCart'+key).attr('datainternal-id'));
+                                totalsumcart = totalsumcart + sumcartval;
+                            });
+                            var totalPriceCart = cartNgulikin * parseInt(totalPrice);
+    
+                            var totalShoppingCart = totalsumcart + senderPriceCart($('#senderProductCart'+key).val());
+                                
+                            $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
+                            $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                        });
+                        
+                        $('#sumProductCart'+keyproduct).keydown(function (e) {
+                            // Allow: backspace, delete, tab, escape, enter and .
+                            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                                 // Allow: Ctrl/cmd+A
+                                (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                                 // Allow: Ctrl/cmd+C
+                                (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+                                 // Allow: Ctrl/cmd+X
+                                (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+                                 // Allow: home, end, left, right
+                                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                                     // let it happen, don't do anything
+                                     return;
+                            }
+                            // Ensure that it is a number and stop the keypress
+                            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                                e.preventDefault();
+                            }
+                        });
+                        
+                        $('#deleteCart'+keyproduct).on('click', function (e) {
+                            var productid = $(this).attr('datainternal-id');
+                            $.confirm({
+                                title: 'Konfirmasi',
+                                icon: 'fa fa-warning',
+                                content: 'Yakin dihapus?',
+                                buttons: {
+                                    ya: function () {
+                                        cartData.product_id = productid;
+                                        deletecartProduct();
+                                    },
+                                    tidak: function () {
+                                    }
+                                }
+                            });
+                        });    
                     });
                 });
                 
@@ -267,11 +339,10 @@ function minCart(cartNgulikin){
     if(cartNgulikin === 1){
         $('.minCart button').prop('disabled',true);
         $('.minCart button').css('opacity','0.5');
+    }else{
+        $('.minCart button').prop('disabled',false);
+        $('.minCart button').css('opacity','1');
     }
-}
-
-function totalCartText(cartNgulikin,productPrice,senderProductCart){
-    
 }
 
 function senderPriceCart(val){
@@ -283,6 +354,128 @@ function senderPriceCart(val){
         price = 208000;
     }
     return price;
+}
+
+function detailAddress(){
+    $.ajax({
+        type: 'GET',
+        url: PROFILE_ADDRESS_API,
+        dataType: 'json',
+        beforeSend: function(xhr, settings) { 
+            xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+        },
+        success: function(data, status) {
+            if(data.status == "OK"){
+                if($.isEmptyObject(data.result) === false){
+                    var detailAddress = '<div class="cart-menu-grid">';
+                        detailAddress +=    data.result.fullname;
+                        detailAddress += '</div>';
+                        detailAddress += '<div class="cart-menu-grid">';
+                        detailAddress += '  <div class="address-grid">';
+                        detailAddress += '      <img src="/img/marker.png"/>';
+                        detailAddress +=        data.result.address;
+                        detailAddress += '  </div>';
+                        detailAddress += '  <div class="address-grid">';
+                        detailAddress += '      <img src="/img/hp.png"/>';
+                        detailAddress +=        data.result.nohp;
+                        detailAddress += '  </div>';
+                        detailAddress += '  <div class="address-grid">';
+                        detailAddress += '      <img src="/img/envelope.png"/>';
+                        detailAddress +=        data.result.email;
+                        detailAddress += '  </div>';
+                        detailAddress += '</div>';
+                        
+                        $(".cart-menu:first-child").html(detailAddress);
+                        
+                    var detailAddress = '  <div class="address-grid">';
+                        detailAddress += '      <i class="fa fa-pencil"></i> Pilih alamat';
+                        detailAddress += '  </div>';
+                        detailAddress += '  <div class="address-grid">';
+                        detailAddress += '      <i class="fa fa-check"></i> Ubah alamat';
+                        detailAddress += '  </div>';
+                        detailAddress += '  <div class="address-grid">';
+                        detailAddress += '      <i class="fa fa-plus"></i> Tambah alamat';
+                        detailAddress += '  </div>';
+                    
+                        $(".cart-menu:last-child").html(detailAddress);
+                    
+                    $("#addressFullname").val(data.result.fullname);
+                    $("#addressLocation").val(data.result.address);
+                    $("#addressNohp").val(data.result.nohp);
+                    $("#addressProvince").val(data.result.provinces_id);
+                    $("#addressRegency").val(data.result.regencies_id);
+                    $("#addressDistrict").val(data.result.districts_id);
+                    $("#addressVillage").val(data.result.villages_id);
+                    $("#addressId").val(data.result.user_address_id);
+                    
+                    $('.cart-menu:last-child .address-grid:nth-child(2)').on('click', function (e) {
+                        doAddress.action = "edit";
+                        actionAddress();
+                    });
+                    
+                    $('.cart-menu:last-child .address-grid:last-child').on('click', function (e) {
+                        doAddress.action = "add";
+                        actionAddress();
+                    });
+                }
+            }else{
+                generateToken(detailAddress);
+            }
+        } 
+    });
+}
+
+function selectAddress(){
+    var selectAddress = '<div class="layerPopup">';
+        selectAddress += '    <div class="accountSellerContainer productLayer" style="width:550px;height: 330px;">';
+        selectAddress += '        <div class="title">Pilih Alamat</div>';
+        selectAddress += '        <div class="body" style="padding: 25px;">';
+        selectAddress += '        </div>';
+        selectAddress += '        <div class="footer" style="margin-top: -40px;">';
+	    selectAddress += '            <input type="button" value="Batal" id="cancel"/>';
+	    selectAddress += '            <input type="button" value="Simpan" id="save"/>';
+	    selectAddress += '        </div>';
+	    selectAddress += '        <div class="loaderPopup hidden">';
+	    selectAddress += '            <img src="../img/loader.gif"/>';
+	    selectAddress += '        </div>';
+        selectAddress += '     </div>';
+        selectAddress += '</div>';
+    
+    $("body").append(selectAddress);
+    
+    $('.accountSellerContainer .footer #save').on( 'click', function( e ){
+        
+    });
+        
+    $('.accountSellerContainer .footer #cancel').on( 'click', function( e ){
+    	$(".layerPopup").fadeOut();
+    	$(".layerPopup").remove();
+    });
+}
+
+function deletecartProduct(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(addtocartProduct);
+    }else{
+        $.ajax({
+            type: 'POST',
+            url: PRODUCT_CART_DELETE_API,
+            data:JSON.stringify({ 
+                    product_id: cartData.product_id,
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                    generateToken(deletecartProduct);
+                }else{
+                    location.reload();
+                }
+            }
+        });
+    }
 }
 
 var CLIENT_ID = '279558050364-cp3evjt1fi39uh82cl304vq5orqob038.apps.googleusercontent.com';
@@ -475,11 +668,10 @@ function villages(){
     }
 }
 
-function doAddress(){
+function doActionAddress(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(actionAddress);
+        generateToken(doActionAddress);
     }else{
-        
         $.ajax({
             type: 'POST',
             url: PROFILE_ADDRESS_ACTION_API,
@@ -488,8 +680,10 @@ function doAddress(){
                     regencies_id : $('#cart_regency').val(),
                     districts_id : $('#cart_district').val(),
                     villages_id : $('#cart_village').val(),
-                    address : $('#cart_address').val(),
-                    type : 'insert'
+                    address : $('#completeaddress').val(),
+                    phone : $('#notlp').val(),
+                    type : doAddress.action,
+                    user_address_id : $('#addressId').val()
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -497,7 +691,7 @@ function doAddress(){
             },
             success: function(data, status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(actionAddress);
+                    generateToken(doActionAddress);
                 }else if(data.message == 'Invalid key'){
                     localStorage.removeItem('emailNgulikin');
                     sessionStorage.setItem("logoutNgulikin", 1);
@@ -505,6 +699,9 @@ function doAddress(){
                     location.href = url;
                     localStorage.getItem('authNgulikin');
                 }else{
+                    detailAddress();
+                    $(".layerPopup").fadeOut();
+	                $(".layerPopup").remove();
                     notif("success","Data sudah disimpan","center","top");
                 }
             } 
@@ -557,13 +754,35 @@ function actionAddress(){
          
     $("body").append(actionAddress);
     
-    provinces();
-    search.province = 11;
-    regencies();
-    search.regency = 1101;
-    districts();
-    search.district = 1101010;
-    villages();
+    if(doAddress.action === "add"){
+        provinces();
+        search.province = 11;
+        regencies();
+        search.regency = 1101;
+        districts();
+        search.district = 1101010;
+        villages(); 
+    }else{
+        var fullname = $("#addressFullname").val(),
+            address = $("#addressLocation").val(),
+            nohp = $("#addressNohp").val(),
+            provinces_id = parseInt($("#addressProvince").val()),
+            regencies_id = parseInt($("#addressRegency").val()),
+            districts_id = parseInt($("#addressDistrict").val()),
+            villages_id = parseInt($("#addressVillage").val());
+                    
+        $("#recipientname").val(fullname);
+        $("#completeaddress").val(address);
+        $("#notlp").val(nohp);
+        
+        provinces();
+        search.province = provinces_id;
+        regencies();
+        search.regency = regencies_id;
+        districts();
+        search.district = districts_id;
+        villages(); 
+    }
     
     $('#cart_province').on('change', function (e) {
 	    search.province = $(this).val();
@@ -584,7 +803,7 @@ function actionAddress(){
 	});
     
     $('.editProfileSellerContainer .footer #save').on( 'click', function( e ){
-        doAddress();
+        doActionAddress();
 	});
 	
 	$('.editProfileSellerContainer .footer #cancel').on( 'click', function( e ){

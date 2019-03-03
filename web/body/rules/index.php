@@ -22,7 +22,6 @@
     </head>
     <body>
         <?php 
-            include $_SERVER['DOCUMENT_ROOT'].'/web/nav/sidebarMenu.php';
             include $_SERVER['DOCUMENT_ROOT'].'/web/nav/mainMenu.php';
             include 'section_body.php';
             include $_SERVER['DOCUMENT_ROOT'].'/web/nav/footerMenu.php';

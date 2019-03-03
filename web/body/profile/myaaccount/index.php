@@ -1,15 +1,15 @@
 <div class="myprofile active" id="myaccount">
     <div class="headerMyprofile">Akun Saya</div>
     <div id="accordionMyprofile">
-        <h3 style="background-image: url(/img/arrow_up.png);">Data Pribadi</h3>
+        <h3 style="background-image: url(/img/arrow_up.png);">DATA PRIBADI</h3>
         <div id="privateProfile">
             <?php include 'section_private.php'; ?>
         </div>
-        <h3>Alamat dan kontak detail</h3>
-        <div class="addressmyprofile">
-            <?php include 'section_address.php'; ?>
+        <h3>KELENGKAPAN DATA</h3>
+        <div id="privateComplete">
+            <?php include 'section_complete.php'; ?>
         </div>
-        <h3>Lain-lain</h3>
+        <h3>LAIN - LAIN</h3>
         <div>
             <p>
             Cras dictum. Pellentesque habitant morbi tristique senectus et netus

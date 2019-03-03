@@ -91,19 +91,21 @@
                             unset($_SESSION['file']);
                         }
                         
-                        
                         $filename = uniqid().".jpg";
                 	    $target_file = $target_dir ."/". $filename;
                 	    
                         //upload file into 'temp' directory
                         move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
                         
-                        if($type != 'createshop'){
-                            $_SESSION['file'][0] = $filename;
-                        }else if($type != 'uploadcard'){
-                            $_SESSION['file'][1] = $filename;
-                        }else if($type != 'uploadselfie'){
-                            $_SESSION['file'][2] = $filename;
+                        if($type == 'createshop'){
+                            unset($_SESSION['shop']);
+                            $_SESSION['shop'] = $filename;
+                        }else if($type == 'uploadcard'){
+                            unset($_SESSION['card']);
+                            $_SESSION['card'] = $filename;
+                        }else if($type == 'uploadselfie'){
+                            unset($_SESSION['selfie']);
+                            $_SESSION['selfie'] = $filename;
                         }else{
                             $_SESSION['file'][] = $filename;
                         }

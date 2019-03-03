@@ -23,6 +23,15 @@
 		      include $_SERVER['DOCUMENT_ROOT'].'/web/nav/footerMenu.php';
 		      include 'web/nav/generalInput.php';
 		?>
+		
+		<input type="hidden" id="addressFullname" value=""/>
+		<input type="hidden" id="addressLocation" value=""/>
+		<input type="hidden" id="addressNohp" value=""/>
+		<input type="hidden" id="addressProvince" value=""/>
+		<input type="hidden" id="addressRegency" value=""/>
+		<input type="hidden" id="addressDistrict" value=""/>
+		<input type="hidden" id="addressVillage" value=""/>
+		<input type="hidden" id="addressId" value=""/>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="js/module-cart.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>

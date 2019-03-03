@@ -17,7 +17,7 @@
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10);
         
         $stmt->fetch();
         
@@ -25,6 +25,18 @@
             $user_photo = IMAGES_URL.'/'.urlencode(base64_encode($col3.'/'.$col7));
         }else{
             $user_photo = INIT_URL."/img/".$col7;
+        }
+        
+        if($col9 != "ktp.png"){
+            $user_card = IMAGES_URL.'/'.urlencode(base64_encode($col3.'/seller/card/'.$col9));
+        }else{
+            $user_card = INIT_URL."/img/".$col9;
+        }
+        
+        if($col10 != "selfie.png"){
+            $user_selfie = IMAGES_URL.'/'.urlencode(base64_encode($col3.'/'.$col10));
+        }else{
+            $user_selfie = INIT_URL."/img/".$col10;
         }
         
         $data['fullname'] = $col1;
@@ -35,6 +47,8 @@
         $data['email'] = $col6;
         $data['user_photo'] = $user_photo;
         $data['user_status_id'] = $col8;
+        $data['user_card'] = $user_card;
+        $data['user_selfie'] = $user_selfie;
         
         $stmt->close();
         

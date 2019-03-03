@@ -12,10 +12,14 @@
     */
     function detail($stmt){
         $stmt->execute();
+        $data =array();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8);
         while($stmt->fetch()){
             $data = array(
+                    "fullname" => $col7,
+                    "nohp" => $col8,
+                    "email" => $_SESSION['user']["email"],
                     "user_address_id" => $col1,
                     "address" => $col2,
                     "provinces_id" => $col3,
@@ -30,7 +34,7 @@
         /*
             Function location in : /model/general/functions.php
         */
-        credentialVerified($data);
+        credentialVerified((object)$data);
     }
     
     /*
@@ -43,15 +47,17 @@
                 - regencies_id
                 - districts_id
                 - villages_id
+                - phone
     */
-    function actionData($user_address_id,$address,$provinces_id,$regencies_id,$districts_id,$villages_id){
+    function actionData($user_address_id,$address,$provinces_id,$regencies_id,$districts_id,$villages_id,$notlp){
         $data = array(
                     "user_address_id" => $user_address_id,
                     "address" => $address,
                     "provinces_id" => $provinces_id,
                     "regencies_id" => $regencies_id,
                     "districts_id" => $districts_id,
-                    "villages_id" => $villages_id
+                    "villages_id" => $villages_id,
+                    "phone" => $notlp
                 );
         
         /*
