@@ -4,9 +4,9 @@
         <div class="grid-rules-body">
             <div class="menu">
                 <ul class="listTerms">
-                    <li datainternal-id="terms">Persyaratan</li>
-                    <li datainternal-id="privacy">Privasi</li>
-                    <li datainternal-id="faq">FAQ</li>
+                    <li datainternal-id="terms" <?php if($currurl == "terms"){echo $rulesSelect; } ?>>Persyaratan</li>
+                    <li datainternal-id="privacy" <?php if($currurl == "privacy"){echo $rulesSelect; } ?>>Privasi</li>
+                    <li datainternal-id="faq" <?php if($currurl == "faq"){echo $rulesSelect; } ?>>FAQ</li>
                 </ul>
             </div>
             <div class="content">

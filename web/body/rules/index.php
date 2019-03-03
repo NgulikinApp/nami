@@ -11,6 +11,7 @@
 		<title>
 		    <?php
 		        $currurl = substr($actual_link, strrpos($actual_link, '/') + 1);
+		        $rulesSelect = "class ='rulesSelect'";
 		        switch($currurl){
 		            case "terms" : echo "Persyaratan";break;
 		            case "privacy" : echo "Privasi";break;

@@ -3033,7 +3033,7 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
     border-radius:5px;
     font-family:proxima_nova_altbold;
 }
-.grid-rules-body .menu ul li:hover{
+.grid-rules-body .menu ul li:hover,.rulesSelect{
     background-color:#00001a;
     color:#3FC3FF;
 }
