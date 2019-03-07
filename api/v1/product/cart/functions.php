@@ -80,7 +80,7 @@
         if(isset($_SESSION['user'])){
             $stmt->execute();
             
-            $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11);
+            $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12);
             
             while ($stmt->fetch()) {
                 $dataProduct = array();
@@ -94,11 +94,14 @@
                 $product_pricearray = explode('~', $col7);
                 $cart_sumproductarray = explode('~', $col10);
                 $cart_adddatearray = explode('~', $col11);
+                $cart_chosenarray = explode('~', $col12);
                 
                 $product_count = count($product_idarray);
                 
+                $shop_chosen = 1;
                 for($i=0;$i<$product_count;$i++) //loop over values
                 {
+                    
                     $totalproduct++;
                     $dataProduct[] = array(
                               "product_id" => $product_idarray[$i],
@@ -107,13 +110,16 @@
                               "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($col5.'/product/'.$product_imagearray[$i])),
                               "product_price" => $product_pricearray[$i],
                               "cart_sumproduct" => $cart_sumproductarray[$i],
-                              "cart_createdate" => $cart_adddatearray[$i]
+                              "cart_createdate" => $cart_adddatearray[$i],
+                              "product_chosen" => intval($cart_chosenarray[$i])
                             );
+                    if($cart_chosenarray[$i] == '0')$shop_chosen = 0;
                 }
                 
                 $dataShops[] = array(
                           "shop_id" => $col9,
                           "shop_name" => $col6,
+                          "shop_chosen" => $shop_chosen,
                           "products" => $dataProduct
                         );
             }
@@ -159,13 +165,15 @@
                                   "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($row["username"].'/product/'.$product_imagearray[$i])),
                                   "product_price" => $product_pricearray[$i],
                                   "cart_sumproduct" => $dataArray[$i]['sum'],
-                                  "cart_createdate" => $dataArray[$i]['date']
+                                  "cart_createdate" => $dataArray[$i]['date'],
+                                  "product_chosen" => 0
                                 );
                     }
                     
                     $dataShops[] = array(
                           "shop_id" => $row["shop_id"],
                           "shop_name" => $row["shop_name"],
+                          "shop_chosen" => 0,
                           "products" => $dataProduct
                         );
                 }
@@ -239,6 +247,31 @@
     */
     function updatecart($product_id,$cart_sumproduct){
         $data = array("product_id" => $product_id,"cart_sumproduct" => $cart_sumproduct);
+        /*
+            Function location in : /model/general/functions.php
+        */
+        credentialVerified($data);
+    }
+    
+    /*
+        Function referred on : module-cart.js
+        Used for calling the json data 
+        Return data:
+                - product_id
+    */
+    function chosencart($list_productid){
+        $data = array();
+        $product_idarray = explode(',', $list_productid);
+        
+        $product_count = count($product_idarray);
+                
+        for($i=0;$i<$product_count;$i++) //loop over values
+        {
+            $data[] = array(
+                          "product_id" => $product_idarray[$i]
+                        );
+        }   
+        
         /*
             Function location in : /model/general/functions.php
         */

@@ -109,6 +109,12 @@
 						        case 'a':
         							include('api/v1/product/cart/addtocart.php');
         						break;
+        						case 'c':
+        							include('api/v1/product/cart/chosencart.php');
+        						break;
+        						case 'cf':
+        							include('api/v1/product/cart/chosenfeed.php');
+        						break;
         						case 'd':
         							include('api/v1/product/cart/deletecart.php');
         						break;

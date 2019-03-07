@@ -2,7 +2,8 @@ var search = {},
     cartData = {},
     doAddress = {},
     doDeleteAddress = {},
-    updateProduct = {};
+    updateProduct = {},
+    chosenProduct = {};
     
 $( document ).ready(function() {
     initGeneral();
@@ -95,9 +96,11 @@ function detailCart(){
                         list_products = val.products,
                         listlen_products = list_products.length-1;
                     
+                    var shop_chosen = (val.shop_chosen === 1) ? 'checked' : '';
+                    
                     listElement += '<div class="detail-shopping-body-title">';
                     listElement += '    <div class="detail-shopping-choose">';
-                    listElement += '        <input type="checkbox" id="shopcart'+key+'" class="chooseShopCart chooseProductCart"/> Pilih yang dibayar';
+                    listElement += '        <input type="checkbox" id="shopcart'+key+'" class="chooseShopCart chooseProductCart" '+shop_chosen+'/> Pilih yang dibayar';
                     listElement += '    </div>';
                     listElement += '    <div class="detail-shopping-icon">';
                     listElement += '        <i class="fa fa-shopping-cart"></i>';
@@ -109,11 +112,12 @@ function detailCart(){
                     $.each( list_products, function(keyproduct , valproduct ) {
                         cartNgulikin = valproduct.sum_product;
                         var second_product_style = (keyproduct === 0) ? "" : 'margin-top: 15px;border-top: 1px solid #F5F5F5;';
+                        var product_chosen = (val.product_chosen === 1) ? 'checked' : '';
                         
                         listElement += '<div style="overflow:auto;'+second_product_style+'">';
                         listElement += '    <div class="detail-shopping-body-content1">';
                         listElement += '        <div class="chooseProductCartTemp">';
-                        listElement += '            <input type="checkbox" class="chooseProductCart chkproduct productcart'+key+'" datainternal-id="'+valproduct.product_id+'"/>';
+                        listElement += '            <input type="checkbox" class="chooseProductCart chkproduct productcart'+key+'" datainternal-id="'+valproduct.product_id+'" '+product_chosen+'/>';
                         listElement += '        </div>';
                         listElement += '        <div class="disaligner">';
                         listElement += '            <img src="'+valproduct.product_image+'" width="100" height="100"/>';
@@ -344,12 +348,14 @@ function detailCart(){
                         }
                     }
                     
-                    if($('.isSignin').val() === '1'){
-                        sessionStorage.setItem('chkproductList',chkproductList);
-                        location.href = url+"/payment";
-                    }else{
+                    if($('.isSignin').val() !== '1'){
                         notif("error","Harap login terlebih dahulu","right","top");
-                    }
+                    }else if(chkproductList === ''){
+                        notif("error","Pilih salah satu produk yang ingin dibeli","right","top");
+                    }else{
+                        chosenProduct.listproduct = chkproductList;
+                        chosenCart();
+                    }    
                 });
                 
                 $('#chooseallCart').on('click', function (e) {
@@ -407,6 +413,31 @@ function updateCartProduct(){
                     generateToken(updateCartProduct);
                 }else{
                     
+                }
+            }
+        });
+    }
+}
+
+function chosenCart(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(addtocartProduct);
+    }else{
+        $.ajax({
+            type: 'POST',
+            url: PRODUCT_CART_CHOSEN_API,
+            data:JSON.stringify({ 
+                    list_productid: chosenProduct.listproduct
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                    generateToken(chosenCart);
+                }else{
+                    location.href = url+"/payment";
                 }
             }
         });
