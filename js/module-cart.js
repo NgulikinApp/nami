@@ -1,7 +1,9 @@
 var search = {},
     cartData = {},
-    doAddress = {};
-
+    doAddress = {},
+    doDeleteAddress = {},
+    updateProduct = {};
+    
 $( document ).ready(function() {
     initGeneral();
     initCart();
@@ -111,7 +113,7 @@ function detailCart(){
                         listElement += '<div style="overflow:auto;'+second_product_style+'">';
                         listElement += '    <div class="detail-shopping-body-content1">';
                         listElement += '        <div class="chooseProductCartTemp">';
-                        listElement += '            <input type="checkbox" class="chooseProductCart productcart'+key+'"/>';
+                        listElement += '            <input type="checkbox" class="chooseProductCart chkproduct productcart'+key+'" datainternal-id="'+valproduct.product_id+'"/>';
                         listElement += '        </div>';
                         listElement += '        <div class="disaligner">';
                         listElement += '            <img src="'+valproduct.product_image+'" width="100" height="100"/>';
@@ -137,7 +139,7 @@ function detailCart(){
                             listElement += '        </div>';
                         }
                         listElement += '        <div class="inputSumCartTemp">';
-                        listElement += '            <input type="text" id="sumProductCart'+keyproduct+'" value="'+valproduct.cart_sumproduct+'" maxlength="3"/>';
+                        listElement += '            <input type="text" class="sumProduct" id="sumProductCart'+keyproduct+'" datainternal-id="'+valproduct.product_id+'" value="'+valproduct.cart_sumproduct+'" maxlength="3"/>';
                         listElement += '        </div>';
                         listElement += '        <div class="plusCart" id="productmaxcart'+keyproduct+'">';
                         listElement += '            <button>+</button>';
@@ -215,6 +217,11 @@ function detailCart(){
                                 
                             $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
                             $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                            
+                            updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
+                            updateProduct.sum = cartNgulikin;
+                            
+                            updateCartProduct();
                         });
                         
                         $('#productmaxcart'+keyproduct).on('click', function (e) {
@@ -240,6 +247,11 @@ function detailCart(){
                                 
                             $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
                             $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                            
+                            updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
+                            updateProduct.sum = cartNgulikin;
+                            
+                            updateCartProduct();
                         });
                         
                         $('#sumProductCart'+keyproduct).on('change', function (e) {
@@ -264,6 +276,11 @@ function detailCart(){
                                 
                             $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
                             $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                            
+                            updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
+                            updateProduct.sum = cartNgulikin;
+                            
+                            updateCartProduct();
                         });
                         
                         $('#sumProductCart'+keyproduct).keydown(function (e) {
@@ -314,7 +331,21 @@ function detailCart(){
                 });
                 
                 $('.detail-summary-footer').on('click', function (e) {
+                    var chkproduct = $(".chkproduct"),
+                        chkproductList = '';
+                        
+                    for(var i = 0; i < chkproduct.length; i++){
+                        if($(chkproduct[i]).prop("checked")){
+                            if(i === 0){
+                                chkproductList += $(chkproduct[i]).attr('datainternal-id');
+                            }else{
+                                chkproductList += ','+$(chkproduct[i]).attr('datainternal-id');
+                            }
+                        }
+                    }
+                    
                     if($('.isSignin').val() === '1'){
+                        sessionStorage.setItem('chkproductList',chkproductList);
                         location.href = url+"/payment";
                     }else{
                         notif("error","Harap login terlebih dahulu","right","top");
@@ -354,6 +385,32 @@ function senderPriceCart(val){
         price = 208000;
     }
     return price;
+}
+
+function updateCartProduct(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(addtocartProduct);
+    }else{
+        $.ajax({
+            type: 'POST',
+            url: PRODUCT_CART_UPDATE_API,
+            data:JSON.stringify({ 
+                    product_id: updateProduct.product_id,
+                    cart_sumproduct: updateProduct.sum
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                    generateToken(updateCartProduct);
+                }else{
+                    
+                }
+            }
+        });
+    }
 }
 
 function detailAddress(){
@@ -408,6 +465,10 @@ function detailAddress(){
                     $("#addressVillage").val(data.result.villages_id);
                     $("#addressId").val(data.result.user_address_id);
                     
+                    $('.cart-menu:last-child .address-grid:first-child').on('click', function (e) {
+                        selectAddress();
+                    });
+                    
                     $('.cart-menu:last-child .address-grid:nth-child(2)').on('click', function (e) {
                         doAddress.action = "edit";
                         actionAddress();
@@ -428,10 +489,10 @@ function detailAddress(){
 function selectAddress(){
     var selectAddress = '<div class="layerPopup">';
         selectAddress += '    <div class="accountSellerContainer productLayer" style="width:550px;height: 330px;">';
-        selectAddress += '        <div class="title">Pilih Alamat</div>';
-        selectAddress += '        <div class="body" style="padding: 25px;">';
+        selectAddress += '        <div class="title">Daftar Alamat</div>';
+        selectAddress += '        <div class="body" style="height: 250px;padding: 0px 15px;">';
         selectAddress += '        </div>';
-        selectAddress += '        <div class="footer" style="margin-top: -40px;">';
+        selectAddress += '        <div class="footer">';
 	    selectAddress += '            <input type="button" value="Batal" id="cancel"/>';
 	    selectAddress += '            <input type="button" value="Simpan" id="save"/>';
 	    selectAddress += '        </div>';
@@ -443,14 +504,170 @@ function selectAddress(){
     
     $("body").append(selectAddress);
     
+    listAddress();
+    
     $('.accountSellerContainer .footer #save').on( 'click', function( e ){
-        
+        chooseAddress();
     });
         
     $('.accountSellerContainer .footer #cancel').on( 'click', function( e ){
     	$(".layerPopup").fadeOut();
     	$(".layerPopup").remove();
     });
+}
+
+function listAddress(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(provinces);
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: PROFILE_ADDRESS_LIST_API,
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var response = data.result;
+                    
+                    var listElement = '';
+                        listElement += '<table style="width: 100%;margin: 0px;">';
+                        listElement += '    <tr>';
+                        listElement += '        <td>Pilih</td>';
+                        listElement += '        <td>Penerima</td>';
+                        listElement += '        <td>Alamat</td>';
+                        listElement += '        <td>Hapus</td>';
+                        listElement += '    </tr>';
+                    $.each( response, function( key, val ) {
+                        var checked = val.priority === '1'? 'checked' : '';
+                        listElement += '    <tr>';
+                        listElement += '        <td>';
+                        listElement += '            <input type="radio" name="addressid" value="'+val.user_address_id+'" '+checked+'/> ';
+                        listElement += '        </td>';
+                        listElement += '        <td>';
+                        listElement +=              val.recipientname;
+                        listElement += '        </td>';
+                        listElement += '        <td>';
+                        listElement +=              val.address;
+                        listElement += '        </td>';
+                        listElement += '        <td>';
+                        if(checked === ''){
+                            listElement += '            <i class="fa fa-trash deleteAddress" datainternal-id="'+val.user_address_id+'"></i>';
+                        }else{
+                            listElement += 'Prioritas';
+                        }
+                        listElement += '        </td>';
+                        listElement += '    </tr>';
+                    });
+                    listElement += '</table>';
+                    
+                    $(".accountSellerContainer .body").html(listElement);
+                    
+                    $('.deleteAddress').on( 'click', function( e ){
+                        var deleteAddressid = $(this).attr('datainternal-id');
+                        $.confirm({
+                            title: 'Konfirmasi',
+                            icon: 'fa fa-warning',
+                            content: 'Yakin dihapus?',
+                            buttons: {
+                                ya: function () {
+                                    doAddress.action = "delete";
+                                    doDeleteAddress.id = deleteAddressid;
+                                    deleteAddress();
+                                },
+                                tidak: function () {
+                                }
+                            }
+                        });
+                    });
+                }else{
+                    generateToken(listAddress);
+                }
+            } 
+        });
+    }
+}
+
+function deleteAddress(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(deleteAddress);
+    }else{
+        $.ajax({
+            type: 'POST',
+            url: PROFILE_ADDRESS_ACTION_API,
+            data:JSON.stringify({
+                user_address_id : doDeleteAddress.id,
+                type : doAddress.action
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                    generateToken(deleteAddress);
+                }else{
+                    listAddress();
+                }
+            }
+        });
+    }
+}
+
+function chooseAddress(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken(chooseAddress);
+    }else{
+        $.ajax({
+            type: 'POST',
+            url: PROFILE_ADDRESS_SELECT_API,
+            data:JSON.stringify({ 
+                    user_address_id: $('input[name="addressid"]:checked').val(),
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                    generateToken(chooseAddress);
+                }else{
+    	            var detailAddress = '<div class="cart-menu-grid">';
+                        detailAddress +=    data.result.fullname;
+                        detailAddress += '</div>';
+                        detailAddress += '<div class="cart-menu-grid">';
+                        detailAddress += '  <div class="address-grid">';
+                        detailAddress += '      <img src="/img/marker.png"/>';
+                        detailAddress +=        data.result.address;
+                        detailAddress += '  </div>';
+                        detailAddress += '  <div class="address-grid">';
+                        detailAddress += '      <img src="/img/hp.png"/>';
+                        detailAddress +=        data.result.nohp;
+                        detailAddress += '  </div>';
+                        detailAddress += '  <div class="address-grid">';
+                        detailAddress += '      <img src="/img/envelope.png"/>';
+                        detailAddress +=        data.result.email;
+                        detailAddress += '  </div>';
+                        detailAddress += '</div>';
+                        
+                    $(".cart-menu:first-child").html(detailAddress);
+                    
+                    $("#addressFullname").val(data.result.fullname);
+                    $("#addressLocation").val(data.result.address);
+                    $("#addressNohp").val(data.result.nohp);
+                    $("#addressProvince").val(data.result.provinces_id);
+                    $("#addressRegency").val(data.result.regencies_id);
+                    $("#addressDistrict").val(data.result.districts_id);
+                    $("#addressVillage").val(data.result.villages_id);
+			        $('#addressId').val(data.result.user_address_id);
+                    
+                    $(".layerPopup").fadeOut();
+    	            $(".layerPopup").remove();
+                }
+            }
+        });
+    }
 }
 
 function deletecartProduct(){
@@ -675,7 +892,8 @@ function doActionAddress(){
         $.ajax({
             type: 'POST',
             url: PROFILE_ADDRESS_ACTION_API,
-            data:JSON.stringify({ 
+            data:JSON.stringify({
+                    recipientname : $('#recipientname').val(),
                     provinces_id : $('#cart_province').val(),
                     regencies_id : $('#cart_regency').val(),
                     districts_id : $('#cart_district').val(),

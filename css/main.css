@@ -98,6 +98,13 @@ textarea{
 .border-yellow{
     border-bottom: 2px solid #FEBD18;
 }
+.fa-trash{
+    color:#F37C65;
+    cursor:pointer;
+}
+.fa-trash:hover{
+    color:#FEBD18;
+}
 .cover-popup{
     display:none;
     background-color: rgba(153,153,153,0.75);
@@ -5661,7 +5668,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 }
 .detail-invoice-body-content .aligner{
     float:right;
-    width: 81.5%;
+    width: 79.5%;
     padding: 20px;
 }
 .detail-invoice-body-content .aligner .brand_name{

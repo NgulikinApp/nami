@@ -34,15 +34,7 @@
     /*
         Parameters
     */
-    $recipientname = param(@$request['recipientname']);
     $user_address_id = param(@$request['user_address_id']);
-    $type = param(@$request['type']);
-    $address = param(@$request['address']);
-    $provinces_id = param(@$request['provinces_id']);
-    $regencies_id = param(@$request['regencies_id']);
-    $districts_id = param(@$request['districts_id']);
-    $villages_id = param(@$request['villages_id']);
-    $notlp = param(@$request['phone']);
     
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
@@ -71,43 +63,37 @@
                 return invalidKey();
             }
             
-            if($type == "edit"){
-                $stmt = $con->prepare("UPDATE user_address SET recipientname=?,address=?,provinces_id=?,regencies_id=?,districts_id=?,villages_id=?,user_address_phone=?,user_address_modifydate=NOW() where user_address_id=?");
-                
-                $stmt->bind_param("sssssssi", $recipientname,$address,$provinces_id,$regencies_id,$districts_id,$villages_id,$notlp,$user_address_id);
+            $stmt = $con->prepare("UPDATE user_address SET priority='0' WHERE user_id=?");
+            $stmt->bind_param("s", $user_id);
+            $stmt->execute();
+            $stmt->close();
             
-                $stmt->execute();
-                
-                $stmt->close();
-            }else if($type == "delete"){
-                $stmt = $con->prepare("UPDATE user_address SET user_address_isactive=0,user_address_modifydate=NOW() where user_address_id=?");
-                
-                $stmt->bind_param("i", $user_address_id);
+            $stmt = $con->prepare("UPDATE user_address SET priority='1' WHERE user_address_id=?");
+            $stmt->bind_param("i", $user_address_id);
+            $stmt->execute();
+            $stmt->close();
             
-                $stmt->execute();
-                
-                $stmt->close();
-            }else{
-                $stmt = $con->prepare("UPDATE user_address SET priority='0' where user_id=?");
-                
-                $stmt->bind_param("s", $user_id);
+            $sql = "SELECT
+                        user_address_id,
+                        address,
+                        provinces_id,
+                        regencies_id,
+                        districts_id,
+                        villages_id,
+                        recipientname,
+                        user_address_phone
+                    FROM 
+                        `user_address`
+                    WHERE 
+                        user_address_id=?";
             
-                $stmt->execute();
-                
-                $stmt->close();
-                
-                $stmt = $con->prepare("INSERT INTO user_address(recipientname,address,provinces_id,regencies_id,districts_id,villages_id,user_id,user_address_phone) VALUES(?,?,?,?,?,?,?,?)");
-                
-                $stmt->bind_param("ssssssss", $recipientname,$address, $provinces_id,$regencies_id,$districts_id,$villages_id,$user_id,$notlp);
+            $stmt = $con->prepare($sql);
+            $stmt->bind_param("i", $user_address_id);
             
-                $stmt->execute();
-                
-                $user_address_id = $con->insert_id;
-            }
             /*
                 Function location in : functions.php
             */
-            actionData($user_address_id,$address,$provinces_id,$regencies_id,$districts_id,$villages_id,$notlp);
+            detail($stmt);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

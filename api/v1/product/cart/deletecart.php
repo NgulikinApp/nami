@@ -52,6 +52,8 @@
                 $stmt->bind_param("is", $product_id,$user_id);
                 
                 $stmt->execute();
+                
+                $stmt->close();
             }
             
             if(isset($_SESSION['productcart'])){

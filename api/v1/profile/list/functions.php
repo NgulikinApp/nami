@@ -49,16 +49,14 @@
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6);
+        $stmt->bind_result($col1, $col2, $col3, $col4);
         
         while ($stmt->fetch()) {
             $data[] = array(
                           "user_address_id" => $col1,
-                          "address" => $col2,
-                          "province_name" => $col3,
-                          "regency_name" => $col4,
-                          "district_name" => $col5,
-                          "village_name" => $col6
+                          "recipientname" => $col2,
+                          "address" => $col3,
+                          "priority" => $col4
                         );
         }
         

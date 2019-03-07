@@ -112,6 +112,9 @@
         						case 'd':
         							include('api/v1/product/cart/deletecart.php');
         						break;
+        						case 'u':
+        							include('api/v1/product/cart/updatecart.php');
+        						break;
         						default :
 							        include('api/v1/product/cart/feed.php');
 						    }
@@ -186,6 +189,9 @@
         						break;
         						case 'ls':
         							include('api/v1/profile/list/listaddress.php');
+        						break;
+        						case 's':
+        							include('api/v1/profile/address/selectAddress.php');
         						break;
 						        default: 
 						            include('api/v1/profile/address/getData.php');

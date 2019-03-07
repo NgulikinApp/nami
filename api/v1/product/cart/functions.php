@@ -229,4 +229,19 @@
         */
         credentialVerified($data);
     }
+    
+    /*
+        Function referred on : module-cart.js
+        Used for calling the json data 
+        Return data:
+                - product_id
+                - cart_sumproduct
+    */
+    function updatecart($product_id,$cart_sumproduct){
+        $data = array("product_id" => $product_id,"cart_sumproduct" => $cart_sumproduct);
+        /*
+            Function location in : /model/general/functions.php
+        */
+        credentialVerified($data);
+    }
 ?>

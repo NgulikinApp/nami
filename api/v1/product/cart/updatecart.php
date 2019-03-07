@@ -1,12 +1,9 @@
 <?php
-    /*
-        This API used in ngulikin.com/js/module-home.js
-    */
-    
     //--------------------------------------------------------------------------
 	// Link to File
 	//--------------------------------------------------------------------------
     include $_SERVER['DOCUMENT_ROOT'].'/api/model/general/get_auth.php';
+	include $_SERVER['DOCUMENT_ROOT'].'/api/model/general/postraw.php';
     include $_SERVER['DOCUMENT_ROOT'].'/api/model/beanoflink.php';
     include 'functions.php';
     
@@ -21,11 +18,22 @@
     $con = conn();
     
     /*
+        Function location in : /model/general/postraw.php
+    */
+    $request = postraw();
+    
+    /*
+        Parameters
+    */
+    $product_id = param($request['product_id']);
+    $cart_sumproduct = param($request['cart_sumproduct']);
+    
+    /*
         Function location in : /model/general/get_auth.php
     */
     $token = bearer_auth();
     
-    $con->begin_transaction(MYSQLI_TRANS_START_READ_ONLY);
+    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
     if($token == ''){
         /*
@@ -38,38 +46,33 @@
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
             if(isset($_SESSION['user'])){
-                $user_id = $_SESSION['user']["user_id"]; 
-                $key = $_SESSION['user']["key"];
+                $user_id = $_SESSION['user']["user_id"];
+                
+                $stmt = $con->prepare("UPDATE cart SET cart_sumproduct=? where user_id=? and product_id=? and cart_isactive='1'");
+                   
+                $stmt->bind_param("isi", $cart_sumproduct,$user_id,$product_id);
+                    
+                $stmt->execute();
+                
+                $stmt->close();
             }else{
-                $user_id = '';
-                $key = '';
+                $productcart = $_SESSION['productcart'];
+                
+                $i=0;
+                foreach($productcart as $value){
+                    if($value['product_id'] == $product_id){
+                        $productcart[$i]['sum'] = $cart_sumproduct;
+                        $_SESSION['productcart'] = $data;
+                        break;
+                    }
+                    $i++;
+                }
             }
             
-            /*
-                Function location in : /model/general/functions.php
-            */
-            if(checkingAuthKey($con,$user_id,$key,0,$cache) == 0){
-                return invalidKey();
-            }
-            
-            $sql = "SELECT
-                        user_address_id,
-                        recipientname,
-                        address,
-                        priority
-                    FROM 
-                        `user_address`
-                    WHERE 
-                        user_id=?
-                        AND
-                        user_address_isactive=1";
-            
-            $stmt = $con->prepare($sql);
-            $stmt->bind_param("s", $user_id);
             /*
                 Function location in : functions.php
             */
-            listaddress($stmt);
+            updatecart($product_id,$cart_sumproduct);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php
