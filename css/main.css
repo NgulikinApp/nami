@@ -2186,10 +2186,18 @@ hr{
 .address-grid img{
     margin-right: 10px;
 }
-.address-grid:hover{
+#addressLoc{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 0;
+    padding: 0;
+    width: 320px;
+}
+.address-grid:hover,#addressLoc:hover{
     cursor:auto;
     color: inherit !important;
-}    
+}
 .cart-menu div:first-child{
     vertical-align: middle;
 }

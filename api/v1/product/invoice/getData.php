@@ -58,18 +58,18 @@
                             SELECT 
                                 invoice.invoice_id,
                                 delivery_name,
-                                invoice_delivery_price,
-                                invoice_total_price,
-                                invoice_paid,
+                                invoice_detail_delivery_price,
                                 invoice_paiddate,
                                 invoice_last_paiddate,
-                                invoice_detail_sumproduct,
-                                GROUP_CONCAT(invoice_detail_notes separator '~') AS list_notes,
+                                invoice_notes,
                                 GROUP_CONCAT(product_name separator '~') AS list_product_name,
                                 GROUP_CONCAT(brand_name separator '~') AS list_brand_name,
                                 GROUP_CONCAT(shop_name separator '~') AS list_shop_name,
+                                GROUP_CONCAT(invoice_detail_sumproduct separator '~') AS list_sumproduct,
                                 GROUP_CONCAT(SUBSTRING_INDEX(product_image,',',1) separator '~') AS list_product_image,
                                 GROUP_CONCAT(product_average_rate separator '~') AS list_product_rate,
+                                GROUP_CONCAT(delivery_id separator '~') AS list_delivery_id,
+                                GROUP_CONCAT(invoice_detail_notes separator '~') AS list_notes,
                                 fullname,
                                 phone,
                                 email
@@ -84,7 +84,6 @@
                             WHERE
                                 invoice.invoice_id = ?
                             GROUP BY
-                                invoice_detail_notes,
                                 product_name,
                                 brand_name,
                                 shop_name,

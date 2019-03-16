@@ -96,11 +96,9 @@ function detailCart(){
                         list_products = val.products,
                         listlen_products = list_products.length-1;
                     
-                    var shop_chosen = (val.shop_chosen === 1) ? 'checked' : '';
-                    
                     listElement += '<div class="detail-shopping-body-title">';
                     listElement += '    <div class="detail-shopping-choose">';
-                    listElement += '        <input type="checkbox" id="shopcart'+key+'" class="chooseShopCart chooseProductCart" '+shop_chosen+'/> Pilih yang dibayar';
+                    listElement += '        <input type="checkbox" id="shopcart'+key+'" class="chooseShopCart chooseProductCart"/> Pilih yang dibayar';
                     listElement += '    </div>';
                     listElement += '    <div class="detail-shopping-icon">';
                     listElement += '        <i class="fa fa-shopping-cart"></i>';
@@ -112,12 +110,11 @@ function detailCart(){
                     $.each( list_products, function(keyproduct , valproduct ) {
                         cartNgulikin = valproduct.sum_product;
                         var second_product_style = (keyproduct === 0) ? "" : 'margin-top: 15px;border-top: 1px solid #F5F5F5;';
-                        var product_chosen = (val.product_chosen === 1) ? 'checked' : '';
                         
                         listElement += '<div style="overflow:auto;'+second_product_style+'">';
                         listElement += '    <div class="detail-shopping-body-content1">';
                         listElement += '        <div class="chooseProductCartTemp">';
-                        listElement += '            <input type="checkbox" class="chooseProductCart chkproduct productcart'+key+'" datainternal-id="'+valproduct.product_id+'" '+product_chosen+'/>';
+                        listElement += '            <input type="checkbox" class="chooseProductCart chkproduct productcart'+key+' shopndx" datainternal-id="'+valproduct.product_id+'"/>';
                         listElement += '        </div>';
                         listElement += '        <div class="disaligner">';
                         listElement += '            <img src="'+valproduct.product_image+'" width="100" height="100"/>';
@@ -154,14 +151,14 @@ function detailCart(){
                             listElement += '    <div class="detail-shopping-body-content3">';
                             listElement += '        <div class="title cart">Deskripsi Barang</div>';
                             listElement += '        <div class="inputDesc">';
-                            listElement += '            <textarea id="descProductCart'+key+'" placeholder="Contoh:Warna, Jenis, Ukuran" rows="7"></textarea>';
+                            listElement += '            <textarea class="descProductCart" id="descProductCart'+key+'" placeholder="Contoh:Warna, Jenis, Ukuran" rows="7"></textarea>';
                             listElement += '        </div>';
                             listElement += '    </div>';
                             listElement += '    <div class="detail-shopping-body-content4">';
                             listElement += '        <div class="title cart">Kurir</div>';
                             listElement += '        <div class="inputDesc">';
                             listElement += '            <div class="select">';
-                            listElement += '                <select id="senderProductCart'+key+'">';
+                            listElement += '                <select class="senderProductCart" id="senderProductCart'+key+'">';
                             var delivery_id = '0';
                             var delivery_idflag = 0;
                             $.each( list_delivery, function( keydelivery, valdelivery ) {
@@ -202,6 +199,17 @@ function detailCart(){
                             $('.productcart'+key).prop("checked",true);
                         }else{
                             $('.productcart'+key).prop("checked",false);
+                        }
+                    });
+                    $('.productcart'+key).on('click', function (e) {
+                        var chkproduct = $(this),
+                            chkproductLen = chkproduct.length;
+                        $('#shopcart'+key).prop("checked",false);
+                            
+                        for(var i = 0; i < chkproductLen; i++){
+                            if($(chkproduct[i]).prop("checked")){
+                                $('#shopcart'+key).prop("checked",true);
+                            }
                         }
                     });
                     $.each( val.products, function( keyproduct, valproduct ) {
@@ -336,11 +344,12 @@ function detailCart(){
                 
                 $('.detail-summary-footer').on('click', function (e) {
                     var chkproduct = $(".chkproduct"),
-                        chkproductList = '';
+                        chkproductList = '',
+                        chkproductLen = chkproduct.length;
                         
-                    for(var i = 0; i < chkproduct.length; i++){
+                    for(var i = 0; i < chkproductLen; i++){
                         if($(chkproduct[i]).prop("checked")){
-                            if(i === 0){
+                            if(chkproductList === ''){
                                 chkproductList += $(chkproduct[i]).attr('datainternal-id');
                             }else{
                                 chkproductList += ','+$(chkproduct[i]).attr('datainternal-id');
@@ -423,11 +432,34 @@ function chosenCart(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken(addtocartProduct);
     }else{
+        var chsshop = $(".chooseShopCart"),
+            senderProductCart = '',
+            senderProductPriceCart = '',
+            descProductCart = '';
+                        
+            for(var i = 0; i < chsshop.length; i++){
+                if($(chsshop[i]).prop("checked")){
+                    if(senderProductCart === ''){
+                        senderProductCart += $('#senderProductCart'+i).val();
+                        descProductCart += $('#descProductCart'+i).val();
+                        senderProductPriceCart += senderPriceCart($('#senderProductCart'+i).val());
+                    }else{
+                        senderProductCart += ',' + $('#senderProductCart'+i).val();
+                        descProductCart += '~' + $('#descProductCart'+i).val();
+                        senderProductPriceCart += ',' + senderPriceCart($('#senderProductCart'+i).val());
+                    }
+                }
+            }
+            
         $.ajax({
             type: 'POST',
             url: PRODUCT_CART_CHOSEN_API,
             data:JSON.stringify({ 
-                    list_productid: chosenProduct.listproduct
+                list_productid: chosenProduct.listproduct,
+                user_address_id: $('#addressId').val(),
+                list_delivery_id: senderProductCart,
+                list_notes: descProductCart,
+                list_delivery_price: senderProductPriceCart
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 
@@ -460,8 +492,10 @@ function detailAddress(){
                         detailAddress += '</div>';
                         detailAddress += '<div class="cart-menu-grid">';
                         detailAddress += '  <div class="address-grid">';
-                        detailAddress += '      <img src="/img/marker.png"/>';
-                        detailAddress +=        data.result.address;
+                        detailAddress += '      <div id="addressLoc">';
+                        detailAddress += '          <img src="/img/marker.png"/>';
+                        detailAddress +=            data.result.address+' , '+data.result.village_name+' '+data.result.district_name+' '+data.result.regency_name+' '+data.result.province_name;
+                        detailAddress += '      </div>';
                         detailAddress += '  </div>';
                         detailAddress += '  <div class="address-grid">';
                         detailAddress += '      <img src="/img/hp.png"/>';

@@ -51,8 +51,7 @@
                                             shop_delivery,
                                             shop.shop_id,
                                             GROUP_CONCAT(cart_sumproduct separator '~') AS cart_sumproduct,
-                                            GROUP_CONCAT(cart_adddate separator '~') AS cart_adddate,
-                                            GROUP_CONCAT(cart_chosen separator '~') AS cart_chosen
+                                            GROUP_CONCAT(cart_adddate separator '~') AS cart_adddate
                                     FROM 
                                             cart
                                             LEFT JOIN product ON product.product_id = cart.product_id

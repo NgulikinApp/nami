@@ -14,7 +14,7 @@
         $stmt->execute();
         $data =array();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12);
         while($stmt->fetch()){
             $data = array(
                     "fullname" => $col7,
@@ -25,7 +25,11 @@
                     "provinces_id" => $col3,
                     "regencies_id" => $col4,
                     "districts_id" => $col5,
-                    "villages_id" => $col6
+                    "villages_id" => $col6,
+                    "province_name" => strtolower($col9),
+                    "regency_name" => strtolower($col10),
+                    "district_name" => strtolower($col11),
+                    "village_name" => strtolower($col12)
                 );
         }
         

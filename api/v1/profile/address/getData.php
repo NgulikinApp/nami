@@ -60,9 +60,17 @@
                         districts_id,
                         villages_id,
                         recipientname,
-                        user_address_phone
+                        user_address_phone,
+                        provinces.name AS province_name,
+                        regencies.name AS regency_name,
+                        districts.name AS district_name,
+                        villages.name AS village_name
                     FROM 
                         `user_address`
+                        LEFT JOIN provinces ON `user_address`.provinces_id=provinces.id
+                        LEFT JOIN regencies ON `user_address`.regencies_id=regencies.id
+                        LEFT JOIN districts ON `user_address`.districts_id=districts.id
+                        LEFT JOIN villages ON `user_address`.villages_id=villages.id
                     WHERE 
                         user_id=?
                         AND

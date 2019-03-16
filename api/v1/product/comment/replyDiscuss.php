@@ -81,6 +81,8 @@
             
             $shop_discuss_reply_id = $con->insert_id;
             
+            $stmt->close();
+            
             $stmt = $con->prepare("SELECT 
                                         DATE_FORMAT(product_discuss_reply_createdate, '%W, %d %M %Y') AS comment_date
                                     FROM 

@@ -346,6 +346,9 @@
         }
             
         unset($_SESSION['file']);
+        unset($_SESSION['shop']);
+        unset($_SESSION['card']);
+        unset($_SESSION['selfie']);
     }
     
     /*

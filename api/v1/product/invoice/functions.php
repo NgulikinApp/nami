@@ -8,15 +8,15 @@
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16, $col17);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15);
         
         while ($stmt->fetch()) {
-            $notesArray = explode("~",$col9);
-            $productNameArray = explode("~",$col10);
-            $brandNameArray = explode("~",$col11);
-            $shopNameArray = explode("~",$col12);
-            $productImageArray = explode("~",$col13);
-            $productRateArray = explode("~",$col14);
+            $productNameArray = explode("~",$col7);
+            $brandNameArray = explode("~",$col8);
+            $shopNameArray = explode("~",$col9);
+            $productSumArray = explode("~",$col10);
+            $productImageArray = explode("~",$col11);
+            $productRateArray = explode("~",$col12);
             
             $countProducts = sizeof($productNameArray);
             
@@ -24,9 +24,9 @@
             for($i=0;$i<$countProducts;$i++){
                 $list_products[] = array(
                                     "name" => $productNameArray[$i],
-                                    "notes" => $notesArray[$i],
                                     "brand" => $brandNameArray[$i],
                                     "shop" => $shopNameArray[$i],
+                                    "sum" => $productSumArray[$i],
                                     "image" => $productImageArray[$i],
                                     "rate" => $productRateArray[$i]
                                     );
@@ -35,14 +35,12 @@
             $data['invoice_id'] = $col1;
             $data['delivery_name'] = $col2;
             $data['invoice_delivery_price'] = intval($col3);
-            $data['invoice_total_price'] = intval($col4);
-            $data['invoice_paid'] = $col5;
-            $data['invoice_paiddate'] = $col6;
-            $data['invoice_last_paiddate'] = $col7;
-            $data['invoice_detail_sumproduct'] = intval($col8);
-            $data['fullname'] = $col15;
-            $data['phone'] = $col16;
-            $data['email'] = $col17;
+            $data['invoice_paiddate'] = $col4;
+            $data['invoice_last_paiddate'] = $col5;
+            $data['invoice_notes'] = $col6;
+            $data['fullname'] = $col13;
+            $data['phone'] = $col14;
+            $data['email'] = $col15;
             $data['products'] = $list_products;
         }
         

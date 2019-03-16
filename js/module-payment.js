@@ -37,7 +37,7 @@ function initPayment(){
 function detailPayment(){
     $.ajax({
         type: 'GET',
-        url: PRODUCT_CART_CHOSENFEED_API,
+        url: PRODUCT_INVOICE_API,
         dataType: 'json',
         beforeSend: function(xhr, settings) { 
             xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
