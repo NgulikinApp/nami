@@ -35,9 +35,12 @@ function initPayment(){
 }
 
 function detailPayment(){
+    var url = window.location.href,
+        invoiceno = url.substr(url.lastIndexOf('/') + 1);
+            
     $.ajax({
         type: 'GET',
-        url: PRODUCT_INVOICE_API,
+        url: PRODUCT_INVOICE_API+'/'+invoiceno,
         dataType: 'json',
         beforeSend: function(xhr, settings) { 
             xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));

@@ -174,7 +174,7 @@
             /*
                 Function location in : functions.php
             */
-            chosencart($list_productid);
+            chosencart($invoice_id);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

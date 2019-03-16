@@ -469,7 +469,7 @@ function chosenCart(){
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
                     generateToken(chosenCart);
                 }else{
-                    location.href = url+"/payment";
+                    location.href = url+"/payment/"+data.result.invoice_id;
                 }
             }
         });
