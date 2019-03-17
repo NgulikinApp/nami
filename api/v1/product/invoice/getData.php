@@ -57,21 +57,25 @@
             $sql = "
                             SELECT 
                                 invoice.invoice_id,
-                                delivery_name,
-                                invoice_shop_detail_delivery_price,
                                 invoice_paiddate,
                                 invoice_last_paiddate,
-                                product_name,
-                                brand_name,
+                                fullname,
+                                phone,
+                                email,
+                                username,
+                                invoice_shop_detail.shop_id AS shop_id,
                                 shop_name,
+                                invoice_shop_detail.delivery_id,
+                                delivery_name,
+                                invoice_shop_detail_delivery_price,
+								invoice_shop_detail_notes,
+                                invoice_product_detail.product_id AS product_id,
+                                brand_name,
+                                product_name,
                                 invoice_product_detail_sumproduct,
                                 SUBSTRING_INDEX(product_image,',',1) AS product_image,
                                 product_average_rate,
-                                invoice_shop_detail.delivery_id,
-								invoice_shop_detail_notes,
-                                fullname,
-                                phone,
-                                email
+                                product_price
                             FROM
                                 invoice
 								LEFT JOIN invoice_shop_detail ON invoice_shop_detail.invoice_id = invoice.invoice_id
@@ -81,16 +85,17 @@
 								LEFT JOIN brand ON brand.brand_id = invoice_brand_detail.brand_id
 								LEFT JOIN invoice_product_detail ON invoice_product_detail.invoice_brand_detail_id = invoice_brand_detail.invoice_brand_detail_id
 								LEFT JOIN product ON product.product_id = invoice_product_detail.product_id
-                                LEFT JOIN `user` ON `user`.user_id=invoice.user_id
+                                LEFT JOIN `user` ON `user`.user_id=shop.user_id
                             WHERE
                                 invoice.invoice_no = ?
                        ";
             
             $stmt = $con->prepare($sql);
-            $stmt->bind_param("i", $noinvoice);
+            $stmt->bind_param("s", $noinvoice);
             /*
                 Function location in : functions.php
             */
+            
             detail($stmt);
         }catch(Exception $e){
             /*

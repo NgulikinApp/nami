@@ -47,7 +47,7 @@ function detailPayment(){
         },
         success: function(data, status) {
             if(data.status == "OK"){
-                var response = data.result.listshops;
+                var response = data.result.shops;
                 var listElement = '';
                 
                 var totalPrice = 0;
@@ -66,20 +66,20 @@ function detailPayment(){
                         listElement += '<div style="overflow:auto;'+second_product_style+'">';
                         listElement += '    <div class="detail-paymentSummary-body-content1">';
                         listElement += '        <div class="left">';
-                        listElement += '            <img src="'+valproduct.product_image+'" width="100" height="100"/>';
+                        listElement += '            <img src="'+valproduct.image+'" width="100" height="100"/>';
                         listElement += '        </div>';
-                        listElement += '        <div class="right">'+valproduct.product_name+'</div>';
+                        listElement += '        <div class="right">'+valproduct.name+'</div>';
                         listElement += '    </div>';
                         listElement += '    <div class="detail-paymentSummary-body-content2">';
-                        listElement += '        <div class="left">'+valproduct.cart_sumproduct+'</div>';
+                        listElement += '        <div class="left">'+valproduct.sum+'</div>';
                         listElement += '    </div>';
                         listElement += '</div>';
                         
-                        totalPrice = totalPrice + (valproduct.product_price * valproduct.cart_sumproduct);
+                        totalPrice = totalPrice + (valproduct.price * valproduct.sum);
                         var price = senderPriceCart(sessionStorage.getItem('cartDelivery')).toString();
                         
                         $('#sumProductSummaryCart').html(numberFormat(price));
-                        var totalPriceCart = valproduct.cart_sumproduct * parseInt(totalPrice);
+                        var totalPriceCart = valproduct.sum * parseInt(totalPrice);
                         var totalShoppingCart = totalPriceCart + senderPriceCart(1);
                                 
                         $('.totalPriceCart').html(numberFormat(totalPriceCart.toString()));
@@ -93,7 +93,7 @@ function detailPayment(){
                 $('body').removeClass('hiddenoverflow');
                 
                 $('.detail-totalPayment-footer').on('click', function (e) {
-                    location.href = url+"/invoice/1";
+                    location.href = url+"/invoice/"+invoiceno;
                 });
             }else{
                 generateToken(detailPayment);

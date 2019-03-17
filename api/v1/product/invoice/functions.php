@@ -4,44 +4,60 @@
         Used for showing callback the detail data invoice
     */
     function detail($stmt){
-        $data = array();
+        $invoiceflag = 0;
+        $shopidflag = 0;
+        $i = 0;
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16, $col17, $col18, $col19, $col20);
         
         while ($stmt->fetch()) {
-            $productNameArray = explode("~",$col7);
-            $brandNameArray = explode("~",$col8);
-            $shopNameArray = explode("~",$col9);
-            $productSumArray = explode("~",$col10);
-            $productImageArray = explode("~",$col11);
-            $productRateArray = explode("~",$col12);
-            
-            $countProducts = sizeof($productNameArray);
-            
-            $list_products = array();
-            for($i=0;$i<$countProducts;$i++){
-                $list_products[] = array(
-                                    "name" => $productNameArray[$i],
-                                    "brand" => $brandNameArray[$i],
-                                    "shop" => $shopNameArray[$i],
-                                    "sum" => $productSumArray[$i],
-                                    "image" => $productImageArray[$i],
-                                    "rate" => $productRateArray[$i]
-                                    );
+            if($invoiceflag == 0){
+                $invoiceflag = 1;
+                $data = array(
+                          "invoice_id" => $col1,
+                          "invoice_paiddate" => $col2,
+                          "invoice_last_paiddate" => $col3,
+                          "fullname" => $col4,
+                          "phone" => $col5,
+                          "email" => $col6,
+                          "shops" => array()
+                        );
             }
             
-            $data['invoice_id'] = $col1;
-            $data['delivery_name'] = $col2;
-            $data['invoice_delivery_price'] = intval($col3);
-            $data['invoice_paiddate'] = $col4;
-            $data['invoice_last_paiddate'] = $col5;
-            $data['invoice_notes'] = $col6;
-            $data['fullname'] = $col13;
-            $data['phone'] = $col14;
-            $data['email'] = $col15;
-            $data['products'] = $list_products;
+            if($shopidflag != intval($col8)){
+                $shopidflag = intval($col8);
+                $data["shops"][$i] = array(
+                            "shop_id" => intval($col8),
+                            "shop_name" => $col9,
+                            "delivery_id" => $col10,
+                            "delivery_name" => $col11,
+                            "delivery_price" => $col12,
+                            "notes" => $col13,
+                            "products" => array()
+                        );
+                $data["shops"][$i]["products"][] = array(
+                                                "id" => $col14,
+                                                "brand_name" => $col15,
+                                                "name" => $col16,
+                                                "sum" => $col17,
+                                                "image" => IMAGES_URL.'/'.urlencode(base64_encode($col7.'/product/'.$col18)),
+                                                "rate" => $col19,
+                                                "price" => $col20
+                                        );
+                $i++;
+            }else{
+                $data["shops"][$i]["products"][] = array(
+                                                "id" => $col14,
+                                                "brand_name" => $col15,
+                                                "name" => $col16,
+                                                "sum" => $col17,
+                                                "image" => IMAGES_URL.'/'.urlencode(base64_encode($col7.'/product/'.$col18)),
+                                                "rate" => $col19,
+                                                "price" => $col20
+                                        );
+            }
         }
         
         $stmt->close();
