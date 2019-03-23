@@ -364,6 +364,8 @@ function detailCart(){
                             notif("error","Harap login terlebih dahulu","right","top");
                         }else if(chkproductList === ''){
                             notif("error","Pilih salah satu produk yang ingin dibeli","right","top");
+                        }else if($('#addressId').val() === ''){
+                            notif("error","Pilih alamat terlebih dahulu","right","top");
                         }else{
                             chosenProduct.listproduct = chkproductList;
                             chosenCart();
@@ -471,7 +473,7 @@ function chosenCart(){
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
                     generateToken("chosenCart");
                 }else{
-                    location.href = url+"/payment/"+data.result.invoice_id;
+                    location.href = url+"/payment/"+data.result.invoice_no;
                 }
             }
         });

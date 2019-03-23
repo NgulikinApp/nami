@@ -59,7 +59,7 @@
                                 invoice.invoice_id,
                                 invoice_paiddate,
                                 invoice_last_paiddate,
-                                fullname,
+                                recipientname,
                                 phone,
                                 email,
                                 username,
@@ -77,7 +77,8 @@
                                 SUBSTRING_INDEX(product_image,',',1) AS product_image,
                                 product_average_rate,
                                 product_price,
-                                product_weight
+                                product_weight,
+								address
                             FROM
                                 invoice
 								LEFT JOIN invoice_shop_detail ON invoice_shop_detail.invoice_id = invoice.invoice_id
@@ -88,8 +89,13 @@
 								LEFT JOIN invoice_product_detail ON invoice_product_detail.invoice_brand_detail_id = invoice_brand_detail.invoice_brand_detail_id
 								LEFT JOIN product ON product.product_id = invoice_product_detail.product_id
                                 LEFT JOIN `user` ON `user`.user_id=shop.user_id
+                                LEFT JOIN user_address ON user_address.user_id=invoice.user_id
                             WHERE
                                 invoice.invoice_no = ?
+                                AND
+								priority='1'
+								AND
+								user_address_isactive=1
                        ";
             
             $stmt = $con->prepare($sql);

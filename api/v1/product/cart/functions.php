@@ -250,10 +250,10 @@
         Function referred on : module-cart.js
         Used for calling the json data 
         Return data:
-                - invoice_id
+                - invoice_no
     */
-    function chosencart($invoice_id){
-        $data = array("invoice_id" => $invoice_id);
+    function chosencart($invoice_no){
+        $data = array("invoice_no" => $invoice_no);
         
         /*
             Function location in : /model/general/functions.php

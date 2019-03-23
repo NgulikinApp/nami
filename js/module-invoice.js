@@ -120,6 +120,10 @@ function detailInvoice(){
                             listElement += '</div>';
                         });
                         $('.filled-invoice .left .list').html(listElement);
+                        $('.data_receiver_invoice span:first-child').html('<img src="/img/people.png" width="10" height="10"> '+data.result.fullname);
+                        $('.data_receiver_invoice span:nth-child(2)').html('<img src="/img/marker.png"> '+data.result.address);
+                        $('.data_receiver_invoice span:nth-child(3)').html('<img src="/img/hp.png"> '+data.result.phone);
+                        $('.data_receiver_invoice span:last-child').html('<img src="/img/envelope.png"> '+data.result.email);
                         
                         $.each( response, function( key, val ) {
                             var list_products = val.products;
@@ -164,7 +168,7 @@ function countDown(last_paiddate){
         // If the count down is over, write some text 
         if (distance < 0) {
             clearInterval(x);
-            document.getElementById("countdown_invoice").innerHTML = "EXPIRED";
+            document.getElementById("countdown_invoice").innerHTML = "KADALUARSA";
         }
     }, 1000);
 }
