@@ -13,17 +13,18 @@
         $data = array();
         
         $stmt->execute();
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7);
         
         while($stmt->fetch()){
-            $image = IMAGES_URL.'/'.urlencode(base64_encode($col5.'/product/'.$col4));
+            $image = IMAGES_URL.'/'.urlencode(base64_encode($col6.'/product/'.$col5));
             
             $data[] = array(
-                    "transaction_date" => $col1,
-                    "status_name" => $col2,
-                    "product_name" => $col3,
+                    "invoice_no" => $col1,
+                    "transaction_date" => $col2,
+                    "status_name" => $col3,
+                    "product_name" => $col4,
                     "product_image" => $image,
-                    "invoice_total_price" => $col6
+                    "total_price" => $col7
                 );
         }
         

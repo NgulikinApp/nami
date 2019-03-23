@@ -86,7 +86,7 @@ function initShopMysales(){
 
 function listdelivery(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(listdelivery);
+        generateToken("listdelivery");
     }else{
         $.ajax({
             type: 'GET',
@@ -106,7 +106,7 @@ function listdelivery(){
                     $('#filterStatusSender').html(listdelivery);
                     $('#filterTransactionSender').html(listdelivery);
                 }else{
-                    generateToken(listdelivery);
+                    generateToken("listdelivery");
                 }
             }
         });    
@@ -115,7 +115,7 @@ function listdelivery(){
 
 function liststatus(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(liststatus);
+        generateToken("liststatus");
     }else{
         $.ajax({
             type: 'GET',
@@ -132,7 +132,7 @@ function liststatus(){
                     });
                     $('.statusproduct').html(liststatus);
                 }else{
-                    generateToken(liststatus);
+                    generateToken("liststatus");
                 }
             }
         });    

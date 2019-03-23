@@ -101,7 +101,7 @@ function initShopSetting(){
 
 function detail(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(detail);
+        generateToken("detail");
     }else{
         $.ajax({
             type: 'GET',
@@ -229,7 +229,7 @@ function detail(){
                 	   editBanner();
                 	});
                 }else{
-                    generateToken(detail);
+                    generateToken("detail");
                 }
             } 
         });
@@ -238,7 +238,7 @@ function detail(){
 
 function detailBrand(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(detailBrand);
+        generateToken("detailBrand");
     }else{
         
         $.ajax({
@@ -285,7 +285,7 @@ function detailBrand(){
                         brandLayer();
                     });
                 }else{
-                    generateToken(detailBrand);
+                    generateToken("detailBrand");
                 }
             } 
         });
@@ -365,7 +365,7 @@ function uploadPhotoShop(){
         data.append('type', 'shop');
         data.append('file', filePhoto);
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(uploadPhotoShop);
+        generateToken("uploadPhotoShop");
     }else{
         if(fileSize < 2){
             if(fileExt === 'jpg' || fileExt === 'png'){
@@ -397,7 +397,7 @@ function uploadPhotoShop(){
 
 function doEditProfile(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(doEditProfile);
+        generateToken("doEditProfile");
     }else{
         var shop_name = $("#name-seller-edit").val(),
             shop_desc = $("#desc-seller-edit").val();
@@ -415,7 +415,7 @@ function doEditProfile(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                        generateToken(doEditProfile);
+                    generateToken("doEditProfile");
                 }else{
                     $('.shop-name').html(data.result.shop_name);
                     $('.shop-desc').html(data.result.shop_description);
@@ -509,7 +509,7 @@ function uploadPhotoBanner(){
         data.append('type', 'banner');
         data.append('file', filePhoto);
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(uploadPhotoBanner);
+        generateToken("uploadPhotoBanner");
     }else{
         if(fileSize < 2){
             if(fileExt === 'jpg' || fileExt === 'png'){
@@ -540,7 +540,7 @@ function uploadPhotoBanner(){
 
 function doEditBanner(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(doEditBanner);
+        generateToken("doEditBanner");
     }else{
         $.ajax({
             type: 'POST',
@@ -551,7 +551,7 @@ function doEditBanner(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                        generateToken(doEditBanner);
+                    generateToken("doEditBanner");
                 }else{
                     $(".layerPopup").fadeOut();
             	    $(".layerPopup").remove();
@@ -569,7 +569,7 @@ function doEditBanner(){
 
 function brandShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(brandShop);
+        generateToken("brandShop");
     }else{
         
         $('#pagingShopSellerBrand').removeData("twbs-pagination");
@@ -613,7 +613,7 @@ function brandShop(){
                         });
                     }
                 }else{
-                    generateToken(brandShop);
+                    generateToken("brandShop");
                 }
             }
         });
@@ -622,7 +622,7 @@ function brandShop(){
 
 function selectBrand(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(selectBrand);
+        generateToken("selectBrand");
     }else{
         $.ajax({
             type: 'POST',
@@ -636,7 +636,7 @@ function selectBrand(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                        generateToken(selectBrand);
+                    generateToken("selectBrand");
                 }else{
                     $(".list-brandseller").removeClass('chosen');
                     $(".brand"+data.result.brand_id).addClass('chosen');
@@ -728,7 +728,7 @@ function uploadPhotoBrand(){
         data.append('type', 'brand');
         data.append('file', filePhoto);
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(uploadPhotoBrand);
+        generateToken("uploadPhotoBrand");
     }else{
         if(fileSize < 2){
             if(fileExt === 'jpg' || fileExt === 'png'){
@@ -760,7 +760,7 @@ function uploadPhotoBrand(){
 
 function doActionBrand(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(doActionBrand);
+        generateToken("doActionBrand");
     }else{
         $.ajax({
             type: 'POST',
@@ -776,7 +776,7 @@ function doActionBrand(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                        generateToken(doActionBrand);
+                    generateToken("doActionBrand");
                 }else{
                     $(".layerPopup").fadeOut();
     	            $(".layerPopup").remove();
@@ -793,7 +793,7 @@ function doActionBrand(){
 
 function productShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(productShop);
+        generateToken("productShop");
     }else{
         $('#pagingShopSellerProduct').removeData("twbs-pagination");
         $('#pagingShopSellerProduct').unbind("page");
@@ -874,7 +874,7 @@ function productShop(){
                         });
                     }
                 }else{
-                    generateToken(productShop);
+                    generateToken("productShop");
                 }
             }
         });
@@ -1121,7 +1121,7 @@ function uploadPhotoProduct(){
         data.append('type', 'product');
         data.append('file', filePhoto);
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(uploadPhotoProduct);
+        generateToken("uploadPhotoProduct");
     }else{
         if(fileSize < 2){
             if(fileExt === 'jpg' || fileExt === 'png'){
@@ -1177,7 +1177,7 @@ function readProductURL() {
 function getcategory(category_id,subcategory_id){
     var categoryProductStorage = sessionStorage.getItem("categoryProduct");
 	if(categoryProductStorage === null){
-	    categoryProductLayer(category_id,subcategory_id);
+	    categoryProductLayer(category_id);
 	}else{
 	    bindCategoryProductLayer(JSON.parse(categoryProductStorage),category_id,subcategory_id);
 	}
@@ -1185,7 +1185,7 @@ function getcategory(category_id,subcategory_id){
 
 function categoryProductLayer(category_id){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(categoryProductLayer);
+        generateToken("categoryProductLayer");
     }else{
         $.ajax({
             type: 'GET',
@@ -1199,7 +1199,7 @@ function categoryProductLayer(category_id){
                 	sessionStorage.setItem("categoryProduct",JSON.stringify(data.result));
                 	bindCategoryProduct(data.result);
                 }else{
-                    generateToken(categoryProductLayer);
+                    generateToken("categoryProductLayer");
                 }
             } 
         });
@@ -1227,7 +1227,7 @@ function bindCategoryProductLayer(data,category_id,subcategory_id){
 
 function detailProduct(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(detailProduct);
+        generateToken("detailProduct");
     }else{
         $.ajax({
             type: 'GET',
@@ -1271,7 +1271,7 @@ function detailProduct(){
                         }
                     });
                 }else{
-                    generateToken(detailProduct);
+                    generateToken("detailProduct");
                 }
             } 
         });
@@ -1280,7 +1280,7 @@ function detailProduct(){
 
 function actionProductLayer(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(actionProductLayer);
+        generateToken("actionProductLayer");
     }else{
         $.ajax({
             type: 'POST',
@@ -1305,7 +1305,7 @@ function actionProductLayer(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(actionProductLayer);
+                    generateToken("actionProductLayer");
                 }else{
                     productShop();
                     
@@ -1380,7 +1380,7 @@ function accountBank(){
 
 function listbank(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(listbank);
+        generateToken("listbank");
     }else{
         $.ajax({
             type: 'GET',
@@ -1409,7 +1409,7 @@ function listbank(){
                     
                     $('.loaderProgress').addClass('hidden');
                 }else{
-                    generateToken(listbank);
+                    generateToken("listbank");
                 }
             }
         });    
@@ -1418,7 +1418,7 @@ function listbank(){
 
 function listaccount(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(listaccount);
+        generateToken("listaccount");
     }else{
             
         $.ajax({
@@ -1472,7 +1472,7 @@ function listaccount(){
                         accountBank();
                     });
                 }else{
-                    generateToken(listaccount);
+                    generateToken("listaccount");
                 }
             }
         });    
@@ -1481,7 +1481,7 @@ function listaccount(){
 
 function actionAccount(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(actionAccount);
+        generateToken("actionAccount");
     }else{
         $('.accountSellerContainer .loaderProgress').removeClass('hidden');
         
@@ -1519,7 +1519,7 @@ function actionAccount(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(actionAccount);
+                    generateToken("actionAccount");
                 }else if(data.message == 'Password is wrong'){
                     notif("error","Password tidak benar","center","top");
                     $('.loaderProgress').addClass('hidden');
@@ -1537,7 +1537,7 @@ function actionAccount(){
 
 function listdelivery(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(listdelivery);
+        generateToken("listdelivery");
     }else{
         $.ajax({
             type: 'GET',
@@ -1576,7 +1576,7 @@ function listdelivery(){
                         actionDelivery();
                     });
                 }else{
-                    generateToken(listdelivery);
+                    generateToken("listdelivery");
                 }
             }
         });    
@@ -1585,7 +1585,7 @@ function listdelivery(){
 
 function actionDelivery(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(actionDelivery);
+        generateToken("actionDelivery");
     }else{
         $.ajax({
             type: 'POST',
@@ -1599,7 +1599,7 @@ function actionDelivery(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                        generateToken(actionDelivery);
+                    generateToken("actionDelivery");
                 }else{
             	    notif("info","Data sudah disimpan","center","top");
                 }

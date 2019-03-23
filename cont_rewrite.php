@@ -152,6 +152,9 @@
 						        case 'a':
         							include('api/v1/product/invoice/addtoinvoice.php');
         						break;
+        						case 'cp':
+        							include('api/v1/product/invoice/changepayment.php');
+        						break;
 						        case 'ss':
         							include('api/v1/product/invoice/sendStatusProduct.php');
         						break;

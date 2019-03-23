@@ -10,7 +10,7 @@
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16, $col17, $col18, $col19, $col20);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16, $col17, $col18, $col19, $col20, $col21, $col22);
         
         while ($stmt->fetch()) {
             if($invoiceflag == 0){
@@ -35,27 +35,30 @@
                             "delivery_name" => $col11,
                             "delivery_price" => $col12,
                             "notes" => $col13,
+                            "noresi" => $col14,
                             "products" => array()
                         );
                 $data["shops"][$i]["products"][] = array(
-                                                "id" => $col14,
-                                                "brand_name" => $col15,
-                                                "name" => $col16,
-                                                "sum" => $col17,
-                                                "image" => IMAGES_URL.'/'.urlencode(base64_encode($col7.'/product/'.$col18)),
-                                                "rate" => $col19,
-                                                "price" => $col20
+                                                "id" => $col15,
+                                                "brand_name" => $col16,
+                                                "name" => $col17,
+                                                "sum" => $col18,
+                                                "image" => IMAGES_URL.'/'.urlencode(base64_encode($col7.'/product/'.$col19)),
+                                                "rate" => $col20,
+                                                "price" => $col21,
+                                                "weight" => $col22
                                         );
                 $i++;
             }else{
                 $data["shops"][$i]["products"][] = array(
-                                                "id" => $col14,
-                                                "brand_name" => $col15,
-                                                "name" => $col16,
-                                                "sum" => $col17,
-                                                "image" => IMAGES_URL.'/'.urlencode(base64_encode($col7.'/product/'.$col18)),
-                                                "rate" => $col19,
-                                                "price" => $col20
+                                                "id" => $col15,
+                                                "brand_name" => $col16,
+                                                "name" => $col17,
+                                                "sum" => $col18,
+                                                "image" => IMAGES_URL.'/'.urlencode(base64_encode($col7.'/product/'.$col19)),
+                                                "rate" => $col20,
+                                                "price" => $col21,
+                                                "weight" => $col22
                                         );
             }
         }
@@ -73,7 +76,7 @@
         Return data:
                 - invoice_id
     */
-    function addtocart($invoice_id){
+    function addtoinvoice($invoice_id){
         $data = array(
                         "invoice_id"=>$invoice_id
                     );

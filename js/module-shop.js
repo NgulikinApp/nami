@@ -108,7 +108,7 @@ function initShop(){
 
 function detail(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(detail);
+        generateToken("detail");
     }else{
         var url = window.location.href,
             shop_name = url.substr(url.lastIndexOf('/') + 1);
@@ -255,7 +255,7 @@ function detail(){
                     $('.loaderProgress').addClass('hidden');
                     $('body').removeClass('hiddenoverflow');
                 }else{
-                    generateToken(detail);
+                    generateToken("detail");
                 }
             } 
         });
@@ -264,7 +264,7 @@ function detail(){
 
 function favoriteShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(favoriteShop);
+        generateToken("favoriteShop");
     }else{
         $.ajax({
             type: 'POST',
@@ -278,7 +278,7 @@ function favoriteShop(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(favoriteShop);
+                    generateToken("favoriteShop");
                 }else if(data.result.isfavorite === 0){
                     notif("info","Toko dihapus dari daftar favorit","left","top");
                 }else{
@@ -291,7 +291,7 @@ function favoriteShop(){
 
 function brandShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(brandShop);
+        generateToken("brandShop");
     }else{
         var urlCurr = window.location.href,
             shop_name = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
@@ -325,7 +325,7 @@ function brandShop(){
                         $("#list-brand").html(listBrand);
                     }
                 }else{
-                    generateToken(brandShop);
+                    generateToken("brandShop");
                 }
             }
         });
@@ -334,7 +334,7 @@ function brandShop(){
 
 function productShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(productShop);
+        generateToken("productShop");
     }else{
         var urlCurr = window.location.href,
             shop_name = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
@@ -394,7 +394,7 @@ function productShop(){
                         }
                     }
                 }else{
-                    generateToken(productShop);
+                    generateToken("productShop");
                 }
             }
         });
@@ -403,7 +403,7 @@ function productShop(){
 
 function discussShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(discussShop);
+        generateToken("discussShop");
     }else{
         var urlCurr = window.location.href,
             shop_name = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
@@ -521,7 +521,7 @@ function discussShop(){
 	                    });
                     }
                 }else{
-                    generateToken(discussShop);
+                    generateToken("discussShop");
                 }
             }
         });
@@ -530,7 +530,7 @@ function discussShop(){
 
 function commentDiscussShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(commentDiscussShop);
+        generateToken("commentDiscussShop");
     }else{
         var shop_id = $('#shop_id').val(),
             comment = $('#commentDiscussShop').val();
@@ -547,7 +547,7 @@ function commentDiscussShop(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(commentDiscussShop);
+                    generateToken("commentDiscussShop");
                 }else{
                     var elemDiscuss = '<div class="grid-shop-body-content-listComment-temp">';
                         elemDiscuss += '     <div class="grid-shop-body-content-listComment-content">';
@@ -574,7 +574,7 @@ function commentDiscussShop(){
 
 function replyCommentDiscussShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(commentDiscussShop);
+        generateToken("replyCommentDiscussShop");
     }else{
         var shop_discuss_id = $('#shop_discuss_id').val(),
             comment = $('.commentReplyDiscussShop').val();
@@ -591,7 +591,7 @@ function replyCommentDiscussShop(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(commentDiscussShop);
+                    generateToken("replyCommentDiscussShop");
                 }else{
                     discussShop();
                 }
@@ -602,7 +602,7 @@ function replyCommentDiscussShop(){
 
 function reviewShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(reviewShop);
+        generateToken("reviewShop");
     }else{
         var urlCurr = window.location.href,
             shop_name = urlCurr.substr(urlCurr.lastIndexOf('/') + 1);
@@ -668,7 +668,7 @@ function reviewShop(){
                         }
                     }
                 }else{
-                    generateToken(reviewShop);
+                    generateToken("reviewShop");
                 }
             }
         });
@@ -677,7 +677,7 @@ function reviewShop(){
 
 function commentReviewShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(commentReviewShop);
+        generateToken("commentReviewShop");
     }else{
         var shop_id = $('#shop_id').val(),
             comment = $('#commentReviewShop').val();
@@ -694,7 +694,7 @@ function commentReviewShop(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                        generateToken(commentReviewShop);
+                    generateToken("commentReviewShop");
                 }else{
                     var elemReview = '<div class="grid-shop-body-content-listComment-temp">';
                         elemReview += '     <div class="grid-shop-body-content-listComment-content">';

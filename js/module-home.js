@@ -80,7 +80,7 @@ function initHome(){
 
 function shop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(shop);
+        generateToken("shop");
     }else{
         $.ajax({
             type: 'GET',
@@ -107,7 +107,7 @@ function shop(){
                         location.href = url+"/shop/"+shopTitle;
                     });
                 }else{
-                    generateToken(shop);
+                    generateToken("shop");
                 }
             } 
         });
@@ -116,7 +116,7 @@ function shop(){
 
 function uptodate(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(uptodate);
+        generateToken("uptodate");
     }else{
         $.ajax({
             type: 'GET',
@@ -153,7 +153,7 @@ function uptodate(){
                         location.href = url+"/product/"+shopname+"/"+productname;
                     });
                 }else{
-                    generateToken(uptodate);
+                    generateToken("uptodate");
                 }
             } 
         });
@@ -162,7 +162,7 @@ function uptodate(){
 
 function bestseller(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(bestseller);
+        generateToken("bestseller");
     }else{
         $.ajax({
             type: 'GET',
@@ -180,6 +180,7 @@ function bestseller(){
                     $.each( data.result, function( key, val ) {
                         listproduct += '<div class="col-md-9" title="'+val.product_name+'">';
                         listproduct += '   <img src="'+val.product_image+'">';
+                        listproduct += '   <div class="rateyo" id="productbestseller'+val.product_id+'" style="margin-top: 10px;"></div>';
                         listproduct += '   <div class="grid-sub-cont9-body-list-hover">';
                         listproduct += '       <i class="fa fa-shopping-cart bestseller-cart"></i>';
                         listproduct += '       <i class="fa fa-thumbs-o-up bestseller-like"></i>';
@@ -190,6 +191,10 @@ function bestseller(){
                     });
                     $('#loaderHomeProductBest').addClass('hidden');
                     $("#best-selling").html(listproduct);
+                    
+                    $.each( data.result, function(keyproduct , valproduct ) {
+                        $("#productbestseller"+valproduct.product_id).rateYo({rating: valproduct.product_average_rate,readOnly: true,starWidth : "20px"});
+                    });
                     
                     $('#best-selling').tosrus({
                 		infinite	: true,
@@ -223,7 +228,7 @@ function bestseller(){
                 	
                 	mousetosrushome(url);
                 }else{
-                    generateToken(bestseller);
+                    generateToken("bestseller");
                 }
             } 
         });
@@ -232,7 +237,7 @@ function bestseller(){
 
 function promo(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(promo);
+        generateToken("promo");
     }else{
         $.ajax({
             type: 'GET',
@@ -250,6 +255,7 @@ function promo(){
                     $.each( data.result, function( key, val ) {
                         listproduct += '<div class="col-md-9" title="'+val.product_name+'">';
                         listproduct += '   <img src="'+val.product_image+'">';
+                        listproduct += '   <div class="rateyo" id="productpromo'+val.product_id+'" style="margin-top: 10px;"></div>';
                         listproduct += '   <div class="grid-sub-cont9-body-list-hover">';
                         listproduct += '       <i class="fa fa-shopping-cart promo-cart"></i>';
                         listproduct += '       <i class="fa fa-thumbs-o-up promo-like"></i>';
@@ -260,6 +266,10 @@ function promo(){
                     });
                     $('#loaderHomeProductPromo').addClass('hidden');
                     $("#promo").html(listproduct);
+                    
+                    $.each( data.result, function(keyproduct , valproduct ) {
+                        $("#productpromo"+valproduct.product_id).rateYo({rating: valproduct.product_average_rate,readOnly: true,starWidth : "20px"});
+                    });
                     
                      $('#promo').tosrus({
                 		infinite	: true,
@@ -291,7 +301,7 @@ function promo(){
                 	
                 	mousetosrushome(url);
                 }else{
-                    generateToken(promo);
+                    generateToken("promo");
                 }
             } 
         });
@@ -300,7 +310,7 @@ function promo(){
 
 function favoriteProduct(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(favoriteProduct);
+        generateToken("favoriteProduct");
     }else{
         var product_id = favoriteData.product_id;
         $.ajax({
@@ -315,7 +325,7 @@ function favoriteProduct(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                        generateToken(favoriteProduct);
+                    generateToken("favoriteProduct");
                 }else if(data.message == 'You have saved this item'){
                     notif("error","Anda sudah menyimpan produk ini","center","center");
                 }else{
@@ -345,7 +355,7 @@ function mousetosrushome(url){
 
 function addtocartProduct(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(addtocartProduct);
+        generateToken("addtocartProduct");
     }else{
         $.ajax({
             type: 'POST',
@@ -361,7 +371,7 @@ function addtocartProduct(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(addtocartProduct);
+                    generateToken("addtocartProduct");
                 }else{
                     $('#iconCartHeader').popover('hide');
                     bubbleCart();

@@ -207,7 +207,7 @@ function initGeneral(){
 	    window.open('https://www.blog.ngulikin.com');
 	});
 	
-	$('#footerHelp,.footer-body-mid2 ul li:nth-child(2)').on('click', function (e) {
+	$('#footerHelp,.footer-body-mid2 ul li:nth-child(2),#contact_us').on('click', function (e) {
 	    location.href = url+"/help";
 	});
 	
@@ -219,7 +219,7 @@ function initGeneral(){
 
 function bubbleCart(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(bubbleCart);
+        generateToken("bubbleCart");
     }else{
         $.ajax({
             type: 'GET',
@@ -289,7 +289,7 @@ function bubbleCart(){
                     
                     $(".sumManinMenuCart").html(data.result.totalproducts);
                 }else{
-                    generateToken(bubbleCart);
+                    generateToken("bubbleCart");
                 }
             } 
         });
@@ -318,7 +318,7 @@ function profileClick(){
 
 function bubbleNotif(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(bubbleNotif);
+        generateToken("bubbleNotif");
     }else{
         $.ajax({
             type: 'GET',
@@ -371,7 +371,7 @@ function bubbleNotif(){
                     });
                     $(".sumNotifinMenuCart").html(data.result.length);
                 }else{
-                    generateToken(bubbleNotif);
+                    generateToken("bubbleNotif");
                 }
             } 
         });
@@ -396,13 +396,13 @@ function logoutClick(){
 function generateToken(name){
     $.getJSON(TOKEN_API, function( data ) {
 	    sessionStorage.setItem('tokenNgulikin',data.result);
-	    eval("name()");
+	    window[name]();
 	});
 }
 
 function categoryProduct(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(categoryProduct);
+        generateToken("categoryProduct");
     }else{
         $.ajax({
             type: 'GET',

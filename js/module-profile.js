@@ -193,7 +193,7 @@ function uploadPhoto(){
         data.append('type', 'profile');
         data.append('file', filePhoto);
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(uploadPhoto);
+        generateToken("uploadPhoto");
     }else{
         if(fileSize < 2){
             if(fileExt === 'jpg' || fileExt === 'png'){
@@ -225,7 +225,7 @@ function uploadPhoto(){
 
 function profile(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(profile);
+        generateToken("profile");
     }else{
         
         $.ajax({
@@ -263,7 +263,7 @@ function profile(){
                         $('.loaderProgress').addClass('hidden');
                     }
                 }else{
-                    generateToken(profile);
+                    generateToken("profile");
                 }
             } 
         });
@@ -284,7 +284,7 @@ function readURL(input) {
 
 function updateProfile(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(updateProfile);
+        generateToken("updateProfile");
     }else{
         
         $('.loaderProgress').removeClass('hidden');
@@ -304,7 +304,7 @@ function updateProfile(){
             },
             success: function(data, status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(updateProfile);
+                    generateToken("updateProfile");
                 }else if(data.message == 'Invalid key'){
                     localStorage.removeItem('emailNgulikin');
                     sessionStorage.setItem("logoutNgulikin", 1);
@@ -325,7 +325,7 @@ function updateProfile(){
 
 function updatePassword(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(updatePassword);
+        generateToken("updatePassword");
     }else{
         var oldpassword = (SHA256($('#oldpassword').val())).toUpperCase();
         var newpassword = (SHA256($('#newpassword').val())).toUpperCase();
@@ -343,7 +343,7 @@ function updatePassword(){
             },
             success: function(data, status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(updatePassword);
+                    generateToken("updatePassword");
                 }else if(data.message === 'Invalid key'){
                     localStorage.removeItem('emailNgulikin');
                     sessionStorage.setItem("logoutNgulikin", 1);
@@ -363,7 +363,7 @@ function updatePassword(){
 
 function transaction(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(transaction);
+        generateToken("transaction");
     }else{
         $.ajax({
             type: 'GET',
@@ -387,36 +387,39 @@ function transaction(){
                             listtransaction += '    </div>';
                             listtransaction += '    <div class="dataTransaction">';
                             listtransaction += '        <div class="header">barang</div>';
-                            listtransaction += '        <div class="detail">"'+val.product_name+'"</div>';
+                            listtransaction += '        <div class="detail">'+val.product_name+'</div>';
                             listtransaction += '    </div>';
                             listtransaction += '    <div class="dataTransaction">';
                             listtransaction += '        <div class="header">status pengiriman</div>';
-                            listtransaction += '        <div class="detail statusTransaction">"'+val.status_name+'"</div>';
+                            listtransaction += '        <div class="detail statusTransaction">'+val.status_name+'</div>';
                             listtransaction += '    </div>';
                             listtransaction += '    <div class="dataTransaction">';
                             listtransaction += '        <div class="header">tanggal transaksi</div>';
-                            listtransaction += '        <div class="detail">"'+val.transaction_date+'"</div>';
+                            listtransaction += '        <div class="detail">'+val.transaction_date+'</div>';
                             listtransaction += '    </div>';
                             listtransaction += '    <div class="dataTransaction">';
                             listtransaction += '        <div class="header">total tagihan</div>';
-                            listtransaction += '        <div class="detail">"'+val.product_name+'"</div>';
+                            listtransaction += '        <div class="detail">'+val.total_price+'</div>';
                             listtransaction += '    </div>';
-                            listtransaction += '    <div class="dataTransaction viewDetailTransaction">';
+                            listtransaction += '    <div class="dataTransaction viewDetailTransaction" datainternal-id="'+val.invoice_no+'">';
                             listtransaction += '        <i class="fa fa-eye"></i> Lihat';
                             listtransaction += '    </div>';
                             listtransaction += '</div>';
                         });
                     }else{
                         listtransaction += '<div class="grid-favorite-body"></div>';
-                        listtransaction += '     <div class="grid-favorite-footer">';
-                        listtransaction += '         <div>';
-                        listtransaction += '             Belum ada data transaksi';
-                        listtransaction += '         </div>';
-                        listtransaction += '     </div>';
+                        listtransaction += '<div class="grid-favorite-footer">';
+                        listtransaction += '    <div>Tidak ada data transaksi</div>';
+                        listtransaction += '</div>';
                     }
                     $(".bodyProfileTransaction").html(listtransaction);
+                    
+                    $(".viewDetailTransaction").on( 'click', function( e ){
+                        var invoiceno = $(this).attr('datainternal-id');
+                        location.href = url+"/invoice/"+invoiceno;
+                    });
                 }else{
-                    generateToken(transaction);
+                    generateToken("transaction");
                 }
             } 
         });
@@ -425,7 +428,7 @@ function transaction(){
 
 function listbank(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(listbank);
+        generateToken("listbank");
     }else{
         $.ajax({
             type: 'GET',
@@ -443,7 +446,7 @@ function listbank(){
                     });
                     $('#bank_id').append(listbank);
                 }else{
-                    generateToken(listbank);
+                    generateToken("listbank");
                 }
             }
         });    
@@ -460,7 +463,7 @@ function uploadPhotoShop(){
         data.append('type', 'createshop');
         data.append('file', filePhoto);
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(uploadPhotoShop);
+        generateToken("uploadPhotoShop");
     }else{
         if(fileSize < 2){
             if(fileExt === 'jpg' || fileExt === 'png'){
@@ -500,7 +503,7 @@ function uploadCardPhotoShop(){
         data.append('type', 'uploadcard');
         data.append('file', filePhoto);
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(uploadCardPhotoShop);
+        generateToken("uploadCardPhotoShop");
     }else{
         if(fileSize < 2){
             if(fileExt === 'jpg' || fileExt === 'png'){
@@ -540,7 +543,7 @@ function uploadSelfiePhotoShop(){
         data.append('type', 'uploadselfie');
         data.append('file', filePhoto);
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(uploadSelfiePhotoShop);
+        generateToken("uploadSelfiePhotoShop");
     }else{
         if(fileSize < 2){
             if(fileExt === 'jpg' || fileExt === 'png'){
@@ -572,7 +575,7 @@ function uploadSelfiePhotoShop(){
 
 function doCreateShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(doEditProfile);
+        generateToken("doEditProfile");
     }else{
         var shop_name = $("#shopname").val(),
             shop_desc = $("#shopdesc").val(),
@@ -596,7 +599,7 @@ function doCreateShop(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(doCreateShop);
+                    generateToken("doEditProfile");
                 }else{
             	    notif("success","Silahkan tunggu konfirmasi dari admin","center","top");
                 }

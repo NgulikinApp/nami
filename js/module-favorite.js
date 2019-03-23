@@ -33,7 +33,7 @@ function initFavorite(){
 
 function listfavoriteProduct(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(listfavoriteProduct());
+        generateToken("listfavoriteProduct");
     }else{
         
         if (typeof productPage.page === 'undefined') {
@@ -108,7 +108,7 @@ function listfavoriteProduct(){
                         $('#grid-favorite-listdataproduct').html(noData);
                     }
                 }else{
-                    generateToken(listfavoriteProduct);
+                    generateToken("listfavoriteProduct");
                 }
             } 
         });
@@ -117,7 +117,7 @@ function listfavoriteProduct(){
 
 function listfavoriteShop(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(listfavoriteShop());
+        generateToken("listfavoriteShop");
     }else{
         
         if (typeof shopPage.page === 'undefined') {
@@ -184,7 +184,7 @@ function listfavoriteShop(){
                         $('#grid-favorite-listdatashop').html(noData);
                     }
                 }else{
-                    generateToken(listfavoriteShop);
+                    generateToken("listfavoriteShop");
                 }
             } 
         });

@@ -30,7 +30,7 @@ function asking(){
         data.append('file', fileQuestioner); 
         
         if(sessionStorage.getItem('tokenNgulikin') === null){
-            generateToken(asking);
+            generateToken("asking");
         }else{
             $.ajax({
                 type: 'POST',

@@ -194,7 +194,7 @@ function initSearch(){
 
 function provinces(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(provinces);
+        generateToken("provinces");
     }else{
         $.ajax({
             type: 'GET',
@@ -214,7 +214,7 @@ function provinces(){
                     
                     $("#provSearch").html(listElement);
                 }else{
-                    generateToken(provinces);
+                    generateToken("provinces");
                 }
             } 
         });
@@ -223,7 +223,7 @@ function provinces(){
 
 function regencies(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(provinces);
+        generateToken("regencies");
     }else{
         $.ajax({
             type: 'GET',
@@ -246,7 +246,7 @@ function regencies(){
                     
                     $("#regSearch").html(listElement);
                 }else{
-                    generateToken(regencies);
+                    generateToken("regencies");
                 }
             } 
         });
@@ -255,7 +255,7 @@ function regencies(){
 
 function searchItem(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(searchItem);
+        generateToken("searchItem");
     }else{
         $('.result-content #searchNotFound').removeClass('active');
         $('.result-content .list-search').addClass('active');
@@ -363,7 +363,7 @@ function searchItem(){
                     }
                     $('.loaderImg').addClass('hidden');
                 }else{
-                    generateToken(searchItem);
+                    generateToken("searchItem");
                 }
             } 
         });

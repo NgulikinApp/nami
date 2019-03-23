@@ -49,7 +49,7 @@ function initSignin(){
 
 function ajax_auth(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(ajax_auth);
+        generateToken("ajax_auth");
     }else{
         var email = $('#emailSignin').val(),
 	        pass = $('#passwordSignin').val();
@@ -73,7 +73,7 @@ function ajax_auth(){
                 dataType: "json",
                 success: function(result) {
                     if(result.message == 'Invalid credential' || result.message == 'Token expired'){
-                        generateToken(ajax_auth);
+                        generateToken("ajax_auth");
                     }else if(result.message ==  'Account is not exist'){
                         $('.error_message').removeClass('show');
 	                    $('.error_message').addClass('show').html('Akun belum terdaftar');
@@ -95,7 +95,7 @@ function ajax_auth(){
 
 function ajax_auth_socmed(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(ajax_auth_socmed);
+        generateToken("ajax_auth_socmed");
     }else{
         var authEmail = authSigin.email,
             authPass = authSigin.pass,
@@ -116,7 +116,7 @@ function ajax_auth_socmed(){
             dataType: "json",
             success: function(result) {
                     if(result.message == 'Invalid credential' || result.message == 'Token expired'){
-                        generateToken(ajax_auth);
+                        generateToken("ajax_auth_socmed");
                     }else if(result.message ==  'Account is not exist'){
                         sessionStorage.setItem('signinEmailNgulikin',authEmail);
                         sessionStorage.setItem('signinSocmedNgulikin',authSocmed);

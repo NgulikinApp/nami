@@ -39,7 +39,7 @@ function initShopMyincome(){
 
 function listaccount(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(listaccount);
+        generateToken("listaccount");
     }else{
         $.ajax({
             type: 'GET',
@@ -63,7 +63,7 @@ function listaccount(){
                     });
                     $('.recbank .list').html(listaccount);
                 }else{
-                    generateToken(listaccount);
+                    generateToken("listaccount");
                 }
             }
         });    
@@ -131,7 +131,7 @@ function accountBank(){
 
 function listbank(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(listbank);
+        generateToken("listbank");
     }else{
         $.ajax({
             type: 'GET',
@@ -153,7 +153,7 @@ function listbank(){
                     
                     $('.loaderProgress').addClass('hidden');
                 }else{
-                    generateToken(listbank);
+                    generateToken("listbank");
                 }
             }
         });    
@@ -162,7 +162,7 @@ function listbank(){
 
 function actionAccount(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(actionAccount);
+        generateToken("actionAccount");
     }else{
         $('.accountSellerContainer .loaderProgress').removeClass('hidden');
         
@@ -200,7 +200,7 @@ function actionAccount(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(actionAccount);
+                    generateToken("actionAccount");
                 }else if(data.message == 'Password is wrong'){
                     notif("error","Password tidak benar","center","top");
                     $('.loaderProgress').addClass('hidden');

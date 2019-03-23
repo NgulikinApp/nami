@@ -91,7 +91,7 @@ function buttonSignup(){
         
 	if(inputFlag){
 	    if(sessionStorage.getItem('tokenNgulikin') === null){
-            generateToken(buttonSignup);
+            generateToken("buttonSignup");
         }else{
             $.ajax({
                 type: 'POST',
@@ -118,7 +118,7 @@ function buttonSignup(){
                 dataType: 'json',
                 success: function(result) {
                     if(result.message == 'Invalid credential' || result.message == 'Token expired'){
-                        generateToken(buttonSignup);
+                        generateToken("buttonSignup");
                     }else if(result.status == 'NO'){
                         if(result.response.email == 'invalid'){
                             $('#emailSignUp').addClass('invalidFormat');

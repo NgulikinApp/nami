@@ -59,7 +59,7 @@
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9);
     
         while ($stmt->fetch()) {
             $data[] = array(
@@ -69,7 +69,8 @@
                       "product_price" => number_format($col5, 0, '.', '.'),
                       "product_isfavorite" => $col6,
                       "shop_name" => $col7,
-                      "shop_id" => $col8
+                      "shop_id" => $col8,
+                      "product_average_rate" => $col9
                     );
         }
         

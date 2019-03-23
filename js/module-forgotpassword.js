@@ -30,7 +30,7 @@ function buttonverified(){
             $('.error_message').removeClass('green');
 	        $('.error_message').html('Kode harus diisi');
         }else if(sessionStorage.getItem('tokenNgulikin') === null){
-            generateToken(buttonverified);
+            generateToken("buttonverified");
         }else{
             $.ajax({
                 type: 'POST',
@@ -45,7 +45,7 @@ function buttonverified(){
                 dataType: 'json',
                 success: function(result) {
                     if(result.message == 'Invalid credential' || result.message == 'Token expired'){
-                        generateToken(buttonverified);
+                        generateToken("buttonverified");
                     }else if(result.status ==  'NO'){
                         $('.error_message').removeClass('show');
     	                $('.error_message').addClass('show').html('Invalid code');
@@ -83,7 +83,7 @@ function buttonnewpass(){
             $('.error_message').addClass('show');
             $('.error_message').html('Password baru harus diisi');
         }else if(sessionStorage.getItem('tokenNgulikin') === null){
-            generateToken(buttonnewpass);
+            generateToken("buttonnewpass");
         }else{
             password = (SHA256(password)).toUpperCase();
             $.ajax({
@@ -99,7 +99,7 @@ function buttonnewpass(){
                 dataType: 'json',
                 success: function(result) {
                     if(result.message == 'Invalid credential' || result.message == 'Token expired'){
-                        generateToken(buttonnewpass);
+                        generateToken("buttonnewpass");
                     }else{
                         $('.error_message').removeClass('show').addClass('show').addClass('green');
                         $('.error_message').html('Password telah diubah, silahkan login kembali');
@@ -122,7 +122,7 @@ function sendingCode(){
 	       $('.error_message').removeClass('show');
 	       $('.error_message').addClass('show').html('Username atau email harus diisi');
     }else if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(sendingCode);
+        generateToken("sendingCode");
     }else{
         $.ajax({
             type: 'POST',
@@ -137,7 +137,7 @@ function sendingCode(){
             dataType: 'json',
             success: function(result) {
                 if(result.message == 'Invalid credential' || result.message == 'Token expired'){
-                    generateToken(sendingCode);
+                    generateToken("sendingCode");
                 }else if(result.message ==  'Email or username is wrong'){
                     $('.error_message').removeClass('show');
 	                $('.error_message').addClass('show').html('Username atau email salah');

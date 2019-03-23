@@ -1288,9 +1288,9 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     letter-spacing: 1px;
 }
 .grid-sub-cont9-body{
-    height: 255px;
+    height: 285px;
     background-color: #FFFFFF;
-    margin: -25px 60px;
+    margin: -40px 60px;
     width: 750px;
     box-shadow: 3px 3px 10px #888888;
     padding: 15px 15px 15px 0px;
@@ -5738,6 +5738,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .title_notes_invoice{
     opacity:0.5;
     text-align: left;
+    width: 100%;
 }
 .history_invoice{
     text-align:center;
@@ -5789,6 +5790,10 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 }
 #payment_method .caption{
     padding: 10px;
+}
+#contact_us:hover{
+    cursor:pointer;
+    color: #FEBD18 !important;
 }
 /*
     End of Invoice page

@@ -65,7 +65,8 @@
                                                     user_id = ?
                                             ) AS product_isfavorite,
 											shop_name,
-											shop.shop_id
+											shop.shop_id,
+											product_average_rate
                                     FROM 
                                             product
                                             LEFT JOIN brand ON brand.brand_id = product.brand_id
@@ -73,11 +74,9 @@
                                             LEFT JOIN `user` ON `user`.user_id = shop.user_id";
                     				
             if($filter == 'bestseller'){
-                $sql .= " LEFT JOIN invoice_detail ON invoice_detail.product_id=product.product_id
-                          LEFT JOIN invoice ON invoice.invoice_id=invoice.invoice_id 
-                          ORDER BY product_sold DESC";
+                $sql .= " ORDER BY product_sold DESC";
             }else{
-                $sql .= "  ORDER BY product_id DESC";
+                $sql .= " ORDER BY product_id DESC";
             }
             
             $sql .= " LIMIT 6";

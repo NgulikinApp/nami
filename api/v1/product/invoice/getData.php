@@ -69,13 +69,15 @@
                                 delivery_name,
                                 invoice_shop_detail_delivery_price,
 								invoice_shop_detail_notes,
+								invoice_shop_detail_noresi,
                                 invoice_product_detail.product_id AS product_id,
                                 brand_name,
                                 product_name,
                                 invoice_product_detail_sumproduct,
                                 SUBSTRING_INDEX(product_image,',',1) AS product_image,
                                 product_average_rate,
-                                product_price
+                                product_price,
+                                product_weight
                             FROM
                                 invoice
 								LEFT JOIN invoice_shop_detail ON invoice_shop_detail.invoice_id = invoice.invoice_id

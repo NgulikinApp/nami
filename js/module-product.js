@@ -13,7 +13,7 @@ function initProduct(){
 
 function detail(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(detail);
+        generateToken("detail");
     }else{
         var pathname = window.location.pathname,
             arraypathname = pathname.split("/"),
@@ -183,7 +183,7 @@ function detail(){
                     $('.loaderProgress').addClass('hidden');
                     $('body').removeClass('hiddenoverflow');
                 }else{
-                    generateToken(detail);
+                    generateToken("detail");
                 }
             } 
         });
@@ -192,7 +192,7 @@ function detail(){
 
 function favoriteProduct(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(favoriteProduct);
+        generateToken("favoriteProduct");
     }else{
         $.ajax({
             type: 'POST',
@@ -206,7 +206,7 @@ function favoriteProduct(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                        generateToken(favoriteProduct);
+                    generateToken("favoriteProduct");
                 }else{
                     $('.tabelList #like').html(data.result.product_count_favorite);
                     if(data.result.isfavorite){
@@ -222,7 +222,7 @@ function favoriteProduct(){
 
 function rateProduct(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(rateProduct);
+        generateToken("rateProduct");
     }else{
         $.ajax({
             type: 'POST',
@@ -237,7 +237,7 @@ function rateProduct(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                        generateToken(rateProduct);
+                    generateToken("rateProduct");
                 }else if(data.message == 'You have rated this item'){
                     notif("error","Anda sudah memberikan penilaian produk ini","top");
                 }else{
@@ -251,7 +251,7 @@ function rateProduct(){
 
 function addtocartProduct(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(addtocartProduct);
+        generateToken("addtocartProduct");
     }else{
         $.ajax({
             type: 'POST',
@@ -267,7 +267,7 @@ function addtocartProduct(){
             },
             success: function(data,status) {
                 if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                    generateToken(addtocartProduct);
+                    generateToken("addtocartProduct");
                 }else{
                     $('#iconCartHeader').popover('hide');
                     bubbleCart();

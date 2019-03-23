@@ -20,7 +20,7 @@ function initNotifications(){
 
 function notification(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(notification);
+        generateToken("notification");
     }else{
         var keyword = $('#searchNotif').val();
         $.ajax({
@@ -59,7 +59,7 @@ function notification(){
                     }
                     $(".bodyNotif-list").html(listNotif);
                 }else{
-                    generateToken(notification);
+                    generateToken("notification");
                 }
             }
         });

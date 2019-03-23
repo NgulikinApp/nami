@@ -117,7 +117,7 @@
             </ul>
         </div>
         <div class="caption">
-            Pembelianmu dicatat dengan nomor tagihan pembayaran <font class="bluesky">AAAABBBBB12345</font>. Ngulikin akan melakukan verifikasi otomatis paling lama 30 menit setelah kamu melakukan pembayaran. Jika kamu menghadapi kendala mengenai pembayaran, silahkan langsung <font class="bluesky">Hubungi kami di Service/FAQ NGULIKIN</font>
+            Pembelianmu dicatat dengan nomor tagihan pembayaran <font class="bluesky">AAAABBBBB12345</font>. Ngulikin akan melakukan verifikasi otomatis paling lama 30 menit setelah kamu melakukan pembayaran. Jika kamu menghadapi kendala mengenai pembayaran, silahkan langsung <span class="bluesky" id="contact_us">Hubungi kami di Service/FAQ NGULIKIN</span>
         </div>
     </div>
 </div>

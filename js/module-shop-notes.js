@@ -68,7 +68,7 @@ function initShopNotes(){
 
 function detail(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(detail);
+        generateToken("detail");
     }else{
         $.ajax({
             type: 'GET',
@@ -106,7 +106,7 @@ function detail(){
                     $('#shop_location').val(data.result.shop_location);
                     $('.loaderProgress').addClass('hidden');
                 }else{
-                    generateToken(detail);
+                    generateToken("detail");
                 }
             } 
         });
@@ -173,7 +173,7 @@ function uploadPhotoLocation(){
         data.append('type', 'product');
         data.append('file', filePhoto);
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(uploadPhotoLocation);
+        generateToken("uploadPhotoLocation");
     }else{
         if(fileSize < 2){
             if(fileExt === 'jpg' || fileExt === 'png'){
@@ -228,7 +228,7 @@ function readPhotoLocationURL() {
 
 function doEditNotes(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
-        generateToken(doEditNotes);
+        generateToken("doEditNotes");
     }else{
         var shop_op_from = hourtosec($('#shop_op_from').val()),
             shop_op_to = hourtosec($('#shop_op_to').val()),
@@ -265,7 +265,7 @@ function doEditNotes(){
                 },
                 success: function(data,status) {
                     if(data.message == 'Invalid credential' || data.message == 'Token expired'){
-                        generateToken(doEditNotes);
+                        generateToken("doEditNotes");
                     }else if(data.status == "NO"){
                         notif("error",data.message,"center","top");
                     }else{
