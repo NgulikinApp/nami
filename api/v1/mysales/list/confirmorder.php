@@ -70,21 +70,24 @@
                         username,
                         user_photo
                     FROM
-                        invoice
+                        shop
+                        LEFT JOIN invoice_shop_detail ON invoice_shop_detail.shop_id=shop.shop_id
+                        LEFT JOIN invoice ON invoice.invoice_id=invoice_shop_detail.invoice_id
                         LEFT JOIN `user` ON `user`.user_id=invoice.user_id
+                        LEFT JOIN payment ON payment.payment_id=invoice.payment_id
                     WHERE
-                        invoice.user_id = ?
+                        shop.user_id = ?
                         AND invoice_current_status=3";
                                     
-            array_push($a_param_type,"i");
+            array_push($a_param_type,"s");
             array_push($a_bind_params,$user_id);
             
             if($date != ''){
                 $sql .= " AND CAST(invoice_createdate AS DATE) = ".date("Y-m-d");
             }
             
-            if($delivery != '0'){
-                $sql .= " AND invoice.delivery_id = ?";
+            if(is_numeric($delivery) && $delivery != '0'){
+                $sql .= " AND invoice_shop_detail.delivery_id = ?";
                 
                 array_push($a_param_type,"i");
                 array_push($a_bind_params,$delivery);
@@ -92,7 +95,7 @@
             
             if($search != ''){
                 if(is_numeric ($search)){
-                    $sql .= " AND invoice.delivery_id = ?";
+                    $sql .= " AND invoice_shop_detail.delivery_id = ?";
                     
                     array_push($a_param_type,"i");
                 }else{

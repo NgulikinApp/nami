@@ -123,4 +123,19 @@
         */
         credentialVerified($data);
     }
+    
+    /*
+        Function referred on : actionorder.php
+        Used for returning array data
+    */
+    function actionorder($listinvoice_id,$action){
+        $data = array(
+                    "listinvoice_id" => $listinvoice_id,
+                    "action" => $action
+                );
+        /*
+            Function location in : /model/general/functions.php
+        */
+        credentialVerified((object)$data);
+    }
 ?>

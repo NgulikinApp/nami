@@ -61,6 +61,9 @@
 				    switch (@$routes[2]) {
 				        case 'detail':
 							switch (@$routes[3]) {
+							    case 'c':
+        							include('api/v1/mysales/list/confirmorder.php');
+        						break;
 							    case 's':
         							include('api/v1/mysales/detail/statussending.php');
         						break;
@@ -69,10 +72,14 @@
         						break;
 							    default :
 							        include('api/v1/mysales/detail/neworder.php');
+							    break;
 							}
 						break;
 						case 'list':
 							switch (@$routes[3]) {
+							    case 'c':
+        							include('api/v1/mysales/list/confirmorder.php');
+        						break;
 							    case 's':
         							include('api/v1/mysales/list/statussending.php');
         						break;
@@ -81,9 +88,11 @@
         						break;
 							    default :
 							        include('api/v1/mysales/list/neworder.php');
+							    break;
 							}
 						break;
 				    }
+				break;
 				case 'notif':
 				    include('api/v1/general/notification/getNotif.php');
 				break;

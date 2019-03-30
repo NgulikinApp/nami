@@ -191,6 +191,9 @@ function neworder(){
                         $.each( data.result, function( key, val ) {
                             neworder += '<div class="grid">';
                             neworder += '   <div class="detail">';
+                            neworder += '       <input type="checkbox" class="newordermysales" data-id="'+val.invoice_id+'"/>';
+                            neworder += '   </div>';
+                            neworder += '   <div class="detail">';
                             neworder += '       <div class="left">';
                             neworder += '           <img src="'+val.user_photo+'"/>';
                             neworder += '       </div>';
@@ -212,6 +215,10 @@ function neworder(){
                             neworder += '   </div>';
                             neworder += '</div>';
                         });
+                        neworder += '<div class="grid">';
+                        neworder += '   <button id="newordercancel" class="grey">Batalkan pesanan</button>';
+                        neworder += '   <button id="newordersave" class="blueskyback">Proses pesanan</button>';
+                        neworder += '</div>';
                     }else{
                         neworder += '<div id="cart-emptylist">';
                         neworder += '    <div class="grid-cart-header">Detail Invoice</div>';

@@ -83,8 +83,17 @@ textarea{
 }
 .blueskyback{
     color:#FFF !important;
-    background-color:#3FC3FF !important;
+    background-color:#3FC3FF;
 }
+.blueskyback:hover{
+    background-color: #004E82;
+}
+.grey{
+    background-color:#848484;
+}
+.grey:hover{
+    background-color: #646464;
+}    
 .greytab{
     color:#3FC3FF !important;
     background-color:#F4F5F5;
@@ -5094,8 +5103,13 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .order-container{
     width:100%
 }
+.order-container .grid .detail:first-child{
+    width: 1%;
+    border: 0;
+    vertical-align: super;
+}    
 .order-container .grid .detail{
-    width: 23%;
+    width: 22%;
     margin: 10px;
     border-right: 1px solid #DFDFDF;
 }
@@ -5105,9 +5119,21 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .order-container .grid .detail.bluesky{
     vertical-align: 10px;
 }
+.order-container .grid button{
+    color: #FFF;
+    float: right;
+    border-radius: 5px;
+    border: 0;
+    padding: 5px 20px;
+    cursor: pointer;
+    margin: 5px 10px;
+    width: 180px;
+}
 .order-container img{
     margin: 5px 15px 0px 0px;
     vertical-align: inherit;
+    width: 30px;
+    border-radius: 25px;
 }
 /*
     Edit Shop Profile Popup
