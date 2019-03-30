@@ -1,22 +1,56 @@
 <?php
     /*
-        Function referred on : neworder.php,statussending.php
+        Function referred on : neworder.php
         Used for returning array data
     */
-    function detail($stmt){
+    function neworder($stmt){
         $data = array();
         $products = array();
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6);
     
         while($stmt->fetch()){
+            if($col6 != "no-photo.jpg"){
+                $user_photo = IMAGES_URL.'/'.urlencode(base64_encode($col5.'/'.$col6));
+            }else{
+                $user_photo = INIT_URL."/img/".$col7;
+            }
             $data[] = array(
                     "invoice_id" => $col1,
-                    "delivery_name" => $col2,
+                    "payment_name" => $col2,
                     "invoice_createdate" => $col3,
-                    "fullname" => $col4
+                    "fullname" => $col4,
+                    "user_photo" => $user_photo
+                );
+        }
+    }
+    
+    /*
+        Function referred on : neworder.php
+        Used for returning array data
+    */
+    function confirmorder($stmt){
+        $data = array();
+        $products = array();
+        
+        $stmt->execute();
+        
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6);
+    
+        while($stmt->fetch()){
+            if($col6 != "no-photo.jpg"){
+                $user_photo = IMAGES_URL.'/'.urlencode(base64_encode($col5.'/'.$col6));
+            }else{
+                $user_photo = INIT_URL."/img/".$col7;
+            }
+            $data[] = array(
+                    "invoice_id" => $col1,
+                    "invoice_no" => $col2,
+                    "invoice_createdate" => $col3,
+                    "fullname" => $col4,
+                    "user_photo" => $user_photo
                 );
         }
     }

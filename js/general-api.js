@@ -7,6 +7,7 @@ var ADMINISTRATIVE_API = BASE_URL + "/administrative",
     FORGOTPASSWORD_API = BASE_URL + "/forgotPassword",
     GENERAL_API = BASE_URL +  "/general",
     MYPURCHASES_API = BASE_URL +  "/mypurchases",
+    MYSALES_API = BASE_URL +  "/mysales",
     NOTIFICATION_API = BASE_URL +  "/notif",
     PUTFILE_API = BASE_URL + "/putfile",
     PRODUCT_API = BASE_URL + "/product",
@@ -23,6 +24,9 @@ var FORGOTPASSWORD_ASKINGCODE_API = FORGOTPASSWORD_API + '/askingCode',
     FORGOTPASSWORD_CHECKINGCODE_API = FORGOTPASSWORD_API + '/checkingCode';
     
 var LIST_MYPURCHASES_API = MYPURCHASES_API + '/list';
+
+var LIST_MYSALES_API = MYPURCHASES_API + '/list',
+    LISTCONFIRM_MYSALES_API = LIST_MYSALES_API + '/c';
 
 var PRODUCT_ACTION_API = PRODUCT_API + "/a",
     PRODUCT_BRAND_API = PRODUCT_API + "/brand",

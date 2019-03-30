@@ -64,7 +64,7 @@
             
             $sql = "SELECT 
                         invoice.invoice_id,
-                        payment_name,
+                        invoice_no,
                         DATE_FORMAT(invoice_createdate, '%W, %d %M %Y') AS invoice_createdate,
                         fullname,
                         username,
@@ -72,19 +72,15 @@
                     FROM
                         invoice
                         LEFT JOIN `user` ON `user`.user_id=invoice.user_id
-                        LEFT JOIN payment ON payment.payment_id=invoice.payment_id
                     WHERE
                         invoice.user_id = ?
-                        AND invoice_current_status=2";
+                        AND invoice_current_status=3";
                                     
             array_push($a_param_type,"i");
             array_push($a_bind_params,$user_id);
             
             if($date != ''){
-                $sql .= " AND CAST(invoice_createdate AS DATE) = ?";
-                
-                array_push($a_param_type,"s");
-                array_push($a_bind_params,$date);
+                $sql .= " AND CAST(invoice_createdate AS DATE) = ".date("Y-m-d");
             }
             
             if($delivery != '0'){
@@ -133,7 +129,7 @@
                 Function location in : functions.php
                 Cache variabel got from : /model/memcache.php
             */
-            neworder($stmt);
+            confirmorder($stmt);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

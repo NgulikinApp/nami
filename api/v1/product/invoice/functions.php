@@ -15,10 +15,17 @@
         while ($stmt->fetch()) {
             if($invoiceflag == 0){
                 $invoiceflag = 1;
+                $invoice_last_paiddate_array = explode(' ',$col3);
+                $date_array = explode('-',$invoice_last_paiddate_array[0]);
+                $time_array = explode(':',$invoice_last_paiddate_array[1]);
+                
+                $last_paiddate = $date_array[2].' '.month($date_array[1]).' '.$date_array[0].' '.$time_array[0].'.'.$time_array[1].' WIB';
+                
                 $data = array(
                           "invoice_id" => $col1,
                           "invoice_paiddate" => $col2,
                           "invoice_last_paiddate" => $col3,
+                          "invoice_last_paiddate_letter" => $last_paiddate,
                           "fullname" => $col4,
                           "phone" => $col5,
                           "email" => $col6,

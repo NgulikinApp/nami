@@ -2317,6 +2317,7 @@ hr{
     color:#808080;
     display: inline-block;
     margin-top:15px;
+    padding-left: 15px;
     font-size: 20px;
 }
 .grid-cart-body,.grid-favorite-body{
@@ -4424,12 +4425,12 @@ input.radioPaymentOthers:empty ~ label:before{
     color:#74C5FC;
 }
 .grid-shop-seller-body .title{
-    padding: 10px;
+    padding: 10px 0px;
     text-align: center;
     color: #414141;
     font-family: 'proxima_nova_ltsemibold';
     font-size: 17px;
-    margin: 0px 15px;
+    border-bottom: 1px solid #DFDFDF;
 }
 .grid-shop-seller-body .title.cart{
     text-align: left;
@@ -5090,6 +5091,24 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     width:30%;
     padding: 10px 35px;
 }
+.order-container{
+    width:100%
+}
+.order-container .grid .detail{
+    width: 23%;
+    margin: 10px;
+    border-right: 1px solid #DFDFDF;
+}
+.order-container .grid .detail:last-child{
+    border:0px;
+}
+.order-container .grid .detail.bluesky{
+    vertical-align: 10px;
+}
+.order-container img{
+    margin: 5px 15px 0px 0px;
+    vertical-align: inherit;
+}
 /*
     Edit Shop Profile Popup
 */
@@ -5251,7 +5270,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     font-size: 13px;
     color: #848484;
 }
-#filterMysalesDate,#filterMysalesInput{
+.filterMysalesDate,.filterMysalesInput{
     border: 1px solid #DFDFDF;
     height: 22px;
     outline:none;
@@ -5260,14 +5279,14 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     border-radius: 3px;
     padding: 0px 3px;
 }
-#filterMysalesInput{
+.filterMysalesInput{
     padding-left: 5px;
     padding-right: 20px;
 }
-#filterMysalesDate::placeholder,#filterMysalesDate:-ms-input-placeholder,#filterMysalesDate::-ms-input-placeholder{
+.filterMysalesDate::placeholder,.filterMysalesDate:-ms-input-placeholder,.filterMysalesDate::-ms-input-placeholder{
     font-size:11px;
 }
-#filterMysalesInput{
+.filterMysalesInput{
     width: 200px;
 }
 #search-mysalesorder{

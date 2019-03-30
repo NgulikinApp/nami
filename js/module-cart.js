@@ -90,295 +90,309 @@ function detailCart(){
             },
             success: function(data, status) {
                 if(data.status == "OK"){
-                    var response = data.result.listshops,
-                        listElement = '',
-                        totalPrice = 0;
-                    
-                    $.each( response, function( key, val ) {
-                        var list_delivery = val.product_delivery,
-                            list_products = val.products,
-                            listlen_products = list_products.length-1;
+                    if(data.result.length > 0){
+                        var response = data.result.listshops,
+                            listElement = '',
+                            totalPrice = 0;
                         
-                        listElement += '<div class="detail-shopping-body-title">';
-                        listElement += '    <div class="detail-shopping-choose">';
-                        listElement += '        <input type="checkbox" id="shopcart'+key+'" class="chooseShopCart chooseProductCart"/> Pilih yang dibayar';
-                        listElement += '    </div>';
-                        listElement += '    <div class="detail-shopping-icon">';
-                        listElement += '        <i class="fa fa-shopping-cart"></i>';
-                        listElement += '    </div>';
-                        listElement += '    <div class="detail-shopping-sellername">'+val.shop_name+'</div>';
-                        listElement += '</div>';
-                        listElement += '<div class="detail-shopping-body-content">';
-                        
-                        $.each( list_products, function(keyproduct , valproduct ) {
-                            cartNgulikin = valproduct.sum_product;
-                            var second_product_style = (keyproduct === 0) ? "" : 'margin-top: 15px;border-top: 1px solid #F5F5F5;';
+                        $.each( response, function( key, val ) {
+                            var list_delivery = val.product_delivery,
+                                list_products = val.products,
+                                listlen_products = list_products.length-1;
                             
-                            listElement += '<div style="overflow:auto;'+second_product_style+'">';
-                            listElement += '    <div class="detail-shopping-body-content1">';
-                            listElement += '        <div class="chooseProductCartTemp">';
-                            listElement += '            <input type="checkbox" class="chooseProductCart chkproduct productcart'+key+' shopndx" datainternal-id="'+valproduct.product_id+'"/>';
-                            listElement += '        </div>';
-                            listElement += '        <div class="disaligner">';
-                            listElement += '            <img src="'+valproduct.product_image+'" width="100" height="100"/>';
-                            listElement += '        </div>';
-                            listElement += '        <div class="aligner">';
-                            listElement += '            <div>'+valproduct.product_name+'</div>';
-                            listElement += '        </div>';
-                            listElement += '        <div class="aligner">';
-                            listElement += '            <div class="productPriceCart" id="productPriceCart'+keyproduct+'" datainternal-id="'+valproduct.product_price+'">'+numberFormat(valproduct.product_price)+'</div>';
-                            listElement += '        </div>';
-                            listElement += '        <div class="aligner">';
-                            listElement += '            <span class="deleteCart" id="deleteCart'+keyproduct+'" datainternal-id="'+valproduct.product_id+'"><img src="/img/note-delete.png"/> Hapus</span>';
-                            listElement += '        </div>';
+                            listElement += '<div class="detail-shopping-body-title">';
+                            listElement += '    <div class="detail-shopping-choose">';
+                            listElement += '        <input type="checkbox" id="shopcart'+key+'" class="chooseShopCart chooseProductCart"/> Pilih yang dibayar';
                             listElement += '    </div>';
-                            listElement += '    <div class="detail-shopping-body-content2">';
-                            if(parseInt(valproduct.cart_sumproduct) === 1){
-                                listElement += '        <div class="minCart" id="productmincart'+keyproduct+'">';
-                                listElement += '            <button style="opacity:0.5;" disabled>-</button>';
-                                listElement += '        </div>';
-                            }else{
-                                listElement += '        <div class="minCart" id="productmincart'+keyproduct+'">';
-                                listElement += '            <button>-</button>';
-                                listElement += '        </div>';
-                            }
-                            listElement += '        <div class="inputSumCartTemp">';
-                            listElement += '            <input type="text" class="sumProduct" id="sumProductCart'+keyproduct+'" datainternal-id="'+valproduct.product_id+'" value="'+valproduct.cart_sumproduct+'" maxlength="3"/>';
-                            listElement += '        </div>';
-                            listElement += '        <div class="plusCart" id="productmaxcart'+keyproduct+'">';
-                            listElement += '            <button>+</button>';
-                            listElement += '        </div>';
+                            listElement += '    <div class="detail-shopping-icon">';
+                            listElement += '        <i class="fa fa-shopping-cart"></i>';
                             listElement += '    </div>';
-                            if(keyproduct == listlen_products){
-                                listElement += '    <hr/>';
-                                listElement += '    <div class="detail-shopping-body-content3">';
-                                listElement += '        <div class="title cart">Deskripsi Barang</div>';
-                                listElement += '        <div class="inputDesc">';
-                                listElement += '            <textarea class="descProductCart" id="descProductCart'+key+'" placeholder="Contoh:Warna, Jenis, Ukuran" rows="7"></textarea>';
-                                listElement += '        </div>';
-                                listElement += '    </div>';
-                                listElement += '    <div class="detail-shopping-body-content4">';
-                                listElement += '        <div class="title cart">Kurir</div>';
-                                listElement += '        <div class="inputDesc">';
-                                listElement += '            <div class="select">';
-                                listElement += '                <select class="senderProductCart" id="senderProductCart'+key+'">';
-                                var delivery_id = '0';
-                                var delivery_idflag = 0;
-                                $.each( list_delivery, function( keydelivery, valdelivery ) {
-                                    if(delivery_idflag === 0)delivery_id = valdelivery.delivery_id;
-                                    listElement += '        <option value="'+valdelivery.delivery_id+'">'+valdelivery.delivery_name+'</option>';
-                                    delivery_idflag++;
-                                });
-                                listElement += '                </select>';
-                                listElement += '            </div>';
-                                listElement += '            <div>';
-                                listElement += '                <span class="senderPriceProductCart">Rp 18.000</span>';
-                                listElement += '            </div>';
-                                listElement += '        </div>';
-                                listElement += '    </div>';
-                            }
+                            listElement += '    <div class="detail-shopping-sellername">'+val.shop_name+'</div>';
                             listElement += '</div>';
+                            listElement += '<div class="detail-shopping-body-content">';
                             
-                            totalPrice = totalPrice + (valproduct.product_price * valproduct.cart_sumproduct);
-                            var price = senderPriceCart(delivery_id).toString();
-                            
-                            $('#sumProductSummaryCart').html(numberFormat(price));
-                            var totalPriceCart = valproduct.cart_sumproduct * parseInt(totalPrice);
-                            var totalShoppingCart = totalPriceCart + senderPriceCart(delivery_id);
+                            $.each( list_products, function(keyproduct , valproduct ) {
+                                cartNgulikin = valproduct.sum_product;
+                                var second_product_style = (keyproduct === 0) ? "" : 'margin-top: 15px;border-top: 1px solid #F5F5F5;';
+                                
+                                listElement += '<div style="overflow:auto;'+second_product_style+'">';
+                                listElement += '    <div class="detail-shopping-body-content1">';
+                                listElement += '        <div class="chooseProductCartTemp">';
+                                listElement += '            <input type="checkbox" class="chooseProductCart chkproduct productcart'+key+' shopndx" datainternal-id="'+valproduct.product_id+'"/>';
+                                listElement += '        </div>';
+                                listElement += '        <div class="disaligner">';
+                                listElement += '            <img src="'+valproduct.product_image+'" width="100" height="100"/>';
+                                listElement += '        </div>';
+                                listElement += '        <div class="aligner">';
+                                listElement += '            <div>'+valproduct.product_name+'</div>';
+                                listElement += '        </div>';
+                                listElement += '        <div class="aligner">';
+                                listElement += '            <div class="productPriceCart" id="productPriceCart'+keyproduct+'" datainternal-id="'+valproduct.product_price+'">'+numberFormat(valproduct.product_price)+'</div>';
+                                listElement += '        </div>';
+                                listElement += '        <div class="aligner">';
+                                listElement += '            <span class="deleteCart" id="deleteCart'+keyproduct+'" datainternal-id="'+valproduct.product_id+'"><img src="/img/note-delete.png"/> Hapus</span>';
+                                listElement += '        </div>';
+                                listElement += '    </div>';
+                                listElement += '    <div class="detail-shopping-body-content2">';
+                                if(parseInt(valproduct.cart_sumproduct) === 1){
+                                    listElement += '        <div class="minCart" id="productmincart'+keyproduct+'">';
+                                    listElement += '            <button style="opacity:0.5;" disabled>-</button>';
+                                    listElement += '        </div>';
+                                }else{
+                                    listElement += '        <div class="minCart" id="productmincart'+keyproduct+'">';
+                                    listElement += '            <button>-</button>';
+                                    listElement += '        </div>';
+                                }
+                                listElement += '        <div class="inputSumCartTemp">';
+                                listElement += '            <input type="text" class="sumProduct" id="sumProductCart'+keyproduct+'" datainternal-id="'+valproduct.product_id+'" value="'+valproduct.cart_sumproduct+'" maxlength="3"/>';
+                                listElement += '        </div>';
+                                listElement += '        <div class="plusCart" id="productmaxcart'+keyproduct+'">';
+                                listElement += '            <button>+</button>';
+                                listElement += '        </div>';
+                                listElement += '    </div>';
+                                if(keyproduct == listlen_products){
+                                    listElement += '    <hr/>';
+                                    listElement += '    <div class="detail-shopping-body-content3">';
+                                    listElement += '        <div class="title cart">Deskripsi Barang</div>';
+                                    listElement += '        <div class="inputDesc">';
+                                    listElement += '            <textarea class="descProductCart" id="descProductCart'+key+'" placeholder="Contoh:Warna, Jenis, Ukuran" rows="7"></textarea>';
+                                    listElement += '        </div>';
+                                    listElement += '    </div>';
+                                    listElement += '    <div class="detail-shopping-body-content4">';
+                                    listElement += '        <div class="title cart">Kurir</div>';
+                                    listElement += '        <div class="inputDesc">';
+                                    listElement += '            <div class="select">';
+                                    listElement += '                <select class="senderProductCart" id="senderProductCart'+key+'">';
+                                    var delivery_id = '0';
+                                    var delivery_idflag = 0;
+                                    $.each( list_delivery, function( keydelivery, valdelivery ) {
+                                        if(delivery_idflag === 0)delivery_id = valdelivery.delivery_id;
+                                        listElement += '        <option value="'+valdelivery.delivery_id+'">'+valdelivery.delivery_name+'</option>';
+                                        delivery_idflag++;
+                                    });
+                                    listElement += '                </select>';
+                                    listElement += '            </div>';
+                                    listElement += '            <div>';
+                                    listElement += '                <span class="senderPriceProductCart">Rp 18.000</span>';
+                                    listElement += '            </div>';
+                                    listElement += '        </div>';
+                                    listElement += '    </div>';
+                                }
+                                listElement += '</div>';
+                                
+                                totalPrice = totalPrice + (valproduct.product_price * valproduct.cart_sumproduct);
+                                var price = senderPriceCart(delivery_id).toString();
+                                
+                                $('#sumProductSummaryCart').html(numberFormat(price));
+                                var totalPriceCart = valproduct.cart_sumproduct * parseInt(totalPrice);
+                                var totalShoppingCart = totalPriceCart + senderPriceCart(delivery_id);
+                                        
+                                $('.totalPriceCart').html(numberFormat(totalPriceCart.toString()));
+                                $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                            });
+                            listElement += '</div>';
+                        });
+                        
+                        $(".detail-shopping-body").html(listElement);
+                        $('.loaderProgress').addClass('hidden');
+                        $('body').removeClass('hiddenoverflow');
+                        
+                        $.each( response, function( key, val ) {
+                            $('#shopcart'+key).on('click', function (e) {
+                                if ($(this).prop("checked")) {
+                                    $('.productcart'+key).prop("checked",true);
+                                }else{
+                                    $('.productcart'+key).prop("checked",false);
+                                }
+                            });
+                            $('.productcart'+key).on('click', function (e) {
+                                var chkproduct = $(this),
+                                    chkproductLen = chkproduct.length;
+                                $('#shopcart'+key).prop("checked",false);
                                     
-                            $('.totalPriceCart').html(numberFormat(totalPriceCart.toString()));
-                            $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                                for(var i = 0; i < chkproductLen; i++){
+                                    if($(chkproduct[i]).prop("checked")){
+                                        $('#shopcart'+key).prop("checked",true);
+                                    }
+                                }
+                            });
+                            $.each( val.products, function( keyproduct, valproduct ) {
+                                $('#productmincart'+keyproduct).on('click', function (e) {
+                                    cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val()) - 1;
+                                    minCart(cartNgulikin);
+                                    $('#sumProductCart'+keyproduct).val(cartNgulikin);
+                                    
+                                    var totalsumcart = 0;
+                                    $(".inputSumCartTemp input").each(function(key,val) {
+                                        var sumcartval = parseInt($(this).val()) * parseInt($('#productPriceCart'+key).attr('datainternal-id'));
+                                        totalsumcart = totalsumcart + sumcartval;
+                                    });
+                                    var totalPriceCart = cartNgulikin * parseInt(totalPrice);
+            
+                                    var totalShoppingCart = totalsumcart + senderPriceCart($('#senderProductCart'+key).val());
+                                        
+                                    $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
+                                    $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                                    
+                                    updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
+                                    updateProduct.sum = cartNgulikin;
+                                    
+                                    updateCartProduct();
+                                });
+                                
+                                $('#productmaxcart'+keyproduct).on('click', function (e) {
+                                    cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val()) + 1;
+                                    
+                                    if(cartNgulikin > 123){
+                                        cartNgulikin = 123;
+                                        $(this).val(cartNgulikin);
+                                    }
+                                    
+                                    $('#productmincart'+keyproduct+' button').prop('disabled',false);
+                                    $('#productmincart'+keyproduct+' button').css('opacity','1');
+                                    $('#sumProductCart'+keyproduct).val(cartNgulikin);
+                                    
+                                    var totalsumcart = 0;
+                                    $(".inputSumCartTemp input").each(function(key,val) {
+                                        var sumcartval = parseInt($(this).val()) * parseInt($('#productPriceCart'+key).attr('datainternal-id'));
+                                        totalsumcart = totalsumcart + sumcartval;
+                                    });
+                                    var totalPriceCart = cartNgulikin * parseInt(totalPrice);
+            
+                                    var totalShoppingCart = totalsumcart + senderPriceCart($('#senderProductCart'+key).val());
+                                        
+                                    $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
+                                    $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                                    
+                                    updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
+                                    updateProduct.sum = cartNgulikin;
+                                    
+                                    updateCartProduct();
+                                });
+                                
+                                $('#sumProductCart'+keyproduct).on('change', function (e) {
+                                    if($(this).val() == ''){
+                                        $(this).val(1);
+                                    }
+                                    
+                                    if(parseInt($(this).val()) > 123){
+                                        $(this).val(123);
+                                    }
+                                    cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val());
+                                    minCart(cartNgulikin);
+                                    
+                                    var totalsumcart = 0;
+                                    $(".inputSumCartTemp input").each(function(key,val) {
+                                        var sumcartval = parseInt($(this).val()) * parseInt($('#productPriceCart'+key).attr('datainternal-id'));
+                                        totalsumcart = totalsumcart + sumcartval;
+                                    });
+                                    var totalPriceCart = cartNgulikin * parseInt(totalPrice);
+            
+                                    var totalShoppingCart = totalsumcart + senderPriceCart($('#senderProductCart'+key).val());
+                                        
+                                    $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
+                                    $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                                    
+                                    updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
+                                    updateProduct.sum = cartNgulikin;
+                                    
+                                    updateCartProduct();
+                                });
+                                
+                                $('#sumProductCart'+keyproduct).keydown(function (e) {
+                                    // Allow: backspace, delete, tab, escape, enter and .
+                                    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                                         // Allow: Ctrl/cmd+A
+                                        (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                                         // Allow: Ctrl/cmd+C
+                                        (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+                                         // Allow: Ctrl/cmd+X
+                                        (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+                                         // Allow: home, end, left, right
+                                        (e.keyCode >= 35 && e.keyCode <= 39)) {
+                                             // let it happen, don't do anything
+                                             return;
+                                    }
+                                    // Ensure that it is a number and stop the keypress
+                                    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                                        e.preventDefault();
+                                    }
+                                });
+                                
+                                $('#deleteCart'+keyproduct).on('click', function (e) {
+                                    var productid = $(this).attr('datainternal-id');
+                                    $.confirm({
+                                        title: 'Konfirmasi',
+                                        icon: 'fa fa-warning',
+                                        content: 'Yakin dihapus?',
+                                        buttons: {
+                                            ya: function () {
+                                                cartData.product_id = productid;
+                                                deletecartProduct();
+                                            },
+                                            tidak: function () {
+                                            }
+                                        }
+                                    });
+                                });    
+                            });
                         });
-                        listElement += '</div>';
-                    });
-                    
-                    $(".detail-shopping-body").html(listElement);
-                    $('.loaderProgress').addClass('hidden');
-                    $('body').removeClass('hiddenoverflow');
-                    
-                    $.each( response, function( key, val ) {
-                        $('#shopcart'+key).on('click', function (e) {
-                            if ($(this).prop("checked")) {
-                                $('.productcart'+key).prop("checked",true);
-                            }else{
-                                $('.productcart'+key).prop("checked",false);
-                            }
+                        
+                        $('#senderProductCart').on('change', function (e) {
+                            var price = senderPriceCart($(this).val()).toString();
+                            $('.senderPriceProductCart').html(numberFormat(price));
+                            $('#sumProductSummaryCart').html(numberFormat(price));
+                            
+                            totalCartText(cartNgulikin,totalPrice,$(this).val());
                         });
-                        $('.productcart'+key).on('click', function (e) {
-                            var chkproduct = $(this),
+                        
+                        $('.detail-summary-footer').on('click', function (e) {
+                            var chkproduct = $(".chkproduct"),
+                                chkproductList = '',
                                 chkproductLen = chkproduct.length;
-                            $('#shopcart'+key).prop("checked",false);
                                 
                             for(var i = 0; i < chkproductLen; i++){
                                 if($(chkproduct[i]).prop("checked")){
-                                    $('#shopcart'+key).prop("checked",true);
-                                }
-                            }
-                        });
-                        $.each( val.products, function( keyproduct, valproduct ) {
-                            $('#productmincart'+keyproduct).on('click', function (e) {
-                                cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val()) - 1;
-                                minCart(cartNgulikin);
-                                $('#sumProductCart'+keyproduct).val(cartNgulikin);
-                                
-                                var totalsumcart = 0;
-                                $(".inputSumCartTemp input").each(function(key,val) {
-                                    var sumcartval = parseInt($(this).val()) * parseInt($('#productPriceCart'+key).attr('datainternal-id'));
-                                    totalsumcart = totalsumcart + sumcartval;
-                                });
-                                var totalPriceCart = cartNgulikin * parseInt(totalPrice);
-        
-                                var totalShoppingCart = totalsumcart + senderPriceCart($('#senderProductCart'+key).val());
-                                    
-                                $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
-                                $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
-                                
-                                updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
-                                updateProduct.sum = cartNgulikin;
-                                
-                                updateCartProduct();
-                            });
-                            
-                            $('#productmaxcart'+keyproduct).on('click', function (e) {
-                                cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val()) + 1;
-                                
-                                if(cartNgulikin > 123){
-                                    cartNgulikin = 123;
-                                    $(this).val(cartNgulikin);
-                                }
-                                
-                                $('#productmincart'+keyproduct+' button').prop('disabled',false);
-                                $('#productmincart'+keyproduct+' button').css('opacity','1');
-                                $('#sumProductCart'+keyproduct).val(cartNgulikin);
-                                
-                                var totalsumcart = 0;
-                                $(".inputSumCartTemp input").each(function(key,val) {
-                                    var sumcartval = parseInt($(this).val()) * parseInt($('#productPriceCart'+key).attr('datainternal-id'));
-                                    totalsumcart = totalsumcart + sumcartval;
-                                });
-                                var totalPriceCart = cartNgulikin * parseInt(totalPrice);
-        
-                                var totalShoppingCart = totalsumcart + senderPriceCart($('#senderProductCart'+key).val());
-                                    
-                                $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
-                                $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
-                                
-                                updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
-                                updateProduct.sum = cartNgulikin;
-                                
-                                updateCartProduct();
-                            });
-                            
-                            $('#sumProductCart'+keyproduct).on('change', function (e) {
-                                if($(this).val() == ''){
-                                    $(this).val(1);
-                                }
-                                
-                                if(parseInt($(this).val()) > 123){
-                                    $(this).val(123);
-                                }
-                                cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val());
-                                minCart(cartNgulikin);
-                                
-                                var totalsumcart = 0;
-                                $(".inputSumCartTemp input").each(function(key,val) {
-                                    var sumcartval = parseInt($(this).val()) * parseInt($('#productPriceCart'+key).attr('datainternal-id'));
-                                    totalsumcart = totalsumcart + sumcartval;
-                                });
-                                var totalPriceCart = cartNgulikin * parseInt(totalPrice);
-        
-                                var totalShoppingCart = totalsumcart + senderPriceCart($('#senderProductCart'+key).val());
-                                    
-                                $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
-                                $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
-                                
-                                updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
-                                updateProduct.sum = cartNgulikin;
-                                
-                                updateCartProduct();
-                            });
-                            
-                            $('#sumProductCart'+keyproduct).keydown(function (e) {
-                                // Allow: backspace, delete, tab, escape, enter and .
-                                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-                                     // Allow: Ctrl/cmd+A
-                                    (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-                                     // Allow: Ctrl/cmd+C
-                                    (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
-                                     // Allow: Ctrl/cmd+X
-                                    (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
-                                     // Allow: home, end, left, right
-                                    (e.keyCode >= 35 && e.keyCode <= 39)) {
-                                         // let it happen, don't do anything
-                                         return;
-                                }
-                                // Ensure that it is a number and stop the keypress
-                                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                                    e.preventDefault();
-                                }
-                            });
-                            
-                            $('#deleteCart'+keyproduct).on('click', function (e) {
-                                var productid = $(this).attr('datainternal-id');
-                                $.confirm({
-                                    title: 'Konfirmasi',
-                                    icon: 'fa fa-warning',
-                                    content: 'Yakin dihapus?',
-                                    buttons: {
-                                        ya: function () {
-                                            cartData.product_id = productid;
-                                            deletecartProduct();
-                                        },
-                                        tidak: function () {
-                                        }
+                                    if(chkproductList === ''){
+                                        chkproductList += $(chkproduct[i]).attr('datainternal-id');
+                                    }else{
+                                        chkproductList += ','+$(chkproduct[i]).attr('datainternal-id');
                                     }
-                                });
-                            });    
-                        });
-                    });
-                    
-                    $('#senderProductCart').on('change', function (e) {
-                        var price = senderPriceCart($(this).val()).toString();
-                        $('.senderPriceProductCart').html(numberFormat(price));
-                        $('#sumProductSummaryCart').html(numberFormat(price));
-                        
-                        totalCartText(cartNgulikin,totalPrice,$(this).val());
-                    });
-                    
-                    $('.detail-summary-footer').on('click', function (e) {
-                        var chkproduct = $(".chkproduct"),
-                            chkproductList = '',
-                            chkproductLen = chkproduct.length;
-                            
-                        for(var i = 0; i < chkproductLen; i++){
-                            if($(chkproduct[i]).prop("checked")){
-                                if(chkproductList === ''){
-                                    chkproductList += $(chkproduct[i]).attr('datainternal-id');
-                                }else{
-                                    chkproductList += ','+$(chkproduct[i]).attr('datainternal-id');
                                 }
                             }
-                        }
+                            
+                            if($('.isSignin').val() !== '1'){
+                                notif("error","Harap login terlebih dahulu","right","top");
+                            }else if(chkproductList === ''){
+                                notif("error","Pilih salah satu produk yang ingin dibeli","right","top");
+                            }else if($('#addressId').val() === ''){
+                                notif("error","Pilih alamat terlebih dahulu","right","top");
+                            }else{
+                                chosenProduct.listproduct = chkproductList;
+                                chosenCart();
+                            }    
+                        });
                         
-                        if($('.isSignin').val() !== '1'){
-                            notif("error","Harap login terlebih dahulu","right","top");
-                        }else if(chkproductList === ''){
-                            notif("error","Pilih salah satu produk yang ingin dibeli","right","top");
-                        }else if($('#addressId').val() === ''){
-                            notif("error","Pilih alamat terlebih dahulu","right","top");
-                        }else{
-                            chosenProduct.listproduct = chkproductList;
-                            chosenCart();
-                        }    
-                    });
-                    
-                    $('#chooseallCart').on('click', function (e) {
-                        if ($(this).prop("checked")) {
-                            $('.chooseProductCart').prop("checked",true);
-                        }else{
-                            $('.chooseProductCart').prop("checked",false);
-                        }
-                    });
+                        $('#chooseallCart').on('click', function (e) {
+                            if ($(this).prop("checked")) {
+                                $('.chooseProductCart').prop("checked",true);
+                            }else{
+                                $('.chooseProductCart').prop("checked",false);
+                            }
+                        });
+                    }else{
+                        var listElement = '<div id="cart-emptylist">';
+                            listElement += '    <div class="grid-cart-header">Detail Belanja</div>';
+                            listElement += '    <div class="grid-cart-body"></div>';
+                            listElement += '    <div class="grid-cart-footer">';
+                            listElement += '        <div>Keranjang kosong</div>';
+                            listElement += '    </div>';
+                            listElement += '</div>';
+                        
+                        $('.cart-detail').html(listElement);
+                        $('.loaderProgress').addClass('hidden');
+                        $('body').removeClass('hiddenoverflow');
+                    }
                 }else{
                     generateToken("detailCart");
                 }

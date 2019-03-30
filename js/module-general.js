@@ -47,9 +47,9 @@ function initGeneral(){
     	    templatePopUpShop += '          <li class="listShopMenu">';
     	    templatePopUpShop += '              <a onclick="mysalesShopClick()">Penjualanku</a>';
     	    templatePopUpShop += '          </li>';
-    	    templatePopUpShop += '          <li class="listShopMenu">';
+    	    /*templatePopUpShop += '          <li class="listShopMenu">';
     	    templatePopUpShop += '              <a onclick="incomeShopClick()">Penghasilanku</a>';
-    	    templatePopUpShop += '          </li>';
+    	    templatePopUpShop += '          </li>';*/
     	    templatePopUpShop += '          <li class="listShopMenu">';
     	    templatePopUpShop += '              <a onclick="settingShopClick()">Pengaturan Toko</a>';
     	    templatePopUpShop += '          </li>';
@@ -348,18 +348,19 @@ function bubbleNotif(){
                                 templatePopUpNotif += '</div>';
                             });
                             templatePopUpNotif += '</div>';
-                            templatePopUpNotif += '<div class="bubble-cart-button">';
-                            templatePopUpNotif += '     <input type="button" value="Lihat Notifikasi" onclick="notifClick()"/>';
-                            templatePopUpNotif += '</div>';
                         }else{
                             templatePopUpNotif += '<div class="no-notif">';
     	                    templatePopUpNotif += '     <img src="/img/no-notif.png" width="120" height="100"/>';
     	                    templatePopUpNotif += '     <span>Tidak ada notifikasi</span>';
     	                    templatePopUpNotif += '</div>';
                         }
+                        templatePopUpNotif += '     <div class="bubble-cart-button">';
+                        templatePopUpNotif += '         <input type="button" value="Lihat Notifikasi" onclick="notifClick()"/>';
+                        templatePopUpNotif += '     </div>';
                         templatePopUpNotif += '  </div>';
                         templatePopUpNotif += '</div>';
                 	
+                	$("#sumNotif").html(data.result.length);
                 	$("#iconNotifHeader").popover('destroy');
                 	$('#iconNotifHeader').popover({
                       placement: 'bottom',

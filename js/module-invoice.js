@@ -7,9 +7,6 @@ function initInvoice(){
     var currurl = window.location.href,
         invoiceno = currurl.substr(currurl.lastIndexOf('/') + 1);
     
-    $('.loaderProgress').addClass('hidden');
-    $('body').removeClass('hiddenoverflow');
-    
     $(".rateyo").rateYo({rating: 4,readOnly: true,starWidth : "15px",normalFill: "white", spacing   : "10px"});
     
     $( ".detail-invoice-footer" ).click(function() {
@@ -51,7 +48,9 @@ function detailInvoice(){
                         $('.grid-invoice-container:last-child').removeClass('hidden');
                         
                         var response = data.result.shops,
-                            listElement = '';
+                            listElement = '',
+                            sum_product_price = 0,
+                            sum_delivery_price = 0;
                         
                         $.each( response, function( key, val ) {
                             var list_products = val.products,
@@ -66,6 +65,8 @@ function detailInvoice(){
                                 listElement += '        </div>';
                                 listElement += '        <div class="detail-invoice-shopname">'+val.shop_name+'</div>';
                                 listElement += '    </div>';
+                                
+                                sum_delivery_price = sum_delivery_price + val.delivery_price;
                             $.each( list_products, function(keyproduct , valproduct ) {
                                     
                                 listElement += '    <div class="detail-invoice-body">';
@@ -116,6 +117,7 @@ function detailInvoice(){
                                 listElement += '        </div>';
                                 listElement += '    </div>';
                                 
+                                sum_product_price = sum_product_price + valproduct.price;
                             });
                             listElement += '</div>';
                         });
@@ -124,6 +126,13 @@ function detailInvoice(){
                         $('.data_receiver_invoice span:nth-child(2)').html('<img src="/img/marker.png"> '+data.result.address);
                         $('.data_receiver_invoice span:nth-child(3)').html('<img src="/img/hp.png"> '+data.result.phone);
                         $('.data_receiver_invoice span:last-child').html('<img src="/img/envelope.png"> '+data.result.email);
+                        
+                        $('#sum_product_price').html(numberFormat(sum_product_price));
+                        $('#sum_delivery_price').html(numberFormat(sum_delivery_price));
+                        $('#sum_delivery_price').html(numberFormat(sum_delivery_price));
+                        
+                        var total_price = sum_product_price + sum_delivery_price;
+                        $('#invoice_last_paiddate').html(data.result.invoice_last_paiddate_letter);
                         
                         $.each( response, function( key, val ) {
                             var list_products = val.products;
@@ -134,6 +143,8 @@ function detailInvoice(){
                         
                         countDown(data.result.invoice_last_paiddate);
                     }
+                    $('.loaderProgress').addClass('hidden');
+                    $('body').removeClass('hiddenoverflow');
                 }else{
                     generateToken("detailInvoice");
                 }

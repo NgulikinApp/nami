@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="filterMysales">
-        <input type="text" id="filterMysalesDate" data-inline="false" data-role="date" placeholder="Tanggal"/>
+        <input type="text" class="filterMysalesDate" data-inline="false" data-role="date" placeholder="Tanggal"/>
     </div>
     <div class="filterMysales">
         <div class="select mysalesSender">
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="filterMysales search">
-        <input type="text" id="filterMysalesInput" placeholder="Nama Pembeli / Nomor Invoice"/>
+        <input type="text" class="filterMysalesInput" placeholder="Nama Pembeli / Nomor Invoice"/>
         <div id="search-mysalesorder"></div>
     </div>
 </div>

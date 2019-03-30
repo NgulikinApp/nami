@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="filterMysales search">
-        <input type="text" id="filterMysalesInput" placeholder="Nama Pembeli / Nomor Invoice / Nomor Resi" style="width:250px;"/>
+        <input type="text" class="filterMysalesInput" placeholder="Nama Pembeli / Nomor Invoice / Nomor Resi" style="width:250px;"/>
         <div id="search-mysalesorder"></div>
     </div>
 </div>

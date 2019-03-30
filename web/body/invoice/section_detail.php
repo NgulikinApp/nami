@@ -16,7 +16,7 @@
             </div>
             <div class="grid">
                 <div class="head">NOMOR TAGIHAN</div>
-                <div class="body">AAAA BBB CCC GG</div>
+                <div class="body"><?php echo $noinvoice; ?></div>
             </div>
             <hr class="line_invoice"/>
             <div class="grid">
@@ -31,24 +31,19 @@
             </div>
             <hr class="line_invoice"/>
             <div class="grid">
-                <div class="head">TOTAL PEMBAYARAN</div>
-                <div class="body">Rp 1.018.000</div>
-            </div>
-            <hr class="line_invoice"/>
-            <div class="grid">
                 <div class="head">RINCIAN PEMBAYARAN</div>
                 <div class="body">
                     <div>
-                        <span class="detail_payment_invoice_left">Harga Barang</span>
-                        <span class="detail_payment_invoice_right">Rp 1.000.000</span>
+                        <span class="detail_payment_invoice_left">Jumlah Harga Barang</span>
+                        <span class="detail_payment_invoice_right" id="sum_product_price">Rp 1.000.000</span>
                     </div>
                     <div>
-                        <span class="detail_payment_invoice_left">Biaya Pengiriman</span>
-                        <span class="detail_payment_invoice_right">Rp 18.000</span>
+                        <span class="detail_payment_invoice_left">Jumlah Biaya Pengiriman</span>
+                        <span class="detail_payment_invoice_right" id="sum_delivery_price">Rp 18.000</span>
                     </div>
                     <div>
                         <span class="detail_payment_invoice_left">Total Belanja</span>
-                        <span class="detail_payment_invoice_right">Rp 1.018.000</span>
+                        <span class="detail_payment_invoice_right" id="total_price">Rp 1.018.000</span>
                     </div>
                 </div>
             </div>
@@ -67,7 +62,7 @@
             <div>Batas Waktu Pembayaran</div>
             <div id="status_invoice">MENUNGGU PEMBAYARAN</div>
             <div id="countdown_invoice">12 jam : 45 menit : 50 detik</div>
-            <div>Paling lambat jumat, 23 September 2017 24.00 WIB</div>
+            <div>Paling lambat <span id="invoice_last_paiddate"></span></div>
         </div>
     </div>
 </div>

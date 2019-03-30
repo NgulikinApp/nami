@@ -7,7 +7,7 @@
     </div>
     <div class="textFilterShopSeller filterMysales">Filter</div>
     <div class="filterMysales">
-        <input type="text" id="filterMysalesDate" data-inline="false" data-role="date" placeholder="Tanggal"/>
+        <input type="text" id="filterConfirmOrderDate" class="filterMysalesDate" data-inline="false" data-role="date" placeholder="Tanggal"/>
     </div>
     <div class="filterMysales">
         <div class="select mysalesSender">
@@ -17,13 +17,13 @@
         </div>
     </div>
     <div class="filterMysales search">
-        <input type="text" id="filterMysalesInput" placeholder="Nama Pembeli / Nomor Invoice"/>
-        <div id="search-mysalesorder"></div>
+        <input type="text" id="filterConfirmOrderInvoice" class="filterMysalesInput" placeholder="Nama Pembeli / Nomor Invoice"/>
+        <div id="search-mysalesconfirm"></div>
     </div>
 </div>
 <div class="order">
     <div class="confirm-container">
-        <div class="grid">
+        <!--<div class="grid">
             <div class="leftCont">
                 <div class="head">PEMBELIAN OLEH</div>
                 <div class="body">
@@ -147,6 +147,6 @@ Kecamatan Duren Sawit, Kota Jakarta Timur DKI Jakarta, 13450
                 <div style="margin: 15px 10px 15px 50px;"><input type="radio" name="confirm" id="confirmcancel"/></div>
                 <div style="margin: 15px 0px;">Batal</div>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
