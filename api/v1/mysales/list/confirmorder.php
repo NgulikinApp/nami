@@ -65,7 +65,7 @@
             $sql = "SELECT 
                         invoice.invoice_id,
                         invoice_no,
-                        DATE_FORMAT(invoice_createdate, '%W, %d %M %Y') AS invoice_createdate,
+                        DATE_FORMAT(invoice_createdate, '%d-%m-%Y') AS invoice_createdate,
                         fullname,
                         username,
                         user_photo

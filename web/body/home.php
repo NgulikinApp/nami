@@ -34,6 +34,7 @@
         </div>
     </section>
     <section class="container store">
+        <div class="title">Toko Terbaru</div>
         <div class="grid-cont4">
             <div class="grid-chapter-cont4">
                 <img src="img/shopterbaru.png">
@@ -44,6 +45,7 @@
         </div>
     </section>
     <section class="container category">
+        <div class="title">Kategori</div>
         <div class="grid-cont8">
             <img src="img/loader.gif" class="loaderImg" id="loaderHomeCategory"/>
             <ul class="grid-list-cont8"></ul>

@@ -774,6 +774,14 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 /*End of Questioner Menu*/
 
 /*Home Content*/
+.store .title,.category .title{
+    font-family: proxima_nova_ltsemibold;
+    font-size: 15px;
+    text-align: center;
+    border-top: 1px solid #DFDFDF;
+    border-bottom: 1px solid #DFDFDF;
+    padding: 15px;
+}
 .grid-cont1{
     height: 400px;
     background-color: #3FC3FF;
