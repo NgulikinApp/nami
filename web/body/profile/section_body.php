@@ -7,7 +7,7 @@
 	            <li id="changepasswordtab">Ubah Kata Sandi</li>
 	            <li id="transactiontab">Transaksi</li>
 	            <?php
-	                if(intval($_SESSION['user']["shop_id"]) == 0){
+	                if(intval(@$_SESSION['user']["shop_id"]) == 0){
 	            ?>  
 	                    <li id="createshoptab">Buat Toko</li>
 	            <?php
@@ -21,7 +21,7 @@
 	            include 'myaaccount/index.php';
 	            include 'section_changepassword.php';
 	            include 'section_transaction.php';
-	            if(intval($_SESSION['user']["shop_id"]) == 0){
+	            if(intval(@$_SESSION['user']["shop_id"]) == 0){
 	                include 'section_createshop.php';
 	        ?>
 	        <?php

@@ -5062,7 +5062,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     background: #004E81;
     color:#FFF;
 }
-.order-container .grid .detail,.order-container .grid .detail .left,.order-container .grid .detail .right{
+.order-container .grid .detail,.order-container .grid .detail .left,.order-container .grid .detail .right,.confirm-container .grid .detail,.confirm-container .grid .detail .left,.confirm-container .grid .detail .right{
     display:inline-block;
 }
 .order-container.right .grid:first-child .detail:last-child{
@@ -5108,18 +5108,18 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     border: 0;
     vertical-align: super;
 }    
-.order-container .grid .detail{
+.order-container .grid .detail,.confirm-container .grid .detail{
     width: 22%;
     margin: 10px;
     border-right: 1px solid #DFDFDF;
 }
-.order-container .grid .detail:last-child{
+.order-container .grid .detail:last-child,.confirm-container .grid .detail:last-child{
     border:0px;
 }
-.order-container .grid .detail.bluesky{
+.order-container .grid .detail.bluesky,.confirm-container .grid .detail.bluesky{
     vertical-align: 10px;
 }
-.order-container .grid button{
+.order-container .grid button,.confirm-container .grid button{
     color: #FFF;
     float: right;
     border-radius: 5px;
@@ -5129,7 +5129,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     margin: 5px 10px;
     width: 180px;
 }
-.order-container img{
+.order-container img,.confirm-container img{
     margin: 5px 15px 0px 0px;
     vertical-align: inherit;
     width: 30px;
@@ -5359,21 +5359,11 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     width:29%;
     padding: 0px 25px;
 }
-.confirm-container .grid:last-child .left,.confirm-container .grid:last-child .right,.confirm-container .grid:last-child .right.confirm div{
-    float:left;
-}
-.confirm-container .grid:last-child .left{
-    width:70%;
-}
 .confirm-container .grid:last-child .left .detail{
     width: 49%;
     display: inline-block;
     text-align: center;
     padding: 15px;
-}
-.confirm-container .grid:last-child .right{
-    width:29%;
-    color: #807F7F;
 }
 .status-container .grid{
     display:block;

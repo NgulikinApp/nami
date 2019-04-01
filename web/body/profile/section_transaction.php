@@ -3,10 +3,10 @@
     <div class="filterMyprofileTransaction">
         <div class="filterMysales textFilterShopSeller">Filter</div>
         <div class="filterMysales">
-            <input type="text" id="filterMysalesDate" data-inline="false" data-role="date" placeholder="Tanggal"/>
+            <input type="text" id="filterMysalesDate" class="filterMysalesDate" data-inline="false" data-role="date" placeholder="Tanggal"/>
         </div>
         <div class="filterMysales search">
-            <input type="text" id="filterMysalesInput" placeholder="Nama Pembeli / Nomor Invoice"/>
+            <input type="text" id="filterMysalesInput" class="filterMysalesInput" placeholder="Nama Pembeli / Nomor Invoice"/>
             <div id="search-transaction"></div>
         </div>
     </div>

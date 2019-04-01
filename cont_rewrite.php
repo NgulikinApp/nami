@@ -61,8 +61,11 @@
 				    switch (@$routes[2]) {
 				        case 'detail':
 							switch (@$routes[3]) {
+							    case 'an':
+        							include('api/v1/mysales/detail/actionneworder.php');
+        						break;
 							    case 'c':
-        							include('api/v1/mysales/list/confirmorder.php');
+        							include('api/v1/mysales/detail/confirmorder.php');
         						break;
 							    case 's':
         							include('api/v1/mysales/detail/statussending.php');

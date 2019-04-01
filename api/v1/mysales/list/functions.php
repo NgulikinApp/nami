@@ -47,15 +47,18 @@
         $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6);
     
         while($stmt->fetch()){
+            $datearray = explode('-', $col3);
+            $date = $datearray[0]." ".month($datearray[1])." ".$datearray[2];
+            
             if($col6 != "no-photo.jpg"){
                 $user_photo = IMAGES_URL.'/'.urlencode(base64_encode($col5.'/'.$col6));
             }else{
-                $user_photo = INIT_URL."/img/".$col7;
+                $user_photo = INIT_URL."/img/".$col6;
             }
             $data[] = array(
                     "invoice_id" => $col1,
                     "invoice_no" => $col2,
-                    "invoice_createdate" => $col3,
+                    "invoice_createdate" => $date,
                     "fullname" => $col4,
                     "user_photo" => $user_photo
                 );

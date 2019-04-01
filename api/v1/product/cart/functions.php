@@ -102,12 +102,12 @@
                     
                     $totalproduct++;
                     $dataProduct[] = array(
-                              "product_id" => $product_idarray[$i],
+                              "product_id" => intval($product_idarray[$i]),
                               "brand_name" => $brand_namearray[$i],
                               "product_name" => $product_namearray[$i],
                               "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($col5.'/product/'.$product_imagearray[$i])),
                               "product_price" => $product_pricearray[$i],
-                              "cart_sumproduct" => $cart_sumproductarray[$i],
+                              "cart_sumproduct" => intval($cart_sumproductarray[$i]),
                               "cart_createdate" => $cart_adddatearray[$i]
                             );
                 }
@@ -154,12 +154,12 @@
                     {
                         $totalproduct++;
                         $dataProduct[] = array(
-                                  "product_id" => $product_idarray[$i],
+                                  "product_id" => intval($product_idarray[$i]),
                                   "brand_name" => $brand_namearray[$i],
                                   "product_name" => $product_namearray[$i],
                                   "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($row["username"].'/product/'.$product_imagearray[$i])),
                                   "product_price" => $product_pricearray[$i],
-                                  "cart_sumproduct" => $dataArray[$i]['sum'],
+                                  "cart_sumproduct" => intval($dataArray[$i]['sum']),
                                   "cart_createdate" => $dataArray[$i]['date']
                                 );
                     }

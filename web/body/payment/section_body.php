@@ -158,7 +158,7 @@
                     </div>
                 </div>
                 <div class="detail-totalPayment-footer">
-                    Sudah Transfer / Bayar
+                    Pilih
                 </div>
             </div>
         </div>

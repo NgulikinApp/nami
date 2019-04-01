@@ -1,3 +1,5 @@
+var neworderData = {};
+
 $( document ).ready(function() {
     initGeneral();
     initShopMysales();
@@ -191,7 +193,7 @@ function neworder(){
                         $.each( data.result, function( key, val ) {
                             neworder += '<div class="grid">';
                             neworder += '   <div class="detail">';
-                            neworder += '       <input type="checkbox" class="newordermysales" data-id="'+val.invoice_id+'"/>';
+                            neworder += '       <input type="checkbox" id="neworderchk'+key+'" class="newordermysales" value="'+val.invoice_id+'"/>';
                             neworder += '   </div>';
                             neworder += '   <div class="detail">';
                             neworder += '       <div class="left">';
@@ -230,11 +232,65 @@ function neworder(){
                     }
                     
                     $('.order-container').html(neworder);
+                    
+                    $('#newordersave').on( 'click', function( e ){
+                        neworderData.action = "confirm";
+                        actionneworder();
+                    });
+                    
+                    $('#newordercancel').on( 'click', function( e ){
+                        neworderData.action = "cancel";
+                        actionneworder();
+                    });
                 }else{
                     generateToken("neworder");
                 }
             }
         });    
+    }
+}
+
+function actionneworder(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken("actionneworder");
+    }else{
+        var chkproduct = $('.newordermysales'),
+            chkproductLen = chkproduct.length,
+            listinvoice_id = "";
+                                    
+            for(var i = 0; i < chkproductLen; i++){
+                if($(chkproduct[i]).prop("checked")){
+                    if(listinvoice_id === ""){
+                        listinvoice_id = $('#neworderchk'+i).val();
+                    }else{
+                        listinvoice_id += ','+$('#neworderchk'+i).val();
+                    }
+                }
+            }
+        $.ajax({
+            type: 'POST',
+            url: MYSALES_ACTIONNEWORDER_API,
+            data:JSON.stringify({ 
+                    listinvoice_id: listinvoice_id,
+                    action:neworderData.action
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(result) {
+                if(result.message == 'Invalid credential' || result.message == 'Token expired'){
+                    generateToken("actionneworder");
+                }else{
+                    neworder();
+                    if(neworderData.action === "confirm"){
+                        notif("info","Produk diproses","center","top");
+                    }else{
+                        notif("info","Produk dibatalkan","center","top");
+                    }
+                }
+            } 
+        });
     }
 }
 
