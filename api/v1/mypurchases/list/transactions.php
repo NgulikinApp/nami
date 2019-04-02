@@ -64,7 +64,10 @@
             $sql = "SELECT 
 						invoice_no,
                         IFNULL(DATE_FORMAT(invoice_createdate, '%d %M %Y'),'') AS transaction_date,
-                        status_name,
+                        CASE
+							WHEN invoice_current_status = 1 AND DATEDIFF(CAST(NOW() AS DATE),CAST(invoice_last_paiddate AS DATE)) > 0 THEN 'Kadaluarsa'
+							ELSE status_name
+						END AS status_name,
                         product_name,
                         SUBSTRING_INDEX(product_image,',',1) AS product_image,
                         username,

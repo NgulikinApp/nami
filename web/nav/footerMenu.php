@@ -3,10 +3,13 @@
         <div class="footer">
             <div class="footer-body">
                 <div class="footer-body-left">
+                    <img src="img/footerlogo.png">
+                </div>
+                <div class="footer-body-mid1">
                     <h3>NGULIKIN</h3>
                     <ul></ul>
                 </div>
-                <div class="footer-body-mid1">
+                <div class="footer-body-mid2">
                     <h3>GABUNG NGULIKERS INDONESIA</h3>
                     <ul>
                         <li>Cara Gabung Ngulikers</li>
@@ -14,7 +17,7 @@
                         <li>Bikin Toko</li>
                     </ul>
                 </div>
-                <div class="footer-body-mid2">
+                <div class="footer-body-mid3">
                     <h3>BANTUAN</h3>
                     <ul>
                         <li class="about-us">Tentang Kami</li>

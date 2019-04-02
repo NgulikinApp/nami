@@ -456,7 +456,7 @@ function bindCategoryProduct(data){
     $('#loaderHomeCategory').addClass('hidden');
     $(".grid-list-cont8").html(listcategory);
     $(".menu-category-sub-menu").html(listcategoryMain);
-    $(".footer-body-left ul").html(listcategoryFooter);
+    $(".footer-body-mid1 ul").html(listcategoryFooter);
                     
     $('.grid-listmiddle-cont8').on('click', function (e) {
         var categoryVal = $(this).data("category");
