@@ -5750,24 +5750,29 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     overflow:auto;
     font-family: proxima_nova_ltsemibold;
     border-bottom: 1px solid #4966f3;
+}
+.detail-invoiceshop-footer-detail{
+    overflow:auto;
+    font-family: proxima_nova_ltsemibold;
+    border-bottom: 1px solid #4966f3;
     margin-bottom: 15px;
 }
-.detail-invoice-footer-detail .grid{
+.detail-invoice-footer-detail .grid,.detail-invoiceshop-footer-detail .grid{
     display:block;
     color:#FFF;
     overflow: auto;
     padding: 10px 0px;
 }
-.detail-invoice-footer-detail .grid:not(:first-child){
+.detail-invoice-footer-detail .grid:not(:first-child),.detail-invoiceshop-footer-detail .grid:not(:first-child){
     border-top: 1px solid #4966f3;
 }
-.detail-invoice-footer-detail .grid .left{
+.detail-invoice-footer-detail .grid .left,.detail-invoiceshop-footer-detail .grid .left{
     float:left;
 }
 .detail-invoice-footer-detail .grid .left .invoice-sum{
     margin-left: 100px;
 }
-.detail-invoice-footer-detail .grid .right{
+.detail-invoice-footer-detail .grid .right,.detail-invoiceshop-footer-detail .grid .right{
     box-shadow: none;
     float:right;
     background-color: transparent;
