@@ -169,7 +169,7 @@ function detail(){
                         	$('#time_op_from').html('Jam '+sectohour(data.result.shop_op_from));
                         	$('#time_op_to').html('Jam '+sectohour(data.result.shop_op_to));
                         	
-                        	var shop_desc = (data.result.shop_desc !== '')?data.result.shop_desc !== '':'Tidak ada keterangan';
+                        	var shop_desc = (data.result.shop_description !== '')?data.result.shop_description:'Tidak ada keterangan';
                         	$('#note-seller-info').html(shop_desc);
                         	
                         	$('.note-footer span').html(data.result.shop_notes_modifydate);
