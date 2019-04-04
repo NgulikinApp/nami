@@ -190,6 +190,7 @@ function neworder(){
                 if(data.status == "OK"){
                     var neworder = '';
                     if(data.result.length){
+                        $('.newordersum').html(data.result.length).removeClass('hidden');
                         $.each( data.result, function( key, val ) {
                             neworder += '<div class="grid">';
                             neworder += '   <div class="detail">';
@@ -222,6 +223,7 @@ function neworder(){
                         neworder += '   <button id="newordersave" class="blueskyback">Proses pesanan</button>';
                         neworder += '</div>';
                     }else{
+                        $('.newordersum').addClass('hidden');
                         neworder += '<div id="cart-emptylist">';
                         neworder += '    <div class="grid-cart-header">Detail Invoice</div>';
                         neworder += '    <div class="grid-cart-body"></div>';

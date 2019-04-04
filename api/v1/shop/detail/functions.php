@@ -47,7 +47,7 @@
             
             $shop_image_location = array();
             if($col24 != ''){
-                $imageArray = explode(",",$col25);
+                $imageArray = explode(",",$col24);
                 $countImage = sizeof($imageArray);
                 for($i=0;$i<$countImage;$i++){
                     $image = IMAGES_URL.'/'.urlencode(base64_encode($col3.'/shop/notes/'.$imageArray[$i]));

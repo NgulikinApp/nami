@@ -4409,6 +4409,13 @@ input.radioPaymentOthers:empty ~ label:before{
     Shop seller page
 */
 
+.newordersum{
+    color: red;
+    bottom: 0;
+    position: absolute;
+    top: 2%;
+    right: 3%;
+}
 .container.shop-seller {
     padding: 0px;
 }
@@ -4429,6 +4436,7 @@ input.radioPaymentOthers:empty ~ label:before{
     border-bottom: 1px solid #DFDFDF;
 }
 .grid-shop-seller-menu div{
+    position: relative;
     display:inline-block;
     padding: 10px;
     color: #848484;

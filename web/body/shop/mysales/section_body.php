@@ -6,7 +6,7 @@
 	    <div class="grid-shop-seller-menu">
 	        <nav>
 	            <a>
-	                <div id="order-shop-seller" class="bluesky border-yellow">Pesanan baru</div>
+	                <div id="order-shop-seller" class="bluesky border-yellow">Pesanan baru<span class="newordersum">0</span></div>
 	            </a>
 	            <a>
 	                <div id="confirm-shop-seller">Konfirmasi Pengiriman</div>
