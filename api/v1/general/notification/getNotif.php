@@ -58,27 +58,28 @@
             }
             
             $sql = "SELECT 
-                        notification_id, 
-                        notification_desc,
-                        brand_name,
-                        product_image,
-                        DATE_FORMAT(notification_createdate, '%W, %d %M %Y') AS notification_createdate,
-                        username
+                        notifications_id, 
+                        notifications_desc,
+                        shop_icon,
+                        DATE_FORMAT(notifications_createdate, '%W, %d %M %Y') AS notifications_createdate,
+                        username,
+						data_id,
+						notifications_type,
+						notifications_title
                     FROM 
-                        notification
-                        LEFT JOIN cart ON notification.cart_id=cart.cart_id
-                        LEFT JOIN product ON product.product_id = cart.product_id
-                        LEFT JOIN brand ON product.brand_id = brand.brand_id
-                        LEFT JOIN shop ON shop.shop_id = brand.shop_id
-                        LEFT JOIN `user` ON `user`.user_id = shop.user_id
+                        notifications
+                        LEFT JOIN invoice ON invoice.invoice_no=notifications.data_id
+                        LEFT JOIN invoice_shop_detail ON invoice_shop_detail.invoice_id = invoice.invoice_id
+						LEFT JOIN shop ON shop.shop_id = invoice_shop_detail.shop_id
+						LEFT JOIN user ON user.user_id = shop.user_id
                     WHERE
-                        notification.user_id = ?";
+                        notifications.user_id = ?";
             
             if($keyword != ''){
-                $sql .= " AND notification_desc LIKE '%?%'";
+                $sql .= " AND notifications_desc LIKE '%?%'";
             }
             $sql .= " ORDER BY 
-                        notification_id DESC";
+                        notifications_id DESC";
             
             $stmt = $con->prepare($sql);
             

@@ -9,7 +9,7 @@
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8);
     
         while($stmt->fetch()){
             $datearray = explode('-', $col3);
@@ -25,7 +25,9 @@
                     "payment_name" => strtoupper($col2),
                     "invoice_createdate" => $date,
                     "fullname" => $col4,
-                    "user_photo" => $user_photo
+                    "user_photo" => $user_photo,
+                    "invoice_no" => $col7,
+                    "user_id" => $col8
                 );
         }
         /*

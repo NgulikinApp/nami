@@ -194,7 +194,7 @@ function neworder(){
                         $.each( data.result, function( key, val ) {
                             neworder += '<div class="grid">';
                             neworder += '   <div class="detail">';
-                            neworder += '       <input type="checkbox" id="neworderchk'+key+'" class="newordermysales" value="'+val.invoice_id+'"/>';
+                            neworder += '       <input type="checkbox" id="neworderchk'+key+'" class="newordermysales" value="'+val.invoice_id+'" datainternal-id="'+val.invoice_no+'" datauser-id="'+val.user_id+'"/>';
                             neworder += '   </div>';
                             neworder += '   <div class="detail">';
                             neworder += '       <div class="left">';
@@ -258,14 +258,20 @@ function actionneworder(){
     }else{
         var chkproduct = $('.newordermysales'),
             chkproductLen = chkproduct.length,
-            listinvoice_id = "";
+            listinvoice_id = "",
+            listinvoice_no = "",
+            listuser_id = "";
                                     
             for(var i = 0; i < chkproductLen; i++){
                 if($(chkproduct[i]).prop("checked")){
                     if(listinvoice_id === ""){
                         listinvoice_id = $('#neworderchk'+i).val();
+                        listinvoice_no = $('#neworderchk'+i).attr('datainternal-id');
+                        listuser_id = $('#neworderchk'+i).attr('datauser-id');
                     }else{
                         listinvoice_id += ','+$('#neworderchk'+i).val();
+                        listinvoice_no = $('#neworderchk'+i).attr('datainternal-id');
+                        listuser_id = $('#neworderchk'+i).attr('datauser-id');
                     }
                 }
             }
@@ -274,6 +280,8 @@ function actionneworder(){
             url: MYSALES_ACTIONNEWORDER_API,
             data:JSON.stringify({ 
                     listinvoice_id: listinvoice_id,
+                    listinvoice_no: listinvoice_no,
+                    listuser_id: listuser_id,
                     action:neworderData.action
             }),
             dataType: 'json',

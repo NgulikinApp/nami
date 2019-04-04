@@ -1,6 +1,6 @@
 <?php
     /*
-        Function referred on : getNotif.php and searchNotif.php
+        Function referred on : getNotif.php
         Used for returning array data
     */
     function notification($stmt){
@@ -8,15 +8,17 @@
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8);
         
         while ($stmt->fetch()) {
             $data[] = array(
-                      "notification_id" => $col1,
-                      "brand_name" => $col3,
-                      "notification_desc" => $col2,
-                      "notification_photo" => IMAGES_URL.'/'.urlencode(base64_encode($col6.'/product/'.$col4)),
-                      "notification_createdate" => $col5
+                      "notifications_id" => $col1,
+                      "data_id" => $col6,
+                      "notifications_desc" => $col2,
+                      "notifications_photo" => IMAGES_URL.'/'.urlencode(base64_encode($col5.'/shop/icon/'.$col3)),
+                      "notifications_createdate" => $col4,
+                      "notifications_type" => $col7,
+                      "notifications_title" => $col8
                     );
         }
         
