@@ -63,12 +63,13 @@
                         shop_icon,
                         DATE_FORMAT(notifications_createdate, '%W, %d %M %Y') AS notifications_createdate,
                         username,
-						data_id,
+						link_id,
 						notifications_type,
-						notifications_title
+						notifications_title,
+						notifications_isread
                     FROM 
                         notifications
-                        LEFT JOIN invoice ON invoice.invoice_no=notifications.data_id
+                        LEFT JOIN invoice ON invoice.invoice_no=notifications.link_id
                         LEFT JOIN invoice_shop_detail ON invoice_shop_detail.invoice_id = invoice.invoice_id
 						LEFT JOIN shop ON shop.shop_id = invoice_shop_detail.shop_id
 						LEFT JOIN user ON user.user_id = shop.user_id

@@ -33,20 +33,20 @@ function notification(){
             },
             success: function(data,status) {
                 if(data.status == "OK"){
-                    var response = data.result;
+                    var response = data.result.listNotif;
                     if(response.length > 0){
                         var listNotif = '<ul>';
                         $.each( response, function( key, val ) {
-                            listNotif += '<li>';
+                            listNotif += '<li class="listnotif" data-id="'+val.link_id+' datainternal-id="'+val.notifications_id+'">';
                             listNotif += '   <div class="bodyNotif-list-left">';
-                            listNotif += '      <div class="title">'+val.brand_name+'</div>';
-                            listNotif += '      <div class="content">'+val.notification_desc+'</div>';
+                            listNotif += '      <div class="title">'+val.notifications_title+'</div>';
+                            listNotif += '      <div class="content">'+val.notifications_desc+'</div>';
                             listNotif += '      <div class="date">';
-                            listNotif += '          <img src="/img/button_notif.png" width="10" height="10"/>'+val.notification_createdate+'';
+                            listNotif += '          <img src="/img/button_notif.png" width="10" height="10"/>'+val.notifications_createdate+'';
                             listNotif += '      </div>';
                             listNotif += '   </div>';
                             listNotif += '   <div class="bodyNotif-list-right">';
-                            listNotif += '      <img src="'+val.notification_photo+'" width="100" height="100" onclick="cartClick()"/>';
+                            listNotif += '      <img src="'+val.notifications_photo+'" width="100" height="100"/>';
                             listNotif += '   </div>';
                             listNotif += '</li>';
                         });
@@ -58,6 +58,11 @@ function notification(){
                             listNotif += '</div>';
                     }
                     $(".bodyNotif-list").html(listNotif);
+                    
+                    $('.listnotif').on('click', function (e) {
+                        var dataid = $( this ).data('id');
+                	    location.href = url+"/invoice/"+dataid;
+                	});
                 }else{
                     generateToken("notification");
                 }

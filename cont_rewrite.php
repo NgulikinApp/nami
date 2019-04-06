@@ -25,6 +25,23 @@
 			    case 'activeAccount':
 					include('api/v1/auth/active_account.php');
 				break;
+				case 'admin':
+					switch (@$routes[2]) {
+				        case 'detail':
+				            switch (@$routes[3]) {
+                			    case 'us':
+                					include('api/v1/profile/updateStatusSeller.php');
+                				break;
+				            }
+						break;
+						default :
+							switch (@$routes[3]) {
+                			    case 'ps':
+                					include('api/v1/profile/list/pendingSeller.php');
+                				break;
+				        }
+				    }
+				break;
 				case 'administrative':
 					include('api/v1/general/list/administrative.php');
 				break;
@@ -97,7 +114,13 @@
 				    }
 				break;
 				case 'notif':
-				    include('api/v1/general/notification/getNotif.php');
+				    switch (@$routes[2]) {
+					    case 'r':
+							include('api/v1/general/notification/doRead.php');
+						break;
+						default :
+							include('api/v1/general/notification/getNotif.php');
+				    }
 				break;
 				case 'putfile':
 					include('api/v1/general/system/putFile.php');
@@ -219,17 +242,11 @@
 				        case 'cm':
 				            include('api/v1/profile/confirmPassword.php');
 				        break;
-				        case 'ls':
-				            include('api/v1/profile/list/listpendingSeller.php');
-				        break;
 				        case 'u':
 				            include('api/v1/profile/updateUser.php');
 				        break;
 				        case 'up':
 				            include('api/v1/profile/updatePassword.php');
-				        break;
-				        case 'us':
-				            include('api/v1/profile/updateStatusSeller.php');
 				        break;
 				        default :
 							include('api/v1/profile/user.php');

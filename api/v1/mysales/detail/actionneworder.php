@@ -66,7 +66,7 @@
             }
             
             $status = ($action =="confirm")?3:7;
-            $type = ($action =="confirm")?1:2;
+            $type = 1;
             $title = ($action =="confirm")?"Pesanan anda dikonfirmasi":"Pesanan anda dibatalkan";
             
             $stmt = $con->prepare("UPDATE invoice SET invoice_current_status=? WHERE invoice_id IN(?)");   
@@ -83,7 +83,7 @@
             
             for($i=0;$i<$invoice_no_count;$i++){
                 $desc = ($action =="confirm")?"No. Tagihan #".$invoice_no_array[$i]." telah dikonfirmasi oleh penjual":"No. Tagihan #".$invoice_no_array[$i]." telah dibatalkan oleh penjual";
-                $stmt = $con->prepare("INSERT INTO notifications(user_id,data_id,notifications_type,notifications_title,notifications_desc) VALUES(?,?,?,?,?)");   
+                $stmt = $con->prepare("INSERT INTO notifications(user_id,link_id,notifications_type,notifications_title,notifications_desc) VALUES(?,?,?,?,?)");   
                 
                 $stmt->bind_param("ssiss", $user_id_array[$i],$invoice_no_array[$i],$type,$title,$desc);
                     

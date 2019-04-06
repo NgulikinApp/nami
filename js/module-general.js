@@ -333,17 +333,17 @@ function bubbleNotif(){
                         templatePopUpNotif += '<div class="popover popover-bubble" role="tooltip">';
                         templatePopUpNotif += '  <div class="arrow"></div>';
                         templatePopUpNotif += '  <div class="bubble-container">';
-                        if(data.result.length>0){
+                        if(data.result.listNotif.length>0){
                             templatePopUpNotif += '<div class="no-cart">';
-                            $.each( data.result, function( key, val ) {
+                            $.each( data.result.listNotif, function( key, val ) {
                                 templatePopUpNotif += '<div class="list-cart">';
                                 templatePopUpNotif += '     <div class="list-cart-cont">';
-                                templatePopUpNotif += '         <div class="list-cart-content">'+val.brand_name+'</div>';
-                                templatePopUpNotif += '         <div class="list-cart-content">'+val.notification_desc+'</div>';
-                                templatePopUpNotif += '         <div class="list-cart-content">'+val.notification_createdate+'</div>';
+                                templatePopUpNotif += '         <div class="list-cart-content">'+val.notifications_title+'</div>';
+                                templatePopUpNotif += '         <div class="list-cart-content">'+val.notifications_desc+'</div>';
+                                templatePopUpNotif += '         <div class="list-cart-content">'+val.notifications_createdate+'</div>';
                                 templatePopUpNotif += '     </div>';
                                 templatePopUpNotif += '     <div class="list-cart-cont">';
-                                templatePopUpNotif += '         <img src="'+val.notification_photo+'" width="65" height="65" onclick="cartClick()" style="cursor:pointer;"/>';
+                                templatePopUpNotif += '         <img src="'+val.notifications_photo+'" width="65" height="65" onclick="notifClick()" style="cursor:pointer;"/>';
                                 templatePopUpNotif += '     </div>';
                                 templatePopUpNotif += '</div>';
                             });
@@ -369,12 +369,38 @@ function bubbleNotif(){
                         $('#iconShopTemp').popover('hide');
                 	    $('#iconCartHeader').popover('hide');
                 	    $('#iconProfileTemp').popover('hide');
+                	    
+                	    if($('.sumNotifinMenuCart').text() === '1'){
+                	        doReadNotif();
+                	    }
                     });
-                    $(".sumNotifinMenuCart").html(data.result.length);
+                    $(".sumNotifinMenuCart").html(data.result.sumRead);
                 }else{
                     generateToken("bubbleNotif");
                 }
             } 
+        });
+    }
+}
+
+function doReadNotif(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken("doReadNotif");
+    }else{
+        $.ajax({
+            type: 'POST',
+            url: NOTIFICATION_DOREAD_API,
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                    generateToken("doReadNotif");
+                }else{
+                    $('.sumNotifinMenuCart').html(data.result.sumRead);
+                }
+            }
         });
     }
 }
