@@ -5124,7 +5124,10 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     width: 1%;
     border: 0;
     vertical-align: super;
-}    
+}
+.confirm-container{
+    min-height: 250px;
+}
 .order-container .grid .detail,.confirm-container .grid .detail{
     width: 22%;
     margin: 10px;
@@ -5136,6 +5139,24 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .order-container .grid .detail.bluesky,.confirm-container .grid .detail.bluesky{
     vertical-align: 10px;
 }
+.order-container .header{
+    min-height: 250px;
+    position: inherit;
+}
+.order-container .header .grid,.confirm-container .grid{
+    border-bottom: 1px solid #dfdfdf;
+}
+.order-container .footer{
+    padding: 10px;
+    border-top: 1px solid #dfdfdf;
+    overflow: auto;
+}
+.order-container .loaderImg,.confirm-container .loaderImg{
+    height: 247px;
+    width: 292px;
+    margin: auto;
+    display: block;
+}
 .order-container .grid button,.confirm-container .grid button{
     color: #FFF;
     float: right;
@@ -5145,6 +5166,8 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     cursor: pointer;
     margin: 5px 10px;
     width: 180px;
+    font-family: proxima_nova_ltsemibold;
+    font-size: 14px;
 }
 .order-container img,.confirm-container img{
     margin: 5px 15px 0px 0px;

@@ -23,6 +23,7 @@
 </div>
 <div class="order">
     <div class="confirm-container">
+        <img src="../img/loader.gif" class="loaderImg"/>
         <!--<div class="grid">
             <div class="leftCont">
                 <div class="head">PEMBELIAN OLEH</div>

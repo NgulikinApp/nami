@@ -191,6 +191,7 @@ function neworder(){
                     var neworder = '';
                     if(data.result.length){
                         $('.newordersum').html(data.result.length).removeClass('hidden');
+                        neworder += '<div class="header">';
                         $.each( data.result, function( key, val ) {
                             neworder += '<div class="grid">';
                             neworder += '   <div class="detail">';
@@ -218,9 +219,12 @@ function neworder(){
                             neworder += '   </div>';
                             neworder += '</div>';
                         });
-                        neworder += '<div class="grid">';
-                        neworder += '   <button id="newordercancel" class="grey">Batalkan pesanan</button>';
-                        neworder += '   <button id="newordersave" class="blueskyback">Proses pesanan</button>';
+                        neworder += '</div>';
+                        neworder += '<div class="footer">';
+                        neworder += '   <div class="grid">';
+                        neworder += '       <button id="newordercancel" class="grey">Batalkan pesanan</button>';
+                        neworder += '       <button id="newordersave" class="blueskyback">Proses pesanan</button>';
+                        neworder += '   </div>';
                         neworder += '</div>';
                     }else{
                         $('.newordersum').addClass('hidden');

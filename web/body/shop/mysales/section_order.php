@@ -16,5 +16,7 @@
     </div>
 </div>
 <div class="order">
-    <div class="order-container"></div>
+    <div class="order-container">
+        <img src="../img/loader.gif" class="loaderImg"/>
+    </div>
 </div>
