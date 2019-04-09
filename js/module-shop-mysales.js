@@ -29,6 +29,8 @@ function initShopMysales(){
 	   $(this).parent('a').css('margin-left','-5px');
 	   $('.grid-shop-seller-content').addClass("hidden");
 	   $('#status-shop-seller-content').removeClass("hidden");
+	   
+	   statussending();
 	});
 	$('#transaction-shop-seller').on( 'click', function( e ){
 	   $('.grid-shop-seller-menu nav div').removeClass("bluesky").removeClass('border-yellow');
@@ -36,6 +38,8 @@ function initShopMysales(){
 	   $(this).parent('a').css('margin-left','-5px');
 	   $('.grid-shop-seller-content').addClass("hidden");
 	   $('#transaction-shop-seller-content').removeClass("hidden");
+	   
+	   transaction();
 	});
 	
 	$('#status-line').milestones({
@@ -365,6 +369,133 @@ function confirmorder(){
                     $('.confirm-container').html(confirmorder);
                 }else{
                     generateToken("confirmorder");
+                }
+            }
+        });    
+    }
+}
+
+function statussending(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken("statussending");
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: LISTSTATUS_MYSALES_API,
+            data: { 
+                delivery: $('#filterStatusSender').val(),
+                search: $('#filterStatusInvoice').val()
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.status == "OK"){
+                    var statussending = '';
+                    if(data.result.length){
+                        $.each( data.result, function( key, val ) {
+                            statussending += '<div class="grid">';
+                            statussending += '   <div class="detail">';
+                            statussending += '       <div class="left">';
+                            statussending += '           <img src="'+val.user_photo+'"/>';
+                            statussending += '       </div>';
+                            statussending += '       <div class="right">';
+                            statussending += '           <div class="head">PEMBELI</div>';
+                            statussending += '           <div class="body">'+val.fullname+'</div>';
+                            statussending += '       </div>';
+                            statussending += '   </div>';
+                            statussending += '   <div class="detail">';
+                            statussending += '       <div class="head">PEMBAYARAN</div>';
+                            statussending += '       <div class="body">'+val.payment_name+'</div>';
+                            statussending += '   </div>';
+                            statussending += '   <div class="detail">';
+                            statussending += '       <div class="head">NOMOR TAGIHAN</div>';
+                            statussending += '       <div class="body">'+val.invoice_no+'</div>';
+                            statussending += '   </div>';
+                            statussending += '   <div class="detail">';
+                            statussending += '       <div class="head">TANGGAL TRANSAKSI</div>';
+                            statussending += '       <div class="body">'+val.invoice_createdate+'</div>';
+                            statussending += '   </div>';
+                            statussending += '</div>';
+                        });
+                    }else{
+                        statussending += '<div id="cart-emptylist">';
+                        statussending += '    <div class="grid-cart-header">Detail Invoice</div>';
+                        statussending += '    <div class="grid-cart-body"></div>';
+                        statussending += '    <div class="grid-cart-footer">';
+                        statussending += '        <div>Invoice kosong</div>';
+                        statussending += '    </div>';
+                        statussending += '</div>';
+                    }
+                    
+                    $('.status-container').html(statussending);
+                }else{
+                    generateToken("statussending");
+                }
+            }
+        });    
+    }
+}
+
+function transaction(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken("transaction");
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: LISTTRANSACTION_MYSALES_API,
+            data: { 
+                delivery: $('#filterTransactionSender').val(),
+                date: $('#filterTransactionDate').val(),
+                search: $('#filterTransactionInput').val()
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.status == "OK"){
+                    var transaction = '';
+                    if(data.result.length){
+                        $.each( data.result, function( key, val ) {
+                            transaction += '<div class="grid">';
+                            transaction += '   <div class="detail">';
+                            transaction += '       <div class="left">';
+                            transaction += '           <img src="'+val.user_photo+'"/>';
+                            transaction += '       </div>';
+                            transaction += '       <div class="right">';
+                            transaction += '           <div class="head">PEMBELI</div>';
+                            transaction += '           <div class="body">'+val.fullname+'</div>';
+                            transaction += '       </div>';
+                            transaction += '   </div>';
+                            transaction += '   <div class="detail">';
+                            transaction += '       <div class="head">TANGGAL TRANSAKSI</div>';
+                            transaction += '       <div class="body">'+val.invoice_createdate+'</div>';
+                            transaction += '   </div>';
+                            transaction += '   <div class="detail">';
+                            transaction += '       <div class="head">AGEN KURIR</div>';
+                            transaction += '       <div class="body">'+val.delivery_name+'</div>';
+                            transaction += '   </div>';
+                            transaction += '   <div class="detail">';
+                            transaction += '       <div class="head">NOMOR TAGIHAN</div>';
+                            transaction += '       <div class="body">'+val.invoice_no+'</div>';
+                            transaction += '   </div>';
+                            transaction += '</div>';
+                        });
+                    }else{
+                        transaction += '<div id="cart-emptylist">';
+                        transaction += '    <div class="grid-cart-header">Detail Invoice</div>';
+                        transaction += '    <div class="grid-cart-body"></div>';
+                        transaction += '    <div class="grid-cart-footer">';
+                        transaction += '        <div>Invoice kosong</div>';
+                        transaction += '    </div>';
+                        transaction += '</div>';
+                    }
+                    
+                    $('.transaction-container').html(transaction);
+                }else{
+                    generateToken("transaction");
                 }
             }
         });    

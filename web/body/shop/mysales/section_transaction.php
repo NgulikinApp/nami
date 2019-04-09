@@ -1,19 +1,7 @@
 <div class="title mysales">
     <div class="textFilterShopSeller filterMysales">Filter</div>
     <div class="filterMysales">
-        <div class="select mysalesSender">
-            <select id="filterMysalesStatus" class="statusproduct">
-                <option>Pilih Status</option>
-                <option>Pembayaran</option>
-                <option>Proses</option>
-                <option>Pengiriman</option>
-                <option>Sampai</option>
-                <option>Diterima</option>
-            </select>
-        </div>
-    </div>
-    <div class="filterMysales">
-        <input type="text" class="filterMysalesDate" data-inline="false" data-role="date" placeholder="Tanggal"/>
+        <input type="text" class="filterMysalesDate" id="filterTransactionDate" data-inline="false" data-role="date" placeholder="Tanggal"/>
     </div>
     <div class="filterMysales">
         <div class="select mysalesSender">
@@ -23,13 +11,14 @@
         </div>
     </div>
     <div class="filterMysales search">
-        <input type="text" class="filterMysalesInput" placeholder="Nama Pembeli / Nomor Invoice"/>
-        <div id="search-mysalesorder"></div>
+        <input type="text" class="filterMysalesInput" id="filterTransactionInput" placeholder="Nama Pembeli / Nomor Invoice"/>
+        <div id="search-mysalestransaction"></div>
     </div>
 </div>
 <div class="order">
-    <div class="status-container">
-        <div class="grid">
+    <div class="transaction-container">
+        <img src="../img/loader.gif" class="loaderImg"/>
+        <!-- <div class="grid">
             <div class="detail">
                 <div class="left">
                     <img src="/img/people.png" style="margin: 5px 15px 0px 0px;"/>
@@ -237,6 +226,6 @@
                     Pesanan telah tiba ditujuan menunggu konfirmasi dari pembeli
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

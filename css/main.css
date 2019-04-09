@@ -5143,7 +5143,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     min-height: 250px;
     position: inherit;
 }
-.order-container .header .grid,.confirm-container .grid{
+.order-container .header .grid,.confirm-container .grid,.status-container .grid,.transaction-container .grid{
     border-bottom: 1px solid #dfdfdf;
 }
 .order-container .footer{
@@ -5151,7 +5151,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     border-top: 1px solid #dfdfdf;
     overflow: auto;
 }
-.order-container .loaderImg,.confirm-container .loaderImg{
+.order-container .loaderImg,.confirm-container .loaderImg,.status-container .loaderImg,.transaction-container .loaderImg{
     height: 247px;
     width: 292px;
     margin: auto;

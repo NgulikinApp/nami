@@ -8,13 +8,14 @@
         </div>
     </div>
     <div class="filterMysales search">
-        <input type="text" class="filterMysalesInput" placeholder="Nama Pembeli / Nomor Invoice / Nomor Resi" style="width:250px;"/>
-        <div id="search-mysalesorder"></div>
+        <input type="text" class="filterMysalesInput" id="filterStatusInvoice" placeholder="Nama Pembeli / Nomor Invoice / Nomor Resi" style="width:250px;"/>
+        <div id="search-mysalesstatus"></div>
     </div>
 </div>
 <div class="order">
     <div class="status-container">
-        <div class="grid">
+        <img src="../img/loader.gif" class="loaderImg"/>
+        <!-- <div class="grid">
             <div class="detail">
                 <div class="left" style="vertical-align: top;margin-top: 2px;">
                     <img src="/img/people.png" style="margin: 5px 15px 0px 0px;"/>
@@ -78,6 +79,6 @@
                     Pesanan di proses
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
