@@ -103,14 +103,32 @@ function initShopMysales(){
 	
 	$('#filterStatusSender').on( 'change', function( e ){
 	    $('#filterStatusSender-button span').remove();
+	    statussending();
+	});
+	
+	$('#filterStatusInvoice').on( 'change', function( e ){
+	    statussending();
+	});
+	
+	$('#search-mysalesstatus').on( 'click', function( e ){
+	    statussending();
 	});
 	
 	$('#filterTransactionSender').on( 'change', function( e ){
 	    $('#filterTransactionSender-button span').remove();
+	    transaction();
 	});
 	
-	$('#filterMysalesStatus').on( 'change', function( e ){
-	    $('#filterMysalesStatus-button span').remove();
+	$('#filterTransactionDate').on( 'change', function( e ){
+	    transaction();
+	});
+	
+	$('#filterTransactionInvoice').on( 'change', function( e ){
+	    transaction();
+	});
+	
+	$('#search-mysalestransaction').on( 'click', function( e ){
+	    transaction();
 	});
 	
 	$('#print_neworder,#print_confirm').on( 'click', function( e ){
