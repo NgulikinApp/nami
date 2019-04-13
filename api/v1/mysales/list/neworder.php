@@ -104,7 +104,7 @@
                     
                     array_push($a_param_type,"i");
                 }else{
-                    $sql .= " AND invoice.fullname = ?";
+                    $sql .= " AND fullname = ?";
                     
                     array_push($a_param_type,"s");
                 }

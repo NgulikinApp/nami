@@ -5079,8 +5079,9 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     background: #004E81;
     color:#FFF;
 }
-.order-container .grid .detail,.order-container .grid .detail .left,.order-container .grid .detail .right,.confirm-container .grid .detail,.confirm-container .grid .detail .left,.confirm-container .grid .detail .right{
+.order-container .grid .detail,.order-container .grid .detail .left,.order-container .grid .detail .right,.confirm-container .grid .detail,.confirm-container .grid .detail .left,.confirm-container .grid .detail .right,.status-container .grid .detail,.status-container .grid .detail .left,.status-container .grid .detail .right,.transaction-container .grid .detail,.transaction-container .grid .detail .left,.transaction-container .grid .detail .right{
     display:inline-block;
+    position: relative;
 }
 .order-container.right .grid:first-child .detail:last-child{
     margin-left: 30px;
@@ -5125,23 +5126,30 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     border: 0;
     vertical-align: super;
 }
-.confirm-container{
-    min-height: 250px;
-}
-.order-container .grid .detail,.confirm-container .grid .detail{
+.order-container .grid .detail,.confirm-container .grid .detail,.transaction-container .grid .detail{
     width: 22%;
     margin: 10px;
     border-right: 1px solid #DFDFDF;
 }
-.order-container .grid .detail:last-child,.confirm-container .grid .detail:last-child{
+.order-container .grid .detail:last-child,.confirm-container .grid .detail:last-child,.status-container .grid .detail:last-child,.transaction-container .grid .detail:last-child{
     border:0px;
+    cursor:pointer;
 }
-.order-container .grid .detail.bluesky,.confirm-container .grid .detail.bluesky{
+.order-container .grid .detail:last-child:hover,.confirm-container .grid .detail:last-child:hover,.status-container .grid .detail:last-child:hover,.transaction-container .grid .detail:last-child:hover{
+    color:#FEBD18 !important;
+}
+.order-container .grid .detail.bluesky,.confirm-container .grid .detail.bluesky,.transaction-container .grid .detail.bluesky{
     vertical-align: 10px;
 }
-.order-container .header{
+.order-container .header,.confirm-container,.status-container,.transaction-container{
     min-height: 250px;
     position: inherit;
+}
+.status-container .grid .detail:last-child .right{
+    margin-right: 10px;
+    margin-top: 10px;
+    right: 0;
+    position: absolute;
 }
 .order-container .header .grid,.confirm-container .grid,.status-container .grid,.transaction-container .grid{
     border-bottom: 1px solid #dfdfdf;
@@ -5169,7 +5177,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     font-family: proxima_nova_ltsemibold;
     font-size: 14px;
 }
-.order-container img,.confirm-container img{
+.order-container img,.confirm-container img,.status-container img,.transaction-container img{
     margin: 5px 15px 0px 0px;
     vertical-align: inherit;
     width: 30px;
@@ -5369,7 +5377,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 #confirmallConfirmMysales div,.confirm-container .grid .leftCont,.confirm-container .grid .midCont,.confirm-container .grid .rightCont,.confirm-container .grid .midCont .left,.confirm-container .grid .midCont .right{
     display:inline-block;
 }
-.confirm-container,.status-container,.order-container{
+.confirm-container,.status-container,.order-container,.transaction-container{
     font-family: proxima_nova_ltsemibold;
 }
 .confirm-container:nth-child(2){
@@ -5431,12 +5439,6 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .status-container .grid .detail.statusline{
     width: 75%;
 }
-.status-container .grid:last-child .detail:first-child{
-    width: 31%;
-}
-.status-container .grid:last-child .detail:last-child{
-    width: 69%;
-}
 .status-container .grid .detail.transaction:last-child{
     width:19%;
     line-height: 40px;
@@ -5447,16 +5449,6 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 }
 .status-container .grid .detail.transaction:last-child img{
     margin-bottom: 0px;
-}
-.status-container .grid:last-child .detail .right{
-    vertical-align: top;
-    background-color: #F97C64;
-    padding: 5px;
-    border-radius: 3px;
-    width: 110px;
-    text-align: center;
-    margin-top: 5px;
-    margin-left: 65px;
 }
 .status-container .grid:last-child .detail.statusline{
     margin-top: 10px;

@@ -61,19 +61,23 @@
             
             $sql = "SELECT 
                         invoice.invoice_id,
-                        delivery_name,
-                        invoice_createdate,
+                        invoice_no,
+                        DATE_FORMAT(invoice_createdate, '%d-%m-%Y') AS invoice_createdate,
                         fullname,
-                        invoice_current_status
+                        username,
+                        user_photo,
+                        delivery_name
                     FROM
-                        invoice
+                        shop
+                        LEFT JOIN invoice_shop_detail ON invoice_shop_detail.shop_id=shop.shop_id
+                        LEFT JOIN invoice ON invoice.invoice_id=invoice_shop_detail.invoice_id
                         LEFT JOIN `user` ON `user`.user_id=invoice.user_id
-                        LEFT JOIN delivery ON delivery.delivery_id=invoice.delivery_id
+                        LEFT JOIN delivery ON delivery.delivery_id=invoice_shop_detail.delivery_id
                     WHERE
-                        seller_id = ?
+                        shop.user_id = ?
                         AND invoice_current_status=6";
             
-            array_push($a_param_type,"i");
+            array_push($a_param_type,"s");
             array_push($a_bind_params,$user_id);
             
             if($date != ''){
@@ -93,7 +97,7 @@
                     
                     array_push($a_param_type,"i");
                 }else{
-                    $sql .= " AND invoice.fullname = ?";
+                    $sql .= " AND fullname = ?";
                     
                     array_push($a_param_type,"s");
                 }

@@ -23,7 +23,8 @@
     /*
         Parameters
     */
-    $invoice_id = param($_GET['invoice_id']);
+    $delivery = param($_GET['delivery']);
+    $search = param($_GET['search']);
     
     /*
         Function location in : /model/general/get_auth.php
@@ -57,27 +58,77 @@
                 return invalidKey();
             }
             
+            $a_param_type = array();
+            $a_bind_params = array();
+            
             $sql = "SELECT 
                         invoice.invoice_id,
-                        delivery_name,
-                        invoice_createdate,
-                        fullname
+                        invoice_no,
+                        DATE_FORMAT(invoice_createdate, '%d-%m-%Y') AS invoice_createdate,
+                        fullname,
+                        username,
+                        user_photo,
+                        payment_name
                     FROM
-                        invoice
+                        shop
+                        LEFT JOIN invoice_shop_detail ON invoice_shop_detail.shop_id=shop.shop_id
+                        LEFT JOIN invoice ON invoice.invoice_id=invoice_shop_detail.invoice_id
                         LEFT JOIN `user` ON `user`.user_id=invoice.user_id
-                        LEFT JOIN delivery ON delivery.delivery_id=invoice.delivery_id
+                        LEFT JOIN payment ON payment.payment_id=invoice.payment_id
                     WHERE
-                        seller_id = ?
-                        AND invoice_current_status=3";
+                        shop.user_id = ?
+                        AND invoice_current_status=4";
         
+            array_push($a_param_type,"s");
+            array_push($a_bind_params,$user_id);
+            
+            if(is_numeric($delivery) && $delivery != '0'){
+                $sql .= " AND invoice_shop_detail.delivery_id = ?";
+                
+                array_push($a_param_type,"i");
+                array_push($a_bind_params,$delivery);
+            }
+            
+            if($search != ''){
+                if(is_numeric ($search)){
+                    $sql .= " AND invoice_shop_detail.delivery_id = ?";
+                    
+                    array_push($a_param_type,"i");
+                }else{
+                    $sql .= " AND fullname = ?";
+                    
+                    array_push($a_param_type,"s");
+                }
+                array_push($a_bind_params,$search);
+            }
+            
+            $a_params = array();
+ 
+            $param_type = '';
+            $n = count($a_param_type);
+            for($i = 0; $i < $n; $i++) {
+              $param_type .= $a_param_type[$i];
+            }
+             
+            /* with call_user_func_array, array params must be passed by reference */
+            $a_params[] = & $param_type;
+             
+            for($i = 0; $i < $n; $i++) {
+              /* with call_user_func_array, array params must be passed by reference */
+              $a_params[] = & $a_bind_params[$i];
+            }
+             
+            /* Prepare statement */
             $stmt = $con->prepare($sql);
-            $stmt->bind_param("is", $noinvoice,$user_id);
+             
+            /* use call_user_func_array, as $stmt->bind_param('s', $param); does not accept params array */
+            call_user_func_array(array($stmt, 'bind_param'), $a_params);
             
             /*
                 Function location in : functions.php
                 Cache variabel got from : /model/memcache.php
             */
-            detail($stmt);
+            statussending($stmt);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

@@ -90,7 +90,7 @@ function detailCart(){
             },
             success: function(data, status) {
                 if(data.status == "OK"){
-                    if(data.result.length > 0){
+                    if($.isEmptyObject(data.result) === false){
                         var response = data.result.listshops,
                             listElement = '',
                             totalPrice = 0;
@@ -514,12 +514,12 @@ function detailAddress(){
                             detailAddress += '<div class="cart-menu-grid">';
                             detailAddress += '  <div class="address-grid">';
                             detailAddress += '      <div id="addressLoc">';
-                            detailAddress += '          <img src="/img/marker.png"/>';
+                            detailAddress += '          <img src="/img/marker.png" style="margin-left: -4.5px;"/>';
                             detailAddress +=            data.result.address+' , '+data.result.village_name+' '+data.result.district_name+' '+data.result.regency_name+' '+data.result.province_name;
                             detailAddress += '      </div>';
                             detailAddress += '  </div>';
                             detailAddress += '  <div class="address-grid">';
-                            detailAddress += '      <img src="/img/hp.png"/>';
+                            detailAddress += '      <img src="/img/hp.png" style="margin-right: 12px;"/>';
                             detailAddress +=        data.result.nohp;
                             detailAddress += '  </div>';
                             detailAddress += '  <div class="address-grid">';

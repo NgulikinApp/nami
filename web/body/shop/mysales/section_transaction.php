@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="filterMysales search">
-        <input type="text" class="filterMysalesInput" id="filterTransactionInput" placeholder="Nama Pembeli / Nomor Invoice"/>
+        <input type="text" class="filterMysalesInput" id="filterTransactionInvoice" placeholder="Nama Pembeli / Nomor Invoice"/>
         <div id="search-mysalestransaction"></div>
     </div>
 </div>

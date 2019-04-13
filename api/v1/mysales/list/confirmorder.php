@@ -74,7 +74,6 @@
                         LEFT JOIN invoice_shop_detail ON invoice_shop_detail.shop_id=shop.shop_id
                         LEFT JOIN invoice ON invoice.invoice_id=invoice_shop_detail.invoice_id
                         LEFT JOIN `user` ON `user`.user_id=invoice.user_id
-                        LEFT JOIN payment ON payment.payment_id=invoice.payment_id
                     WHERE
                         shop.user_id = ?
                         AND invoice_current_status=3";
@@ -99,7 +98,7 @@
                     
                     array_push($a_param_type,"i");
                 }else{
-                    $sql .= " AND invoice.fullname = ?";
+                    $sql .= " AND fullname = ?";
                     
                     array_push($a_param_type,"s");
                 }

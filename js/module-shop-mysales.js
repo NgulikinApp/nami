@@ -414,27 +414,32 @@ function statussending(){
                     if(data.result.length){
                         $.each( data.result, function( key, val ) {
                             statussending += '<div class="grid">';
-                            statussending += '   <div class="detail">';
-                            statussending += '       <div class="left">';
-                            statussending += '           <img src="'+val.user_photo+'"/>';
-                            statussending += '       </div>';
-                            statussending += '       <div class="right">';
-                            statussending += '           <div class="head">PEMBELI</div>';
-                            statussending += '           <div class="body">'+val.fullname+'</div>';
-                            statussending += '       </div>';
-                            statussending += '   </div>';
-                            statussending += '   <div class="detail">';
-                            statussending += '       <div class="head">PEMBAYARAN</div>';
-                            statussending += '       <div class="body">'+val.payment_name+'</div>';
-                            statussending += '   </div>';
-                            statussending += '   <div class="detail">';
-                            statussending += '       <div class="head">NOMOR TAGIHAN</div>';
-                            statussending += '       <div class="body">'+val.invoice_no+'</div>';
-                            statussending += '   </div>';
-                            statussending += '   <div class="detail">';
-                            statussending += '       <div class="head">TANGGAL TRANSAKSI</div>';
-                            statussending += '       <div class="body">'+val.invoice_createdate+'</div>';
-                            statussending += '   </div>';
+                            statussending += '  <div class="detail">';
+                            statussending += '      <div class="left">';
+                            statussending += '          <img src="'+val.user_photo+'"/>';
+                            statussending += '      </div>';
+                            statussending += '      <div class="right">';
+                            statussending += '          <div class="head">PEMBELI</div>';
+                            statussending += '          <div class="body">'+val.fullname+'</div>';
+                            statussending += '      </div>';
+                            statussending += '  </div>';
+                            statussending += '  <div class="detail">';
+                            statussending += '          <div class="head">PEMBAYARAN</div>';
+                            statussending += '          <div class="body">'+val.payment_name+'</div>';
+                            statussending += '  </div>';
+                            statussending += '  <div class="detail">';
+                            statussending += '      <div class="head">NOMOR TAGIHAN</div>';
+                            statussending += '      <div class="body">'+val.invoice_no+'</div>';
+                            statussending += '  </div>';
+                            statussending += '  <div class="detail detail-statussending" data-invoiceid="'+val.invoice_id+'">';
+                            statussending += '      <div class="left">';
+                            statussending += '          <div class="head">TANGGAL TRANSAKSI</div>';
+                            statussending += '          <div class="body">'+val.invoice_createdate+'</div>';
+                            statussending += '      </div>';
+                            statussending += '      <div class="right bluesky">';
+                            statussending += '          <i class="fa fa-chevron-down"></i>';
+                            statussending += '      </div>';
+                            statussending += '  </div>';
                             statussending += '</div>';
                         });
                     }else{
@@ -448,6 +453,14 @@ function statussending(){
                     }
                     
                     $('.status-container').html(statussending);
+                    
+                    $('.detail-statussending').on( 'click', function( e ){
+                        //alert($( this ).data( "invoiceid" ));
+                        var element = '<div class="grid">';
+                            element += '</div>';
+                            
+                        $( element ).insertAfter( $( this ).parent() );
+                    });
                 }else{
                     generateToken("statussending");
                 }
@@ -495,9 +508,8 @@ function transaction(){
                             transaction += '       <div class="head">AGEN KURIR</div>';
                             transaction += '       <div class="body">'+val.delivery_name+'</div>';
                             transaction += '   </div>';
-                            transaction += '   <div class="detail">';
-                            transaction += '       <div class="head">NOMOR TAGIHAN</div>';
-                            transaction += '       <div class="body">'+val.invoice_no+'</div>';
+                            transaction += '   <div class="detail bluesky">';
+                            transaction += '       <strong>Tampilkan detail</strong> <i class="fa fa-chevron-down"></i>';
                             transaction += '   </div>';
                             transaction += '</div>';
                         });
