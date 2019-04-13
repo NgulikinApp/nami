@@ -69,16 +69,18 @@
             $stmt = $con->prepare("UPDATE 
                                         shop 
                                     SET 
-                                        shop_current_brand=".$brand_id.",
+                                        shop_current_brand=?,
                                         shop_current_brand_modifydate=NOW() 
                                     WHERE 
-                                        shop_id=".$shop_id."");
+                                        shop_id=?");
             
             $stmt->bind_param("ii", $brand_id, $shop_id);
             
             $stmt->execute();
             
-            $stmt = $con->query("SELECT
+            $stmt->close();
+            
+            $stmt = $con->prepare("SELECT
                                         shop_current_brand,
                                         CONCAT('Terakhir diganti tanggal ',DATE_FORMAT(shop_current_brand_modifydate, '%d %M %Y'),', pukul ',DATE_FORMAT(shop_current_brand_modifydate, '%H.%i')) AS modify_date,
                                         brand_image,
@@ -90,6 +92,7 @@
                                     WHERE 
                                         shop.shop_id=".$shop_id."");
             
+            $stmt->bind_param("i", $shop_id);
             /*
                 Function location in : functions.php
             */

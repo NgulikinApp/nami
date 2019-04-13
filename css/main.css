@@ -4736,7 +4736,7 @@ input.radioPaymentOthers:empty ~ label:before{
     width: calc(100% - 190px);
     overflow-x: hidden;
 }
-.grid-shop-seller-body .brand .left .list-brandseller,.grid-shop-seller-body .product .right .list-productseller{
+.grid-shop-seller-body .brand .right .list-brandseller,.grid-shop-seller-body .product .right .list-productseller{
     display:inline-block;
     position:relative;
     cursor:pointer;
@@ -5247,7 +5247,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     font-family: 'proxima_nova_ltsemibold';
 }
 .accountSellerContainer.productLayer{
-    height: 500px;
+    height: 530px;
     width: 840px;
 }
 .accountSellerContainer.productLayer .body{

@@ -258,6 +258,8 @@
                     "brand_product_count" => $col5
                 );
         $_SESSION['user']["brand_id"]=$col1;
+        
+        $stmt->close();
         /*
             Function location in : /model/general/functions.php
         */

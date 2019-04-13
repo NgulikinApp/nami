@@ -593,7 +593,9 @@ function brandShop(){
                             var isSelected = val.shop_current_brand === val.brand_id ? 'chosen' : '';
                             listBrand += '<div class="list-brandseller brand'+val.brand_id+' '+isSelected+'" title="'+val.brand_name+'" datainternal-id="'+val.brand_id+'">';
                             listBrand += '    <img src="'+val.brand_image+'" height="150" width="150"/>';
-                            listBrand += '    <div>'+val.brand_name+'</div>';
+                            listBrand += '    <div>';
+                            listBrand += '      <label>'+val.brand_name+'</label>';
+                            listBrand += '    </div>';
                             listBrand += '</div>';
                         });
                         
@@ -993,6 +995,7 @@ function productLayer(){
 	}else{
 	    getcategory(1,0);
 	    $('#newProduct').attr('checked','checked');
+	    $('.accountSellerContainer.productLayer').css('height','420px');
 	}
     
     $('.accountSellerContainer .footer #cancel').on( 'click', function( e ){
