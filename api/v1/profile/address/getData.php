@@ -64,7 +64,8 @@
                         provinces.name AS province_name,
                         regencies.name AS regency_name,
                         districts.name AS district_name,
-                        villages.name AS village_name
+                        villages.name AS village_name,
+                        courier_id
                     FROM 
                         `user_address`
                         LEFT JOIN provinces ON `user_address`.provinces_id=provinces.id

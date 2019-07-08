@@ -16,11 +16,11 @@ function initHome(){
             greeting += '   <div class="greetingContainer">';
             greeting += '       <div class="top">';
             greeting += '           <div class="icon"></div>';
-            greeting += '           <div class="title">Hallo, <font></font></div>';
-            greeting += '           <div class="desc">Ayo segera isi keranjang dengan barang kesukaanmu sekarang juga</div>';
+            greeting += '           <div class="title fn-15">Hallo, <font></font></div>';
+            greeting += '           <div class="desc fn-13">Ayo segera isi keranjang dengan barang kesukaanmu sekarang juga</div>';
             greeting += '       </div>';
             greeting += '       <div class="bottom">';
-            greeting += '           <input type="button" value="LIHAT KERANJANG BELANJA"/>';
+            greeting += '           <input type="button" value="LIHAT KERANJANG BELANJA" class="fn-13"/>';
             greeting += '       </div>';
             greeting += '   </div>';
             greeting += '</div>';
@@ -180,7 +180,9 @@ function bestseller(){
                     $.each( data.result, function( key, val ) {
                         listproduct += '<div class="col-md-9" title="'+val.product_name+'">';
                         listproduct += '   <img src="'+val.product_image+'">';
-                        listproduct += '   <div class="rateyo" id="productbestseller'+val.product_id+'" style="margin-top: 10px;"></div>';
+                        listproduct += '   <div class="fn-14" style="color:#807F7F;font-family: proxima_nova;margin-top: 3px;">'+val.product_name+'</div>';
+                        listproduct += '   <div style="margin-top: 5px;color:#E05A36;font-size: 14px;font-family:proxima_nova_altbold;">IDR '+val.product_price+'</div>';
+                        listproduct += '   <div class="rateyo" id="productbestseller'+val.product_id+'" style="margin: initial;padding: 0px;"></div>';
                         listproduct += '   <div class="grid-sub-cont9-body-list-hover">';
                         listproduct += '       <i class="fa fa-shopping-cart bestseller-cart"></i>';
                         listproduct += '       <i class="fa fa-thumbs-o-up bestseller-like"></i>';
@@ -193,7 +195,7 @@ function bestseller(){
                     $("#best-selling").html(listproduct);
                     
                     $.each( data.result, function(keyproduct , valproduct ) {
-                        $("#productbestseller"+valproduct.product_id).rateYo({rating: valproduct.product_average_rate,readOnly: true,starWidth : "20px"});
+                        $("#productbestseller"+valproduct.product_id).rateYo({rating: valproduct.product_average_rate,readOnly: true,starWidth : "12px"});
                     });
                     
                     $('#best-selling').tosrus({
@@ -255,7 +257,9 @@ function promo(){
                     $.each( data.result, function( key, val ) {
                         listproduct += '<div class="col-md-9" title="'+val.product_name+'">';
                         listproduct += '   <img src="'+val.product_image+'">';
-                        listproduct += '   <div class="rateyo" id="productpromo'+val.product_id+'" style="margin-top: 10px;"></div>';
+                        listproduct += '   <div class="fn-14" style="color:#807F7F;font-family: proxima_nova;margin-top: 3px;">'+val.product_name+'</div>';
+                        listproduct += '   <div style="margin-top: 5px;color:#E05A36;font-size: 14px;font-family:proxima_nova_altbold;">IDR '+val.product_price+'</div>';
+                        listproduct += '   <div class="rateyo" id="productpromo'+val.product_id+'" style="margin: initial;padding: 0px;"></div>';
                         listproduct += '   <div class="grid-sub-cont9-body-list-hover">';
                         listproduct += '       <i class="fa fa-shopping-cart promo-cart"></i>';
                         listproduct += '       <i class="fa fa-thumbs-o-up promo-like"></i>';
@@ -268,7 +272,7 @@ function promo(){
                     $("#promo").html(listproduct);
                     
                     $.each( data.result, function(keyproduct , valproduct ) {
-                        $("#productpromo"+valproduct.product_id).rateYo({rating: valproduct.product_average_rate,readOnly: true,starWidth : "20px"});
+                        $("#productpromo"+valproduct.product_id).rateYo({rating: valproduct.product_average_rate,readOnly: true,starWidth : "12px"});
                     });
                     
                      $('#promo').tosrus({

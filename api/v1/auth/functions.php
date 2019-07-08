@@ -350,33 +350,11 @@
         get_data_signin($stmt,$cache);
     }
     
-    function returndata_signin_admin($user_id,$key){
-        $data = array(
-                    "status" => $user_id,
-                    "message" => $key
-            );
-        $_SESSION['user_admin'] = $data;
-        
-        session_regenerate_id();
-        session_regenerate_id(true);
-    
-        $dataout = array(
-                        "status" => 'OK',
-                        "message" => 'Signin successfully'
-                    );
-        
-        $stmt->close();
-        
-        /*
-            Function location in : /model/generatejson.php
-        */
-        return generateJSON($dataout);
-    }
-    
     function sessionCart($user_id,$con){
         if(isset($_SESSION['productcart'])){
             $i = 0;
             $list_productid = "";
+            $data = $_SESSION['productcart'];
             foreach($data as &$value){
                 $list_productid = ($i != 0)?','.$list_productid:'';
                 $list_productid = $list_productid.$value['product_id'];

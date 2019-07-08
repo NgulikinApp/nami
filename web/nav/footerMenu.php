@@ -7,7 +7,7 @@
                         $array_link = explode("/",$actual_link);
                         if(count($array_link)>4){
                     ?>
-                        <img src="../img/footerlogo.png">
+                        <img src="../../img/footerlogo.png">
                     <?php
                         }else{
                     ?>

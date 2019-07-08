@@ -66,7 +66,8 @@
                         fullname,
                         username,
                         user_photo,
-                        delivery_name
+                        delivery_name,
+                        invoice_current_status
                     FROM
                         shop
                         LEFT JOIN invoice_shop_detail ON invoice_shop_detail.shop_id=shop.shop_id
@@ -75,7 +76,8 @@
                         LEFT JOIN delivery ON delivery.delivery_id=invoice_shop_detail.delivery_id
                     WHERE
                         shop.user_id = ?
-                        AND invoice_current_status=6";
+                        AND invoice_current_status=6 OR invoice_current_status=7
+                    LIMIT 0,5";
             
             array_push($a_param_type,"s");
             array_push($a_bind_params,$user_id);

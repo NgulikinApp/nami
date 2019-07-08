@@ -3,7 +3,6 @@
     include 'web/system/checkDevice.php';
     include 'web/system/getUrl.php';
     include 'system/jsversionstring.php';
-    include 'web/system/minifier.php';
 ?>
 <link rel="shortcut icon" href="img/favicon.ico?jsr=<?php echo $jsversionstring; ?>" type="image/x-icon" />
 <!--CSS Library-->

@@ -72,7 +72,8 @@
                                       "product_image" =>  $icon,
                                       "product_price" =>  $row[3],
                                       "product_difdate" =>  $row[5],
-                                      "shop_name" =>  $row[7]
+                                      "shop_name" =>  $row[7],
+                                      "product_average_rate" =>  $row[8]
                                     );
                         
                     }else{

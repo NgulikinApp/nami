@@ -1,4 +1,5 @@
 <?php
+    include 'web/system/checkDevice.php';
     session_start();
     include 'web/system/minify.php';
 ?>

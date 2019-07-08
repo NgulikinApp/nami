@@ -1,7 +1,7 @@
-<div>
+<div class="privateCompleteLeft">
     <span>Status</span>
 </div>
-<div>
+<div class="privateCompleteRight">
     <span id="statusCon">
         <input type="radio" name="statusPrivate" id="studentPrivate" value="1"/>
         <span>Pelajar</span>
@@ -9,8 +9,8 @@
         <span>Lainnya</span>
     </span>
 </div>
-<div>Foto</div>
-<div>
+<div class="privateCompleteLeft">Foto</div>
+<div class="privateCompleteRight">
     <div class="photoDataProfile">
         <img src="../../img/ktp.png" id="previewCardCreateShopPrivate" width="150" height="150"/>
         <label for="filesCardCreateShopPrivate" class="editPhoto"><i class="fa fa-pencil"></i></label>

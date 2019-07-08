@@ -86,6 +86,7 @@
             $shop_idtemp = 0;
             
             for($i=0;$i<$product_idcount;$i++){
+                $invoice_detail_notran = getID(15);
                 $stmt = $con->prepare("SELECT 
                                             cart_sumproduct,
                                             brand.brand_id AS brand_id,
@@ -133,9 +134,9 @@
                     
                 $stmt->close();
                 
-                $stmt = $con->prepare("INSERT INTO invoice_shop_detail(invoice_id,shop_id,delivery_id,invoice_shop_detail_delivery_price,invoice_shop_detail_notes) VALUES(?,?,?,?,?)");
+                $stmt = $con->prepare("INSERT INTO invoice_shop_detail(invoice_id,shop_id,delivery_id,invoice_shop_detail_delivery_price,invoice_shop_detail_notes,invoice_shop_detail_notran) VALUES(?,?,?,?,?,?)");
                    
-                $stmt->bind_param("iiiis", $invoice_id,$shop_id,$delivery_idarray[$j],$delivery_price_array[$j],$notes_array[$j]);
+                $stmt->bind_param("iiiiss", $invoice_id,$shop_id,$delivery_idarray[$j],$delivery_price_array[$j],$notes_array[$j],$invoice_detail_notran);
                         
                 $stmt->execute();
                 
@@ -153,10 +154,9 @@
                 
                 $stmt->close();
                 
-                $invoice_detail_notran = getID(15);
-                $stmt = $con->prepare("INSERT INTO invoice_product_detail(invoice_brand_detail_id,product_id,invoice_product_detail_notran,invoice_product_detail_sumproduct) VALUES(?,?,?,?)");
+                $stmt = $con->prepare("INSERT INTO invoice_product_detail(invoice_brand_detail_id,product_id,invoice_product_detail_sumproduct) VALUES(?,?,?)");
                    
-                $stmt->bind_param("iisi", $invoice_brand_detail_id,$product_idarray[$i],$invoice_detail_notran,$cart_sumproduct);
+                $stmt->bind_param("iii", $invoice_brand_detail_id,$product_idarray[$i],$cart_sumproduct);
                         
                 $stmt->execute();
                 

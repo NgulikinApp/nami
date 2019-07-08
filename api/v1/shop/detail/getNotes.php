@@ -68,7 +68,7 @@
                                         			shop_close,
                                         			shop_open,
                                         			shop_closing_notes,
-                                        			shop_location,
+                                        			shop_address,
                                         			shop_image_location
                                             FROM 
                                                     shop

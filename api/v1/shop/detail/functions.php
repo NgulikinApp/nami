@@ -85,7 +85,7 @@
             $data['shop_close'] = $col20;
             $data['shop_open'] = $col21;
             $data['shop_closing_notes'] = $col22;
-            $data['shop_location'] = $col23;
+            $data['shop_address'] = $col23;
             $data['shop_notes_modifydate'] = $col25;
             $data['canbecommented'] = $canbecommented;
             $data['shop_total_review'] = $col26;
@@ -346,7 +346,7 @@
                 - shop_close
                 - shop_open
                 - shop_closing_notes
-                - shop_location
+                - shop_address
                 - shop_image_location
     */
     function detailNotes($stmt){
@@ -383,7 +383,7 @@
             $data['shop_close'] = $col12;
             $data['shop_open'] = $col13;
             $data['shop_closing_notes'] = $col14;
-            $data['shop_location'] = $col15;
+            $data['shop_address'] = $col15;
             $data['shop_image_location'] = $shop_image_location;
         }
         

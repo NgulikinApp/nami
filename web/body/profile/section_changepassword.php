@@ -1,5 +1,5 @@
 <div class="myprofile" id="changepassword">
-    <div class="headerMyprofile">Ubah Kata Sandi</div>
+    <div class="headerMyprofile fn-15">Ubah Kata Sandi</div>
     <div class="bodyMyprofile">
         <div>
             <span>Password saat ini</span>
@@ -21,6 +21,6 @@
         </div>
     </div>
     <div class="footerMyprofile">
-        <button id="btnSubmitPassMyprofile">Ubah</button>
+        <button id="btnSubmitPassMyprofile" class="fn-12">Ubah</button>
     </div>
 </div>

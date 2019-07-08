@@ -192,8 +192,8 @@ function detail(){
                         	$('#shop_close_date').html(data.result.shop_close);
                         	$('#shop_open_date').html(data.result.shop_open);
                         	
-                        	var shop_location = (data.result.shop_location !== '')?data.result.shop_location !== '':'Belum diisi';
-                        	$('#address-shop').html(shop_location);
+                        	var shop_address = (data.result.shop_address !== '')?data.result.shop_address !== '':'Belum diisi';
+                        	$('#address-shop').html(shop_address);
                         	
                         	$('#owner-shop').html(data.result.fullname);
                         	$('#hp-shop').html(data.result.phone);
@@ -318,6 +318,7 @@ function brandShop(){
                         $.each( response, function( key, val ) {
                             listBrand += '<div>';
                             listBrand += '   <img src="'+val.brand_image+'" title="'+val.brand_name+'" class="brandShopImage"/>';
+                            listBrand += '   <span class="brand-name">'+val.brand_name+'</span>';
                             listBrand += '</div>';
                         });
                         
@@ -368,12 +369,21 @@ function productShop(){
                         var listProduct = '';
                         $.each( response, function( key, val ) {
                             listProduct += '<div>';
-                            listProduct += '   <img src="'+val.product_image+'" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'" title="'+val.product_name+'" class="productShopImage"/>';
+                            listProduct += '    <img src="'+val.product_image+'" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'" title="'+val.product_name+'" class="productShopImage"/>';
+                            listProduct += '    <span class="brand-name">';
+                            listProduct += '        <span class="product-name">'+val.product_name+'</span>';
+                            listProduct += '        <span class="product-price">IDR '+val.product_price+'</span>';
+                            listProduct += '        <div class="rateyo product-rate" id="product'+val.product_id+'">IDR '+val.product_price+'</div>';
+                            listProduct += '    </span>';
                             listProduct += '</div>';
                         });
                         
                         $('#loaderShopProduct').addClass('hidden');
                         $("#list-product").html(listProduct);
+                        
+                        $.each( response, function(keyproduct , valproduct ) {
+                            $("#product"+valproduct.product_id).rateYo({rating: valproduct.product_average_rate,readOnly: true,starWidth : "12px"});
+                        });
                         
                         $('.productShopImage').on('click', function (e) {
                             var shopname = ($(this).data("shopname")).split(' ').join('-'),
@@ -391,6 +401,8 @@ function productShop(){
                                 shopProductPage.page = page;
                                 productShop();
                             });   
+                        }else{
+                            $('#pagingShopProduct').addClass('hidden');
                         }
                     }
                 }else{

@@ -1,6 +1,10 @@
 <div class="home_container">
 	<section class="container profile">
+	    <div class="grid-profile-head">
+	        informasi akun
+	    </div>
 	    <div class="menuProfile">
+	        <div class="menuProfileHeader fn-15">Kategori</div>
 	        <ul>
 	            <li id="myaccounttab" class="greytab">Akun Saya</li>
 	            <li id="trackorderstab">Lacak Pesanan</li>

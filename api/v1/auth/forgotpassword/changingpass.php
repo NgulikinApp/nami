@@ -36,6 +36,7 @@
     */
     $password = param($request['password']);
     $email = param($request['email']);
+    $code = param($request['code']);
     
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
@@ -49,28 +50,56 @@
             //secretKey variabel got from : /model/jwt.php
             $exp = JWT::decode($token, $secretKey, array('HS256'));
             
-            $stmt = $con->prepare("UPDATE 
-                                        user
-                                    SET
-                                        password = ?
+            $stmt = $con->prepare("SELECT 
+                                        user_id
+                                    FROM 
+                                        user 
                                     WHERE 
-                                        email = ?");
+                                        email=? 
+                                        AND
+                                        code_forgotpassword=?");
             
-            $stmt->bind_param("ss", $password, $email);
-                
-            $stmt->execute();
-            
-            $stmt->close();
-            
-            $data = array(
-            			'status' => "OK",
-            			'message' => "Password has been changed, you can login now"
-            );
-            
+            $stmt->bind_param("ss", $email, $code);
             /*
-                Function location in : /model/generatejson.php
+                Function location in : /v1/auth/functions.php
             */
-            generateJSON($data);
+            $verified = code_verified($stmt);
+            
+            if($verified[0] == "" || $code == ""){
+                /*
+                    Function location in : /v1/auth/functions.php
+                */
+                wrong_code_verified();
+            }else{
+            
+                $stmt = $con->prepare("UPDATE 
+                                            user
+                                        SET
+                                            password = ?
+                                        WHERE 
+                                            email = ?");
+                
+                $stmt->bind_param("ss", $password, $email);
+                    
+                $stmt->execute();
+                
+                $stmt->close();
+                
+                /*
+                    Function location in : /model/general/functions.php
+                */
+                sendEmail("info@ngulikin.com","Ngulikin",$email,"","Password diubah","Password anda berhasil diubah");
+                
+                $data = array(
+                			'status' => "OK",
+                			'message' => "Password has been changed, you can login now"
+                );
+                
+                /*
+                    Function location in : /model/generatejson.php
+                */
+                generateJSON($data);
+            }
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

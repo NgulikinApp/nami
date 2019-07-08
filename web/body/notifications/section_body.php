@@ -1,17 +1,10 @@
 <div class="home_container">
 	<section class="container notif">
-	    <div class="headerNotif">
-	        <div class="headerNotif-element">
-	            <div class="headerNotif-element-image"></div>
-	            <div class="headerNotif-element-text">
-	                notifikasi
-	            </div>
-	        </div>
-	    </div>
+	    <div class="grid-notif-head">notifikasi</div>
 	    <div class="bodyNotif">
 	        <div class="bodyNotif-filter">
 	            <div class="bodyNotif-filter-left">
-	                <div>Jumlah(<span id="sumNotif">100</span>)</div>
+	                <div>Jumlah (<span id="sumNotif">0</span>)</div>
 	                <font>|</font>
 	                <div id="filterNotifButton">
     	                <nav class="notif-filter">
@@ -52,9 +45,7 @@
 	                </div>
 	            </div>
 	        </div>
-	        <div class="bodyNotif-list">
-	            <img src="img/loader.gif" class="loaderImg" id="loaderNotif"/>
-	        </div>
+	        <div class="bodyNotif-list"></div>
 	    </div>
 	</section>
 </div>

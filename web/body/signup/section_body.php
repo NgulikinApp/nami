@@ -2,7 +2,7 @@
     <div id="signupBanner">
         <p class="signupBanner-head">ngulikin</p>
 		<p class="signupBanner-body">registrasi di ngulikin</p>
-		<div class="signupBanner-footer">
+		<div class="signupBanner-footer fn-13">
 		    <div>Sudah punya akun Ngulikin masuk</div>
 		    <div>disini</div>
 		</div>
@@ -12,7 +12,7 @@
 			<div class="grid-signup-bodyhead">
 			    registrasi
 			</div>
-			<div class="grid-signup-bodyfooter">
+			<div class="grid-signup-bodyfooter fn-15">
 			    Dengan memiliki akun Ngulikin.com, Anda dapat melakukan transaksi. Jangan khawatir data anda akan aman bersama kami.
 			</div>
 			<div class="signupBodySub">

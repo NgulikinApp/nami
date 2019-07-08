@@ -1,42 +1,42 @@
-@charset "utf-8";
-@font-face {
-  font-family: 'OpenSans-Bold';
-  src: url('../fonts/OpenSans-Bold.woff');
-}
-@font-face {
-  font-family: 'OpenSans-BoldItalic';
-  src: url('../fonts/OpenSans-BoldItalic.woff');
-}
-@font-face {
-  font-family: 'OpenSans-ExtraBold';
-  src: url('../fonts/OpenSans-ExtraBold.woff');
-}
-@font-face {
-  font-family: 'OpenSans-ExtraBoldItalic';
-  src: url('../fonts/OpenSans-ExtraBoldItalic.woff');
-}
-@font-face {
-  font-family: 'OpenSans-Italic';
-  src: url('../fonts/OpenSans-Italic.woff');
-}
-@font-face {
-  font-family: 'OpenSans-Light';
-  src: url('../fonts/OpenSans-Light.woff');
-}
-@font-face {
-  font-family: 'OpenSans-LightItalic';
-  src: url('../fonts/OpenSans-LightItalic.woff');
-}
-@font-face {
-  font-family: 'OpenSans-Regular';
-  src: url('../fonts/OpenSans-Regular.woff');
-}
-@font-face {
-  font-family: 'OpenSans-Semibold';
-  src: url('../fonts/OpenSans-Semibold.woff');
-}
-@font-face {
-  font-family: 'OpenSans-SemiboldItalic';
-  src: url('../fonts/OpenSans-SemiboldItalic.woff');
-}
-
+@charset "utf-8";
+@font-face {
+  font-family: 'OpenSans-Bold';
+  src: url('../fonts/OpenSans-Bold.woff');
+}
+@font-face {
+  font-family: 'OpenSans-BoldItalic';
+  src: url('../fonts/OpenSans-BoldItalic.woff');
+}
+@font-face {
+  font-family: 'OpenSans-ExtraBold';
+  src: url('../fonts/OpenSans-ExtraBold.woff');
+}
+@font-face {
+  font-family: 'OpenSans-ExtraBoldItalic';
+  src: url('../fonts/OpenSans-ExtraBoldItalic.woff');
+}
+@font-face {
+  font-family: 'OpenSans-Italic';
+  src: url('../fonts/OpenSans-Italic.woff');
+}
+@font-face {
+  font-family: 'OpenSans-Light';
+  src: url('../fonts/OpenSans-Light.woff');
+}
+@font-face {
+  font-family: 'OpenSans-LightItalic';
+  src: url('../fonts/OpenSans-LightItalic.woff');
+}
+@font-face {
+  font-family: 'OpenSans-Regular';
+  src: url('../fonts/OpenSans-Regular.woff');
+}
+@font-face {
+  font-family: 'OpenSans-Semibold';
+  src: url('../fonts/OpenSans-Semibold.woff');
+}
+@font-face {
+  font-family: 'OpenSans-SemiboldItalic';
+  src: url('../fonts/OpenSans-SemiboldItalic.woff');
+}
+

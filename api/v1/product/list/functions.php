@@ -101,7 +101,7 @@
                             "product_id" => $col1,
                             "product_name" => $col2,
                             "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($col5.'/product/'.$col3)),
-                            "product_price" =>  $col4,
+                            "product_price" =>  number_format($col4, 0, '.', '.'),
                             "product_difdate" => $col6,
                             "shop_name" =>  $col8,
                             "product_average_rate" =>  $col9

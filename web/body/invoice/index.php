@@ -1,4 +1,5 @@
 <?php
+    include 'web/system/checkDevice.php';
     session_start();
     if(!isset($_SESSION['productcart']) && !isset($_SESSION['user'])){
         header("Location: .");

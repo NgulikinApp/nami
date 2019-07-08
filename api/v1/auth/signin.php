@@ -85,6 +85,9 @@
                 */
                 notexist_account();
             }else if($verified[2] == ""){
+                /*
+                    Function location in : functions.php
+                */
                 $key = encrypt_hash('ngulik_'.$verified[0].date('Y-m-d H:i:s'));
                 
                 $stmt = $con->prepare("UPDATE 

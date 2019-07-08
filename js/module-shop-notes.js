@@ -103,7 +103,7 @@ function detail(){
                     $('#shop_close').val(data.result.shop_close);
                     $('#shop_open').val(data.result.shop_open);
                     $('#shop_closing_notes').val(data.result.shop_closing_notes);
-                    $('#shop_location').val(data.result.shop_location);
+                    $('#shop_address').val(data.result.shop_address);
                     $('.loaderProgress').addClass('hidden');
                 }else{
                     generateToken("detail");
@@ -257,7 +257,7 @@ function doEditNotes(){
                     shop_close : $('#shop_close').val(),
                     shop_open : $('#shop_open').val(),
                     shop_closing_notes : $('#shop_closing_notes').val(),
-                    shop_location : $('#shop_location').val()
+                    shop_address : $('#shop_address').val()
                 }),
                 dataType: 'json',
                 beforeSend: function(xhr, settings) { 

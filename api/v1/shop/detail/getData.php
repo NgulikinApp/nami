@@ -81,7 +81,7 @@
                         IFNULL(DATE_FORMAT(shop_close, '%d %M %Y'),'') AS shop_close,
                         IFNULL(DATE_FORMAT(shop_open, '%d %M %Y'),'') AS shop_open,
                         IFNULL(shop_closing_notes,'') AS shop_closing_notes,
-                        IFNULL(shop_location,'') AS shop_location,
+                        IFNULL(shop_address,'') AS shop_address,
                         shop_image_location,
                         CONCAT('Terakhir diganti tanggal ',DATE_FORMAT(shop_notes_modifydate, '%d %M %Y'),', pukul ',DATE_FORMAT(shop_notes_modifydate, '%H.%i')) AS shop_notes_modifydate,
                         shop_total_review,

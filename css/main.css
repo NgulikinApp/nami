@@ -61,6 +61,22 @@ body{
    font-family: proxima_nova;
    overflow: auto;
    background:#F1F1F1;
+   color: #414141;
+}
+.fn-32{
+    font-size:32px;
+}
+.fn-15{
+    font-size:15px;
+}
+.fn-14{
+    font-size:14px;
+}
+.fn-13{
+    font-size:13px;
+}
+.fn-12{
+    font-size:12px;
 }
 ul{
     list-style:none;
@@ -81,6 +97,10 @@ textarea{
 .bluesky{
     color:#3FC3FF !important;
 }
+.redyoung{
+    color:#FFF !important;
+    background-color:#F37C65;
+}
 .blueskyback{
     color:#FFF !important;
     background-color:#3FC3FF;
@@ -88,7 +108,7 @@ textarea{
 .blueskyback:hover{
     background-color: #004E82;
 }
-.grey{
+.grey,.redyoung:hover{
     background-color:#848484;
 }
 .grey:hover{
@@ -96,7 +116,6 @@ textarea{
 }    
 .greytab{
     color:#3FC3FF !important;
-    background-color:#F4F5F5;
 }
 .pinkyoung{
     color: #F97C64 !important;
@@ -130,6 +149,7 @@ textarea{
     padding: 5px;
     letter-spacing: 1px;
     color:red;
+    font-size: 12px;
 }
 .error_message.green{
     color:green;
@@ -142,7 +162,7 @@ textarea{
     width: 100%;
     padding: 0px;
 }
-.container.desc,.container.store,.container.category,.container.product{
+.container.desc,.container.store,.container.category,.container.product,.container.successtory{
     padding-left: 0px;
     padding-right: 0px;
 }
@@ -155,9 +175,6 @@ textarea{
 }
 .container.sellbuy{
     border-top: 3px dashed #F5F5F5;
-}
-.container.successtory{
-    background-color: #3FC3FF;
 }
 .container.grid-sec{
     height:100%;
@@ -288,11 +305,10 @@ select::-ms-expand {
 .menu-category-wrap {
     display: inline-block;
     margin-left: 15px;
-    margin-top: 26px;
+    margin-top: 21px;
     background-color: #3FC3FF;
-    font-family: proxima_nova;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 7px;
+    padding-bottom: 7px;
     padding-left: 25px;
     padding-right: 25px;
     border-radius: 15px;
@@ -305,7 +321,6 @@ select::-ms-expand {
 }
 .menu-category {
     margin:0px auto;
-    font-family: proxima_nova_ltthin;
     font-weight: 900;
 }
 .menu-category li {
@@ -329,7 +344,6 @@ select::-ms-expand {
 .menu-category > ul > li {
     display:inline-block;
     position:relative;
-    font-size:17px;
 }
  
 .menu-category > ul > li > a {
@@ -421,7 +435,7 @@ select::-ms-expand {
     position: relative;
     border-radius: 8px;
     padding: 10px 40px 10px 15px;
-    margin-top: 15px;
+    margin-top: 11px;
     font-size: 14px;
     font-weight: 900;
 }
@@ -444,7 +458,7 @@ select::-ms-expand {
     width: 30px;
     height: 20px;
     background-size: contain;
-    top: 27px;
+    top: 23px;
     right: 0;
     cursor: pointer;
 }
@@ -482,7 +496,7 @@ select::-ms-expand {
     text-decoration: underline;
 }
 #menuLogin{
-    margin-top: 20px;
+    margin-top: 23px;
 }
 #menuLogin,#btnSubmitMyprofile,#btnSubmitPassMyprofile,#btnSubmitCreateShop{
     padding-top: 7px;
@@ -496,6 +510,7 @@ select::-ms-expand {
     box-shadow: 3px 3px 5px #888888;
     overflow:hidden;
     outline:none;
+    letter-spacing: 1px;
 }
 #menuLogin:hover,#btnSubmitMyprofile:hover,#btnSubmitPassMyprofile:hover,#btnSubmitCreateShop:hover{
     color: #FFFFFF;
@@ -774,8 +789,8 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 /*End of Questioner Menu*/
 
 /*Home Content*/
-.store .title,.category .title{
-    font-family: proxima_nova_ltsemibold;
+.store .title,.category .title,.successtory .title{
+    font-family: proxima_nova_altbold;
     font-size: 15px;
     text-align: center;
     border-top: 1px solid #DFDFDF;
@@ -863,10 +878,9 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 }
 .grid_chapter_subcon_detail .grid_chapter_subcon_body_detail{
     color: #999999;
-    font-family: proxima_nova_altbold;
-    font-size: 15px;
     text-align:center;
-    margin-top: 5px;
+    line-height: 12px;
+    margin-top: 10px;
 }
 .grid-cont2{
    width: 100%;
@@ -952,7 +966,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     margin: 20px !important;
     float: left;
     color: #999999;
-    font-size: 11px;
+    font-size: 13px;
 }
 .grid-body3-icon-cont2 li[data-internalid='1']{
     background-image: url(/img/ngulikin_value_1.png);
@@ -975,13 +989,16 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     position: absolute;
     text-align: center;
 }
+.grid-body3-icon-cont2 li:last-child span{
+    bottom: -65px;
+}
 .grid-cont3{
     width: 100%;
     height: 250px;
     background-color: #fbbd33;
     color: #FFF;
     font-size: 10pt;
-    font-family: proxima_nova_ltthin;
+    font-family: proxima_nova_ltsemibold;
     font-weight: bold;
     border: 2px solid #F5F5F5;
 }
@@ -1010,7 +1027,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     margin-right: auto;
     font-size: 15px;
     letter-spacing: 2px;
-    font-family: proxima_nova_ltsemibold;
+    font-family: proxima_nova_altbold;
 }
 .grid-cont3-middle .grid-cont3-middle-subright{
     width:75%;
@@ -1070,19 +1087,19 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     position: relative;
 }
 .grid-header-cont2{
-    color:#004E82;
     text-align:center;
     width:100%;
-    font-size:32px;
+    font-size:15px;
     padding: 25px 0px 0px 0px;
     text-transform: uppercase;
     font-family: proxima_nova_altbold;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 .grid-header-cont5{
+    position: absolute;
     color:#FFFFFF;
     text-align:center;
-    width:100%;
+    width:98%;
     font-size:32px;
     padding: 10px;
     text-transform: uppercase;
@@ -1128,8 +1145,9 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 }
 .grid-cont5{
    width: 100%;
-   font-family: proxima_nova;
    padding:10px;
+   background-color: #3FC3FF;
+   position: relative;
 }
 .grid-cont5 .grid_chapter .grid_sub_chapter{
     width:49% !important;
@@ -1137,7 +1155,8 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
     padding: 40px;
-    margin: 5px;font-family: proxima_nova_ltthin;
+    margin: 5px;
+    font-family: proxima_nova_ltsemibold;
     letter-spacing: 1px;
     font-weight: bold;
     position: relative;
@@ -1162,6 +1181,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 }
 .grid_rightsub_chapter_right span{
     display: inherit;
+    font-family: proxima_nova_ltsemibold;
 }
 .grid_rightsub_chapter_right span:first-child{
     font-family: proxima_nova_altbold;
@@ -1212,7 +1232,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     color: #FFFFFF;
     text-shadow: 3px 3px 5px #888888;
     font-family: proxima_nova_altbold;
-    font-size: 15px;
+    font-size: 14px;
     letter-spacing: 1px;
 }
 .grid-list-cont8 li{
@@ -1265,14 +1285,14 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 }
 .grid-cont9{
     width: 100%;
-    height: 460px;
+    height: 440px;
     font-size: 10pt;
     font-family: proxima_nova_ltthin;
     font-weight: bold;
     padding-bottom: 70px;
 }
 .grid-sub-cont9{
-    background-color: #fbbd33;
+    background-color: #3FC3FF;
     height: 100%;
     background-image: url(/img/backgroundPromo.png);
     background-repeat: no-repeat;
@@ -1282,32 +1302,37 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     text-transform:uppercase;
 }
 .grid-sub-cont9-header div{
-    padding: 50px;
+    padding: 10px 50px;
     text-transform:uppercase;
 }
-.grid-sub-cont9-header span{
-    display:inherit;
-}
 .grid-sub-cont9-header span:first-child{
+    font-family: proxima_nova_altbold;
     background-color: #3FC3FF;
     width: 230px;
     line-height: 60px;
-    font-size: 30px;
+    font-size: 15px;
     padding-left: 20px;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
-}
-.grid-sub-cont9-header span:nth-child(2){
-    padding: 10px 0px 0px 30px;
-    font-family: proxima_nova_ltsemibold;
-    font-size: 15px;
-    text-transform: uppercase;
     letter-spacing: 1px;
 }
+.grid-sub-cont9-header span:nth-child(2){
+    padding-left: 25px;
+    font-weight: lighter;
+    color: #DFDFDF;
+}
+.grid-sub-cont9-header span:last-child{
+    padding: 10px 0px 0px 30px;
+    font-family: proxima_nova_ltsemibold;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color:#FFF;
+}
 .grid-sub-cont9-body{
-    height: 285px;
+    height: 335px;
     background-color: #FFFFFF;
-    margin: -40px 60px;
+    margin: 0px 60px;
     width: 750px;
     box-shadow: 3px 3px 10px #888888;
     padding: 15px 15px 15px 0px;
@@ -1327,7 +1352,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     display: none;
     position: absolute;
     top: 0;
-    left: 0;
+    left: -15px;
     right: 0;
     bottom: 0;
     background: rgba(58, 58, 58, 0.85);
@@ -1381,7 +1406,10 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 
 .grid-sub-cont9-body-list .col-md-9{
     width: 245px;
+    border: 1px solid #DFDFDF;
+    padding: 5px;
 }
+
 .container div div ul li{
     margin: 0px;
     cursor: pointer;
@@ -1471,8 +1499,8 @@ footer, footer div{
     }
 }
 .footer-body div h3{
-    font-size: 17px;
-    font-weight: bold;
+    font-size: 15px;
+    font-family: proxima_nova_altbold;
 }
 .footer-body div ul{
     list-style-type: none;
@@ -1482,7 +1510,7 @@ footer, footer div{
     width:100%;
 }
 .footer-body div ul li{
-    font-size: 13px;
+    font-size: 14px;
 }
 .list-socmed{
     width: 100%;
@@ -1517,7 +1545,8 @@ footer, footer div{
 
 /*End of Footer Menu*/
 section div h1{
-   font-size:45px;
+    font-size: 32px;
+    font-family: proxima_nova_altbold;
 }
 
 /*Tooltip Content*/
@@ -1706,8 +1735,8 @@ section div h1{
     display: inline-block;
     cursor:pointer;
     margin-right: -260px;
-    font-size: 13px;
-    font-family: proxima_nova_ltsemibold;
+    font-size: 12px;
+    font-family: proxima_nova;
 }
 .signinBodyForgot:hover{
     text-decoration:underline;
@@ -1796,7 +1825,7 @@ section div h1{
     text-align: center;
     color:#fbbd33;
     letter-spacing: 1px;
-    font-family: proxima_nova_altbold;
+    font-family: proxima_nova_ltsemibold;
 }
 .signupBanner-head{
     padding-top: 50px;
@@ -1820,7 +1849,7 @@ section div h1{
     border-radius: 25px 25px 25px 25px;
     cursor: pointer;
     color: #3FC3FF;
-    font-family: proxima_nova_ltsemibold;
+    font-family: proxima_nova;
     box-shadow: 2px 2px 5px #888888;
 }
 .signupBanner-footer div:nth-child(2):hover{
@@ -1832,10 +1861,10 @@ section div h1{
     margin: auto;
 }
 .grid-signup-body{
-    margin-top: -57px;
+    margin-top: -51px;
     margin-bottom: 50px;
     width: 500px;
-    height: 680px;
+    height: 700px;
     box-shadow: 3px 3px 5px #888888;
     border-radius: 5px;
 }
@@ -1847,7 +1876,7 @@ section div h1{
     font-family: proxima_nova_altbold;
     letter-spacing: 1px;
     text-transform: uppercase;
-    font-size: 19px;
+    font-size: 15px;
 }
 .grid-signup-bodyfooter{
     padding: 15px 20px;
@@ -1861,9 +1890,9 @@ section div h1{
     width: 100%;
     padding-left: 25px;
     outline: none;
-    font-size: 13px;
+    font-size: 12px;
     font-family: proxima_nova_ltsemibold;
-    border: 2px solid #F5F5F5;
+    border: 1px solid #E0E0DF;
 }
 .inputSignup.invalidFormat{
     border-color:red;
@@ -1878,7 +1907,7 @@ section div h1{
 	text-align:center;
 }
 .signupBodySub span{
-    font-size: 11px;
+    font-size: 12px;
     color:#3FC3FF;
     float:left;
 }
@@ -1918,7 +1947,7 @@ section div h1{
     display: block;
     width: 215px;
     height: 38px;
-    font-size: 15px;
+    font-size: 12px;
 }
 #sextextSignUp{
     display: block;
@@ -1928,14 +1957,14 @@ section div h1{
 .signinBodySub .fa {
 	position: absolute;
 	left: 8px;
-	top: 28px;
+	top: 25px;
 	color: #848484;
 	font-size: 13px;
 }
 .signupBodySub .fa {
 	position: absolute;
 	left: 8px;
-	top: 28px;
+	top: 26px;
 	color: #fbbd33;
 }
 .signinBodySubRadio{
@@ -1989,10 +2018,11 @@ section div h1{
     padding-top: 50px;
     color:#004E82;
     width: 500px;
+    margin-bottom: 15px;
 }
 .grid-signin-header.forgotpassword h1{
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 15px;
+    font-family: proxima_nova_altbold;
 }
 .grid-signin-header.forgotpassword h1:last-child{
     color:#808080;
@@ -2004,21 +2034,22 @@ section div h1{
 	border-radius: 3px;
 	border: none;
 	color: #FFFFFF;
-	font-size: x-small;
-	padding: 7px 5px 7px 5px;
+	font-size: 15px;
+	padding: 5px;
 	width: 50%;
 	cursor:pointer;
 	font-weight: bold;
 	outline:none;
-	font-family: proxima_nova;
+	font-family: proxima_nova_altbold;
 	box-shadow: 3px 3px 5px #888888;
+	letter-spacing: 1px;
 }
 #buttonSignIn:hover,#buttonSignup:hover,#buttonReset:hover,#buttonForgotSend:hover,#buttonForgotVerified:hover,#buttonForgotChange:hover,#processMysalesButton:hover,#buttonListTransactionIncome:hover,#buttonCartAddress:hover{
     background-color: #007ec1;
 }
 #buttonSignIn{
     font-size:15px;
-    font-family: proxima_nova_ltsemibold;
+    font-family: proxima_nova_altbold;
 }
 #buttonReset {
     font-size: 10px;
@@ -2026,10 +2057,10 @@ section div h1{
 }
 .signupConfirmText{
     float:left;
-    font-size: 8px;
     text-align: initial;
     color: #808080 !important;
-    font-family: proxima_nova_ltsemibold;
+    font-size: 15px !important;
+    text-align: center;
 }
 .signupConfirmText font{
     color:#004F7F;
@@ -2043,8 +2074,8 @@ hr{
 	border: solid 1px darkgrey;
 	outline:none;
 	cursor:pointer;
-	font-size: 13px;
-	font-family: proxima_nova_ltsemibold;
+	font-size: 12px;
+	font-family: proxima_nova;
 }
 #buttonSigninFb{
 	padding: 7px; 
@@ -2066,7 +2097,7 @@ hr{
 	padding: 7px;
 	background-color: #FFFFFF;
 	width: 100%;
-	color: darkgrey;
+	color: #747474;
 }
 #iconSigninGplus{
 	background-image:url("/img/icon_google.png");
@@ -2166,7 +2197,6 @@ hr{
 .grid-shop-seller-menu .cart-menu{
     float: left;
     padding: 10px;
-    font-family: 'proxima_nova_ltsemibold';
     border-right: 1px solid #DFDFDF;
     background: #FFF;
     cursor: default;
@@ -2219,6 +2249,9 @@ hr{
 .cart-menu div:first-child{
     vertical-align: middle;
 }
+.cart-menu:first-child .cart-menu-grid:first-child{
+    font-family: proxima_nova_altbold;
+}
 .cart-menu:last-child .address-grid{
     margin: 5px auto;
     color: #74C5FC;
@@ -2265,11 +2298,11 @@ hr{
 }
 #chooseallShopCart{
     margin-left: 10px;
-    font-family: proxima_nova_altbold;
+    font-family: proxima_nova_ltsemibold;
 }
 .no-cart{
     text-align:center;
-    padding:5px;
+    padding: 0px 5px 5px;
 }
 .no-cart span{
     display:block;
@@ -2283,13 +2316,17 @@ hr{
     text-align: left;
     border-bottom: 1px solid #DFDFDF !important;
     border-top: 0px !important;
+    font-family: proxima_nova_altbold;
 }
 .list-cart{
-    font-size:12px;
+    font-size:13px;
     overflow: auto;
+    color: #7F7F7F;
 }
 .list-cart-cont{
-    float:left;
+    display: inline-block;
+    font-family: proxima_nova;
+    vertical-align: text-top;
 }
 .list-cart-cont img{
     margin: 0px 10px;
@@ -2297,12 +2334,28 @@ hr{
 .list-cart-cont:last-child{
     line-height: 65px;
 }
+.bubble-notif-date{
+    font-size:12px !important;
+    font-family: proxima_nova !important;
+    color:#848484 !important;
+}
 .list-cart-content{
     text-align: left;
-    width: 119px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    font-family: proxima_nova;
+    margin-left: 1px;
+    max-width: 200px;
+}
+.list-cart-content:first-child{
+    font-size: 15px;
+    font-family: proxima_nova_altbold;
+}
+.list-cart-content:nth-child(2){
+    font-family: proxima_nova_ltsemibold;
+}
+.list-cart-content:last-child{
+    font-size: 15px;
+    color:#F97C64;
+    font-family: proxima_nova_ltsemibold;
 }
 .bubble-sum-cart{
     float:right;
@@ -2322,6 +2375,7 @@ hr{
     padding: 5px;
     box-shadow: 2px 2px 5px #888888;
     outline:none;
+    font-family:proxima_nova_altbold;
 }
 .bubble-cart-button input:hover{
     background-color: #004E82;
@@ -2330,13 +2384,13 @@ hr{
     background-color:#F1F1F1;
 }
 .grid-cart-header,.grid-favorite-header{
-    font-family:proxima_nova;
+    font-family:proxima_nova_altbold;
     float:left;
     color:#808080;
     display: inline-block;
     margin-top:15px;
     padding-left: 15px;
-    font-size: 20px;
+    font-size: 32px;
 }
 .grid-cart-body,.grid-favorite-body{
     background-repeat: no-repeat;
@@ -2384,8 +2438,11 @@ hr{
     font-family: proxima_nova_altbold;
     letter-spacing: 1px;
 }
+.grid-cartsum-right #detail-summary .detail-summary-header{
+    color:#005080;
+}
 .detail-shopping-header,.grid-cartsum-left #detail-shoppingaccount .detail-shoppingaccount-header{
-    border-bottom: 2px solid #F5F5F5;
+    border-bottom: 1px solid #F5F5F5;
     margin-top: 0px !important;
     margin-bottom: 0px !important;
 }
@@ -2409,7 +2466,7 @@ hr{
 }
 .detail-shopping-body-title .detail-shopping-choose{
     float:left;
-    font-family: proxima_nova_altbold;
+    font-family: proxima_nova;
     margin: 7px 10px;
 }
 .detail-shopping-body-title .detail-shopping-icon{
@@ -2418,7 +2475,8 @@ hr{
 }
 .detail-shopping-body-title .detail-shopping-sellername{
     background-color:#3FC3FF;
-    font-size: 12px;
+    font-size: 13px;
+    font-family: proxima_nova_ltsemibold;
 }
 .detail-shopping-body-content{
     font-size:12px;
@@ -2440,6 +2498,7 @@ hr{
 .detail-shopping-body-content .detail-shopping-body-content1 .aligner,.chooseProductCartTemp{
     line-height: 95px;
     text-align: center;
+    font-family: proxima_nova;
 }
 .detail-shopping-body-content .detail-shopping-body-content1 div img{
     border:1px solid #F5f5f5;
@@ -2457,7 +2516,13 @@ hr{
     width: 50px;
     padding: 0;
     text-align: center;
-    height: 23px;
+    height: 22px;
+    font-family: proxima_nova;
+    font-size: 13px;
+    border-top: 1px solid #F5F5F5;
+    border-bottom: 1px solid #F5F5F5;
+    border-right: 0;
+    border-left: 0;
 }
 .detail-shopping-body-content2 .minCart button,.detail-shopping-body-content2 .plusCart button{
     background: #FFF;
@@ -2491,6 +2556,7 @@ hr{
 }
 .detail-shopping-body-content3 .title,.detail-shopping-body-content3 .inputDesc,.detail-shopping-body-content4 .title,.detail-shopping-body-content4 .inputDesc{
     padding-left: 25px;
+    overflow: auto;
 }
 .detail-shopping-body-content3 .inputDesc{
     padding-right: 25px;
@@ -2500,6 +2566,8 @@ hr{
     border: 1px solid #DFDFDF;
     padding: 10px;
     width: 100%;
+    font-family: proxima_nova;
+    border-radius: 5px;
 }
 .detail-shopping-body-content4 .inputDesc .select{
     width: 65%;
@@ -2512,15 +2580,18 @@ hr{
 }
 .detail-shopping-body-content4 div select{
     height: 30px;
+    font-family: proxima_nova;
 }
 .detail-shopping-body-content4 .inputDesc span{
     padding-left: 50px;
     margin-left: 50px;
 }
+.senderPriceProductCart{
+    font-family: proxima_nova;
+}
 .grid-cartsum-right #detail-summary .detail-summary-body{
     padding: 15px;
-    font-family: proxima_nova_ltsemibold;
-    font-size: 12px;
+    font-size: 13px;
 }
 .grid-cartsum-right #detail-summary .detail-summary-body div{
     display:block;
@@ -2542,8 +2613,8 @@ hr{
     padding: 5px;
     font-weight: bold;
     letter-spacing: 1px;
-    font-size: 12px;
     cursor:pointer;
+    font-family: proxima_nova_altbold;
 }
 .grid-cartsum-left #detail-shoppingaccount .detail-shoppingaccount-body{
     padding: 15px;
@@ -2653,6 +2724,7 @@ hr{
     text-align: center;
     box-shadow: 3px 3px 5px #888888;
     font-family: proxima_nova_ltsemibold;
+    letter-spacing: 1px;
     cursor:pointer;
 }
 .favoriteButton:hover{
@@ -2671,8 +2743,12 @@ hr{
 .grid-favorite-footer div{
     width:100%;
     margin:auto;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 40px;
+    letter-spacing:1px;
+}
+.grid-favorite-footer p{
+    letter-spacing:1px;
 }
 .grid-favorite-footer.filled{
     margin: 33px 0px;
@@ -2724,12 +2800,14 @@ hr{
     font-size: 14px;
     float: left;
     width:180px;
-    font-family: proxima_nova_ltsemibold;
 }
 .grid-favorite-footer.filled div .result-content-list-data .result-content-list-data-body span{
     display:block;
     text-align: left;
     line-height: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .favoriteProductAction{
     color:#817F7F;
@@ -2737,6 +2815,7 @@ hr{
 }
 .favoriteProductPrice{
     color:#E05B36;
+    font-family: proxima_nova_altbold;
 }
 /*
     End of Favorite Page
@@ -2770,8 +2849,8 @@ hr{
     color: #3FC3FF;
     margin: 10px 80px 15px 0px;
     float:right;
-    font-size: 13px;
-    font-family: proxima_nova_ltsemibold;
+    font-size: 12px;
+    font-family: proxima_nova;
 }
 .grid-signin-body .signBodyRegis font{
     font-weight:bold;
@@ -2781,9 +2860,9 @@ hr{
     text-decoration:underline;
 }
 #layer-signin-cont{
-    font-size:10px;
+    font-size:13px;
     text-align:center;
-    height: 500px;
+    height: 530px;
 }
 #layer-signin-header{
     color:#808080;
@@ -2836,7 +2915,6 @@ hr{
     display:block;
 }
 .filter-content .content span{
-    font-weight:bold;
     font-family: proxima_nova_altbold;
 }
 .filter-content .content select{
@@ -2886,10 +2964,11 @@ hr{
     text-align: center;
     cursor:pointer;
     z-index: 1;
+    font-family: proxima_nova_ltsemibold;
 }
 .result-content .result-content-tab .tab.active{
-    color: #004E82;
-    border-bottom: 3px solid #004E82;
+    color: #7FC1EA;
+    border-bottom: 5px solid #FCBC1B;
 }
 .result-content .result-content-tab .tab .tab-icons{
     display: inline-block;
@@ -3010,13 +3089,12 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
     padding:10px;
 }
 .grid-rules-body .content .con-content .head{
-    font-size: 23px;
+    font-size: 15px;
     font-family: proxima_nova_altbold;
     letter-spacing: 1px;
     border-bottom: 2px solid #D3D3D3;
 }
 .grid-rules-body .content .con-content .body{
-    font-size: 15px;
     padding: 10px 0px;
 }
 .grid-rules-body .content .con-content .body span{
@@ -3079,12 +3157,12 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
 .grid-shop-head{
     padding: 25px 5px;
     overflow: auto;
-    color:#808080;
+    color:#757575;
 }
 .grid-shop-head-left,.grid-shop-head-right{
     width:50%;
     float:left;
-    font-size: 15px;
+    font-size: 14px;
 }
 .grid-shop-head-left div{
     float: left;
@@ -3116,10 +3194,11 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
 .grid-shop-head-left div:last-child span:first-child{
     font-family: proxima_nova_altbold;
     letter-spacing: 1px;
-    font-size: 16px;
+    font-size: 14px;
+    text-transform: uppercase;
 }
 .grid-shop-head-left div:last-child span:last-child{
-    font-size: 12px;
+    font-size: 13px;
 }
 .grid-shop-head-left div img,.grid-shop-head-right div img{
     border-radius: 15px;
@@ -3165,14 +3244,14 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
     opacity:0.7;
 }
 .grid-shop-body{
-    color: #808080;
+    color: #757575;
     margin: 20px 0px;
     overflow: auto;
     border: 1px solid #DFDFDF;
 }
 .grid-shop-body .grid-shop-body-head{
     font-size: 15px;
-    font-family: proxima_nova_ltsemibold;
+    font-family: proxima_nova_altbold;
     border-bottom: 1px solid #DFDFDF;
     overflow: auto;
 }
@@ -3194,10 +3273,39 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
     color:#F37C65;
     position:absolute;
     margin-top: -10px;
+    font-size: 13px;
 }
 .grid-shop-body .grid-shop-body-content,.grid-shop-body .grid-shop-body-content .grid-shop-body-content-list div
 {
     display: inline-block;
+}
+.brand-name{
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-family: proxima_nova_altbold;
+    border-bottom: 1px solid #E0E0DF;
+    border-left: 1px solid #E0E0DF;
+    border-right: 1px solid #E0E0DF;
+    padding: 5px;
+    color: #757575;
+}
+.product-name{
+    font-family: proxima_nova;
+    text-align: left;
+    display: block;
+}
+.product-price{
+    display: block;
+    color:#E05B36;
+    text-align: left;
+    margin-top: 5px;
+}
+.product-rate,.product-rate div{
+    margin: 0 !important;
+    text-align: left;
+    display: block !important;
+    padding: 0;
 }
 .grid-shop-body .grid-shop-body-content.discuss,.grid-shop-body .grid-shop-body-content.review{
     display: flow-root;
@@ -3242,23 +3350,25 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
     text-align: center;
 }
 #productShopSection,#notesShopSection{
-    margin: 20px;
+    margin: 20px 20px 0px;
     width: 96.79%;
 }
 #productShopSection .title{
-    font-family: 'proxima_nova_ltsemibold';
-    font-size: 17px;
+    font-family: proxima_nova_altbold;
+    font-size: 15px;
     width: 100%;
-    color: #414141;
+    color: #424242;
     border-top: 1px solid #DFDFDF;
     border-bottom: 1px solid #DFDFDF;
     padding: 10px;
+}
+.grid-shop-body .grid-shop-body-content .loaderImg{
+    margin:auto;
 }
 .grid-shop-body .grid-shop-body-content .grid-shop-body-content-list div
 {
     margin: 10px 15px;
     cursor: pointer;
-    height: 135px;
 }
 #pagingShopMore{
     list-style-type: none;
@@ -3267,8 +3377,8 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
     width: 100%;
 }
 .grid-shop-body .grid-shop-body-content .grid-shop-body-content-list div img{
-    width:130px;
-    height:130px;
+    width: 157px;
+    height: 157px;
 }
 .grid-shop-body .grid-shop-body-content .grid-shop-body-content-list div img:hover
 {
@@ -3319,6 +3429,9 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
     width: 40px;
     border-radius: 25px;
 }
+.grid-shop-body .grid-shop-body-content .grid-shop-body-content-listComment .grid-shop-body-content-listComment-content .discussShopPhoto,.grid-shop-body .grid-shop-body-content .grid-shop-body-content-listComment .grid-shop-body-content-listComment-content .reviewShopPhoto{
+    height:40px;
+}
 .grid-shop-body .grid-shop-body-content .grid-shop-body-content-listComment .grid-shop-body-content-listComment-content div span,.grid-shop-listcomment-more .grid-shop-body-content-listComment-content div span{
     display: block;
 }
@@ -3328,10 +3441,14 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
 .grid-shop-body .grid-shop-body-content .grid-shop-body-content-listComment .grid-shop-body-content-listComment-content div span:first-child{
     font-size: 15px;
     text-transform: uppercase;
+    color: #424242;
+}
+.grid-shop-body .grid-shop-body-content .grid-shop-body-content-listComment .grid-shop-body-content-listComment-content div span:nth-child(2){
+    font-size: 15px;
+    color: #424242;
 }
 .grid-shop-body .grid-shop-body-content .grid-shop-body-content-listComment .grid-shop-body-content-listComment-content div span:last-child,.grid-shop-listcomment-more .grid-shop-body-content-listComment-content div span:last-child{
-    font-family: proxima_nova_ltsemibold;
-    font-size: 10px;
+    font-size: 12px;
 }
 .grid-shop-body .grid-shop-body-content .grid-shop-body-content-inputComment,.grid-shop-body .grid-shop-body-content .grid-shop-body-content-inputComment div,.grid-shop-body .grid-shop-body-content .grid-shop-body-content-inputComment div #commentDiscussShop,.grid-shop-body .grid-shop-body-content .grid-shop-body-content-inputComment div #commentReviewShop{
     width:100%;
@@ -3555,6 +3672,13 @@ Product page
 }
 .menuProfile{
     width:250px;
+    color:#838484;
+}
+.menuProfileHeader{
+    text-align: left;
+    border-bottom: 1px solid #F5F5F5;
+    padding: 15px;
+    font-family: proxima_nova_ltsemibold;
 }
 .menuProfile ul{
     -webkit-padding-start: 0px;
@@ -3562,46 +3686,47 @@ Product page
     -ms-padding-start: 0px;
     -o-padding-start : 0px;
     cursor:pointer;
-    font-size: 13px;
+    font-size: 14px;
 }
 .menuProfile ul li{
-    padding:5px 10px;
-    color:#838484;
+    padding: 5px 30px;
 }
 .menuProfile ul li:hover{
     color:#3FC3FF;
-    background-color:#F4F5F5;
 }
 .contentProfile{
     width:calc(100% - 250px);
     border-left: 1px solid #F5F5F5;
 }
 .myprofile .headerMyprofile{
-    text-align: right;
+    text-align: center;
     width: 100%;
     font-family: proxima_nova_altbold;
     border-bottom: 1px solid #F5F5F5;
-    padding: 5px;
+    padding: 15px;
 }
 .myprofile .headerMyprofileTransaction{
     text-align: center;
     width: 100%;
     font-family: proxima_nova_altbold;
     border-bottom: 1px solid #F5F5F5;
-    padding: 5px;
+    padding: 15px;
+}
+#accordionMyprofile{
+    overflow: auto;
+    color: #757575;
+    padding: 3px 15px;
 }
 #accordionMyprofile h3{
-    cursor:pointer;
     font-size:13px;
-    font-family: proxima_nova_altbold;
     border-bottom: 1px solid #F5F5F5;
-    padding: 5px;
+    padding: 5px 0px;
     outline:none;
     margin: 0px;
-    background-image:url(/img/arrow_down.png);
     background-size: 20px;
     background-repeat: no-repeat;
     background-position: 98% bottom;
+    color:#817F7F;
 }
 #myaccount,#changepassword,#createshop,#transaction,.btnFilePhoto{
     display:none;
@@ -3627,34 +3752,33 @@ Product page
     width: 10px;
     height: 10px;
 }
-#privateComplete{
-    padding: 5px 15px;
+#othersPrivate{
+    margin-left: 25px;
 }
 #createshop .body div,#privateComplete div{
     overflow: auto;
-    margin:10px 0px;
+    margin: 0px 0px 10px 0px;
     float: left;
 }
-#createshop .body div:nth-child(odd),#privateComplete div:nth-child(odd){
+#createshop .body div:nth-child(odd){
     width: 10%;
 }
-#createshop .body div:nth-child(even),#privateComplete div:nth-child(even) {
+#createshop .body div:nth-child(even){
     width: 90%;
 }
 .inputCreateShopPrivate{
-    border: 2px solid #F5F5F5;
+    border: 1px solid #E0E0DF;
     border-radius: 5px;
-    padding: 3px; 
+    padding: 5px 10px;
 }
 #shopname{
-    width: 20%;
+    width: 346.833px;
 }
 .myprofile .bodyMyprofile .dataTransaction{
     display:inline-block;
     width: 20%;
     display: table-cell;
     vertical-align: middle;
-    font-family: proxima_nova_ltsemibold;
 }
 .myprofile .bodyMyprofile .dataTransaction:first-child,.myprofile .bodyMyprofile .dataTransaction:last-child{
     width: 10%;
@@ -3669,8 +3793,12 @@ Product page
     width: 15%;
 }
 .myprofile .bodyMyprofile .head{
-    font-family: proxima_nova_altbold;
+    color: #817F7F;
     border-bottom: 1px solid #F5F5F5;
+    text-transform: uppercase;
+}
+.myprofile .bodyMyprofile .body{
+    padding-top:10px;
 }
 .viewDetailTransaction{
     cursor:pointer;
@@ -3686,12 +3814,17 @@ Product page
     text-transform: uppercase;
     color: #807F7F;
     background-color: inherit;
+    font-size: 13px;
 }
 .dataTransaction .detail{
     text-overflow: ellipsis; 
 }
 .dataTransaction .statusTransaction{
     color: #3FC3FF;
+}
+
+.dataTransaction .statusTransaction.expired{
+    color: #F37C65;
 }
 .bodyProfileTransaction{
     padding:0px !important;
@@ -3708,14 +3841,14 @@ Product page
     width: 100%;
 }
 .myprofile#changepassword div span {
-    font-family: proxima_nova_ltsemibold;
-    font-size: 12px;
+    font-family: proxima_nova;
+    color: #757575;
 }
 .myprofile#changepassword div input {
     padding: 5px;
     width: 70%;
     border-radius: 5px;
-    border: 2px solid #F5F5F5;
+    border: 1px solid #E0E0DF;
 }
 .footerMyprofile{
     border-top: 1px solid #F5F5F5;
@@ -3724,6 +3857,7 @@ Product page
 }
 .footerMyprofile,.myprofile .bodyMyprofile{
     padding: 15px;
+    color: #757575;
 }
 .footerMyprofile #btnSubmitMyprofile,.footerMyprofile #btnSubmitPassMyprofile,.footerMyprofile #btnSubmitCreateShop{
     float:right;
@@ -3731,37 +3865,43 @@ Product page
 .privateLeft,.privateRight{
     float:left;
 }
-.privateLeft{
+.privateLeft,.privateCompleteLeft{
     width:calc(100% - 200px);
-    padding: 10px 0px 0px 15px;
 }
 .privateRight{
     width:200px;
-    padding-top: 25px;
-    text-align: center;
+    position: relative;
 }
 .privateLeft div{
     overflow: auto;
-    margin: 5px;
+    margin: 0px 0px 10px 0px;
     float:left;
 }
 .privateLeft div:nth-child(odd){
     width:30%;
 }
-.privateLeft div:nth-child(even){
+#privateProfile,#privateComplete{
+    overflow: auto;
+    padding-top: 10px;
+}
+.privateCompleteLeft{
+    width:24%;
+}
+.privateLeft div:nth-child(even),.privateCompleteRight{
     width:65%;
 }
 .privateLeft div input[type="text"]{
-    border: 2px solid #F5F5F5;
+    border: 1px solid #E0E0DF;
     border-radius: 5px;
-    padding: 3px;
+    padding: 5px 10px;
     width: 100%;
 }
 .privateRight div input,.btnFilePhoto{
     visibility:hidden;
     width:100px;
+    position: absolute;
 }
-.privateRight div label,.midProductLayer div label{
+.midProductLayer div label{
     background-color: #3FC3FF;
     padding: 3px;
     color: #FFF;
@@ -3834,30 +3974,6 @@ Product page
     padding-left: 0px;
     padding-right: 0px;
 }
-.headerNotif{
-    width:100%;
-    height:200px;
-    background-color: #fbbd33;
-    text-align:center;
-    padding-top: 18px;
-}
-.headerNotif .headerNotif-element{
-    width: 160px;
-    margin: auto;
-}
-.headerNotif .headerNotif-element .headerNotif-element-image{
-    background-image: url("/img/notif.png");
-    background-repeat: no-repeat;
-    background-size: 150px 110px;
-    width: 100%;
-    height:120px;
-}
-.headerNotif .headerNotif-element .headerNotif-element-text{
-    text-transform:uppercase;
-    color:#004E82;
-    font-size:30px;
-    font-family: proxima_nova_ltsemibold;;
-}
 .bodyNotif,.bodyNotif-filter,.bodyNotif-list{
     width:100%;
 }
@@ -3887,6 +4003,9 @@ Product page
 }
 .bodyNotif-filter .bodyNotif-filter-left #filterNotifButton img{
     vertical-align: text-top;
+}
+.bodyNotif-list{
+    min-height: 285px;
 }
 .notif-filter{
     height: 27px;
@@ -3919,7 +4038,7 @@ Product page
 }
 .notif-filter-sub-menu li {
     display:block;
-    font-size:inherit;
+    font-size:13px;
     padding: 2px;
 }
 .notif-filter-sub-menu li:hover{
@@ -3937,6 +4056,7 @@ Product page
     line-height: 15px;
     position: absolute;
     margin-top: 7px;
+    width: 70px;
 }
 .bodyNotif-filter-right .inputSearchNotif,.bodyNotif-filter-right .textSearchNotif{
     position:relative;
@@ -3955,25 +4075,27 @@ Product page
 }
 .bodyNotif-list .bodyNotif-list-left .title{
     text-transform:uppercase;
-    font-size:20px;
+    font-size:15px;
     font-family: proxima_nova_altbold;
+    color:#414141;
 }
 .bodyNotif-list .bodyNotif-list-left .content{
-    font-size:15px;
+    font-size:13px;
     font-family: proxima_nova;
+    color:#414141;
 }
 .bodyNotif-list .bodyNotif-list-left .date{
     font-size: 10px;
     margin-top: 15px;
 }
 .bodyNotif-list .bodyNotif-list-left .date img{
-    vertical-align: super;
     margin-right: 5px;
 }
 .bodyNotif-list .bodyNotif-list-right{
     width: 29%;
     display: inline-block;
     text-align: center;
+    border: 1px solid #DFDFDF;
 }
 .bodyNotif-list .bodyNotif-list-right img{
     border: 1px solid #F5F5F5;
@@ -4295,6 +4417,7 @@ input.radioPaymentOthers:empty ~ label:before{
 .loaderImg{
     height:inherit;
     position: relative;
+    display: block;
 }
 .loaderProgress{
     width:100%;
@@ -4341,7 +4464,7 @@ input.radioPaymentOthers:empty ~ label:before{
     left: 50%;
     margin-left: -80px;
     top: 50%;
-    margin-top: 30px;
+    margin-top: -100px;
     height: 150px;
     
 }
@@ -4353,19 +4476,18 @@ input.radioPaymentOthers:empty ~ label:before{
     Greeting after login
 */
 .greetingContainer{
-    font-family: proxima_nova;
     position: relative;
     left: 50%;
     top: 50%;
     margin-top: -230px;
-    margin-left: -250px;
+    margin-left: -230px;
     height: 330px;
-    width: 480px;
+    width: 450px;
     text-align: center;
 }
 .greetingContainer .top{
     background-color: #FBBD34;
-    height:260px;
+    height:180px;
     width:100%;
     text-align:center;
     border-top-left-radius: 3px;
@@ -4376,14 +4498,11 @@ input.radioPaymentOthers:empty ~ label:before{
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
-    height: 160px;
-    background-size: 80px;
+    height: 120px;
+    background-size: 55px;
 }
 .greetingContainer .top .title{
-    font-size:20pt;
-}
-.greetingContainer .top .desc{
-    font-size:14pt;
+    font-family:proxima_nova_altbold;
 }
 .greetingContainer .bottom{
     width:100%;
@@ -4392,6 +4511,7 @@ input.radioPaymentOthers:empty ~ label:before{
     border-bottom-right-radius: 3px;
 }
 .greetingContainer .bottom input{
+    font-family:proxima_nova_altbold;
     background-color: #3FC3FF;
     color: #FFF;
     border: 0;
@@ -4415,32 +4535,37 @@ input.radioPaymentOthers:empty ~ label:before{
     position: absolute;
     top: 2%;
     right: 3%;
+    font-family: proxima_nova;
 }
 .container.shop-seller {
     padding: 0px;
 }
 
-.grid-shop-seller-head{
+.grid-profile-head,.grid-shop-seller-head,.grid-notif-head{
     background-color:#FEBD18;
-    font-size:30px;
+    font-size:32px;
     text-align:center;
     color:#004E81;
     height: 70px;
-    font-family: 'proxima_nova_ltsemibold';
+    font-family: 'proxima_nova_altbold';
     line-height: 70px;
+    text-transform: uppercase;
 }
 .grid-shop-seller-menu,.grid-shop-seller-body,.grid-shop-seller-footer{
     border-right: 1px solid #DFDFDF;
     border-left: 1px solid #DFDFDF;
     overflow: auto;
     border-bottom: 1px solid #DFDFDF;
+    font-size: 13px;
+}
+.grid-shop-seller-body{
+    min-height:285px;
 }
 .grid-shop-seller-menu div{
     position: relative;
     display:inline-block;
     padding: 10px;
-    color: #848484;
-    font-family: 'proxima_nova_ltsemibold';
+    color: #414141;
     border-right:1px solid #DFDFDF;
     cursor:pointer;
 }
@@ -4454,12 +4579,22 @@ input.radioPaymentOthers:empty ~ label:before{
     padding: 10px 0px;
     text-align: center;
     color: #414141;
-    font-family: 'proxima_nova_ltsemibold';
-    font-size: 17px;
-    border-bottom: 1px solid #DFDFDF;
+    font-family: proxima_nova_altbold;
+    font-size: 15px;
+    border-top: 1px solid #DFDFDF;
+    margin: 0px 15px;
+}
+.grid-shop-seller-body .title.mysales{
+    margin: 0px;
+}
+.grid-shop-seller-body .title:first-child{
+    border-top: 0;
 }
 .grid-shop-seller-body .title.cart{
     text-align: left;
+    color: #747474;
+    font-family: proxima_nova;
+    font-size: 13px;
 }
 .grid-shop-seller-body .note,#notesShopSection .note{
     color :#F97C64;
@@ -4484,7 +4619,7 @@ input.radioPaymentOthers:empty ~ label:before{
 }
 .grid-shop-seller-body .note .note-text .note-seller,#notesShopSection .note .note-text .note-seller{
     width:96%;
-    font-family: 'proxima_nova_ltsemibold';
+    font-size:13px;
 }
 .grid-shop-seller-body .note .note-updated,#notesShopSection .note .note-updated{
     width:100%;
@@ -4496,31 +4631,32 @@ input.radioPaymentOthers:empty ~ label:before{
     margin: 10px;
     background-image: url(/img/note-delete.png);
     background-repeat: no-repeat;
-    width: 50px;
+    width: 45px;
     background-position-x: left;
     line-height: 15px;
     float: right;
     color: #414141;
-    font-family: 'proxima_nova_ltsemibold';
+    font-size: 12px;
+    background-size: 12px;
 }
 .grid-shop-seller-body .note .note-updated .note-updated-button:hover,#notesShopSection .note .note-updated .note-updated-button:hover{
     color:#FEBD18;
 }
 .grid-shop-seller-body .note .note-title,#notesShopSection .note .note-title{
     text-transform: uppercase;
-    font-family: 'proxima_nova_ltsemibold';
+    font-size: 13px;
     color: #808080;
     margin: 10px 0px;
     text-align: left;
-}
-.grid-shop-seller-body .note .note-body,#notesShopSection .note .note-body{
-    border-top: 1px solid #DFDFDF;
     border-bottom: 1px solid #DFDFDF;
+    border-top: 1px solid #DFDFDF;
+    padding: 10px 0px;
+}
+.grid-shop-seller-body .note .note-body,#notesShopSection .note .note-body:first-child{
     color: #808080;
     overflow: auto;
 }
 .grid-shop-seller-body .note .note-body #note-seller-info,.date-operation .date,.date-operation .time,#close-info,#notesShopSection .note .note-body #note-seller-info{
-    font-family: 'proxima_nova_altbold';
     color: #414141;
 }
 #notesShopSection .note .note-body #note-seller-info{
@@ -4529,12 +4665,14 @@ input.radioPaymentOthers:empty ~ label:before{
 .date-operation .date{
     margin: 5px;
 }
-.date-operation .time{
+.date-operation .time,.status-container .time{
     background-color: #F97C64;
     width: 140px;
     margin: auto;
     padding: 5px;
     border-radius: 3px;
+    color: #414141 !important;
+    text-align: center;
 }
 .grid-shop-seller-body .note .note-body .note-body-content,#notesShopSection .note .note-body .note-body-content{
     padding: 10px 0px;
@@ -4543,6 +4681,8 @@ input.radioPaymentOthers:empty ~ label:before{
 .grid-shop-seller-body .note .note-body .note-body-content #owner-shop,#notesShopSection .note .note-body .note-body-content #owner-shop{
     vertical-align: sub;
     margin-left: 10px;
+    color: #414141;
+    font-family: proxima_nova_altbold;
 }
 .grid-shop-seller-body .note .note-body .note-body-content #marker-shop,#notesShopSection .note .note-body .note-body-content #marker-shop,.grid-shop-seller-body .note .note-body .note-body-content #phone-shop,#notesShopSection .note .note-body .note-body-content #phone-shop{
     margin: 10px 5px;
@@ -4555,6 +4695,7 @@ input.radioPaymentOthers:empty ~ label:before{
 }
 .grid-shop-seller-body .note .note-body .note-body-content #address-shop,#notesShopSection .note .note-body .note-body-content #address-shop,.grid-shop-seller-body .note .note-body .note-body-content #hp-shop,#notesShopSection .note .note-body .note-body-content #hp-shop,.grid-shop-seller-body .note .note-body .note-body-content .photo-location-shop,#notesShopSection .note .note-body .note-body-content .photo-location-shop{
     margin-left: 10px;
+    color: #414141;
 }
 .grid-shop-seller-body .note .note-body .note-body-content #address-shop font:nth-child(3),.grid-shop-seller-body .note .note-body .note-body-content #address-shop font:last-child,#notesShopSection .note .note-body .note-body-content #address-shop font:nth-child(3),#notesShopSection .note .note-body .note-body-content #address-shop font:last-child{
     margin-left: 35px;
@@ -4563,13 +4704,16 @@ input.radioPaymentOthers:empty ~ label:before{
     width: 49%;
     overflow: auto;
     float:left;
+    border-left: 1px solid #DFDFDF;
 }
-.grid-shop-seller-body .note .note-body .note-body-content #address-shop-con,#notesShopSection .note .note-body .note-body-content #address-shop-con{
-    border-right: 1px solid #DFDFDF;
+.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-left{
+    border:0;
+}
+#notesShopSection .note .note-body .note-body-content .note-body-content-left{
+    border:0;
 }
 .grid-shop-seller-body .note .note-body .note-body-content .note-body-content-grid1,#notesShopSection .note .note-body .note-body-content .note-body-content-grid1,.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-grid4,#notesShopSection .note .note-body .note-body-content .note-body-content-grid4{
     color:#807F7F;
-    font-family: 'proxima_nova_ltsemibold';
 }
 #notesShopSection .note .note-body .note-body-content .note-body-content-grid1,#notesShopSection .note .note-body .note-body-content .note-body-content-grid2,#notesShopSection .note .note-body .note-body-content .note-body-content-grid3,#notesShopSection .note .note-body .note-body-content .note-body-content-grid4,#notesShopSection .note .note-body .note-body-content .note-body-content-grid5{
     text-align:left;
@@ -4577,7 +4721,13 @@ input.radioPaymentOthers:empty ~ label:before{
 .grid-shop-seller-body .note .note-body .note-body-content .note-body-content-right .date-operation,.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-grid2 .time,#notesShopSection .note .note-body .note-body-content .note-body-content-right .date-operation,#notesShopSection .note .note-body .note-body-content .note-body-content-grid2 .time{
     display:inline-block;
 }
-.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-right .date-operation,#notesShopSection .note .note-body .note-body-content .note-body-content-right .date-operation{
+.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-right .date-operation{
+    text-align:center;
+}
+#notesShopSection .note .note-body .note-body-content .note-body-content-right .date-operation div{
+    color:#807F7F;
+}
+.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-right .date-operation:last-child,#notesShopSection .note .note-body .note-body-content .note-body-content-right .date-operation:last-child{
     width: 49%;
     border-left: 1px solid #DFDFDF;
     text-align: center;
@@ -4587,7 +4737,6 @@ input.radioPaymentOthers:empty ~ label:before{
 }
 .grid-shop-seller-body .note .note-body .note-body-content .note-body-content-grid2 .time:first-child,.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-grid2 .time:nth-child(3),.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-right .time-note,.grid-shop-seller-body .notes .right .time:first-child,.grid-shop-seller-body .notes .right .time:nth-child(3),#notesShopSection .note .note-body .note-body-content .note-body-content-grid2 .time:first-child,#notesShopSection .note .note-body .note-body-content .note-body-content-grid2 .time:nth-child(3),.grid-shop-seller-body .note .note-body .note-body-content .note-body-content-right .time-note,#notesShopSection .notes .right .time:first-child,.grid-shop-seller-body .notes .right .time:nth-child(3){
     background-color:#E5EAED;
-    font-family: 'proxima_nova_altbold';
     color: #414141;
     padding: 5px 30px;
 }
@@ -4596,8 +4745,9 @@ input.radioPaymentOthers:empty ~ label:before{
 }
 .grid-shop-seller-body .note .note-footer,.grid-shop-seller-body .profile .note-footer,#notesShopSection .note .note-footer,.grid-shop-seller-body .profile .note-footer{
     color:#3FC3FF;
-    padding: 20px;
-    font-family: 'proxima_nova_ltsemibold';
+    padding: 20px 0px;
+    font-size: 12px;
+    border-top: 1px solid #DFDFDF;
 }
 .grid-shop-seller-body .note .note-footer input,.grid-shop-seller-body .menu .note-footer input,#notesShopSection .note .note-footer input,#notesShopSection .menu .note-footer input{
     float:right;
@@ -4610,7 +4760,8 @@ input.radioPaymentOthers:empty ~ label:before{
 .grid-shop-seller-body .bank .list-bank table{
     width:100%;
     color:#807F7F;
-    font-family: 'proxima_nova_ltsemibold';
+    font-family: proxima_nova;
+    font-size: 13px;
 }
 .grid-shop-seller-body .bank .list-bank table td{
     padding:15px;
@@ -4632,6 +4783,7 @@ input.radioPaymentOthers:empty ~ label:before{
 }
 .grid-shop-seller-body .bank .list-bank table .list-bank-name #account-name,.grid-shop-seller-body .bank .list-bank table .list-bank-account .no{
     color:#414141;
+    font-family: proxima_nova_altbold;
 }
 .grid-shop-seller-body .bank .list-bank table .list-bank-com{
     height:40px;
@@ -4663,6 +4815,9 @@ input.radioPaymentOthers:empty ~ label:before{
     padding: 5px 20px;
     outline:none;
     box-shadow: 2px 2px 5px #888888;
+    font-size: 13px;
+    font-family: proxima_nova_altbold;
+    letter-spacing: 1px;
 }
 .grid-shop-seller-body .delivery .footer .update-delivery-button:hover,.grid-shop-seller-body .bank .add-bank .add-bank-button:hover,.grid-shop-seller-body .profile .profile-seller-grid1 .grid-shop-head .grid-shop-head-right input:hover,.grid-shop-seller-body .note .note-footer input:hover,.grid-shop-seller-body .menu .note-footer input:hover{
     background-color: #004E82;
@@ -4729,9 +4884,6 @@ input.radioPaymentOthers:empty ~ label:before{
     float:left;
     overflow: auto;
 }
-.grid-shop-seller-body .brand .image img,.grid-shop-seller-body .product .image img{
-    margin:10px;
-}
 .grid-shop-seller-body .brand .right,.grid-shop-seller-body .product .right{
     width: calc(100% - 190px);
     overflow-x: hidden;
@@ -4741,7 +4893,13 @@ input.radioPaymentOthers:empty ~ label:before{
     position:relative;
     cursor:pointer;
     text-align: center;
-    font-family: 'proxima_nova_ltsemibold';
+    margin: 10px 10px 0px;
+}
+.grid-shop-seller-body .brand .right .list-brandseller{
+    margin: 10px;
+}
+.grid-shop-seller-body .brand .right .list-brandseller:hover{
+    background-color: #DFDFDF;
 }
 .grid-shop-seller-body .product .right .list-productseller label{
     display:block;
@@ -4752,14 +4910,18 @@ input.radioPaymentOthers:empty ~ label:before{
 }
 .grid-shop-seller-body .brand .image .create-data,.grid-shop-seller-body .product .image .create-data{
     width: 150px;
-    height: 160px;
+    height: 178px;
     border: 1px solid #DFDFDF;
     text-align: center;
-    line-height: 160px;
+    line-height: 178px;
     cursor: pointer;
     margin-top: 10px;
     color: #3FC3FF;
     overflow: hidden;
+}
+.grid-shop-seller-body .product .image .create-data{
+    height: 212px;
+    line-height: 212px;
 }
 .grid-shop-seller-body .brand .image .create-data:hover,.grid-shop-seller-body .product .image .create-data:hover{
     background: #E5EAED;
@@ -4771,21 +4933,19 @@ input.radioPaymentOthers:empty ~ label:before{
     left: 0;
     right: 0;
     bottom: 0;
-    height: 160px;
+    height: 211px;
     background: rgba(58, 58, 58, 0.6);
     margin: 0px 0px 0px 10px;
     text-align: center;
     color:#3FC3FF;
     font-size:14px;
-    line-height: 160px;
+    line-height: 211px;
+    width: 150px;
+    margin-left: 1px;
 }
 .grid-shop-seller-body .notes{
     padding: 15px 10px;
-    font-family: 'proxima_nova_ltsemibold';
     color: #848484;
-}
-.grid-shop-seller-body .notes:first-child{
-    border-top: 1px solid #DFDFDF;
 }
 .grid-shop-seller-body .notes .left{
     width:20%;
@@ -4852,6 +5012,9 @@ input.radioPaymentOthers:empty ~ label:before{
     cursor: pointer;
     margin-left: 118px;
 }
+.editPhoto:hover{
+    color:#FDBC1C;
+}
 .editProfileSellerContainer{
     background: #FFFFFF;
     width: 800px;
@@ -4867,7 +5030,8 @@ input.radioPaymentOthers:empty ~ label:before{
     text-align: center;
     padding: 10px;
     color: #414141;
-    font-family: 'proxima_nova_ltsemibold';
+    font-family: proxima_nova_altbold;
+    font-size:15px;
 }
 .editProfileSellerContainer .body{
     padding: 20px;
@@ -4894,11 +5058,13 @@ input.radioPaymentOthers:empty ~ label:before{
     width: 100px;
 }
 .editProfileSellerContainer .body .content .right{
-    padding:10px;
     width: 590px;
 }
 .editProfileSellerContainer .body .content .right .grid{
     padding:10px;
+}
+.editProfileSellerContainer .body .content .right .grid label{
+    font-weight: unset;
 }
 .editProfileSellerContainer .body .content .right .grid:first-child label{
     margin-right: 38px;
@@ -4921,12 +5087,18 @@ input.radioPaymentOthers:empty ~ label:before{
     outline: none;
     padding: 5px;
 }
+.editProfileSellerContainer .body .content .select{
+    width: 100%;
+    line-height: 2;
+}
 .editProfileSellerContainer .body .content .addressLabel{
     display:block;
     margin-top: 5px;
+    font-size: 13px;
 }
 .editProfileSellerContainer .body .content .addressInput{
     width:100%;
+    padding-left: 8px;
 }
 .editProfileSellerContainer .footer,.accountSellerContainer .footer,.grid-shop-seller-footer{
     color:#FFF;
@@ -4956,6 +5128,8 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     border-radius:5px;
     width: 86.48px;
     outline: none;
+    font-size: 13px;
+    font-family: proxima_nova_altbold;
 }
 .editProfileSellerContainer .footer #cancel:hover,.accountSellerContainer .footer #cancel:hover,.grid-shop-seller-footer #cancel:hover{
     background-color:#646464;
@@ -4964,6 +5138,8 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     background-color:#3FC3FF;
     border-radius:5px;
     outline: none;
+    font-size: 13px;
+    font-family: proxima_nova_altbold;
 }
 .editProfileSellerContainer .footer #save:hover,.accountSellerContainer .footer #save:hover,.grid-shop-seller-footer #save:hover{
     background-color: #004E82;
@@ -5042,12 +5218,30 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 }
 #detailProductCont label{
     vertical-align: inherit;
+    font-weight: unset;
 }
 #detailProductCont input[name="productCondLayer"]{
     margin-right: 5px;
 }
 .order-container,.order-container .grid .detail.address{
     float:left;
+}
+.order-container .grid.content,.confirm-container .grid.content,.transaction-container .grid.content{
+    border:0;
+}
+.order-container .list-order,.confirm-container .list-confirm{
+    background:#004E81;
+}
+.order-container .list-order img,.confirm-container .list-confirm img{
+    width: 50px;
+    height: 50px;
+    border-radius: 0;
+}
+.order-container .list-order .head,.confirm-container .list-confirm .head{
+    color:#FFF !important;
+}
+.order-container .list-order .body,.confirm-container .list-confirm .body{
+    color:#FEBD18;
 }
 .order-container.left{
     width:60%;
@@ -5064,7 +5258,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     padding: 20px;
     text-align: center;
 }
-.order-container.left .grid .detail .head,.confirm-container .grid .head,.status-container .grid .detail .head{
+.order-container .grid .detail .head,.confirm-container .grid .head,.status-container .grid .detail .head,.transaction-container .grid .detail .head{
     color : #807F7F;
 }
 .order-container.left .grid.third .detail{
@@ -5119,29 +5313,22 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     padding: 10px 35px;
 }
 .order-container{
-    width:100%
-}
-.order-container .grid .detail:first-child{
-    width: 1%;
-    border: 0;
-    vertical-align: super;
+    width:100%;
 }
 .order-container .grid .detail,.confirm-container .grid .detail,.transaction-container .grid .detail{
-    width: 22%;
-    margin: 10px;
+    width: 25%;
+    padding: 10px 35px;
     border-right: 1px solid #DFDFDF;
+    float: left;
 }
 .order-container .grid .detail:last-child,.confirm-container .grid .detail:last-child,.status-container .grid .detail:last-child,.transaction-container .grid .detail:last-child{
     border:0px;
     cursor:pointer;
 }
-.order-container .grid .detail:last-child:hover,.confirm-container .grid .detail:last-child:hover,.status-container .grid .detail:last-child:hover,.transaction-container .grid .detail:last-child:hover{
-    color:#FEBD18 !important;
-}
 .order-container .grid .detail.bluesky,.confirm-container .grid .detail.bluesky,.transaction-container .grid .detail.bluesky{
-    vertical-align: 10px;
+    margin-top: 10px;
 }
-.order-container .header,.confirm-container,.status-container,.transaction-container{
+.order-container,.confirm-container,.status-container,.transaction-container{
     min-height: 250px;
     position: inherit;
 }
@@ -5151,13 +5338,14 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     right: 0;
     position: absolute;
 }
-.order-container .header .grid,.confirm-container .grid,.status-container .grid,.transaction-container .grid{
+.order-container .grid,.confirm-container .grid,.status-container .grid,.transaction-container .grid{
     border-bottom: 1px solid #dfdfdf;
-}
-.order-container .footer{
-    padding: 10px;
-    border-top: 1px solid #dfdfdf;
     overflow: auto;
+    display: block;
+    padding: 5px 0px;
+}
+.order-container .footer,.confirm-container .footer,.transaction-container .footer{
+    padding: 0px;
 }
 .order-container .loaderImg,.confirm-container .loaderImg,.status-container .loaderImg,.transaction-container .loaderImg{
     height: 247px;
@@ -5165,7 +5353,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     margin: auto;
     display: block;
 }
-.order-container .grid button,.confirm-container .grid button{
+.order-container .grid button,.confirm-container .grid button,.transaction-container .grid button{
     color: #FFF;
     float: right;
     border-radius: 5px;
@@ -5174,14 +5362,21 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     cursor: pointer;
     margin: 5px 10px;
     width: 180px;
-    font-family: proxima_nova_ltsemibold;
-    font-size: 14px;
+    font-family: proxima_nova_altbold;
+    font-size: 13px;
 }
 .order-container img,.confirm-container img,.status-container img,.transaction-container img{
     margin: 5px 15px 0px 0px;
     vertical-align: inherit;
     width: 30px;
     border-radius: 25px;
+}
+.mysales-name{
+    color:#414141;
+    font-family: proxima_nova_altbold;
+}
+.mysales-date{
+    color:#414141;
 }
 /*
     Edit Shop Profile Popup
@@ -5202,6 +5397,8 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .accountSellerContainer table{
     margin:auto;
     margin-top: 15px;
+    font-size: 13px;
+    color: #747474;
 }
 .accountSellerContainer table td{
     padding: 5px;
@@ -5209,6 +5406,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 #bankname_con{
     height: 32px;
     line-height: inherit;
+    width: 100%;
 }
 #bankname_con::after{
     padding: 7px 1em;
@@ -5218,16 +5416,17 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 }
 #recbanking{
     vertical-align: top;
+    margin-top: -4px;
 }
 #recname,#recpass,#recno{
-    border: 1px solid #C6C6C6;
+    border: 1px solid #E0E0DF;
     border-radius: 3px;
     padding: 5px 10px;
     outline: none;
     width: 100%;
 }
 #recno{
-    width: 177px;
+    width: 227px;
 }
 .accountSellerContainer .warning{
     padding: 10px;
@@ -5244,14 +5443,16 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     display: inline-block;
     color: #F97C64;
     width: 96%;
-    font-family: 'proxima_nova_ltsemibold';
+    font-size:13px;
 }
 .accountSellerContainer.productLayer{
-    height: 530px;
+    height: 586px;
     width: 840px;
+    top: 43%;
 }
 .accountSellerContainer.productLayer .body{
     overflow: auto;
+    min-height: 341.883px;
 }
 .accountSellerContainer.productLayer .body .left,.accountSellerContainer.productLayer .body .right{
     width: 50%;
@@ -5262,7 +5463,8 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     border-bottom: 1px solid #DFDFDF;
 }
 .accountSellerContainer.productLayer .body .left .titleProductLayer{
-    padding-bottom: 4px
+    padding-bottom: 2px;
+    font-size: 13px;
 }
 .accountSellerContainer.productLayer .body .left img{
     margin-bottom: 10px;
@@ -5273,14 +5475,18 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .accountSellerContainer.productLayer .body .right .titleProductLayer .titleProductLayerTab{
     float: left;
     cursor: pointer;
+    font-size: 13px;
 }
 .accountSellerContainer.productLayer .body .right .titleProductLayer #detailProductLayer{
     margin-left: 10px;
 }
+#descLabel{
+    vertical-align: baseline;
+}
 .delivery .title{
     color: #807F7F;
     text-align: left;
-    font-size: 14px;
+    font-size: 13px;
     border: 0;
 }
 .delivery .body{
@@ -5334,6 +5540,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     border-radius: 3px;
     background: #FFFFFF;
     font-size: 11px;
+    font-family: proxima_nova;
 }
 .filterMysales .select{
     border: 1px solid #DFDFDF;
@@ -5341,17 +5548,19 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     background: inherit;
 }
 .textFilterShopSeller{
-    font-size: 13px;
+    font-size: 14px;
+    font-family: proxima_nova;
     color: #848484;
 }
 .filterMysalesDate,.filterMysalesInput{
     border: 1px solid #DFDFDF;
     height: 22px;
     outline:none;
-    font-size: 11px;
+    font-size: 12px;
     color: #848484;
     border-radius: 3px;
     padding: 0px 3px;
+    font-family: proxima_nova;
 }
 .filterMysalesInput{
     padding-left: 5px;
@@ -5363,22 +5572,27 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .filterMysalesInput{
     width: 200px;
 }
-#search-mysalesorder{
+#search-mysalesorder,#search-mysalesstatus,#search-mysalesconfirm,#search-mysalestransaction{
     position: absolute;
     background-image: url(/img/search-icon.png);
     background-repeat: no-repeat;
     background-size: contain;
     cursor: pointer;
     right: 15px;
-    top: 10px;
+    top: 8px;
     width: 10px;
     height: 10px;
 }
 #confirmallConfirmMysales div,.confirm-container .grid .leftCont,.confirm-container .grid .midCont,.confirm-container .grid .rightCont,.confirm-container .grid .midCont .left,.confirm-container .grid .midCont .right{
     display:inline-block;
+    font-size: 13px;
+    font-family: proxima_nova;
 }
-.confirm-container,.status-container,.order-container,.transaction-container{
-    font-family: proxima_nova_ltsemibold;
+#confirmallConfirmMysales{
+    cursor:pointer;
+}
+#confirmallConfirmMysales:hover{
+    color:#FEBD18;
 }
 .confirm-container:nth-child(2){
     border-top: 1px solid #DFDFDF;
@@ -5413,22 +5627,23 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     text-align: center;
     padding: 15px;
 }
-.status-container .grid{
-    display:block;
-    overflow: auto;
-}
-.status-container .grid:first-child{
-    padding: 5px;
-}
-.status-container .grid:nth-child(2){
-    border-top:1px solid #DFDFDF;
-    border-bottom:1px solid #DFDFDF;
+.status-container .grid.list-status{
+    background-color: #E5EAED;
+    border: 1px solid #747474;
 }
 .status-container .grid .detail{
     float:left;
     width: 25%;
     padding: 10px 35px;
     border-right: 1px solid #DFDFDF;
+}
+.status-container .grid.list-status .detail{
+    border-right: 1px solid #747474;
+    width: 30%;
+}
+.status-container .grid.list-status .detail .right{
+    float: right;
+    margin-top: 4px;
 }
 .status-container .grid .detail:last-child{
     border-right: 0;
@@ -5437,21 +5652,25 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     display:inline-block;
 }
 .status-container .grid .detail.statusline{
-    width: 75%;
+    width: 65%;
+    text-transform: capitalize;
 }
 .status-container .grid .detail.transaction:last-child{
     width:19%;
     line-height: 40px;
     cursor: pointer;
 }
-.status-container .grid .detail.transaction:last-child:hover{
-    color:#FEBD18 !important;
-}
 .status-container .grid .detail.transaction:last-child img{
     margin-bottom: 0px;
 }
 .status-container .grid:last-child .detail.statusline{
     margin-top: 10px;
+}
+#status-line .tick-label{
+    color:#BCBCBC;
+}
+#status-line .tick-label:first-child,#status-line .tick-label:nth-child(2){
+    color:#3FC3FF;
 }
 .grid-incomehistory-left,.grid-incomehistory-right{
     border-top: 1px solid #DFDFDF;
@@ -5600,6 +5819,20 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .print_incomemonth,.print_income{
     cursor:pointer;
 }
+.canceledtrans{
+    background:#E5EAED;
+}
+.canceledtrans img{
+    border-radius: 0;
+    margin-left: 33px;
+    vertical-align: top;
+}
+.canceledtrans span{
+    font-size: 13px;
+    font-family: proxima_nova_altbold;
+    color: #414141;
+    vertical-align: middle;
+}
 /*
     End of Mysales Layer
 */
@@ -5612,7 +5845,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     margin: 20px;
     border: 1px solid #DFDFDF;
     width: calc(100% - 100px);
-    min-height: 850px;
+    min-height: 630px;
 }
 .filled-invoice .left{
     width:50%;
@@ -5630,7 +5863,6 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     -webkit-box-shadow: 2px -1px 15px 0 rgba(0,0,0,.3);
 }
 .filled-invoice .right .content .grid{
-    font-family: proxima_nova_ltsemibold;
     overflow: auto;
 }
 .filled-invoice .right .content .grid .left{
@@ -5664,9 +5896,11 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 }
 .detail_payment_invoice_left{
     float:left;
+    font-family: proxima_nova;
 }
 .detail_payment_invoice_right{
     float:right;
+    font-family: proxima_nova;
 }
 .line_invoice{
     border-top: 1px solid #747474;
@@ -5679,14 +5913,14 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     background-color: #FFFFFF;
 }
 .caption_warning img{
-    vertical-align:super;
+    vertical-align:baseline;
 }
 .filled-invoice .left .title{
     text-align:center;
     border-top:0.5px solid #DFDFDF;
     overflow:auto;
     background-color: #FFFFFF;
-    font-family: proxima_nova_ltsemibold;
+    font-family: proxima_nova_altbold;
 }
 .filled-invoice .left .body{
     padding: 20px 30px;
@@ -5698,41 +5932,47 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     text-align:center;
     font-size: 30px;
     color: #004E81;
-    font-family: proxima_nova_ltsemibold;
+    font-family: proxima_nova_altbold;
+}
+.filled-invoice .right .content .body{
+    font-family: proxima_nova_altbold;
 }
 .filled-invoice .right .footer{
     text-align:center;
     background-color:#3FC3FF;
     overflow:auto;
     color: #004E81;
-    font-family: proxima_nova_ltsemibold;
+    font-family: proxima_nova_altbold;
     font-size: 14px;
 }
 .detail-invoice-icon{
     background-color: #FFFFFF;
     float:left;
-    padding: 10px;
+    padding: 9.3px 10px;
 }
 .detail-invoice-shopname{
-    font-family: proxima_nova_altbold;
+    font-family: proxima_nova_ltsemibold;
     background-color: #3FC3FF;
     text-align: center;
     padding: 10px;
 }
 #status_invoice{
-    color:#FFF;
-}
-#countdown_invoice{
     background-color: #F97C64;
     color: #FFF;
     padding: 5px;
     border-radius: 5px;
     width: 200px;
-    margin: auto; 
+    margin: auto;
+    font-family: proxima_nova_altbold;
+}
+#countdown_invoice{
+    color: #005080;
+    font-family: proxima_nova_altbold;
 }
 .detail-invoice-body{
     padding: 10px 0px;
     overflow: auto;
+    width: 100%;
 }
 .detail-invoice-body-content{
     color:#FFF;
@@ -5743,11 +5983,11 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 }
 .detail-invoice-body-content .aligner{
     float:right;
-    width: 79.5%;
+    width: 78.5%;
     padding: 20px;
 }
 .detail-invoice-body-content .aligner .brand_name{
-    font-size: 18px;
+    font-family: proxima_nova_altbold;
 }
 .detail-invoice-body-content .aligner .product_name{
     color:#FEBD18;
@@ -5815,7 +6055,8 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .history_invoice{
     text-align:center;
     cursor:pointer;
-    color:#FEBD18 !important;
+    color:#F97C64 !important;
+    font-family: proxima_nova_altbold;
 }
 .history_invoice:hover{
     color:inherit;
@@ -5833,6 +6074,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     border-bottom: 0;
     width: 40%;
     text-align: center;
+    font-family: proxima_nova_altbold;
 }
 #payment_method .content{
     padding: 30px;
@@ -5866,6 +6108,9 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 #contact_us:hover{
     cursor:pointer;
     color: #FEBD18 !important;
+}
+#total_pricetext,#total_price{
+    font-family: proxima_nova_altbold;
 }
 /*
     End of Invoice page
@@ -5907,11 +6152,151 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     End of Footer Float Menu
 */
 /*
+    Account Page
+*/
+.account-container{
+    font-family: proxima_nova_ltsemibold;
+    width: 700px;
+    margin: 25px auto;
+}
+.account-container-head{
+    display:block;
+    color:#414141;
+    text-align:center;
+    border:1px solid #DFDFDF;
+    padding: 10px;
+    font-family: proxima_nova_altbold;
+    font-size: 15px;
+}
+.account-container-body{
+    display:block;
+    padding: 10px 30px;
+    background:#F4F4F4;
+    color:#414141;
+    overflow: auto;
+}
+.account-container-section{
+    margin-bottom:20px;
+}
+.account-container-section .caution{
+    border:1px solid #DFDFDF;
+    padding: 10px 30px;
+}
+.account-container-section font:last-child{
+    cursor:pointer;
+}
+.account-container-section-head{
+    background:#FFFFFF;
+    text-align:center;
+}
+.account-container-section-head .h6{
+    padding: 15px 150px;
+    text-align: left;
+    font-family: proxima_nova;
+}
+.account-container-section-head .h6 .text-uppercase:first-child{
+    color:#004E81;
+    font-size: 32px;
+    font-family: proxima_nova_altbold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.account-container-section-body{
+    background:#3FC3FF;
+    color:#FFF;
+    text-align:center;
+    padding:10px
+}
+.account-container-section-body .h6:last-child{
+    color:#005080;
+}
+.no-account{
+    border-bottom:1px solid #747474;
+    margin: 10px 0px;
+    padding-bottom: 10px;
+    font-size: 15px;
+    font-family: proxima_nova_altbold;
+}
+.account-container-count{
+    background:#F97C64;
+    color:#FFF;
+    padding:5px 10px;
+    border:0;
+    border-radius:5px;
+    box-shadow: 3px 3px 10px #888888;
+    width: 200px;
+    margin: auto;
+}
+.account-container-section:nth-child(2){
+    background:#FFFFFF;
+    text-align:center;
+}
+.account-container-section ul{
+    overflow:auto;
+}
+.account-container-section ul li{
+    float:left;
+    width: 110px;
+    margin: 0px 25px !important;
+    position: relative;
+}
+.account-container-section ul li div:first-child{
+    position:absolute;
+    background-color:#FEBD18;
+    margin-top: 1px;
+    margin-left: -10px;
+    padding: 5px 10px;
+}
+.account-container-section ul li div:nth-child(2){
+    margin-top: 10px;
+    background-color: #004E82;
+}
+.account-container-section:nth-child(2) .h6{
+    padding: 15px 0px;
+}
+.account-container-section img{
+    width: 88px;
+    height: 112px;
+}
+.account-container-section:nth-child(3){
+    font-size:13px;
+    overflow:auto;
+}
+.account-container-section:nth-child(3) div:first-child{
+    float:left;
+    width: 10px;
+}
+.account-container-section:nth-child(3) div:last-child{
+    float:left;
+    width: 575px;
+    margin-left: 15px;
+}
+.account-container-footer{
+    background:#3FC3FF;
+    text-align: center;
+    padding: 10px;
+}
+.btn-account{
+    background:#F97C64;
+    color:#FFF;
+    padding:5px 10px;
+    border:0;
+    border-radius:5px;
+    box-shadow: 3px 3px 10px #888888;
+    width: 200px;
+    margin: auto;
+    text-transform:uppercase;
+    font-family: proxima_nova_altbold;
+}
+/*
+    End of Account Page
+*/
+/*
     Pagination
 */
     .page-item{
         margin: 0px 5px !important;
-        font-size: initial;
+        font-size: 12px;
     }
     .page-item a{
         border-radius: 15px;

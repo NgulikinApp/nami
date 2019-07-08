@@ -12,7 +12,7 @@
 <div class="header">
     <header>
         <div class="leftHeader"></div>
-        <div class="menu-category-wrap">
+        <div class="menu-category-wrap fn-12">
             <nav class="menu-category">
                 <ul class="menu-category-clearfix">
                     <li class="current-item">
@@ -29,24 +29,24 @@
             <div id="search-header"></div>
         </div>
         <div class="rightHeader">
-            <div class="iconHeader tooltip" id="iconCartHeader" data-toggle="popover" data-trigger="click" data-content="1">
+            <div class="iconHeader tooltip fn-13" id="iconCartHeader" data-toggle="popover" data-trigger="click" data-content="1">
                 <span class="tooltiptext tooltip-bottom">Keranjang Belanja</span>
                 <span class="sumManinMenuCart">0</span>
             </div>
             <?php
                 if(isset($_SESSION['user'])){
             ?>
-                <div class="iconHeader tooltip" id="iconNotifHeader" data-toggle="popover" data-trigger="click" data-content="1">
+                <div class="iconHeader tooltip fn-13" id="iconNotifHeader" data-toggle="popover" data-trigger="click" data-content="1">
                     <span class="tooltiptext tooltip-bottom">Notifikasi</span>
                     <span class="sumNotifinMenuCart">0</span>
                 </div>
             <?php
                 }
             ?>
-            <div class="iconHeader tooltip" id="iconFavoritHeader">
+            <div class="iconHeader tooltip fn-13" id="iconFavoritHeader">
                 <span class="tooltiptext tooltip-bottom">Favorit Belanja</span>
             </div>
-            <div class="textHeader">
+            <div class="textHeader fn-12">
                 <?php
                     if(!isset($_SESSION['user'])){
                 ?>
@@ -79,7 +79,7 @@
             </div>-->
         </div>
     </header>
-    <div class="menu-category-sub-menu"></div>
+    <div class="menu-category-sub-menu fn-12"></div>
 </div>
 <div class="cover-popup"></div>
 <div class="cover-category hidden"></div>

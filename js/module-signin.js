@@ -58,6 +58,7 @@ function ajax_auth(){
 	       $('.error_message').removeClass('show');
 	       $('.error_message').addClass('show').html('Username dan password harus diisi');
 	    }else{
+	        $('body').append('<div class="loaderProgress"><img src="img/loader.gif" /></div>');
 	        pass = (SHA256(pass)).toUpperCase();
     	    $.ajax({
                 type: 'POST',
@@ -87,6 +88,7 @@ function ajax_auth(){
                         sessionStorage.setItem('loginNgulikin',1);
                         location.href = url;
                     }
+                    $('.loaderProgress').remove();
                 }
             });
 	   }

@@ -29,7 +29,7 @@ function initGeneral(){
 	
 	if(sessionStorage.getItem('tokenNgulikin') === null){
         $.getJSON(TOKEN_API, function( data ) {
-	    sessionStorage.setItem('tokenNgulikin',data.result);
+	        sessionStorage.setItem('tokenNgulikin',data.result);
 	    });
 	}
 	
@@ -43,14 +43,14 @@ function initGeneral(){
     	    templatePopUpShop += '  <div class="arrow"></div>';
     	    templatePopUpShop += '  <div>';
     	    templatePopUpShop += '      <ul>';
-    	    templatePopUpShop += '          <li class="listShopMenu fullname_bubble"></li>';
-    	    templatePopUpShop += '          <li class="listShopMenu">';
+    	    templatePopUpShop += '          <li class="listShopMenu fullname_bubble fn-13"></li>';
+    	    templatePopUpShop += '          <li class="listShopMenu fn-13">';
     	    templatePopUpShop += '              <a onclick="mysalesShopClick()">Penjualanku</a>';
     	    templatePopUpShop += '          </li>';
     	    /*templatePopUpShop += '          <li class="listShopMenu">';
     	    templatePopUpShop += '              <a onclick="incomeShopClick()">Penghasilanku</a>';
     	    templatePopUpShop += '          </li>';*/
-    	    templatePopUpShop += '          <li class="listShopMenu">';
+    	    templatePopUpShop += '          <li class="listShopMenu fn-13">';
     	    templatePopUpShop += '              <a onclick="settingShopClick()">Pengaturan Toko</a>';
     	    templatePopUpShop += '          </li>';
     	    templatePopUpShop += '      </ul>';
@@ -72,11 +72,11 @@ function initGeneral(){
     	    templatePopUpProfile += '  <div class="arrow"></div>';
     	    templatePopUpProfile += '  <div>';
     	    templatePopUpProfile += '      <ul>';
-    	    templatePopUpProfile += '          <li class="listShopMenu fullname_bubble"></li>';
-    	    templatePopUpProfile += '          <li class="listShopMenu">';
+    	    templatePopUpProfile += '          <li class="listShopMenu fullname_bubble fn-13"></li>';
+    	    templatePopUpProfile += '          <li class="listShopMenu fn-13">';
     	    templatePopUpProfile += '              <a onclick="profileClick()">Lihat Profil</a>';
     	    templatePopUpProfile += '          </li>';
-    	    templatePopUpProfile += '          <li class="listShopMenu">';
+    	    templatePopUpProfile += '          <li class="listShopMenu fn-12">';
     	    templatePopUpProfile += '              <input type="button" value="Keluar" class="logoutMainMenu" onclick="logoutClick()"/>';
     	    templatePopUpProfile += '          </li>';
     	    templatePopUpProfile += '      </ul>';
@@ -207,7 +207,7 @@ function initGeneral(){
 	    window.open('https://www.blog.ngulikin.com');
 	});
 	
-	$('#footerHelp,.footer-body-mid2 ul li:nth-child(2),#contact_us').on('click', function (e) {
+	$('#footerHelp,.footer-body-mid3 ul li:nth-child(2),#contact_us').on('click', function (e) {
 	    location.href = url+"/help";
 	});
 	
@@ -237,7 +237,7 @@ function bubbleCart(){
                         templatePopUpCart += '  <div class="bubble-container">';
                     	if(data.result.totalproducts>0){
                             templatePopUpCart += '      <ul class="bubble-list-cart">';
-                            templatePopUpCart += '          <li>Jumlah <div class="bubble-sum-cart"><font id="productsbubbletotal">'+data.result.totalproducts+'</font><img src="/img/button_cart.png" width="15" height="15"/></div></li>';
+                            templatePopUpCart += '          <li class="fn-15">Jumlah <div class="bubble-sum-cart"><font id="productsbubbletotal">'+data.result.totalproducts+'</font><img src="/img/button_cart.png" width="15" height="15"/></div></li>';
                             templatePopUpCart += '      </ul>';
                             templatePopUpCart += '      <div class="no-cart">';
                             $.each( data.result.listshops, function( key, val ) {
@@ -247,13 +247,13 @@ function bubbleCart(){
                                     templatePopUpCart += '                  <div class="list-cart-content">'+valproduct.brand_name+'</div>';
                                     templatePopUpCart += '                  <div class="list-cart-content">'+valproduct.product_name+'</div>';
                                     templatePopUpCart += '                  <div class="list-cart-content">Total '+valproduct.cart_sumproduct+'</div>';
-                                    templatePopUpCart += '                  <div class="list-cart-content">'+valproduct.cart_createdate+'</div>';
+                                    templatePopUpCart += '                  <div class="list-cart-content"> <i class="fa fa-clock-o"></i> '+valproduct.cart_createdate+'</div>';
                                     templatePopUpCart += '              </div>';
                                     templatePopUpCart += '              <div class="list-cart-cont">';
                                     templatePopUpCart += '                  <img src="'+valproduct.product_image+'" width="65" height="65"/>';
                                     templatePopUpCart += '              </div>';
                                     templatePopUpCart += '              <div class="list-cart-cont">';
-                                    templatePopUpCart +=                    valproduct.product_price;
+                                    templatePopUpCart +=                    numberFormat(valproduct.product_price);
                                     templatePopUpCart += '              </div>';
                                     templatePopUpCart += '          </div>';
                                 });
@@ -271,7 +271,7 @@ function bubbleCart(){
                             templatePopUpCart += '          <span>Tidak ada produk yang ditambahkan</span>';
                             templatePopUpCart += '      </div>';
                             templatePopUpCart += '      <div class="bubble-cart-button">';
-                            templatePopUpCart += '          <input type="button" value="Lihat Keranjang" onclick="cartClick()"/>';
+                            templatePopUpCart += '          <input type="button" value="Lihat Keranjang" onclick="cartClick()" class="fn-13"/>';
                             templatePopUpCart += '      </div>';
                     	}
                 	templatePopUpCart += '  </div>';
@@ -285,6 +285,8 @@ function bubbleCart(){
                         $('#iconShopTemp').popover('hide');
                     	$('#iconNotifHeader').popover('hide');
                     	$('#iconProfileTemp').popover('hide');
+                    	
+                    	$('.popover .arrow').removeAttr('style');
                     });
                     
                     $(".sumManinMenuCart").html(data.result.totalproducts);
@@ -334,20 +336,26 @@ function bubbleNotif(){
                         templatePopUpNotif += '  <div class="arrow"></div>';
                         templatePopUpNotif += '  <div class="bubble-container">';
                         if(data.result.listNotif.length>0){
-                            templatePopUpNotif += '<div class="no-cart">';
+                            templatePopUpNotif += '      <ul class="bubble-list-cart">';
+                            templatePopUpNotif += '          <li class="fn-15">Notifikasi</li>';
+                            templatePopUpNotif += '      </ul>';
+                            templatePopUpNotif += '     <div class="no-cart">';
                             $.each( data.result.listNotif, function( key, val ) {
-                                templatePopUpNotif += '<div class="list-cart">';
-                                templatePopUpNotif += '     <div class="list-cart-cont">';
-                                templatePopUpNotif += '         <div class="list-cart-content">'+val.notifications_title+'</div>';
-                                templatePopUpNotif += '         <div class="list-cart-content">'+val.notifications_desc+'</div>';
-                                templatePopUpNotif += '         <div class="list-cart-content">'+val.notifications_createdate+'</div>';
+                                templatePopUpNotif += '     <div class="list-cart">';
+                                templatePopUpNotif += '         <div class="list-cart-cont">';
+                                templatePopUpNotif += '             <div class="list-cart-content">'+val.notifications_title+'</div>';
+                                templatePopUpNotif += '             <div class="list-cart-content">'+val.notifications_desc+'</div>';
+                                templatePopUpNotif += '             <div class="list-cart-content bubble-notif-date">';
+                                templatePopUpNotif += '                 <img src="/img/button_notif.png" width="10" height="10" style="margin: 0px 3px 0px 0px;vertical-align: unset;"/>';
+                                templatePopUpNotif +=                   val.notifications_createdate;
+                                templatePopUpNotif += '             </div>';
+                                templatePopUpNotif += '         </div>';
+                                templatePopUpNotif += '         <div class="list-cart-cont">';
+                                templatePopUpNotif += '             <img src="'+val.notifications_photo+'" width="65" height="65" onclick="notifClick()" style="cursor:pointer;"/>';
+                                templatePopUpNotif += '         </div>';
                                 templatePopUpNotif += '     </div>';
-                                templatePopUpNotif += '     <div class="list-cart-cont">';
-                                templatePopUpNotif += '         <img src="'+val.notifications_photo+'" width="65" height="65" onclick="notifClick()" style="cursor:pointer;"/>';
-                                templatePopUpNotif += '     </div>';
-                                templatePopUpNotif += '</div>';
                             });
-                            templatePopUpNotif += '</div>';
+                            templatePopUpNotif += '     </div>';
                         }else{
                             templatePopUpNotif += '<div class="no-notif">';
     	                    templatePopUpNotif += '     <img src="/img/no-notif.png" width="120" height="100"/>';
@@ -355,7 +363,7 @@ function bubbleNotif(){
     	                    templatePopUpNotif += '</div>';
                         }
                         templatePopUpNotif += '     <div class="bubble-cart-button">';
-                        templatePopUpNotif += '         <input type="button" value="Lihat Notifikasi" onclick="notifClick()"/>';
+                        templatePopUpNotif += '         <input type="button" value="Lihat Notifikasi" onclick="notifClick()" class="fn-13"/>';
                         templatePopUpNotif += '     </div>';
                         templatePopUpNotif += '  </div>';
                         templatePopUpNotif += '</div>';
@@ -370,6 +378,9 @@ function bubbleNotif(){
                 	    $('#iconCartHeader').popover('hide');
                 	    $('#iconProfileTemp').popover('hide');
                 	    
+                	    $('.popover .arrow').css({'top':'-11px','margin-left':'24px'});
+                	    $('.popover').css('left','-=34px');
+    	    
                 	    if($('.sumNotifinMenuCart').text() === '1'){
                 	        doReadNotif();
                 	    }
@@ -484,13 +495,7 @@ function bindCategoryProduct(data){
     $(".menu-category-sub-menu").html(listcategoryMain);
     $(".footer-body-mid1 ul").html(listcategoryFooter);
                     
-    $('.grid-listmiddle-cont8').on('click', function (e) {
-        var categoryVal = $(this).data("category");
-                            
-	    location.href = url+"/search/"+categoryVal;
-    });
-                    
-    $('.dropbtn').on('click', function (e) {
+    $('.dropbtn,.footer-body-mid1 li,.grid-listmiddle-cont8').on('click', function (e) {
         var categoryVal = $(this).data("category");
                             
 	    location.href = url+"/search/"+categoryVal;
@@ -501,12 +506,6 @@ function bindCategoryProduct(data){
         var subcategoryVal = $(this).data("subcategory");
                             
 	    location.href = url+"/search/"+categoryVal+"/"+subcategoryVal;
-    });
-    
-    $('.footer-body-left ul li').on('click', function (e) {
-        var categoryVal = $(this).data("category");
-                            
-	    location.href = url+"/search/"+categoryVal;
     });
     
     $('.menu-category-items').hover(function(){

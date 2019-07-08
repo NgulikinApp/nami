@@ -156,7 +156,7 @@ function changePayment(){
                     location.href = url;
                     localStorage.getItem('authNgulikin');
                 }else{
-                    location.href = url+"/invoice/"+invoiceno;
+                    location.href = url+"/account/"+invoiceno;
                 }
             } 
         });

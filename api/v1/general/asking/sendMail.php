@@ -11,6 +11,11 @@
     include $_SERVER['DOCUMENT_ROOT'].'/api/model/beanoflink.php';
     
     /*
+        Function location in : /model/connection.php
+    */
+    $con = conn();
+    
+    /*
         Get parameter with from ajax form
         list parameter:
         1. name
@@ -24,6 +29,8 @@
     $user_name	= param($_POST['name']);
 	$user_email = param($_POST['email']);
 	$question	= param($_POST['question']);
+	
+	$con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
 	
 	//checking all parameter that should not be empty
 	if($user_name == "" || $user_email == "" || $question == ""){
@@ -104,9 +111,24 @@
 		);
 	}
 	
+	$stmt = $con->prepare("INSERT INTO questions(fullname,email,desc,attach_file) VALUES(?,?,?,?)");
+                
+    $stmt->bind_param("ssss", $user_name, $user_email, $question, basename($_FILES["file"]["name"]));
+            
+    $stmt->execute();
+                
+    $stmt->close();
+	
 	/*
         Function location in : /model/generatejson.php
     */
 	generateJSON($data);
 	if($target_file != "")unlink($target_file);
+	
+	$con->commit();
+    
+    /*
+        Function location in : /model/connection.php
+    */
+    conn_close($con);
 ?>

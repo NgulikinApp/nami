@@ -81,7 +81,7 @@
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8);
         
         while ($stmt->fetch()) {
             $total = $col5;
@@ -89,8 +89,9 @@
                       "product_id" => $col1,
                       "product_name" => $col2,
                       "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($col4.'/product/'.$col3)),
-                      "product_price" => $col6,
-                      "shop_name" => $col7
+                      "product_price" => number_format($col6, 0, '.', '.'),
+                      "shop_name" => $col7,
+                      "product_average_rate" => $col8
                     );
         }
         

@@ -1,4 +1,4 @@
-<div class="detail-shopping-header">
+<div class="detail-shopping-header fn-15">
     Detail Belanja
 </div>
 <div id="cart-filledlist">

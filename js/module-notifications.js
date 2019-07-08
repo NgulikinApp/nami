@@ -16,12 +16,18 @@ function initNotifications(){
 	        $('#search-notif').trigger('click');
 	    }
 	});
+	
+	$('input[name="filterNotif"]').on('click', function (e) {
+	    notification();
+	});
 }
 
 function notification(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken("notification");
     }else{
+        $(".bodyNotif-list").html('<img src="img/loader.gif" class="loaderImg" id="loaderNotif"/>');
+        
         var keyword = $('#searchNotif').val();
         $.ajax({
             type: 'GET',
@@ -37,7 +43,7 @@ function notification(){
                     if(response.length > 0){
                         var listNotif = '<ul>';
                         $.each( response, function( key, val ) {
-                            listNotif += '<li class="listnotif" data-id="'+val.link_id+' datainternal-id="'+val.notifications_id+'">';
+                            listNotif += '<li class="listnotif" data-id="'+val.link_id+' data-type="'+val.notifications_type+' datainternal-id="'+val.notifications_id+'">';
                             listNotif += '   <div class="bodyNotif-list-left">';
                             listNotif += '      <div class="title">'+val.notifications_title+'</div>';
                             listNotif += '      <div class="content">'+val.notifications_desc+'</div>';
@@ -59,9 +65,21 @@ function notification(){
                     }
                     $(".bodyNotif-list").html(listNotif);
                     
+                    $("#sumNotif").html(response.length);
+                    
                     $('.listnotif').on('click', function (e) {
-                        var dataid = $( this ).data('id');
-                	    location.href = url+"/invoice/"+dataid;
+                        var dataid = $( this ).data('id'),
+                            datatype = parseInt($( this ).data('type')),
+                            linkUrl = "";
+                        
+                        if(datatype !== 3){
+                            if(datatype === 1){
+                                linkUrl = url+"/invoice/"+dataid;
+                            }else{
+                                linkUrl = url+"/shop/t";
+                            }
+                            location.href = linkUrl;
+                        }
                 	});
                 }else{
                     generateToken("notification");

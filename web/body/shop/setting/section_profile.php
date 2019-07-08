@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="note-body-content-right">
-                <div class="date-operation">
+                <div class="date-operation" style="margin: 0px 65px;">
                     <div>Tanggal tutup</div>
                     <div class="date" id="shop_close_empty">Belum diisi</div>
                     <div class="time hidden" id="shop_close_filled"></div>

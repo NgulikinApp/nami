@@ -64,7 +64,7 @@
             */
             $verified = code_verified($stmt);
             
-            if($verified[0] == ""){
+            if($verified[0] == "" || $code == ""){
                 /*
                     Function location in : /v1/auth/functions.php
                 */

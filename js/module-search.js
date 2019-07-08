@@ -324,8 +324,9 @@ function searchItem(){
                                 listElement += '       <img src="'+val.product_image+'"/>';
                                 listElement += '   </div>';
                                 listElement += '   <div class="result-content-list-data-body">';
-                                listElement += '       <span>'+val.product_name+'</span>';
-                                listElement += '       <span>'+val.product_price+'</span>';
+                                listElement += '       <span style="color:#817F7F;font-family: proxima_nova;margin-top: 3px;letter-spacing:1px;">'+val.product_name+'</span>';
+                                listElement += '       <span style="margin-top: 5px;color:#E05A36;font-size: 14px;font-family:proxima_nova_altbold;">IDR '+val.product_price+'</span>';
+                                listElement += '       <span class="rateyo" id="productsearch'+val.product_id+'" style="margin: initial;padding: 0px;"></span>';
                                 listElement += '   </div>';
                                 listElement += '</div>';
                             }
@@ -333,6 +334,10 @@ function searchItem(){
                         
                         $('.result-content #searchNotFound').removeClass('active');
                         $(".list-search .result-content-list").html(listElement);
+                        
+                        $.each( response, function(keyproduct , valproduct ) {
+                            $("#productsearch"+valproduct.product_id).rateYo({rating: valproduct.product_average_rate,readOnly: true,starWidth : "12px"});
+                        });
                         
                         $('.pagination').twbsPagination({
                             totalPages: data.total_page,

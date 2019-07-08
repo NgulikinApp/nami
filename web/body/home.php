@@ -17,18 +17,18 @@
     </section>
     <section class="container desc">
         <div class="grid-cont3">
-            <div class="grid-cont3-left">
+            <div class="grid-cont3-left fn-13">
                 Ngulikin menyediakan wadah untuk para wirausaha yang ingin memasarkan produknya secara luas .....
             </div>
             <div class="grid-cont3-middle">
-                <div class="grid-cont3-middle-subleft">
+                <div class="grid-cont3-middle-subleft fn-14">
                     E-COMMERCE PELAJAR PERTAMA DI INDONESIA
                 </div>
                 <div class="grid-cont3-middle-subright">
                     Ngulikin merupakan terobosan terbaru dalam dunia E-commerce yang mewadahi karya-karya anak muda, khususnya pelajar. Agar memiliki wadah efektif dan efisien dalam memasarkan  produk kreatifnya.
                 </div>
             </div>
-            <div class="grid-cont3-right">
+            <div class="grid-cont3-right fn-13">
                 <div>Produk di Ngulikin merupakan 100% karya anak indonesia yang dibuat oleh para pelajar dan Universitas di seluruh indonesia .....</div>
             </div>
         </div>
@@ -57,12 +57,13 @@
                 <div class="grid-sub-cont9-header">
                     <div>
                         <span>promo</span>
+                        <span>|</span>
                         <span>fashion.teknologi.furniture</span>
                     </div>
                 </div>
                 <div class="grid-sub-cont9-body">
                     <img src="img/loader.gif" class="loaderImg" id="loaderHomeProductPromo"/>
-                    <div class="grid-sub-cont9-body-list" id="promo"></div>
+                    <div class="grid-sub-cont9-body-list" id="promo" style="padding-left: 10px;"></div>
                 </div>
             </div>
         </div>
@@ -71,26 +72,27 @@
                 <div class="grid-sub-cont9-header">
                     <div>
                         <span>terlaris</span>
+                        <span>|</span>
                         <span>fashion.teknologi.furniture</span>
                     </div>
                 </div>
                 <div class="grid-sub-cont9-body">
                     <img src="img/loader.gif" class="loaderImg" id="loaderHomeProductBest"/>
-                    <div class="grid-sub-cont9-body-list" id="best-selling"></div>
+                    <div class="grid-sub-cont9-body-list" id="best-selling" style="padding-left: 10px;"></div>
                 </div>
             </div>
         </div>
     </section>
     <section class="container successtory">
+        <div class="title">Kisah sukses</div>
         <div id="cslide-slides" class="grid-cont5 cslide-slides-master">
             <div class="grid-header-cont5">
-                KISAH SUKSES
                 <span class="cslide-prev"><img src="img/arrow-left.png" height="25" width="25"/></span>
                 <span class="cslide-next"><img src="img/arrow-right.png" height="25" width="25"/></span>
             </div>
             <div class="grid_chapter cslide-slides-container" id="success-story">
                 <div class="cslide-slide">
-                    <div class="grid_sub_chapter">
+                    <div class="grid_sub_chapter fn-13">
                         <div>
                             Appreciate banget sama Ngulikin.com karena disini anak-anak muda khususnya mahasiswa Desain Produk ndustri bisa lebih dihargai karyanya, nggak cuma sekedar jadi nilai akademis aja
                         </div>
@@ -99,13 +101,13 @@
                                 <img src="https://scontent.fjkt1-1.fna.fbcdn.net/v/t1.0-9/16472974_10208482547443706_4718047265869220728_n.jpg?_nc_cat=0&oh=a4a42e5ccd5d6566b116347eb5aa6021&oe=5BD24D26" width="100" height="100">
                             </div>
                             <div class="grid_rightsub_chapter_right">
-                                <span>Andhika Adhitama Gama</span>
-                                <span>AMIKOM YOGYAKARTA</span>
-                                <span>INFORMATICS ENGINEERING</span>
+                                <span class="fn-14">Andhika Adhitama Gama</span>
+                                <span class="fn-12">AMIKOM YOGYAKARTA</span>
+                                <span class="fn-12">INFORMATICS ENGINEERING</span>
                             </div>
                         </div>
                     </div>
-                    <div class="grid_sub_chapter">
+                    <div class="grid_sub_chapter fn-13">
                         <div> Appreciate banget sama Ngulikin.com karena disini anak-anak muda khususnya mahasiswa Desain Produk ndustri bisa lebih dihargai karyanya, nggak cuma sekedar jadi nilai akademis aja
                         </div>
                         <div class="grid_rightsub_chapter">
@@ -113,15 +115,15 @@
                                 <img src="https://scontent.fjkt1-1.fna.fbcdn.net/v/t1.0-9/10262014_1703247593234804_5565481879552377594_n.jpg?_nc_cat=0&oh=ea882447a6bdf830ccaaaf72115e728b&oe=5C11E7C6" width="100" height="100">
                             </div>
                             <div class="grid_rightsub_chapter_right">
-                                <span>Reicha Sofi Azura</span>
-                                <span>TELKOM UNIVERSITY</span>
-                                <span>VISUAL COMMUNICATION DESIGN</span>
+                                <span class="fn-14">Reicha Sofi Azura</span>
+                                <span class="fn-12">TELKOM UNIVERSITY</span>
+                                <span class="fn-12">VISUAL COMMUNICATION DESIGN</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="cslide-slide">
-                    <div class="grid_sub_chapter">
+                    <div class="grid_sub_chapter fn-13">
                         <div> Appreciate banget sama Ngulikin.com karena disini anak-anak muda khususnya mahasiswa Desain Produk ndustri bisa lebih dihargai karyanya, nggak cuma sekedar jadi nilai akademis aja
                         </div>
                         <div class="grid_rightsub_chapter">
@@ -129,13 +131,13 @@
                                 <img src="https://trello-avatars.s3.amazonaws.com/718fe86f8d8913e5cdb680ab654c1d14/170.png" width="100" height="100">
                             </div>
                             <div class="grid_rightsub_chapter_right">
-                                <span>Muhamad Agung Prabowo</span>
-                                <span>PARAMADINA UNIVERSITY</span>
-                                <span>INTERNATIONAL BUSINESS</span>
+                                <span class="fn-14">Muhamad Agung Prabowo</span>
+                                <span class="fn-12">PARAMADINA UNIVERSITY</span>
+                                <span class="fn-12">INTERNATIONAL BUSINESS</span>
                             </div>
                         </div>
                     </div>
-                    <div class="grid_sub_chapter">
+                    <div class="grid_sub_chapter fn-13">
                         <div>
                             Appreciate banget sama Ngulikin.com karena disini anak-anak muda khususnya mahasiswa Desain Produk ndustri bisa lebih dihargai karyanya, nggak cuma sekedar jadi nilai akademis aja
                         </div>
@@ -144,9 +146,9 @@
                                 <img src="https://scontent-sin6-2.xx.fbcdn.net/v/t1.0-1/p160x160/10460988_10202462622957956_7341475977666742534_n.jpg?_nc_cat=102&_nc_ht=scontent-sin6-2.xx&oh=0c581392f710fdbfbf7780b6bce859bd&oe=5C57B408" width="100" height="100">
                             </div>
                             <div class="grid_rightsub_chapter_right">
-                                <span>Sandy Nurdiansyah</span>
-                                <span>PARAMADINA UNIVERSITY</span>
-                                <span>VISUAL COMMUNICATION DESIGN</span>
+                                <span class="fn-14">Sandy Nurdiansyah</span>
+                                <span class="fn-12">PARAMADINA UNIVERSITY</span>
+                                <span class="fn-12">VISUAL COMMUNICATION DESIGN</span>
                             </div>
                         </div>
                     </div>

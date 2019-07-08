@@ -6,7 +6,7 @@
     	        <i class="fa fa-angle-right hidden"></i>
     	        <span id="categorySearch"></span>
     	        <span id="sortingText">Urutkan</span>
-    	        <div class="select search">
+    	        <div class="select search fn-13">
         			<select id="sortingSearch">
         			    <option value="1">Terbaru</option>
         			    <option value="2">Termurah</option>
@@ -27,8 +27,8 @@
     		</div>
     		<div class="content price">
     			<span>Harga</span>
-    			<input type="text" id="minPriceSearch" class="content-search" placeholder="Harga Minimum"/>
-    			<input type="text" id="maxPriceSearch" class="content-search" placeholder="Harga Maksimum"/>
+    			<input type="text" id="minPriceSearch" class="content-search fn-12" placeholder="Harga Minimum"/>
+    			<input type="text" id="maxPriceSearch" class="content-search fn-12" placeholder="Harga Maksimum"/>
     	    </div>
     	    <div class="content rate">
     	        <span>Rating</span>
@@ -74,13 +74,13 @@
     	</div>
     	<div class="result-content">
     	    <div class="result-content-tab">
-                <div class="tab active tooltip" id="product">
-                    <i class="tab-icons icon-product active"></i>
+                <div class="tab active tooltip fn-13" id="product">
+                    <i class="fa fa-gift" style="font-size: 25px;"></i>
                     Produk
                     <span class="tooltiptext tooltip-bottom">Pencarian bersadarkan Produk</span>
                 </div>
-                <div class="tab tooltip" id="shop">
-                    <i class="tab-icons icon-shop"></i>
+                <div class="tab tooltip fn-13" id="shop">
+                    <i class="fa fa-certificate" style="font-size: 25px;"></i>
                     Toko
                     <span class="tooltiptext tooltip-bottom">Pencarian bersadarkan Nama Toko</span>
                 </div>

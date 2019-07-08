@@ -7,8 +7,6 @@ function initProfile(){
     var trackordertab = sessionStorage.getItem('track_orderNgulikin'),
         createshoptab = sessionStorage.getItem('create_shopNgulikin');
     
-    $( "#accordionMyprofile" ).accordion();
-    
     profile();
     if($('.ishasShop').val() === '0'){
         listbank();
@@ -19,12 +17,8 @@ function initProfile(){
         $("#bankname").parent().replaceWith(cnt);
         var cnt = $("#recno").parent().contents();
         $("#recno").parent().replaceWith(cnt);
-        var cnt = $("#filesSelfieCreateShopPrivate").parent().contents();
-        $("#filesSelfieCreateShopPrivate").parent().replaceWith(cnt);
-        var cnt = $("#filesCardCreateShopPrivate").parent().contents();
-        $("#filesCardCreateShopPrivate").parent().replaceWith(cnt);
         
-        $('#bank_id-button').css({"width":"100%","margin":"-5px 0px"});
+        $('#bank_id-button').css({"width":"100%","margin":"5px 0px"});
         
         $('#bank_id').on( 'change', function( e ){
             $('#bank_id-button span').remove();
@@ -116,11 +110,6 @@ function initProfile(){
         $(this).addClass('greytab');
     });
     
-    $('#accordionMyprofile h3').on( 'click', function( e ){
-        $('#accordionMyprofile h3').css('background-image','url(/img/arrow_down.png)');
-        $(this).css('background-image','url(/img/arrow_up.png)');
-    });
-    
     $('#btnSubmitMyprofile').on( 'click', function( e ){
         updateProfile();
     });
@@ -149,6 +138,10 @@ function initProfile(){
     $("#othersPrivate").parent().replaceWith(cnt);
     var cnt = $("#filesCreateShopPrivate").parent().contents();
     $("#filesCreateShopPrivate").parent().replaceWith(cnt);
+    var cnt = $("#filesCardCreateShopPrivate").parent().contents();
+    $("#filesCardCreateShopPrivate").parent().replaceWith(cnt);
+    var cnt = $("#filesSelfieCreateShopPrivate").parent().contents();
+    $("#filesSelfieCreateShopPrivate").parent().replaceWith(cnt);
     
     $('.ui-loader').remove();
     
@@ -381,6 +374,7 @@ function transaction(){
                     var listtransaction = '';
                     if(data.result.length > 0){
                         $.each( data.result, function( key, val ) {
+                            var expired = (val.status_name!=="Kadaluarsa")?'':'expired';
                             listtransaction += '<div class="listMyprofileTransaction">';
                             listtransaction += '    <div class="dataTransaction">';
                             listtransaction += '        <img src="'+val.product_image+'" height="70" width="70"/>';
@@ -391,7 +385,7 @@ function transaction(){
                             listtransaction += '    </div>';
                             listtransaction += '    <div class="dataTransaction">';
                             listtransaction += '        <div class="header">status pengiriman</div>';
-                            listtransaction += '        <div class="detail statusTransaction">'+val.status_name+'</div>';
+                            listtransaction += '        <div class="detail statusTransaction '+expired+'">'+val.status_name+'</div>';
                             listtransaction += '    </div>';
                             listtransaction += '    <div class="dataTransaction">';
                             listtransaction += '        <div class="header">tanggal transaksi</div>';

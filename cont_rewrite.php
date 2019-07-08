@@ -25,23 +25,6 @@
 			    case 'activeAccount':
 					include('api/v1/auth/active_account.php');
 				break;
-				case 'admin':
-					switch (@$routes[2]) {
-				        case 'detail':
-				            switch (@$routes[3]) {
-                			    case 'us':
-                					include('api/v1/profile/updateStatusSeller.php');
-                				break;
-				            }
-						break;
-						default :
-							switch (@$routes[3]) {
-                			    case 'ps':
-                					include('api/v1/profile/list/pendingSeller.php');
-                				break;
-				        }
-				    }
-				break;
 				case 'administrative':
 					include('api/v1/general/list/administrative.php');
 				break;
@@ -80,6 +63,9 @@
 							switch (@$routes[3]) {
 							    case 'an':
         							include('api/v1/mysales/detail/actionneworder.php');
+        						break;
+        						case 'ac':
+        							include('api/v1/mysales/detail/actionconfirmorder.php');
         						break;
 							    case 'c':
         							include('api/v1/mysales/detail/confirmorder.php');
@@ -256,6 +242,9 @@
 				case 's':
 					include('api/v1/general/search/searchItem.php');
 				break;
+				case 'shippingcost':
+					include('api/v1/general/system/shippingcost.php');
+				break;
 				case 'shop':
 				    switch (@$routes[2]) {
 				        case 'a':
@@ -353,13 +342,7 @@
 				case 'signin':
 					include('api/v1/auth/signin.php');
 				break;
-				case 'signinadmin':
-					include('api/v1/auth/signin_admin.php');
-				break;
 				case 'signout':
-					include('api/v1/auth/signout.php');
-				break;
-				case 'signoutadmin':
 					include('api/v1/auth/signout.php');
 				break;
 				case 'signup':
@@ -369,6 +352,9 @@
 		break;
 		case 'aboutus':
 			include('web/body/about/index.php');
+		break;
+		case 'account':
+			include('web/body/account/index.php');
 		break;
 		case 'blog':
 			include('web/body/blog/index.php');
@@ -388,6 +374,9 @@
 		case 'help':
 			include('web/body/help/index.php');
 		break;
+		case 'in':
+            include('web/body/invoice/print.php');
+        break;
 		case 'invoice':
 			include('web/body/invoice/index.php');
 		break;
@@ -423,9 +412,6 @@
 		        case 'p':
 		            include('web/body/shop/myproduct/index.php');
 		        break;
-		        case 'pdf':
-                	include('web/body/shop/invoice/print.php');
-                break;
 		        case 's':
 		            include('web/body/shop/mysales/index.php');
 		        break;
@@ -445,6 +431,9 @@
 		case 'terms':
 			include('web/body/rules/index.php');
 		break;
+		case '':
+			include('index.php');
+		break;
 		default:
-		    include('index.php');
+		    include('web/body/notfound/index.php');
 	}		

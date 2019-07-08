@@ -545,7 +545,7 @@ body[class*=jconfirm-no-scroll-] {
 }
 
 .jconfirm .jconfirm-box .jconfirm-buttons button.btn-dark {
-    background-color: #34495e;
+    background-color: #004E81;
     color: #FFF;
     text-shadow: none;
     -webkit-transition: background .2s;

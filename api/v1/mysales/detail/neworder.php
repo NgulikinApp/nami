@@ -23,7 +23,7 @@
     /*
         Parameters
     */
-    $invoice_id = param($_GET['invoice_id']);
+    $invoiceid = param($_GET['invoiceid']);
     
     /*
         Function location in : /model/general/get_auth.php
@@ -57,47 +57,50 @@
                 return invalidKey();
             }
             
-            $sql = "SELECT 
-                        invoice.invoice_id,
+            $sql = 'SELECT 
                         delivery_name,
-                        invoice_delivery_price,
-                        invoice_detail_noresi,
-                        invoice_total_price,
-                        invoice_createdate,
-                        fullname,
+                        recipientname,
+                        user_address_phone,
                         email,
-                        phone,
-                        user_photo,
-                        username,
-                        GROUP_CONCAT(invoice_detail_sumproduct separator '~') AS invoice_detail_sumproduct,
-                        GROUP_CONCAT(invoice_detail_notes separator '~') AS invoice_detail_notes,
-                        GROUP_CONCAT(product_name separator '~') AS product_names,
-                        GROUP_CONCAT(SUBSTRING_INDEX(product_image,',',1) separator '~') AS product_images,
-                        GROUP_CONCAT(brand_name separator '~') AS brand_names
+                        invoice_shop_detail_notran,
+                        CONCAT(address," ", `villages`.name," ",`districts`.name," ",`regencies`.name," ",`provinces`.name) AS address,
+                        invoice_shop_detail_notes,
+                        GROUP_CONCAT(SUBSTRING_INDEX(product_image, ",", 1) SEPARATOR "~") AS product_image,
+                        GROUP_CONCAT(brand_name SEPARATOR "~") AS brand_name,
+                        GROUP_CONCAT(product_name SEPARATOR "~") AS product_name,
+                        GROUP_CONCAT(product_price SEPARATOR "~") AS product_price,
+                        GROUP_CONCAT(invoice_product_detail_sumproduct SEPARATOR "~") AS invoice_product_detail_sumproduct,
+                        GROUP_CONCAT(invoice_shop_detail_delivery_price SEPARATOR "~") AS invoice_shop_detail_delivery_price
                     FROM
                         invoice
-                        LEFT JOIN `user` ON `user`.user_id=invoice.user_id
-                        LEFT JOIN invoice_detail ON invoice.invoice_id=invoice_detail.invoice_id
-                        LEFT JOIN product ON product.product_id=invoice_detail.product_id
+                        LEFT JOIN invoice_shop_detail ON invoice_shop_detail.invoice_id=invoice.invoice_id
+                        LEFT JOIN invoice_brand_detail ON invoice_shop_detail.invoice_shop_detail_id=invoice_brand_detail.invoice_shop_detail_id
+                        LEFT JOIN invoice_product_detail ON invoice_brand_detail.invoice_brand_detail_id=invoice_product_detail.invoice_brand_detail_id
+                        LEFT JOIN delivery ON invoice_shop_detail.delivery_id=delivery.delivery_id
+                        LEFT JOIN `user` ON invoice.user_id=`user`.user_id
+                        LEFT JOIN `user_address` ON `user`.user_id=`user_address`.user_id
+                        LEFT JOIN `villages` ON `villages`.id=`user_address`.villages_id
+                        LEFT JOIN `districts` ON `districts`.id=`villages`.district_id
+                        LEFT JOIN `regencies` ON `regencies`.id=`districts`.regency_id
+                        LEFT JOIN `provinces` ON `provinces`.id=`regencies`.province_id
+                        LEFT JOIN product ON product.product_id=invoice_product_detail.product_id
                         LEFT JOIN brand ON brand.brand_id=product.brand_id
-                        LEFT JOIN delivery ON delivery.delivery_id=invoice.delivery_id
                     WHERE
                         invoice.invoice_id = ?
+                        AND priority  = "1"
+                        AND user_address_isactive  = "1"
                     GROUP BY 
-                        invoice_detail_sumproduct,
-                        invoice_detail_notes,
-                        product_name,
-                        product_image,
-                        brand_name";
-            
+                        invoice_shop_detail.shop_id';
+        
             $stmt = $con->prepare($sql);
-            $stmt->bind_param("i", $invoice_id);
+            
+            $stmt->bind_param("i", $invoiceid);
             
             /*
                 Function location in : functions.php
                 Cache variabel got from : /model/memcache.php
             */
-            detail($stmt);
+            neworder($stmt);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

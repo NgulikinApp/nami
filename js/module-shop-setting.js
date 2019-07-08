@@ -172,8 +172,8 @@ function detail(){
                         	$('#shop_close_date').html(data.result.shop_close);
                         	$('#shop_open_date').html(data.result.shop_open);
                         	
-                        	var shop_location = (data.result.shop_location !== '')?data.result.shop_location:'Belum diisi';
-                        	$('#address-shop').html(shop_location);
+                        	var shop_address = (data.result.shop_address !== '')?data.result.shop_address:'Belum diisi';
+                        	$('#address-shop').html(shop_address);
                         	
                         	$('#owner-shop').html(data.result.fullname);
                         	$('#hp-shop').html(data.result.phone);
@@ -296,12 +296,12 @@ function editProfile(){
     var editProfile = '<div class="layerPopup">';
 	    editProfile += '     <div class="editProfileSellerContainer">';
 	    editProfile += '         <div class="title">Pengaturan profil toko</div>';
-	    editProfile += '         <div style="height: 210px;"><div class="body">';
+	    editProfile += '         <div style="height: 225px;"><div class="body">';
 	    editProfile += '            <div class="content">';
 	    editProfile += '                <div class="left">';
 	    editProfile += '                    <img src="/img/no-photo.jpg" id="previewLogoSeller" width="150" height="150"/>';
 	    editProfile += '                    <div>';
-	    editProfile += '                        <label for="filesSeller">Unggah Foto</label>';
+	    editProfile += '                        <label for="filesSeller" class="fn-13">Unggah Foto</label>';
 	    editProfile += '                        <input id="filesSeller" type="file">';
 	    editProfile += '                    </div>';
 	    editProfile += '                </div>';
@@ -592,9 +592,9 @@ function brandShop(){
                         $.each( response, function( key, val ) {
                             var isSelected = val.shop_current_brand === val.brand_id ? 'chosen' : '';
                             listBrand += '<div class="list-brandseller brand'+val.brand_id+' '+isSelected+'" title="'+val.brand_name+'" datainternal-id="'+val.brand_id+'">';
-                            listBrand += '    <img src="'+val.brand_image+'" height="150" width="150"/>';
+                            listBrand += '    <img src="'+val.brand_image+'"/>';
                             listBrand += '    <div>';
-                            listBrand += '      <label>'+val.brand_name+'</label>';
+                            listBrand += '          <span class="brand-name">'+val.brand_name+'</span>';
                             listBrand += '    </div>';
                             listBrand += '</div>';
                         });
@@ -670,7 +670,7 @@ function brandLayer(){
         }
         brandLayer += '                   <img id="brandImageLayer" src="'+brand_image+'" width="150" height="150"/>';
         brandLayer += '                   <div>';
-        brandLayer += '                         <label for="filesBrand">Unggah logo brand</label>';
+        brandLayer += '                         <label for="filesBrand" class="fn-13">Unggah logo brand</label>';
         brandLayer += '                         <input id="filesBrand" type="file">';
         brandLayer += '                   </div>';
         brandLayer += '               </div>';
@@ -692,7 +692,7 @@ function brandLayer(){
         brandLayer += '               </div>';
         brandLayer += '           </div>';
         brandLayer += '        </div>';
-        brandLayer += '        <div class="footer" style="margin-top: -40px;">';
+        brandLayer += '        <div class="footer" style="margin-top: -105px;">';
 	    brandLayer += '            <input type="button" value="Batal" id="cancel"/>';
 	    brandLayer += '            <input type="button" value="Simpan" id="save"/>';
 	    brandLayer += '        </div>';
@@ -825,10 +825,11 @@ function productShop(){
                         $.each( response, function( key, val ) {
                             listProduct += '<div class="list-productseller" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">';
                             listProduct += '    <img src="'+val.product_image+'" height="150" width="150"/>';
-                            listProduct += '    <div>';
-                            listProduct += '        <label>'+val.product_name+'</label>';
-                            listProduct += '        <label>IDR '+val.product_price+'</label>';
-                            listProduct += '    </div>';
+                            listProduct += '    <span class="brand-name">';
+                            listProduct += '        <span class="product-name">'+val.product_name+'</span>';
+                            listProduct += '        <span class="product-price">IDR '+val.product_price+'</span>';
+                            listProduct += '        <div class="rateyo product-rate" id="product'+val.product_id+'">IDR '+val.product_price+'</div>';
+                            listProduct += '    </span>';
                             listProduct += '    <div class="hover">';
                             listProduct += '        <img src="/img/edit-pencil.png" height="20" width="20"/>';
                             listProduct += '        <span>Ubah Produk</span>';
@@ -837,6 +838,10 @@ function productShop(){
                         });
                         
                         $(".grid-shop-seller-body .product .right").html(listProduct);
+                        
+                        $.each( response, function(keyproduct , valproduct ) {
+                            $("#product"+valproduct.product_id).rateYo({rating: valproduct.product_average_rate,readOnly: true,starWidth : "12px"});
+                        });
                         
                         if(response.length > 6){
                             $('.grid-shop-seller-body .product .right').tosrus({
@@ -938,7 +943,7 @@ function productLayer(){
         productLayer += '                       </tr>';
         productLayer += '                       <tr>';
         productLayer += '                           <td id="descLabel">Deskripsi Produk</td>';
-        productLayer += '                           <td><textarea id="descProductLayer" cols="35" rows="7"></textarea></td>';
+        productLayer += '                           <td><textarea id="descProductLayer" cols="41" rows="7"></textarea></td>';
         productLayer += '                       </tr>';
         productLayer += '                   </table>';
         productLayer += '                   <table class="uploadProductCont hidden" id="detailProductCont">';
@@ -946,13 +951,13 @@ function productLayer(){
         productLayer += '                           <td style="width:">Harga Produk</td>';
         productLayer += '                           <td>';
         productLayer += '                               <div class="blueCont" id="rpProductPrice">Rp</div>';
-        productLayer += '                               <div style="margin-left: -3px;"><input type="text" id="productPriceLayer" placeholder="20000000"/></div>';
+        productLayer += '                               <div style="margin-left: -4px;"><input type="text" id="productPriceLayer"/></div>';
         productLayer += '                           </td>';
         productLayer += '                       </tr>';
         productLayer += '                       <tr>';
         productLayer += '                           <td>Perkiraan Berat</td>';
         productLayer += '                           <td>';
-        productLayer += '                               <div><input type="text" id="productWeight" placeholder="1"/></div><div class="blueCont" id="productWeightLayer">gram</div>';
+        productLayer += '                               <div><input type="text" id="productWeight"/></div><div class="blueCont" id="productWeightLayer">gram</div>';
         productLayer += '                           </td>';
         productLayer += '                       </tr>';
         productLayer += '                       <tr>';
@@ -978,6 +983,10 @@ function productLayer(){
         productLayer += '               </div>';
         productLayer += '           </div>';
         productLayer += '        </div>';
+        productLayer += '        <div class="warning">';
+	    productLayer += '            <div class="note-warning"></div>';
+	    productLayer += '            <div class="note-seller">Catatan Pelapak diperuntukkan bagi pelapak yang ingin memberikan catatan tambahan yang tidak terkait dengan deskripsi barang kepada calon pembeli. Catatan Pelapak tetap tunduk terhadap Aturan penggunaan Ngulikin.</div>';
+	    productLayer += '        </div>';
         productLayer += '        <div class="footer">';
 	    productLayer += '            <input type="button" value="Batal" id="cancel"/>';
 	    productLayer += '            <input type="button" value="Simpan" id="save"/>';
@@ -995,7 +1004,7 @@ function productLayer(){
 	}else{
 	    getcategory(1,0);
 	    $('#newProduct').attr('checked','checked');
-	    $('.accountSellerContainer.productLayer').css('height','420px');
+	    $('.accountSellerContainer.productLayer').css('height','480px');
 	}
     
     $('.accountSellerContainer .footer #cancel').on( 'click', function( e ){
@@ -1175,6 +1184,8 @@ function readProductURL() {
             visible		: 3
         }
     });
+    
+    $('.accountSellerContainer.productLayer').removeAttr('style');
 }
 
 function getcategory(category_id,subcategory_id){

@@ -132,7 +132,8 @@
                 }
                 $user_photo = 'no-photo.jpg';
                 
-                $stmt = $con->prepare("INSERT INTO 
+                if($source != "web"){
+                    $stmt = $con->prepare("INSERT INTO 
                                                     user(
                                                         user_id,
                                                         username,
@@ -151,7 +152,27 @@
                                                     ) 
                                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 
-                $stmt->bind_param("ssssssssssssss", $user_id, $username, $name, $password, $email, $nohp, $dob, $gender, $key, $source, $passwordSocmed, $user_isactive,$id_socmed,$user_photo);
+                    $stmt->bind_param("ssssssssssssss", $user_id, $username, $name, $password, $email, $nohp, $dob, $gender, $key, $source, $passwordSocmed, $user_isactive,$id_socmed,$user_photo);
+                }else{
+                    $stmt = $con->prepare("INSERT INTO 
+                                                    user(
+                                                        user_id,
+                                                        username,
+                                                        fullname,
+                                                        password,
+                                                        email,
+                                                        phone,
+                                                        dob,
+                                                        gender,
+                                                        user_key,
+                                                        source,
+                                                        user_isactive,
+                                                        user_photo
+                                                    ) 
+                                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                
+                    $stmt->bind_param("ssssssssssss", $user_id, $username, $name, $password, $email, $nohp, $dob, $gender, $key, $source, $user_isactive,$user_photo);
+                }
 
                 $stmt->execute();
                 

@@ -60,7 +60,8 @@
                         username,
                         shop_total_product,
                         product_price,
-                        shop_name
+                        shop_name,
+                        product_average_rate
                     FROM 
                         shop
                         LEFT JOIN `user` ON `user`.user_id = shop.user_id

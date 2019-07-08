@@ -1,5 +1,5 @@
 <div class="myprofile" id="transaction">
-    <div class="headerMyprofileTransaction">Transaksi</div>
+    <div class="headerMyprofileTransaction fn-15">Transaksi</div>
     <div class="filterMyprofileTransaction">
         <div class="filterMysales textFilterShopSeller">Filter</div>
         <div class="filterMysales">
@@ -10,7 +10,9 @@
             <div id="search-transaction"></div>
         </div>
     </div>
-    <div class="bodyMyprofile bodyProfileTransaction"></div>
+    <div class="bodyMyprofile bodyProfileTransaction">
+        <img src="img/loader.gif" class="loaderImg" style="margin: 0px auto;"/>
+    </div>
     <div class="result-content-paging">
         <ul class="pagination"></ul>
     </div>

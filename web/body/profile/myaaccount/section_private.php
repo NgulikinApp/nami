@@ -24,7 +24,7 @@
         <span id="sexCon">
             <input type="radio" name="sexPrivate" id="malePrivate" value="male"/>
             <span>Laki - laki</span>
-            <input type="radio" name="sexPrivate" id="femalePrivate" value="female"/>
+            <input type="radio" name="sexPrivate" id="femalePrivate" value="female" style="margin-left: 25px;"/>
             <span>Perempuan</span>
         </span>
     </div>
@@ -43,8 +43,6 @@
 </div>
 <div class="privateRight">
     <img src="../../img/no-photo.jpg" id="previewImagePrivate" width="150" height="150"/>
-    <div>
-      <label for="filesPrivate">Unggah Foto</label>
-      <input id="filesPrivate" type="file">
-    </div>
+    <label for="filesPrivate" class="editPhoto"><i class="fa fa-pencil"></i></label>
+    <input id="filesPrivate" type="file">
 </div>

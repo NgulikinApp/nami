@@ -90,7 +90,7 @@ function detailCart(){
             },
             success: function(data, status) {
                 if(data.status == "OK"){
-                    if($.isEmptyObject(data.result) === false){
+                    if(data.result.totalproducts > 0){
                         var response = data.result.listshops,
                             listElement = '',
                             totalPrice = 0;
@@ -100,7 +100,7 @@ function detailCart(){
                                 list_products = val.products,
                                 listlen_products = list_products.length-1;
                             
-                            listElement += '<div class="detail-shopping-body-title">';
+                            listElement += '<div class="detail-shopping-body-title" style="border-bottom: 0;">';
                             listElement += '    <div class="detail-shopping-choose">';
                             listElement += '        <input type="checkbox" id="shopcart'+key+'" class="chooseShopCart chooseProductCart"/> Pilih yang dibayar';
                             listElement += '    </div>';
@@ -152,12 +152,6 @@ function detailCart(){
                                 listElement += '    </div>';
                                 if(keyproduct == listlen_products){
                                     listElement += '    <hr/>';
-                                    listElement += '    <div class="detail-shopping-body-content3">';
-                                    listElement += '        <div class="title cart">Deskripsi Barang</div>';
-                                    listElement += '        <div class="inputDesc">';
-                                    listElement += '            <textarea class="descProductCart" id="descProductCart'+key+'" placeholder="Contoh:Warna, Jenis, Ukuran" rows="7"></textarea>';
-                                    listElement += '        </div>';
-                                    listElement += '    </div>';
                                     listElement += '    <div class="detail-shopping-body-content4">';
                                     listElement += '        <div class="title cart">Kurir</div>';
                                     listElement += '        <div class="inputDesc">';
@@ -175,6 +169,12 @@ function detailCart(){
                                     listElement += '            <div>';
                                     listElement += '                <span class="senderPriceProductCart">Rp 18.000</span>';
                                     listElement += '            </div>';
+                                    listElement += '        </div>';
+                                    listElement += '    </div>';
+                                    listElement += '    <div class="detail-shopping-body-content3">';
+                                    listElement += '        <div class="title cart">Deskripsi Barang</div>';
+                                    listElement += '        <div class="inputDesc">';
+                                    listElement += '            <textarea class="descProductCart" id="descProductCart'+key+'" placeholder="Contoh:Warna, Jenis, Ukuran" rows="7"></textarea>';
                                     listElement += '        </div>';
                                     listElement += '    </div>';
                                 }
@@ -382,7 +382,7 @@ function detailCart(){
                         });
                     }else{
                         var listElement = '<div id="cart-emptylist">';
-                            listElement += '    <div class="grid-cart-header">Detail Belanja</div>';
+                            listElement += '    <div class="grid-cart-header fn-15">Detail Belanja</div>';
                             listElement += '    <div class="grid-cart-body"></div>';
                             listElement += '    <div class="grid-cart-footer">';
                             listElement += '        <div>Keranjang kosong</div>';
@@ -514,7 +514,7 @@ function detailAddress(){
                             detailAddress += '<div class="cart-menu-grid">';
                             detailAddress += '  <div class="address-grid">';
                             detailAddress += '      <div id="addressLoc">';
-                            detailAddress += '          <img src="/img/marker.png" style="margin-left: -4.5px;"/>';
+                            detailAddress += '          <img src="/img/marker.png" style="margin-left: -3.5px;"/>';
                             detailAddress +=            data.result.address+' , '+data.result.village_name+' '+data.result.district_name+' '+data.result.regency_name+' '+data.result.province_name;
                             detailAddress += '      </div>';
                             detailAddress += '  </div>';
@@ -577,7 +577,7 @@ function selectAddress(){
     var selectAddress = '<div class="layerPopup">';
         selectAddress += '    <div class="accountSellerContainer productLayer" style="width:550px;height: 330px;">';
         selectAddress += '        <div class="title">Daftar Alamat</div>';
-        selectAddress += '        <div class="body" style="height: 250px;padding: 0px 15px;">';
+        selectAddress += '        <div class="body" style="min-height: 250px;padding: 0px 15px;">';
         selectAddress += '        </div>';
         selectAddress += '        <div class="footer">';
 	    selectAddress += '            <input type="button" value="Batal" id="cancel"/>';
@@ -1016,37 +1016,45 @@ function doActionAddress(){
 
 function actionAddress(){
      var actionAddress = '<div class="layerPopup">';
-         actionAddress += '     <div class="editProfileSellerContainer" style="height: 560px;margin-top: -290px;">';
+         actionAddress += '     <div class="editProfileSellerContainer" style="height: 550px;width: 500px;margin-top: -290px;">';
          actionAddress += '         <div class="title">Masukan Alamat</div>';
-         actionAddress += '         <div style="overflow-y:auto;height: 475px;">';
+         actionAddress += '         <div style="height: 455px;">';
          actionAddress += '             <div class="body">';
          actionAddress += '                 <div class="content">';
-         actionAddress += '                     <label class="addressLabel">Nama Penerima</label>';
+         actionAddress += '                     <span class="addressLabel">Nama Penerima</span>';
          actionAddress += '                     <input type="text" id="recipientname" class="addressInput"/>';
          actionAddress += '                 </div>';
          actionAddress += '                 <div class="content">';
-         actionAddress += '                     <label class="addressLabel">Telepon/Handphone</label>';
+         actionAddress += '                     <span class="addressLabel">Telepon/Handphone</span>';
          actionAddress += '                     <input type="text" id="notlp" class="addressInput"/>';
          actionAddress += '                 </div>';
          actionAddress += '                 <div class="content">';
-         actionAddress += '                     <label class="addressLabel">Alamat Lengkap</label>';
+         actionAddress += '                     <span class="addressLabel">Alamat Lengkap</span>';
          actionAddress += '                     <textarea id="completeaddress" class="addressInput"></textarea>';
          actionAddress += '                 </div>';
          actionAddress += '                 <div class="content">';
-         actionAddress += '                     <label class="addressLabel">Pilih Provinsi</label>';
-         actionAddress += '                     <select id="cart_province"></select>';
+         actionAddress += '                     <span class="addressLabel">Pilih Provinsi</span>';
+         actionAddress += '                     <div class="select">';
+         actionAddress += '                         <select id="cart_province"></select>';
+         actionAddress += '                     </div>';
          actionAddress += '                 </div>';
          actionAddress += '                 <div class="content">';
-         actionAddress += '                     <label class="addressLabel">Pilih Kota</label>';
-         actionAddress += '                     <select id="cart_regency"></select>';
+         actionAddress += '                     <span class="addressLabel">Pilih Kota</span>';
+         actionAddress += '                     <div class="select">';
+         actionAddress += '                         <select id="cart_regency"></select>';
+         actionAddress += '                     </div>';
          actionAddress += '                 </div>';
          actionAddress += '                 <div class="content">';
-         actionAddress += '                     <label class="addressLabel">Pilih Kecamatan</label>';
-         actionAddress += '                     <select id="cart_district"></select>';
+         actionAddress += '                     <span class="addressLabel">Pilih Kecamatan</span>';
+         actionAddress += '                     <div class="select">';
+         actionAddress += '                         <select id="cart_district"></select>';
+         actionAddress += '                     </div>';
          actionAddress += '                 </div>';
          actionAddress += '                 <div class="content">';
-         actionAddress += '                     <label class="addressLabel">Pilih Kelurahan</label>';
-         actionAddress += '                     <select id="cart_village"></select>';
+         actionAddress += '                     <span class="addressLabel">Pilih Kelurahan</span>';
+         actionAddress += '                     <div class="select">';
+         actionAddress += '                         <select id="cart_village"></select>';
+         actionAddress += '                     </div>';
          actionAddress += '                 </div>';
          actionAddress += '             </div>';
          actionAddress += '         </div>';

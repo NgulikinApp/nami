@@ -1,4 +1,5 @@
 <?php
+    include 'web/system/checkDevice.php';
     session_start();
     if(!isset($_SESSION['user']) || intval($_SESSION['user']["shop_id"]) == 0 || $_SESSION['user']['user_seller'] != '2'){
         header("Location: ..");

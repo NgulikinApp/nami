@@ -1,5 +1,5 @@
 <div class="myprofile" id="createshop">
-    <div class="headerMyprofileTransaction">Buat Toko</div>
+    <div class="headerMyprofileTransaction fn-15">Buat Toko</div>
     <div class="bodyMyprofile">
         <div class="head">Detail</div>
         <div class="body">
@@ -13,13 +13,13 @@
             <div style="position: relative;">
                 <img src="../../img/no-photo.jpg" id="previewImageCreateShopPrivate" width="150" height="150"/>
                 <label for="filesCreateShopPrivate" class="editPhoto"><i class="fa fa-pencil"></i></label>
-                <input id="filesCreateShopPrivate" type="file" class="btnFilePhoto">
+                <input id="filesCreateShopPrivate" type="file" class="btnFilePhoto" style="display: inline-block;">
             </div>
             <div>
                 <span>Deskripsi</span>
             </div>
             <div>
-                <textarea id="shopdesc" class="inputCreateShopPrivate" cols="50" rows="5"></textarea>
+                <textarea id="shopdesc" class="inputCreateShopPrivate" cols="100" rows="5"></textarea>
             </div>
         </div>
         <div class="head">Rekening</div>
@@ -28,22 +28,22 @@
                 <span style="line-height: 30px;">Nama Bank</span>
             </div>
             <div style="margin: 0px;">
-                <div class="select" id="bankname_con" style="width: 15%;overflow: hidden;">
+                <div class="select" id="bankname_con" style="width: 346.833px;overflow: hidden;">
                     <select id="bank_id"></select>
                 </div>
             </div>
             <div>
                 <span style="line-height: 30px;">Nama Pemilik</span>
             </div>
-            <input type="text" id="recname" class="inputCreateShopPrivate" style="width: 33.5%;"/>
+            <input type="text" id="recname" class="inputCreateShopPrivate" style="width: 346.833px;"/>
             <div>
                 <span>No. Rekening</span>
             </div>
             <img src="/img/bca.png" id="recbanking" style="height:38px;"/>
-            <input type="text" id="recno" class="inputCreateShopPrivate" style="width: 20%;"/>
+            <input type="text" id="recno" class="inputCreateShopPrivate"/>
         </div>
     </div>
     <div class="footerMyprofile">
-        <button id="btnSubmitCreateShop">Simpan</button>
+        <button id="btnSubmitCreateShop" class="fn-12">Simpan</button>
     </div>
 </div>

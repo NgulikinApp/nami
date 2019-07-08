@@ -1,53 +1,161 @@
 <?php
     /*
-        Function referred on : neworder.php,statussending.php
+        Function referred on : neworder.php
         Used for returning array data
     */
-    function detail($stmt){
+    function neworder($stmt){
         $data = array();
-        $products = array();
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13);
     
-        $stmt->fetch();
-        
-        $invoice_detail_sumproductarray = explode('~', $col12);
-        $invoice_detail_notesarray = explode('~', $col13);
-        $product_namesarray = explode('~', $col14);
-        $product_imagesarray = explode('~', $col15);
-        $brand_namesarray = explode('~', $col16);
+        while($stmt->fetch()){
+            $detail = array();
             
-        $product_count = count($product_namesarray);
+            $product_imagearray = explode('~', $col8);
+            $brand_namearray = explode('~', $col9);
+            $product_namearray = explode('~', $col10);
+            $product_pricearray = explode('~', $col11);
+            $invoice_product_detail_sumproductarray = explode('~', $col12);
+            $invoice_shop_detail_delivery_pricearray = explode('~', $col13);
             
-        for($i=0;$i<$product_count;$i++) //loop over values
-        {
-            $products[] = array(
-                          "product_name" => $product_namesarray[$i],
-                          "brand_name" => $brand_namesarray[$i],
-                          "product_image" => $product_imagesarray[$i],
-                          "sum_product" => $invoice_detail_sumproductarray[$i],
-                          "notes" => $invoice_detail_notesarray[$i]
-                        );
-        }
+            $brand_namearraycount = count($brand_namearray);
+            
+            $totalproduct = 0;
+            $totalproduct_price = 0;
+            $totaldelivery_price = 0;
+            
+            for($i=0;$i<$brand_namearraycount;$i++){
+                $product_price = $product_pricearray[$i] * $invoice_product_detail_sumproductarray[$i];
                 
-        $data[] = array(
-                    "invoice_id" => $col1,
-                    "delivery_name" => $col2,
-                    "invoice_delivery_price" => $col3,
-                    "invoice_noresi" => $col4,
-                    "invoice_total_price" => $col5,
-                    "invoice_createdate" => $col6,
-                    "fullname" => $col7,
-                    "email" => $col8,
-                    "phone" => $col9,
-                    "user_photo" => IMAGES_URL.'/'.urlencode(base64_encode($col11.'/'.$col10)),
-                    "products" => $products
+                $totalproduct = $totalproduct + $invoice_product_detail_sumproductarray[$i];
+                $totalproduct_price = $totalproduct_price + $product_price;
+                $totaldelivery_price = $totaldelivery_price + $invoice_shop_detail_delivery_pricearray[$i];
+                
+                $detail[] = array(
+                                "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($_SESSION['user']['username'].'/product/'.$product_imagearray[$i])),
+                                "brand_name" => strtoupper($brand_namearray[$i]),
+                                "product_name" => $product_namearray[$i],
+                                "product_price" => $product_price,
+                                "sumproduct" => $invoice_product_detail_sumproductarray[$i],
+                                "delivery_price" => $invoice_shop_detail_delivery_pricearray[$i],
+                                "totaldetail_price" => $product_price + $invoice_shop_detail_delivery_pricearray[$i]
+                            );
+            }
+            
+            $data[] = array(
+                    "delivery_name" => $col1,
+                    "recipientname" => $col2,
+                    "phone" => $col3,
+                    "email" => $col4,
+                    "notran" => $col5,
+                    "address" => strtoupper($col6),
+                    "notes" => $col7,
+                    "totalproduct" => $totalproduct,
+                    "totalproduct_price" => $totalproduct_price,
+                    "totaldelivery_price" => $totaldelivery_price,
+                    "total_price" => $totalproduct_price + $totaldelivery_price,
+                    "detail" => $detail
                 );
+        }
+        /*
+            Function location in : /model/general/functions.php
+        */
+        credentialVerified($data);
+    }
+    
+    /*
+        Function referred on : confirmorder.php
+        Used for returning array data
+    */
+    function confirmorder($stmt){
+        $data = array();
         
-        $stmt->close();
+        $stmt->execute();
         
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11);
+    
+        while($stmt->fetch()){
+            $detail = array();
+            
+            $product_imagearray = explode('~', $col6);
+            $brand_namearray = explode('~', $col7);
+            $product_namearray = explode('~', $col8);
+            $product_pricearray = explode('~', $col9);
+            $invoice_product_detail_sumproductarray = explode('~', $col10);
+            $invoice_shop_detail_delivery_pricearray = explode('~', $col11);
+            
+            $brand_namearraycount = count($brand_namearray);
+            
+            for($i=0;$i<$brand_namearraycount;$i++){
+                $product_price = $product_pricearray[$i] * $invoice_product_detail_sumproductarray[$i];
+                
+                $totalproduct = $totalproduct + $invoice_product_detail_sumproductarray[$i];
+                $totalproduct_price = $totalproduct_price + $product_price;
+                $totaldelivery_price = $totaldelivery_price + $invoice_shop_detail_delivery_pricearray[$i];
+                
+                $detail[] = array(
+                                "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($_SESSION['user']['username'].'/product/'.$product_imagearray[$i])),
+                                "brand_name" => strtoupper($brand_namearray[$i]),
+                                "product_name" => $product_namearray[$i],
+                                "product_price" => $product_price,
+                                "sumproduct" => $invoice_product_detail_sumproductarray[$i],
+                                "delivery_price" => $invoice_shop_detail_delivery_pricearray[$i],
+                                "totaldetail_price" => $product_price + $invoice_shop_detail_delivery_pricearray[$i]
+                            );
+            }
+            
+            $data[] = array(
+                    "recipientname" => $col1,
+                    "phone" => $col2,
+                    "email" => $col3,
+                    "address" => strtoupper($col4),
+                    "notes" => $col5,
+                    "totalproduct" => $totalproduct,
+                    "totalproduct_price" => $totalproduct_price,
+                    "totaldelivery_price" => $totaldelivery_price,
+                    "total_price" => $totalproduct_price + $totaldelivery_price,
+                    "detail" => $detail
+                );
+        }
+        /*
+            Function location in : /model/general/functions.php
+        */
+        credentialVerified($data);
+    }
+    
+    /*
+        Function referred on : statussending.php
+        Used for returning array data
+    */
+    function statussending($stmt){
+        $stmt->execute();
+        
+        $stmt->bind_result($col1, $col2, $col3, $col4);
+    
+        while($stmt->fetch()){
+            $status = array();
+                
+            $datearray = explode(',', $col2);
+            $timearray = explode(',', $col3);
+            $descarray = explode(',', $col4);
+                
+            $datecount = count($datearray);
+                
+            for($i=0;$i<$datecount;$i++){
+                $status[] = array(
+                                "date" => $datearray[$i],
+                                "time" => $timearray[$i],
+                                "desc" => $descarray[$i]
+                            );
+            }
+                
+            $data = array(
+                        "delivery_name" => $col1,
+                        "status" => $status
+                    );
+        }
         /*
             Function location in : /model/general/functions.php
         */
@@ -60,82 +168,26 @@
     */
     function transaction($stmt){
         $data = array();
-        $products = array();
-        $status = array();
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16, $col17, $col18);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8);
     
-        $stmt->fetch();
-        
-        $invoice_detail_sumproductarray = explode('~', $col12);
-        $invoice_detail_notesarray = explode('~', $col13);
-        $product_namesarray = explode('~', $col14);
-        $product_imagesarray = explode('~', $col15);
-        $brand_namesarray = explode('~', $col16);
-        
-        $status_datearray = explode('~', $col17);
-        $status_descarray = explode('~', $col18);
-            
-        $product_count = count($product_namesarray);
-            
-        for($i=0;$i<$product_count;$i++) //loop over values
-        {
-            $products[] = array(
-                          "product_name" => $product_namesarray[$i],
-                          "brand_name" => $brand_namesarray[$i],
-                          "product_image" => $product_imagesarray[$i],
-                          "sum_product" => $invoice_detail_sumproductarray[$i],
-                          "notes" => $invoice_detail_notesarray[$i]
-                        );
+        while($stmt->fetch()){
+            $data[] = array(
+                    "recipientname" => $col1,
+                    "phone" => $col2,
+                    "email" => $col3,
+                    "address" => strtoupper($col4),
+                    "notes" => $col5,
+                    "invoice_no" => $col6,
+                    "notran" => $col7,
+                    "status" => $col8
+                );
         }
-            
-        $status_count = count($status_datearray);
-            
-        for($i=0;$i<$status_count;$i++) //loop over values
-        {
-            $status[] = array(
-                          "date" => $status_datearray[$i],
-                          "desc" => $status_descarray[$i]
-                        );
-        }
-            
-        $data[] = array(
-                        "invoice_id" => $col1,
-                        "delivery_name" => $col2,
-                        "invoice_delivery_price" => $col3,
-                        "invoice_noresi" => $col4,
-                        "invoice_total_price" => $col5,
-                        "invoice_createdate" => $col6,
-                        "fullname" => $col7,
-                        "email" => $col8,
-                        "phone" => $col9,
-                        "user_photo" => IMAGES_URL.'/'.urlencode(base64_encode($col11.'/'.$col10)),
-                        "products" => $products,
-                        "status" => $status
-                    );
-
-        $stmt->close();
-        
         /*
             Function location in : /model/general/functions.php
         */
         credentialVerified($data);
-    }
-    
-    /*
-        Function referred on : actionorder.php
-        Used for returning array data
-    */
-    function actionorder($listinvoice_id,$action){
-        $data = array(
-                    "listinvoice_id" => $listinvoice_id,
-                    "action" => $action
-                );
-        /*
-            Function location in : /model/general/functions.php
-        */
-        credentialVerified((object)$data);
     }
 ?>

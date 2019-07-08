@@ -61,9 +61,9 @@ function detailInvoice(){
                                 listElement += '<div class="list_product_invoice">';
                                 listElement += '    <div class="detail-invoice-title">';
                                 listElement += '        <div class="detail-invoice-icon">';
-                                listElement += '            <i class="fa fa-shopping-cart"></i>';
+                                listElement += '            <i class="fa fa-shopping-cart" style="color:#848484;"></i>';
                                 listElement += '        </div>';
-                                listElement += '        <div class="detail-invoice-shopname">'+val.shop_name+'</div>';
+                                listElement += '        <div class="detail-invoice-shopname fn-13">'+val.shop_name+'</div>';
                                 listElement += '    </div>';
                                 
                                 sum_delivery_price = sum_delivery_price + val.delivery_price;
@@ -75,31 +75,31 @@ function detailInvoice(){
                                 listElement += '                <img src="'+valproduct.image+'" width="100" height="100"/>';
                                 listElement += '            </div>';
                                 listElement += '            <div class="aligner">';
-                                listElement += '                <div class="brand_name">'+valproduct.brand_name+'</div>';
-                                listElement += '                <div class="product_name">'+valproduct.name+'</div>';
-                                listElement += '                <div class="rateyo" id="product'+val.shop_id+'_'+valproduct.id+'"></div>';
+                                listElement += '                <div class="brand_name fn-13">'+valproduct.brand_name+'</div>';
+                                listElement += '                <div class="product_name fn-13">'+valproduct.name+'</div>';
+                                listElement += '                <div class="rateyo" id="product'+val.shop_id+'_'+valproduct.id+'" style="padding:0px;"></div>';
                                 listElement += '            </div>';
                                 listElement += '        </div>';
                                 listElement += '    </div>';
-                                listElement += '    <div class="detail-invoice-footer">';
+                                listElement += '    <div class="detail-invoice-footer fn-13">';
                                 listElement += '        <div class="detail_text">DETAIL</div>';
                                 listElement += '        <div class="angle">';
                                 listElement += '            <i class="fa fa-angle-up"></i>';
                                 listElement += '        </div>';
                                 listElement += '    </div>';
-                                listElement += '    <div class="detail-invoice-footer-detail">';
+                                listElement += '    <div class="detail-invoice-footer-detail fn-13">';
                                 listElement += '        <div class="grid">';
                                 listElement += '            <div class="left">';
                                 listElement += '                Jumlah <span class="invoice-sum">'+valproduct.sum+'</span> <font class="invoice-wight">(<span>'+valproduct.weight+' kg</span>)</font>';
                                 listElement += '            </div>';
-                                listElement += '            <div class="right">Rp '+valproduct.price+'</div>';
+                                listElement += '            <div class="right">'+numberFormat(valproduct.price)+'</div>';
                                 listElement += '        </div>';
                                 listElement += '    </div>';
                                 
                                 sum_product_price = sum_product_price + valproduct.price;
                             });
                             
-                            listElement += '    <div class="detail-invoiceshop-footer-detail">';
+                            listElement += '    <div class="detail-invoiceshop-footer-detail fn-13">';
                             listElement += '        <div class="grid">';
                             listElement += '            <div class="title_notes_invoice">CATATAN UNTUK PENJUAL</div>';
                             listElement += '            <div>'+val.notes+'</div>';
@@ -119,20 +119,16 @@ function detailInvoice(){
                             listElement += '            </div>';
                             listElement += '        </div>';
                             listElement += '        <div class="grid history_invoice">';
-                            listElement += '            HISTORI PENGIRIMAN <i class="fa fa-angle-right"></i>';
+                            listElement += '            LIHAT HISTORI PENGIRIMAN <i class="fa fa-angle-right"></i>';
                             listElement += '        </div>';
                             listElement += '    </div>';
                             listElement += '</div>';
                         });
                         $('.filled-invoice .left .list').html(listElement);
-                        $('.data_receiver_invoice span:first-child').html('<img src="/img/people.png" width="10" height="10"> '+data.result.fullname);
-                        $('.data_receiver_invoice span:nth-child(2)').html('<img src="/img/marker.png"> '+data.result.address);
-                        $('.data_receiver_invoice span:nth-child(3)').html('<img src="/img/hp.png"> '+data.result.phone);
-                        $('.data_receiver_invoice span:last-child').html('<img src="/img/envelope.png"> '+data.result.email);
                         
                         $('#sum_product_price').html(numberFormat(sum_product_price));
                         $('#sum_delivery_price').html(numberFormat(sum_delivery_price));
-                        $('#sum_delivery_price').html(numberFormat(sum_delivery_price));
+                        $('#total_price').html(numberFormat(sum_product_price+sum_delivery_price));
                         
                         var total_price = sum_product_price + sum_delivery_price;
                         $('#invoice_last_paiddate').html(data.result.invoice_last_paiddate_letter);
@@ -140,7 +136,7 @@ function detailInvoice(){
                         $.each( response, function( key, val ) {
                             var list_products = val.products;
                             $.each( list_products, function(keyproduct , valproduct ) {
-                                $("#product"+val.shop_id+"_"+valproduct.id).rateYo({rating: valproduct.rate,readOnly: true,starWidth : "20px"});
+                                $("#product"+val.shop_id+"_"+valproduct.id).rateYo({rating: valproduct.rate,readOnly: true,starWidth : "13px"});
                             });
                         });
                         
@@ -177,7 +173,7 @@ function countDown(last_paiddate){
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
                                 
         // Output the result in an element with id="demo"
-        document.getElementById("countdown_invoice").innerHTML = hours + " jam " + minutes + " menit " + seconds + " detik ";
+        document.getElementById("countdown_invoice").innerHTML = hours + " jam : " + minutes + " menit : " + seconds + " detik ";
                                 
         // If the count down is over, write some text 
         if (distance < 0) {

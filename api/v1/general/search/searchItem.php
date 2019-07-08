@@ -79,7 +79,8 @@
                                 username,
                                 DATEDIFF(CURDATE(),CAST(product_createdate AS DATE)) AS difdate,
                                 @count_product AS count_product,
-								shop_name
+								shop_name,
+								product_average_rate
                             FROM 
                                 product
                                 LEFT JOIN brand ON brand.brand_id = product.brand_id

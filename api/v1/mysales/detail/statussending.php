@@ -23,7 +23,7 @@
     /*
         Parameters
     */
-    $invoice_id = param($_GET['invoice_id']);
+    $notrans = param($_GET['notrans']);
     
     /*
         Function location in : /model/general/get_auth.php
@@ -57,47 +57,31 @@
                 return invalidKey();
             }
             
-            $sql = "SELECT 
-                        invoice.invoice_id,
+            $sql = 'SELECT 
                         delivery_name,
-                        invoice_delivery_price,
-                        invoice_detail_noresi,
-                        invoice_total_price,
-                        invoice_createdate,
-                        fullname,
-                        email,
-                        phone,
-                        user_photo,
-                        username,
-                        GROUP_CONCAT(invoice_detail_sumproduct separator '~') AS invoice_detail_sumproduct,
-                        GROUP_CONCAT(invoice_detail_notes separator '~') AS invoice_detail_notes,
-                        GROUP_CONCAT(product_name separator '~') AS product_names,
-                        GROUP_CONCAT(SUBSTRING_INDEX(product_image,',',1) separator '~') AS product_images,
-                        GROUP_CONCAT(brand_name separator '~') AS brand_names
+                        GROUP_CONCAT(DATE_FORMAT(invoice_status_detail_createdate, "%d %M %Y")) AS statusdate,
+                        GROUP_CONCAT(DATE_FORMAT(invoice_status_detail_createdate, "%H:%i")) AS statustime,
+                        GROUP_CONCAT(status_desc) AS `desc`
                     FROM
                         invoice
-                        LEFT JOIN `user` ON `user`.user_id=invoice.user_id
-                        LEFT JOIN invoice_detail ON invoice.invoice_id=invoice_detail.invoice_id
-                        LEFT JOIN product ON product.product_id=invoice_detail.product_id
-                        LEFT JOIN brand ON brand.brand_id=product.brand_id
-                        LEFT JOIN delivery ON delivery.delivery_id=invoice.delivery_id
+                        LEFT JOIN invoice_shop_detail ON invoice_shop_detail.invoice_id=invoice.invoice_id
+                        LEFT JOIN delivery ON invoice_shop_detail.delivery_id=delivery.delivery_id
+                        LEFT JOIN invoice_status_detail ON invoice.invoice_id=invoice_status_detail.invoice_id
+                        LEFT JOIN status ON invoice_status_detail.status_id=status.status_id
                     WHERE
-                        invoice.invoice_id = ?
+                        invoice_shop_detail_notran = ?
                     GROUP BY 
-                        invoice_detail_sumproduct,
-                        invoice_detail_notes,
-                        product_name,
-                        product_image,
-                        brand_name";
+                        invoice_shop_detail_notran';
         
             $stmt = $con->prepare($sql);
-            $stmt->bind_param("is", $noinvoice,$user_id);
+            
+            $stmt->bind_param("s", $notrans);
             
             /*
                 Function location in : functions.php
                 Cache variabel got from : /model/memcache.php
             */
-            detail($stmt);
+            statussending($stmt);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

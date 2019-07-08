@@ -6,7 +6,7 @@
 	    <div class="grid-shop-seller-head">
 	        Keranjang Belanja
 	    </div>
-	    <div class="grid-shop-seller-menu">
+	    <div class="grid-shop-seller-menu fn-13">
 	        <div class="cart-menu">
 	            <?php
 	                if(!isset($_SESSION['user'])){

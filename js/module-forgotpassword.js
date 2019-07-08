@@ -54,6 +54,7 @@ function buttonverified(){
                         var resetPassElem = '<input type="password" id="passNewForgot" class="inputSignin" placeholder="Masukan password baru"/>';
             	            resetPassElem += '<i class="fa fa-lock"></i>';
             	            resetPassElem += '<input type="hidden" id="codeForgotEmail" value="'+result.response.email+'"/>';
+            	            resetPassElem += '<input type="hidden" id="codeForgotPass" value="'+code+'"/>';
             	           $('.grid-signin-body .signinBodySub:first-child').html(resetPassElem);
             	        
             	        var buttonElem = '<input type="button" id="buttonForgotChange" value="Ganti"/>';
@@ -78,6 +79,7 @@ function buttonnewpass(){
     $('#buttonForgotChange').on( 'click', function( e ){
         var password = $('#passNewForgot').val();
         var email = $('#codeForgotEmail').val();
+        var code = $('#codeForgotPass').val();
         if(password === ''){
             $('.error_message').removeClass('show').removeClass('green');
             $('.error_message').addClass('show');
@@ -88,7 +90,7 @@ function buttonnewpass(){
             password = (SHA256(password)).toUpperCase();
             $.ajax({
                 type: 'POST',
-                data: JSON.stringify({ password: password, email: email}),
+                data: JSON.stringify({ password: password, email: email, code: code}),
                 crossDomain: true,
                 async: true,
                 beforeSend: function(xhr) { 
