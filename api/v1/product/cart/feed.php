@@ -51,7 +51,9 @@
                                             shop_delivery,
                                             shop.shop_id,
                                             GROUP_CONCAT(cart_sumproduct separator '~') AS cart_sumproduct,
-                                            GROUP_CONCAT(cart_adddate separator '~') AS cart_adddate
+                                            GROUP_CONCAT(cart_adddate separator '~') AS cart_adddate,
+                                            shop_courier_id,
+                                            GROUP_CONCAT(product_weight  separator '~') AS product_weight 
                                     FROM 
                                             cart
                                             LEFT JOIN product ON product.product_id = cart.product_id
@@ -97,7 +99,9 @@
                                             shop_name,
                                             GROUP_CONCAT(product_price separator '~') AS product_price,
                                             shop_delivery,
-                                            shop.shop_id
+                                            shop.shop_id,
+                                            shop_courier_id,
+                                            GROUP_CONCAT(product_weight  separator '~') AS product_weight
                                     FROM 
                                             product
                                             LEFT JOIN brand ON product.brand_id = brand.brand_id

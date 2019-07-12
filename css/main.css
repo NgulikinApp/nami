@@ -3796,9 +3796,11 @@ Product page
     color: #817F7F;
     border-bottom: 1px solid #F5F5F5;
     text-transform: uppercase;
+    overflow:auto;
 }
 .myprofile .bodyMyprofile .body{
     padding-top:10px;
+    overflow:auto;
 }
 .viewDetailTransaction{
     cursor:pointer;
@@ -5403,12 +5405,12 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .accountSellerContainer table td{
     padding: 5px;
 }
-#bankname_con{
+.createshop_con{
     height: 32px;
     line-height: inherit;
     width: 100%;
 }
-#bankname_con::after{
+.createshop_con::after{
     padding: 7px 1em;
 } 
 #bankname{

@@ -3,7 +3,13 @@ var search = {},
     doAddress = {},
     doDeleteAddress = {},
     updateProduct = {},
-    chosenProduct = {};
+    chosenProduct = {},
+    shipping = {},
+    courier_id,
+    senderPriceProductCart = 0,
+    senderPriceArray = [],
+    totalPrice = 0,
+    senderPriceTotalTemp = 0;
     
 $( document ).ready(function() {
     initGeneral();
@@ -39,8 +45,6 @@ function initCart(){
     }else{
         handleClientLoad();
     }
-    
-    detailCart();
         
     $('#cart-filledlist').show();
     
@@ -92,17 +96,18 @@ function detailCart(){
                 if(data.status == "OK"){
                     if(data.result.totalproducts > 0){
                         var response = data.result.listshops,
-                            listElement = '',
-                            totalPrice = 0;
+                            listElement = '';
                         
                         $.each( response, function( key, val ) {
                             var list_delivery = val.product_delivery,
                                 list_products = val.products,
+                                sum_productweights = 0,
+                                shop_delivery = 0,
                                 listlen_products = list_products.length-1;
                             
                             listElement += '<div class="detail-shopping-body-title" style="border-bottom: 0;">';
                             listElement += '    <div class="detail-shopping-choose">';
-                            listElement += '        <input type="checkbox" id="shopcart'+key+'" class="chooseShopCart chooseProductCart"/> Pilih yang dibayar';
+                            listElement += '        <input type="checkbox" id="shopcart'+key+'" class="chooseShopCart chooseProductCart" checked="checked"/> Pilih yang dibayar';
                             listElement += '    </div>';
                             listElement += '    <div class="detail-shopping-icon">';
                             listElement += '        <i class="fa fa-shopping-cart"></i>';
@@ -112,13 +117,14 @@ function detailCart(){
                             listElement += '<div class="detail-shopping-body-content">';
                             
                             $.each( list_products, function(keyproduct , valproduct ) {
+                                sum_productweights = valproduct.product_weight;
                                 cartNgulikin = valproduct.sum_product;
                                 var second_product_style = (keyproduct === 0) ? "" : 'margin-top: 15px;border-top: 1px solid #F5F5F5;';
                                 
                                 listElement += '<div style="overflow:auto;'+second_product_style+'">';
                                 listElement += '    <div class="detail-shopping-body-content1">';
                                 listElement += '        <div class="chooseProductCartTemp">';
-                                listElement += '            <input type="checkbox" class="chooseProductCart chkproduct productcart'+key+' shopndx" datainternal-id="'+valproduct.product_id+'"/>';
+                                listElement += '            <input type="checkbox" class="chooseProductCart chkproduct productcart'+key+' shopndx" datainternal-id="'+valproduct.product_id+'" checked="checked"/>';
                                 listElement += '        </div>';
                                 listElement += '        <div class="disaligner">';
                                 listElement += '            <img src="'+valproduct.product_image+'" width="100" height="100"/>';
@@ -156,18 +162,19 @@ function detailCart(){
                                     listElement += '        <div class="title cart">Kurir</div>';
                                     listElement += '        <div class="inputDesc">';
                                     listElement += '            <div class="select">';
-                                    listElement += '                <select class="senderProductCart" id="senderProductCart'+key+'">';
+                                    listElement += '                <select class="senderProductCart" id="senderProductCart'+key+'" data-courier_id="'+courier_id+'" data-shop_courier_id="'+val.shop_courier_id+'" data-sum_productweights="'+sum_productweights+'" data-shop_delivery="'+shop_delivery+'">';
                                     var delivery_id = '0';
                                     var delivery_idflag = 0;
                                     $.each( list_delivery, function( keydelivery, valdelivery ) {
                                         if(delivery_idflag === 0)delivery_id = valdelivery.delivery_id;
+                                        if(delivery_idflag === 0)shop_delivery = valdelivery.delivery_id;
                                         listElement += '        <option value="'+valdelivery.delivery_id+'">'+valdelivery.delivery_name+'</option>';
                                         delivery_idflag++;
                                     });
                                     listElement += '                </select>';
                                     listElement += '            </div>';
                                     listElement += '            <div>';
-                                    listElement += '                <span class="senderPriceProductCart">Rp 18.000</span>';
+                                    listElement += '                <span class="senderPriceProductCart" id="senderPriceProductCart'+key+'">Rp 18.000</span>';
                                     listElement += '            </div>';
                                     listElement += '        </div>';
                                     listElement += '    </div>';
@@ -183,14 +190,20 @@ function detailCart(){
                                 totalPrice = totalPrice + (valproduct.product_price * valproduct.cart_sumproduct);
                                 var price = senderPriceCart(delivery_id).toString();
                                 
-                                $('#sumProductSummaryCart').html(numberFormat(price));
                                 var totalPriceCart = valproduct.cart_sumproduct * parseInt(totalPrice);
                                 var totalShoppingCart = totalPriceCart + senderPriceCart(delivery_id);
                                         
                                 $('.totalPriceCart').html(numberFormat(totalPriceCart.toString()));
-                                $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
                             });
                             listElement += '</div>';
+                            
+                            senderPriceProductCart = key;
+                            
+                            shipping.origin = courier_id;
+                            shipping.destination = val.shop_courier_id;
+                            shipping.weight = sum_productweights;
+                            shipping.courier = shop_delivery;
+                            shippingcost();
                         });
                         
                         $(".detail-shopping-body").html(listElement);
@@ -259,10 +272,10 @@ function detailCart(){
                                     });
                                     var totalPriceCart = cartNgulikin * parseInt(totalPrice);
             
-                                    var totalShoppingCart = totalsumcart + senderPriceCart($('#senderProductCart'+key).val());
+                                    var totalShoppingCart = totalsumcart + senderPriceTotalTemp;
                                         
                                     $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
-                                    $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                                    $('.totalShoppingCart').html(numberFormat(totalShoppingCart));
                                     
                                     updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
                                     updateProduct.sum = cartNgulikin;
@@ -288,10 +301,10 @@ function detailCart(){
                                     });
                                     var totalPriceCart = cartNgulikin * parseInt(totalPrice);
             
-                                    var totalShoppingCart = totalsumcart + senderPriceCart($('#senderProductCart'+key).val());
+                                    var totalShoppingCart = totalsumcart + senderPriceTotalTemp;
                                         
                                     $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
-                                    $('.totalShoppingCart').html(numberFormat(totalShoppingCart.toString()));
+                                    $('.totalShoppingCart').html(numberFormat(totalShoppingCart));
                                     
                                     updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
                                     updateProduct.sum = cartNgulikin;
@@ -336,14 +349,16 @@ function detailCart(){
                                     });
                                 });    
                             });
-                        });
-                        
-                        $('#senderProductCart').on('change', function (e) {
-                            var price = senderPriceCart($(this).val()).toString();
-                            $('.senderPriceProductCart').html(numberFormat(price));
-                            $('#sumProductSummaryCart').html(numberFormat(price));
                             
-                            totalCartText(cartNgulikin,totalPrice,$(this).val());
+                            $('#senderProductCart'+key).on('change', function (e) {
+                                senderPriceProductCart = key;
+                            
+                                shipping.origin = $(this).data('courier_id');
+                                shipping.destination = $(this).data('shop_courier_id');
+                                shipping.weight = $(this).data('sum_productweights');
+                                shipping.courier = $(this).data('shop_delivery');
+                                shippingcost();
+                            });
                         });
                         
                         $('.detail-summary-footer').on('click', function (e) {
@@ -508,6 +523,8 @@ function detailAddress(){
             success: function(data, status) {
                 if(data.status == "OK"){
                     if($.isEmptyObject(data.result) === false){
+                        courier_id = data.result.courier_id;
+                        
                         var detailAddress = '<div class="cart-menu-grid">';
                             detailAddress +=    data.result.fullname;
                             detailAddress += '</div>';
@@ -565,6 +582,8 @@ function detailAddress(){
                             actionAddress();
                         });
                     }
+                    
+                    detailCart();
                 }else{
                     generateToken("detailAddress");
                 }
@@ -1123,4 +1142,45 @@ function actionAddress(){
 	    $(".layerPopup").fadeOut();
 	    $(".layerPopup").remove();
 	});
+}
+
+function shippingcost(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken("shippingcost");
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: SHIPPINGCOST_API,
+            data:{
+                origin : shipping.origin,
+                destination : shipping.destination,
+                weight : shipping.weight,
+                courier : shipping.courier
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                var cost = numberFormat(data.rajaongkir.results[0].costs[0].cost[0].value);
+                senderPriceArray[senderPriceProductCart] = data.rajaongkir.results[0].costs[0].cost[0].value;
+                $("#senderPriceProductCart"+senderPriceProductCart).html(cost);
+                
+                var senderPriceArrayCount = senderPriceArray.length;
+                var senderPriceTotal = 0;
+                for(var i=0;i<senderPriceArrayCount;i++){
+                    senderPriceTotal = senderPriceTotal + senderPriceArray[i];
+                }
+                senderPriceTotalTemp = senderPriceTotal;
+                $("#sumProductSummaryCart").html(numberFormat(senderPriceTotal));
+                $('.totalShoppingCart').html(numberFormat(totalPrice+senderPriceTotal));
+                
+                /*if(data.status == "OK"){
+                    
+                }else{
+                    generateToken("shippingcost");
+                }*/
+            } 
+        });
+    }
 }

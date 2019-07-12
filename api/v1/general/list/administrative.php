@@ -49,7 +49,7 @@
                 $query = "SELECT id,name FROM districts WHERE regency_id=?";
                 $key_cache = "m_adm_districts_".$id;
             }else if($idlen == 2){
-                $query = "SELECT id,name FROM regencies WHERE province_id=?";
+                $query = "SELECT id,name,courier_id FROM regencies WHERE province_id=?";
                 $key_cache = "m_adm_regencies_".$id;
             }else{
                 $query = "SELECT id,name FROM provinces";
@@ -60,7 +60,7 @@
                 Function location in : functions.php
                 Cache variabel got from : /model/memcache.php
             */
-            listadminis($query,$cache,$key_cache,$con,$id);
+            listadminis($query,$cache,$key_cache,$con,$id,$idlen);
         }catch(Exception $e){
             /*
                 Function location in : /model/general/functions.php

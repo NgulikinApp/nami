@@ -42,6 +42,8 @@
     
             $curl = curl_init();
             
+            $courier = ($courier == 1)?'jne':'tiki';
+            
             curl_setopt_array($curl, array(
               CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
               CURLOPT_RETURNTRANSFER => true,

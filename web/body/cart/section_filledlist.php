@@ -4,7 +4,7 @@
 <div id="cart-filledlist">
     <div class="grid-cartsum-left">
         <div id="chooseallShopCart">
-            <input type="checkbox" id="chooseallCart"/> Pilih Semua
+            <input type="checkbox" id="chooseallCart" checked="checked"/> Pilih Semua
         </div>
         <div id="detail-shopping">
             <div class="detail-shopping-body"></div>

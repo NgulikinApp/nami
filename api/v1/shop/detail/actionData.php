@@ -106,6 +106,9 @@
                 $account_name = param($request['account_name']);
                 $account_no = param($request['account_no']);
                 $bank_id = intval(param($request['bank_id']));
+                $shopprovince = param($request['shopprovince']);
+                $shopcity = param($request['shopcity']);
+                $shopaddress = param($request['shopaddress']);
                 
                 $stmt = $con->prepare("INSERT INTO account(user_id,bank_id,account_name,account_no) VALUES(?,?,?,?)");
                 
@@ -125,9 +128,9 @@
                 $stmt->close();
                 
                 $shop_current_brand = 0;
-                $stmt = $con->prepare("INSERT INTO shop(user_id,shop_name,shop_icon,shop_description,shop_current_brand) VALUES(?,?,?,?,?)");
+                $stmt = $con->prepare("INSERT INTO shop(user_id,shop_name,shop_icon,shop_description,shop_current_brand,shop_address,shop_province_id,shop_regency_id) VALUES(?,?,?,?,?,?,?,?)");
                 
-                $stmt->bind_param("ssssi", $user_id, $shop_name, $shop_photo_name, $shop_desc, $shop_current_brand);
+                $stmt->bind_param("ssssi", $user_id, $shop_name, $shop_photo_name, $shop_desc, $shop_current_brand, $shopaddress, $shopprovince, $shopcity);
                 
                 $stmt->execute();
             

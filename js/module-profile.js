@@ -1,3 +1,5 @@
+var search = {};
+
 $( document ).ready(function() {
     initGeneral();
     initProfile();
@@ -9,16 +11,22 @@ function initProfile(){
     
     profile();
     if($('.ishasShop').val() === '0'){
-        listbank();
-        $('#bankname_con span').remove();
         $('.ui-select').css("width","100%");
         
-        var cnt = $("#bankname").parent().contents();
-        $("#bankname").parent().replaceWith(cnt);
+        provinces();
+        search.province = 11;
+        regencies();
+        
+        listbank();
+        
+        $('#province_con span').remove();
+        $('#city_con span').remove();
+        $('#bankname_con span').remove();
+        
         var cnt = $("#recno").parent().contents();
         $("#recno").parent().replaceWith(cnt);
         
-        $('#bank_id-button').css({"width":"100%","margin":"5px 0px"});
+        $('#bank_id-button,#shopprovince-button,#shopcity-button').css({"width":"100%","margin":"5px 0px"});
         
         $('#bank_id').on( 'change', function( e ){
             $('#bank_id-button span').remove();
@@ -174,6 +182,72 @@ function initProfile(){
 	    $('#createshoptab').trigger('click');
         sessionStorage.removeItem('create_shopNgulikin');
 	}
+}
+
+function provinces(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken("provinces");
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: ADMINISTRATIVE_API,
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var response = data.result;
+                    
+                    var listElement = '';
+                    $.each( response, function( key, val ) {
+                        listElement += '<option value="'+val.id+'">'+val.name+'</option>';
+                    });
+                    
+                    $("#shopprovince").html(listElement);
+                }else{
+                    generateToken("provinces");
+                }
+            } 
+        });
+    }
+}
+
+function regencies(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken("regencies");
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: ADMINISTRATIVE_API,
+            data:{
+                id : search.province
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var response = data.result;
+                    
+                    var listElement = '';
+                    $.each( response, function( key, val ) {
+                        listElement += '<option value="'+val.id+'">'+val.name+'</option>';
+                        
+                        if(search.regency === ''){
+                            search.regency = val.id;
+                            districts();   
+                        }
+                    });
+                    
+                    $("#shopcity").html(listElement);
+                }else{
+                    generateToken("regencies");
+                }
+            } 
+        });
+    }
 }
 
 function uploadPhoto(){
@@ -575,7 +649,10 @@ function doCreateShop(){
             shop_desc = $("#shopdesc").val(),
             bank_id = $("#bank_id").val(),
             recname = $("#recname").val(),
-            recno = $("#recno").val();
+            recno = $("#recno").val(),
+            shopprovince = $("#shopprovince").val(),
+            shopcity = $("#shopcity").val(),
+            shopaddress = $("#shopaddress").val();
             
         $.ajax({
             type: 'POST',
@@ -585,7 +662,10 @@ function doCreateShop(){
                     shop_desc : shop_desc,
                     account_name : recname,
                     account_no : recno,
-                    bank_id : bank_id
+                    bank_id : bank_id,
+                    shopprovince : shopprovince,
+                    shopcity : shopcity,
+                    shopaddress : shopaddress
             }),
             dataType: 'json',
             beforeSend: function(xhr, settings) { 

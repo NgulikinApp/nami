@@ -22,13 +22,38 @@
                 <textarea id="shopdesc" class="inputCreateShopPrivate" cols="100" rows="5"></textarea>
             </div>
         </div>
+        <div class="head">Lokasi</div>
+        <div class="body">
+            <div>
+                <span>Provinsi</span>
+            </div>
+            <div style="margin: 0px;">
+                <div class="select createshop_con" id="province_con" style="width: 346.833px;overflow: hidden;">
+                    <select id="shopprovince"></select>
+                </div>
+            </div>
+            <div>
+                <span>Kota</span>
+            </div>
+            <div style="margin: 0px;">
+                <div class="select createshop_con" id="city_con" style="width: 346.833px;overflow: hidden;">
+                    <select id="shopcity"></select>
+                </div>
+            </div>
+            <div>
+                <span>Alamat</span>
+            </div>
+            <div>
+                <textarea id="shopaddress" class="inputCreateShopPrivate" cols="100" rows="5"></textarea>
+            </div>
+        </div>
         <div class="head">Rekening</div>
         <div class="body">
             <div>
                 <span style="line-height: 30px;">Nama Bank</span>
             </div>
             <div style="margin: 0px;">
-                <div class="select" id="bankname_con" style="width: 346.833px;overflow: hidden;">
+                <div class="select createshop_con" id="bankname_con" style="width: 346.833px;overflow: hidden;">
                     <select id="bank_id"></select>
                 </div>
             </div>

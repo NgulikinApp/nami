@@ -80,7 +80,7 @@
         if(isset($_SESSION['user'])){
             $stmt->execute();
             
-            $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11);
+            $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13);
             
             while ($stmt->fetch()) {
                 $dataProduct = array();
@@ -92,6 +92,7 @@
                 $brand_namearray = explode('~', $col3);
                 $product_imagearray = explode('~', $col4);
                 $product_pricearray = explode('~', $col7);
+                $product_weightarray = explode('~', $col13);
                 $cart_sumproductarray = explode('~', $col10);
                 $cart_adddatearray = explode('~', $col11);
                 
@@ -107,6 +108,7 @@
                               "product_name" => $product_namearray[$i],
                               "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($col5.'/product/'.$product_imagearray[$i])),
                               "product_price" => $product_pricearray[$i],
+                              "product_weight" => $product_weightarray[$i],
                               "cart_sumproduct" => intval($cart_sumproductarray[$i]),
                               "cart_createdate" => $cart_adddatearray[$i]
                             );
@@ -115,6 +117,7 @@
                 $dataShops[] = array(
                           "shop_id" => $col9,
                           "shop_name" => $col6,
+                          "shop_courier_id" => $col12,
                           "products" => $dataProduct
                         );
             }
@@ -147,6 +150,7 @@
                     $brand_namearray = explode('~', $row["brand_name"]);
                     $product_imagearray = explode('~', $row["product_images"]);
                     $product_pricearray = explode('~', $row["product_price"]);
+                    $product_weightarray = explode('~', $row["product_weight"]);
                     
                     $product_count = count($product_idarray);
                     
@@ -159,6 +163,7 @@
                                   "product_name" => $product_namearray[$i],
                                   "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($row["username"].'/product/'.$product_imagearray[$i])),
                                   "product_price" => $product_pricearray[$i],
+                                  "product_weight" => $product_weightarray[$i],
                                   "cart_sumproduct" => intval($dataArray[$i]['sum']),
                                   "cart_createdate" => $dataArray[$i]['date']
                                 );
@@ -167,6 +172,7 @@
                     $dataShops[] = array(
                           "shop_id" => $row["shop_id"],
                           "shop_name" => $row["shop_name"],
+                          "shop_courier_id" => $row["shop_courier_id"],
                           "products" => $dataProduct
                         );
                 }
@@ -193,24 +199,18 @@
     
     function listdelivery($con,$listproductid){
         $datadel = array();
-        $stmt = $con->prepare("SELECT 
+        $result = $con->query("SELECT 
                                     delivery_id,
                                     delivery_name
                                 FROM 
                                     delivery
                                 WHERE
-                                    delivery_id IN (?)");
+                                    delivery_id IN (".$listproductid.")");
         
-        $stmt->bind_param("s", $listproductid);
-                
-        $stmt->execute();
-        
-        $stmt->bind_result($col1, $col2);
-        
-        while ($stmt->fetch()) {
+        while ($row = $result->fetch_row()) {
             $datadel[] = array(
-                              "delivery_id" => $col1,
-                              "delivery_name" => $col2
+                              "delivery_id" => $row[0],
+                              "delivery_name" => $row[1]
                     );
         }
         
