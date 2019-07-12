@@ -3,8 +3,8 @@
     //--------------------------------------------------------------------------
 	// Link to File
 	//--------------------------------------------------------------------------
-    include $_SERVER['DOCUMENT_ROOT'].'/api/model/jwt.php';
-    include $_SERVER['DOCUMENT_ROOT'].'/api/model/generatejson.php';
+    include './api/model/jwt.php';
+    include './api/model/generatejson.php';
     
     /*
         Function location in : /model/jwt.php

@@ -6,10 +6,10 @@
     //--------------------------------------------------------------------------
 	// Link to File
 	//--------------------------------------------------------------------------
-    include $_SERVER['DOCUMENT_ROOT'].'/api/model/beanoflink.php';
-    include $_SERVER['DOCUMENT_ROOT'].'/api/v1/auth/functions.php';
-    include $_SERVER['DOCUMENT_ROOT'].'/api/model/general/get_auth.php';
-	include $_SERVER['DOCUMENT_ROOT'].'/api/model/general/postraw.php';
+    include './api/model/beanoflink.php';
+    include './api/v1/auth/functions.php';
+    include './api/model/general/get_auth.php';
+	include './api/model/general/postraw.php';
 	
 	/*
         Function location in : /model/jwt.php

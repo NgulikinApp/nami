@@ -289,7 +289,7 @@ select::-ms-expand {
 .leftHeader{
     margin-top: 7px;
     margin-left: 10px;
-    background-image: url(/img/icontext.png);
+    background-image: url(../img/icontext.png);
     background-repeat: no-repeat;
     width: 160px;
     height: 60px;
@@ -335,7 +335,7 @@ select::-ms-expand {
     text-decoration:none;
 }
 .menu-category .arrow {
-    background-image: url(/img/arrowcategory.png);
+    background-image: url(../img/arrowcategory.png);
     background-repeat: no-repeat;
     width: 30px;
     height: 13px;
@@ -453,7 +453,7 @@ select::-ms-expand {
 }
 #search-header{
     position: absolute;
-    background-image: url(/img/search-icon.png);
+    background-image: url(../img/search-icon.png);
     background-repeat: no-repeat;
     width: 30px;
     height: 20px;
@@ -528,7 +528,7 @@ select::-ms-expand {
     background-repeat: no-repeat;
     border-radius: 25px;
     border: 1px solid #DFDFDF;
-    background-image:url(/img/shop.png);
+    background-image:url(../img/shop.png);
     margin-top: 20px;
     margin-right: 10px;
     margin-left: 10px;
@@ -565,7 +565,7 @@ select::-ms-expand {
     height: 40px;
     background-size: contain;
     border-radius: 25px;
-    background-image:url(/img/no-photo.jpg);
+    background-image:url(../img/no-photo.jpg);
     margin-top: 20px;
     margin-right: 10px;
     margin-left: 10px;
@@ -582,13 +582,13 @@ select::-ms-expand {
     background-size: 30px;
 }
 #iconFavoritHeader{
-    background-image: url("/img/button_favorit.png");
+    background-image: url("../img/button_favorit.png");
     background-repeat: no-repeat;
     height: 100%;
     background-position: center;
 }
 #iconNotifHeader{
-    background-image: url("/img/button_notif.png");
+    background-image: url("../img/button_notif.png");
     background-repeat: no-repeat;
     display:block;
     background-size: 40px 30px;
@@ -597,7 +597,7 @@ select::-ms-expand {
     height: 100%;
 }
 #iconCartHeader{
-    background-image: url("/img/button_cart_blue.png");
+    background-image: url("../img/button_cart_blue.png");
     background-repeat: no-repeat;
     background-position: center;
     height: 100%;
@@ -632,7 +632,7 @@ select::-ms-expand {
     bottom: 5px;
     z-index: 1;
     right:2%;
-    background-image: url("/img/button_message.png");
+    background-image: url("../img/button_message.png");
     background-repeat: no-repeat;
     cursor:pointer;
     width: 63px;
@@ -685,7 +685,7 @@ select::-ms-expand {
 	font-size: smaller;
 }
 .closeIcon{
-	background-image: url("/img/button_close.png");
+	background-image: url("../img/button_close.png");
 	background-repeat: no-repeat;
 	float: right;
 	margin-right: 5px;
@@ -844,7 +844,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 .grid-cont1 .grid_chapter .grid_chapter_con#grid_chapter_con_left{
     float: left;
     width: 50%;
-    background-image: url("/img/latest-product.png");
+    background-image: url("../img/latest-product.png");
     background-size: cover;
     height: inherit;
     background-repeat: no-repeat;
@@ -969,19 +969,19 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     font-size: 13px;
 }
 .grid-body3-icon-cont2 li[data-internalid='1']{
-    background-image: url(/img/ngulikin_value_1.png);
+    background-image: url(../img/ngulikin_value_1.png);
     cursor:auto;
 }
 .grid-body3-icon-cont2 li[data-internalid='2']{
-    background-image: url(/img/ngulikin_value_2.png);
+    background-image: url(../img/ngulikin_value_2.png);
     cursor:auto;
 }
 .grid-body3-icon-cont2 li[data-internalid='3']{
-    background-image: url(/img/ngulikin_value_3.png);
+    background-image: url(../img/ngulikin_value_3.png);
     cursor:auto;
 }
 .grid-body3-icon-cont2 li[data-internalid='4']{
-    background-image: url(/img/ngulikin_value_4.png);
+    background-image: url(../img/ngulikin_value_4.png);
     cursor:auto;
 }
 .grid-body3-icon-cont2 li span{
@@ -1294,7 +1294,7 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 .grid-sub-cont9{
     background-color: #3FC3FF;
     height: 100%;
-    background-image: url(/img/backgroundPromo.png);
+    background-image: url(../img/backgroundPromo.png);
     background-repeat: no-repeat;
     background-position: 100% 45px;
 }
@@ -1444,7 +1444,7 @@ footer, footer div{
 .footer-header-logo{
     width: 134px;
     height: 78px;
-    background-image: url("/img/logo_ngulikin.png");
+    background-image: url("../img/logo_ngulikin.png");
     background-repeat: no-repeat;
     float:left;
     margin-left: 30px;
@@ -1607,7 +1607,7 @@ section div h1{
     /* size of bullet elment */
     width: 16px;
     height: 16px;
-    background: url('/img/b05.png') no-repeat;
+    background: url('../img/b05.png') no-repeat;
     overflow: hidden;
     cursor: pointer;
 }
@@ -1634,7 +1634,7 @@ section div h1{
     width: 40px;
     height: 58px;
     cursor: pointer;
-    background: url('/img/a11.png') center center no-repeat;
+    background: url('../img/a11.png') center center no-repeat;
     overflow: hidden;
     cursor:pointer;
 }
@@ -1672,7 +1672,7 @@ section div h1{
    filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;
 }
 .jssor_loading_nextcontainer{
-   position:absolute;display:block;background:url('../img/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;
+   position:absolute;display:block;background:url('..../img/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;
 }
 
 /* SignIn and SignUp Menu*/
@@ -1706,7 +1706,7 @@ section div h1{
 	position:absolute;
 }
 #closeSignin{
-    background-image: url(/img/button_close_sidebar.png) !important;
+    background-image: url(../img/button_close_sidebar.png) !important;
     background-size: contain;
 }
 .signinBody{
@@ -1817,7 +1817,7 @@ section div h1{
     color:#004F7F;
 }
 #signupBanner{
-    background:url('/img/ngulik-carousel-image.jpg');
+    background:url('../img/ngulik-carousel-image.jpg');
     background-size: 100% 551px;
     background-repeat: no-repeat;
     height: 400px;
@@ -2000,7 +2000,7 @@ section div h1{
     margin-right: 5px;
 }
 .grid-signup-header-icon{
-    background-image: url(/img/icon.png);
+    background-image: url(../img/icon.png);
     background-repeat: no-repeat;
     width: 170px;
     height: 100px;
@@ -2089,7 +2089,7 @@ hr{
     left: 75px;
 }
 #iconSigninFb{
-	background-image:url("/img/icon_fb.png");
+	background-image:url("../img/icon_fb.png");
 	width:7px;
 	height:14px;
 }
@@ -2100,7 +2100,7 @@ hr{
 	color: #747474;
 }
 #iconSigninGplus{
-	background-image:url("/img/icon_google.png");
+	background-image:url("../img/icon_google.png");
 	width:14px;
 	height:13px;
 }
@@ -2400,7 +2400,7 @@ hr{
     margin-top: 145px;
 }
 .grid-cart-body{
-    background-image: url("/img/keranjang.png");
+    background-image: url("../img/keranjang.png");
 }
 .grid-cart-footer,.grid-favorite-footer{
     font-family:proxima_nova;
@@ -2712,7 +2712,7 @@ hr{
     text-align:center;
 }
 .grid-favorite-body{
-    background-image: url("/img/favorit.png");
+    background-image: url("../img/favorit.png");
 }
 .grid-favorite-header .favoriteButton{
     background-color: #3FC3FF;
@@ -2981,16 +2981,16 @@ hr{
     image-rendering: -webkit-optimize-contrast;
 }
 .icon-product{
-    background-image: url(https://ecs7.tokopedia.net/img/category/icon-product.png);
+    background-image: url(https://ecs7.tokopedia.net../img/category/icon-product.png);
 }
 .icon-product.active{
-    background-image: url(https://ecs7.tokopedia.net/img/category/icon-product-green.png);
+    background-image: url(https://ecs7.tokopedia.net../img/category/icon-product-green.png);
 }
 .icon-shop{
-    background-image: url(https://ecs7.tokopedia.net/img/category/icon-shop.png);
+    background-image: url(https://ecs7.tokopedia.net../img/category/icon-shop.png);
 }
 .icon-shop.active{
-    background-image: url(https://ecs7.tokopedia.net/img/category/icon-shop-green.png);
+    background-image: url(https://ecs7.tokopedia.net../img/category/icon-shop-green.png);
 }
 .result-content .list-search.active{
     display:block;
@@ -3208,7 +3208,7 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
     border-radius:45px;
 }
 .grid-shop-banner{
-    background: url('/img/shop-banner.png');
+    background: url('../img/shop-banner.png');
     background-size: 100% 248px;
     background-repeat: no-repeat;
     height: 220px;
@@ -3227,7 +3227,7 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
     opacity:0.5;
 }
 #favorite-icon-shop{
-    background-image: url("/img/favorit.png");
+    background-image: url("../img/favorit.png");
     background-repeat: no-repeat;
     width: 50px;
     height: 50px;
@@ -3743,7 +3743,7 @@ Product page
 }
 #search-transaction{
     position: absolute;
-    background-image: url(/img/search-icon.png);
+    background-image: url(../img/search-icon.png);
     background-repeat: no-repeat;
     background-size: contain;
     cursor: pointer;
@@ -4111,7 +4111,7 @@ Product page
 }
 #search-notif{
     position: absolute;
-    background-image: url(/img/search-icon.png);
+    background-image: url(../img/search-icon.png);
     background-repeat: no-repeat;
     width: 15px;
     height: 15px;
@@ -4496,7 +4496,7 @@ input.radioPaymentOthers:empty ~ label:before{
     border-top-right-radius: 3px;
 }
 .greetingContainer .top .icon{
-    background-image: url(/img/iconwithtext.png);
+    background-image: url(../img/iconwithtext.png);
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
@@ -4613,7 +4613,7 @@ input.radioPaymentOthers:empty ~ label:before{
     display:inline-block;
 }
 .grid-shop-seller-body .note .note-text .note-warning,#notesShopSection .note .note-text .note-warning{
-    background-image: url(/img/warning.png);
+    background-image: url(../img/warning.png);
     background-position: top;
     background-repeat: no-repeat;
     width: 3%;
@@ -4631,7 +4631,7 @@ input.radioPaymentOthers:empty ~ label:before{
 .grid-shop-seller-body .note .note-updated .note-updated-button,#notesShopSection .note .note-updated .note-updated-button{
     cursor: pointer;
     margin: 10px;
-    background-image: url(/img/note-delete.png);
+    background-image: url(../img/note-delete.png);
     background-repeat: no-repeat;
     width: 45px;
     background-position-x: left;
@@ -4776,7 +4776,7 @@ input.radioPaymentOthers:empty ~ label:before{
     display:inline-block;
 }
 .grid-shop-seller-body .bank .list-bank table .list-bank-name .left,.grid-incomehistory-left .left #photo_profile{
-    background-image: url(/img/no-photo.jpg);
+    background-image: url(../img/no-photo.jpg);
     border-radius: 25px;
     width: 40px;
     height: 40px;
@@ -5434,7 +5434,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     padding: 10px;
 }
 .accountSellerContainer .warning .note-warning{
-    background-image: url(/img/warning.png);
+    background-image: url(../img/warning.png);
     background-position: top;
     background-repeat: no-repeat;
     width: 3%;
@@ -5576,7 +5576,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 }
 #search-mysalesorder,#search-mysalesstatus,#search-mysalesconfirm,#search-mysalestransaction{
     position: absolute;
-    background-image: url(/img/search-icon.png);
+    background-image: url(../img/search-icon.png);
     background-repeat: no-repeat;
     background-size: contain;
     cursor: pointer;

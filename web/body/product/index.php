@@ -10,7 +10,7 @@
     <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1, width=device-width">
-		<?php include $_SERVER['DOCUMENT_ROOT'].'/web/library_detail.php';?>
+		<?php include './web/library_detail.php';?>
 		<title>Tidak ditemukan | Ngulikin</title>
     </head>
     <body class="hiddenoverflow">

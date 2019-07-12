@@ -8,7 +8,7 @@
     //--------------------------------------------------------------------------
 	// Link to File
 	//--------------------------------------------------------------------------
-    include $_SERVER['DOCUMENT_ROOT'].'/api/model/beanoflink.php';
+    include './api/model/beanoflink.php';
     
     /*
         Function location in : /model/connection.php

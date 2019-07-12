@@ -16,7 +16,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1, width=device-width">
 		<title>Invoice | Ngulikin</title>
-		<?php include $_SERVER['DOCUMENT_ROOT'].'/web/library_detail.php';?>
+		<?php include './web/library_detail.php';?>
     </head>
     <body class="hiddenoverflow">
         <div class="loaderProgress">

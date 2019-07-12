@@ -14,7 +14,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1, width=device-width">
 		<title>Notifikasi | Ngulikin</title>
-		<?php include $_SERVER['DOCUMENT_ROOT'].'/web/library.php';?>
+		<?php include './web/library.php';?>
     </head>
     <body>
 		<?php 

@@ -1,7 +1,7 @@
 <?php
 
 // Include library ongkir
-include $_SERVER['DOCUMENT_ROOT'].'/api/model/general/fpdf.php';
+include './api/model/general/fpdf.php';
 
 class PDF extends FPDF
 {

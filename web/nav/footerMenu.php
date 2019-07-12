@@ -5,7 +5,7 @@
                 <div class="footer-body-left">
                     <?php
                         $array_link = explode("/",$actual_link);
-                        if(count($array_link)>4){
+                        if(count($array_link)>4 && $array_link[count($array_link)-1] != ''){
                     ?>
                         <img src="../../img/footerlogo.png">
                     <?php

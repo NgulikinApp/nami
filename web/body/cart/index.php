@@ -11,7 +11,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1, width=device-width">
 		<title>Cart | Ngulikin</title>
-		<?php include $_SERVER['DOCUMENT_ROOT'].'/web/library.php';?>
+		<?php include './web/library.php';?>
 		<script src="js/library/FBsdk.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="https://apis.google.com/js/api.js?jsr=<?php echo $jsversionstring; ?>"></script>
     </head>

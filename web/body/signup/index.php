@@ -14,7 +14,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1, width=device-width">
 		<title>Sign Up | Ngulikin</title>
-		<?php include $_SERVER['DOCUMENT_ROOT'].'/web/library.php';?>
+		<?php include './web/library.php';?>
 		<link href="css/jquery.mobile.datepicker.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
         <link href="css/jquery.mobile.datepicker.theme.css?jsr=<?php echo $jsversionstring; ?>" rel="stylesheet">
         

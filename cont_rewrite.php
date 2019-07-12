@@ -18,41 +18,41 @@
 	
 	switch (@$routes[0]) {
 	    case 'v2':
-	         include('api/v2/test.php');
+	         include('./api/v2/test.php');
 	    break;
 	    case 'v1':
 	        switch (@$routes[1]) {
 			    case 'activeAccount':
-					include('api/v1/auth/active_account.php');
+					include('./api/v1/auth/active_account.php');
 				break;
 				case 'administrative':
-					include('api/v1/general/list/administrative.php');
+					include('./api/v1/general/list/administrative.php');
 				break;
 				case 'asking':
-					include('api/v1/general/asking/sendMail.php');
+					include('./api/v1/general/asking/sendMail.php');
 				break;
 			    case 'forgotPassword':
 				    switch (@$routes[2]) {
 				        case 'askingCode':
-							include('api/v1/auth/forgotpassword/sendingcode.php');
+							include('./api/v1/auth/forgotpassword/sendingcode.php');
 						break;
 						case 'checkingCode':
-							include('api/v1/auth/forgotpassword/checkingcode.php');
+							include('./api/v1/auth/forgotpassword/checkingcode.php');
 						break;
 						case 'changingPass':
-							include('api/v1/auth/forgotpassword/changingpass.php');
+							include('./api/v1/auth/forgotpassword/changingpass.php');
 						break;
 				    }
 				break;
 				case 'generateToken':
-					include('api/v1/general/system/generateToken.php');
+					include('./api/v1/general/system/generateToken.php');
 				break;
 				case 'mypurchases':
 					switch (@$routes[2]) {
 					    case 'list':
 					        switch (@$routes[3]) {
 					            default :
-							        include('api/v1/mypurchases/list/transactions.php');
+							        include('./api/v1/mypurchases/list/transactions.php');
 					        }
 					    break;
 					}
@@ -62,38 +62,38 @@
 				        case 'detail':
 							switch (@$routes[3]) {
 							    case 'an':
-        							include('api/v1/mysales/detail/actionneworder.php');
+        							include('./api/v1/mysales/detail/actionneworder.php');
         						break;
         						case 'ac':
-        							include('api/v1/mysales/detail/actionconfirmorder.php');
+        							include('./api/v1/mysales/detail/actionconfirmorder.php');
         						break;
 							    case 'c':
-        							include('api/v1/mysales/detail/confirmorder.php');
+        							include('./api/v1/mysales/detail/confirmorder.php');
         						break;
 							    case 's':
-        							include('api/v1/mysales/detail/statussending.php');
+        							include('./api/v1/mysales/detail/statussending.php');
         						break;
         						case 't':
-        							include('api/v1/mysales/detail/transaction.php');
+        							include('./api/v1/mysales/detail/transaction.php');
         						break;
 							    default :
-							        include('api/v1/mysales/detail/neworder.php');
+							        include('./api/v1/mysales/detail/neworder.php');
 							    break;
 							}
 						break;
 						case 'list':
 							switch (@$routes[3]) {
 							    case 'c':
-        							include('api/v1/mysales/list/confirmorder.php');
+        							include('./api/v1/mysales/list/confirmorder.php');
         						break;
 							    case 's':
-        							include('api/v1/mysales/list/statussending.php');
+        							include('./api/v1/mysales/list/statussending.php');
         						break;
         						case 't':
-        							include('api/v1/mysales/list/transaction.php');
+        							include('./api/v1/mysales/list/transaction.php');
         						break;
 							    default :
-							        include('api/v1/mysales/list/neworder.php');
+							        include('./api/v1/mysales/list/neworder.php');
 							    break;
 							}
 						break;
@@ -102,108 +102,108 @@
 				case 'notif':
 				    switch (@$routes[2]) {
 					    case 'r':
-							include('api/v1/general/notification/doRead.php');
+							include('./api/v1/general/notification/doRead.php');
 						break;
 						default :
-							include('api/v1/general/notification/getNotif.php');
+							include('./api/v1/general/notification/getNotif.php');
 				    }
 				break;
 				case 'putfile':
-					include('api/v1/general/system/putFile.php');
+					include('./api/v1/general/system/putFile.php');
 				break;
 				case 'product':
 					switch (@$routes[2]) {
 					    case 'a':
-							include('api/v1/product/detail/actionData.php');
+							include('./api/v1/product/detail/actionData.php');
 						break;
 						case 'brand':
 							switch (@$routes[3]) {
 							    case 'a':
-        							include('api/v1/product/brand/actionData.php');
+        							include('./api/v1/product/brand/actionData.php');
         						break;
 							    default :
-							        include('api/v1/product/brand/getData.php');
+							        include('./api/v1/product/brand/getData.php');
 							}
 						break;
 						case 'cart':
 						    switch (@$routes[3]) {
 						        case 'a':
-        							include('api/v1/product/cart/addtocart.php');
+        							include('./api/v1/product/cart/addtocart.php');
         						break;
         						case 'c':
-        							include('api/v1/product/cart/chosencart.php');
+        							include('./api/v1/product/cart/chosencart.php');
         						break;
         						case 'd':
-        							include('api/v1/product/cart/deletecart.php');
+        							include('./api/v1/product/cart/deletecart.php');
         						break;
         						case 'u':
-        							include('api/v1/product/cart/updatecart.php');
+        							include('./api/v1/product/cart/updatecart.php');
         						break;
         						default :
-							        include('api/v1/product/cart/feed.php');
+							        include('./api/v1/product/cart/feed.php');
 						    }
 						break;
 						case 'category':
-							include('api/v1/product/list/category.php');
+							include('./api/v1/product/list/category.php');
 						break;
 						case 'discuss':
 				            switch (@$routes[3]) {
 				                case 'c':
-        							include('api/v1/product/comment/discuss.php');
+        							include('./api/v1/product/comment/discuss.php');
         						break;
         						case 'r':
-        							include('api/v1/product/comment/replyDiscuss.php');
+        							include('./api/v1/product/comment/replyDiscuss.php');
         						break;
 				                default:
-				                    include('api/v1/product/list/discuss.php');
+				                    include('./api/v1/product/list/discuss.php');
 				                break;
 				            }
 						break;
 						case 'favorite':
-							include('api/v1/product/favorite/favoriteItem.php');
+							include('./api/v1/product/favorite/favoriteItem.php');
 						break;
 						case 'favoriteList':
-							include('api/v1/product/list/favorite.php');
+							include('./api/v1/product/list/favorite.php');
 						break;
 						case 'feed':
-							include('api/v1/product/list/feed.php');
+							include('./api/v1/product/list/feed.php');
 						break;
 						case 'invoice':
 						    switch (@$routes[3]) {
 						        case 'a':
-        							include('api/v1/product/invoice/addtoinvoice.php');
+        							include('./api/v1/product/invoice/addtoinvoice.php');
         						break;
         						case 'cp':
-        							include('api/v1/product/invoice/changepayment.php');
+        							include('./api/v1/product/invoice/changepayment.php');
         						break;
 						        case 'ss':
-        							include('api/v1/product/invoice/sendStatusProduct.php');
+        							include('./api/v1/product/invoice/sendStatusProduct.php');
         						break;
 						        case 'us':
-        							include('api/v1/product/invoice/changestatusinvoice.php');
+        							include('./api/v1/product/invoice/changestatusinvoice.php');
         						break;
         						default :
-							        include('api/v1/product/invoice/getData.php');
+							        include('./api/v1/product/invoice/getData.php');
 						    }
 						break;
 						case 'rate':
-							include('api/v1/product/rate/rateItem.php');
+							include('./api/v1/product/rate/rateItem.php');
 						break;
 						case 'review':
 						    switch (@$routes[3]) {
 						        case 'c':
-        							include('api/v1/product/comment/review.php');
+        							include('./api/v1/product/comment/review.php');
         						break;
 						        default: 
-						            include('api/v1/product/list/review.php');
+						            include('./api/v1/product/list/review.php');
 						        break;
 						    }
 						break;
 						case 'status':
-							include('api/v1/product/list/status.php');
+							include('./api/v1/product/list/status.php');
 						break;
 						default :
-						    include('api/v1/product/detail/getData.php');
+						    include('./api/v1/product/detail/getData.php');
 						break;
 					}
 				break;
@@ -212,141 +212,141 @@
 				        case 'address':
 				            switch (@$routes[3]) {
 						        case 'a':
-        							include('api/v1/profile/address/actionData.php');
+        							include('./api/v1/profile/address/actionData.php');
         						break;
         						case 'ls':
-        							include('api/v1/profile/list/listaddress.php');
+        							include('./api/v1/profile/list/listaddress.php');
         						break;
         						case 's':
-        							include('api/v1/profile/address/selectAddress.php');
+        							include('./api/v1/profile/address/selectAddress.php');
         						break;
 						        default: 
-						            include('api/v1/profile/address/getData.php');
+						            include('./api/v1/profile/address/getData.php');
 						        break;
 						    }
 				        break;
 				        case 'cm':
-				            include('api/v1/profile/confirmPassword.php');
+				            include('./api/v1/profile/confirmPassword.php');
 				        break;
 				        case 'u':
-				            include('api/v1/profile/updateUser.php');
+				            include('./api/v1/profile/updateUser.php');
 				        break;
 				        case 'up':
-				            include('api/v1/profile/updatePassword.php');
+				            include('./api/v1/profile/updatePassword.php');
 				        break;
 				        default :
-							include('api/v1/profile/user.php');
+							include('./api/v1/profile/user.php');
 						break;
 				    }
 				break;
 				case 's':
-					include('api/v1/general/search/searchItem.php');
+					include('./api/v1/general/search/searchItem.php');
 				break;
 				case 'shippingcost':
-					include('api/v1/general/system/shippingcost.php');
+					include('./api/v1/general/system/shippingcost.php');
 				break;
 				case 'shop':
 				    switch (@$routes[2]) {
 				        case 'a':
-        					include('api/v1/shop/detail/actionData.php');
+        					include('./api/v1/shop/detail/actionData.php');
         				break;
 				        case 'account':
 				            switch (@$routes[3]) {
 				                case 'a':
-        							include('api/v1/shop/detail/actionAccount.php');
+        							include('./api/v1/shop/detail/actionAccount.php');
         						break;
 				                default:
-				                    include('api/v1/shop/list/account.php');
+				                    include('./api/v1/shop/list/account.php');
 				                break;
 				            }
 						break;
 				        case 'bank':
-							include('api/v1/shop/list/bank.php');
+							include('./api/v1/shop/list/bank.php');
 						break;
 				        case 'brand':
 				            switch (@$routes[3]) {
 				                case 's':
-        							include('api/v1/shop/detail/selectBrand.php');
+        							include('./api/v1/shop/detail/selectBrand.php');
         						break;
 				                default:
-				                    include('api/v1/shop/list/brand.php');
+				                    include('./api/v1/shop/list/brand.php');
 				                break;
 				            }
 						break;
 						case 'delivery':
 						    switch (@$routes[3]) {
 						        case 'e':
-        							include('api/v1/shop/detail/editDelivery.php');
+        							include('./api/v1/shop/detail/editDelivery.php');
         						break;
 						        default:
-				                    include('api/v1/shop/list/delivery.php');
+				                    include('./api/v1/shop/list/delivery.php');
 				                break;
 						    }
 						break;
 				        case 'discuss':
 				            switch (@$routes[3]) {
 				                case 'c':
-        							include('api/v1/shop/comment/discuss.php');
+        							include('./api/v1/shop/comment/discuss.php');
         						break;
         						case 'r':
-        							include('api/v1/shop/comment/replyDiscuss.php');
+        							include('./api/v1/shop/comment/replyDiscuss.php');
         						break;
 				                default:
-				                    include('api/v1/shop/list/discuss.php');
+				                    include('./api/v1/shop/list/discuss.php');
 				                break;
 				            }
 						break;
 						case 'e':
-							include('api/v1/shop/detail/editData.php');
+							include('./api/v1/shop/detail/editData.php');
 						break;
 						case 'eb':
-							include('api/v1/shop/detail/editBanner.php');
+							include('./api/v1/shop/detail/editBanner.php');
 						break;
 				        case 'favorite':
-							include('api/v1/shop/favorite/favoriteItem.php');
+							include('./api/v1/shop/favorite/favoriteItem.php');
 						break;
 						case 'favoriteList':
-							include('api/v1/shop/list/favorite.php');
+							include('./api/v1/shop/list/favorite.php');
 						break;
 				        case 'feed':
-							include('api/v1/shop/list/feed.php');
+							include('./api/v1/shop/list/feed.php');
 						break;
 						case 'notes':
 						    switch (@$routes[3]) {
 						        case 'e':
-        							include('api/v1/shop/detail/editNotes.php');
+        							include('./api/v1/shop/detail/editNotes.php');
         						break;
 						        default: 
-						            include('api/v1/shop/detail/getNotes.php');
+						            include('./api/v1/shop/detail/getNotes.php');
 						        break;
 						    }
 						break;
 						case 'product':
-							include('api/v1/shop/list/product.php');
+							include('./api/v1/shop/list/product.php');
 						break;
 						case 'review':
 						    switch (@$routes[3]) {
 						        case 'c':
-        							include('api/v1/shop/comment/review.php');
+        							include('./api/v1/shop/comment/review.php');
         						break;
 						        default: 
-						            include('api/v1/shop/list/review.php');
+						            include('./api/v1/shop/list/review.php');
 						        break;
 						    }
 						break;
 						default :
-							include('api/v1/shop/detail/getData.php');
+							include('./api/v1/shop/detail/getData.php');
 						break;
 				    }
 				break;
 				case 'signin':
-					include('api/v1/auth/signin.php');
+					include('./api/v1/auth/signin.php');
 				break;
 				case 'signout':
-					include('api/v1/auth/signout.php');
+					include('./api/v1/auth/signout.php');
 				break;
 				case 'signup':
-					include('api/v1/auth/signup.php');
+					include('./api/v1/auth/signup.php');
 				break;
 			}
 		break;

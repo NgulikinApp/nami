@@ -176,19 +176,19 @@
                           "products" => $dataProduct
                         );
                 }
-                
-                $stmt->close();
-                $countArray = count($dataShops);
-                for($j=0;$j<$countArray;$j++){
-                    $datadel = listdelivery($con,$dataDelivery[$j]);
-                    $dataShops[$j]['product_delivery'] = $datadel;
-                }
-                
-                $data = array(
-                          "totalproducts" => $totalproduct,
-                          "listshops" => $dataShops
-                        );
             }
+			
+			$stmt->close();
+            $countArray = count($dataShops);
+            for($j=0;$j<$countArray;$j++){
+                $datadel = listdelivery($con,$dataDelivery[$j]);
+                $dataShops[$j]['product_delivery'] = $datadel;
+            }
+                
+            $data = array(
+                        "totalproducts" => $totalproduct,
+                        "listshops" => $dataShops
+                    );
         }
         
         /*
