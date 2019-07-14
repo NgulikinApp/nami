@@ -1460,6 +1460,11 @@ footer, footer div{
     width: 17%;
     padding-left: 30px;
 }
+.footer-icon{
+    background: url('../img/footerlogo.png') center center no-repeat;
+    width:211px;
+    height:84px;
+}
 .footer-body-mid1 ul li:hover, .footer-body-mid2 ul li:hover,.footer-body-mid3 ul li:hover{
     text-decoration:underline;
 }

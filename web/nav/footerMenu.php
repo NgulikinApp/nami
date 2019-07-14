@@ -3,18 +3,7 @@
         <div class="footer">
             <div class="footer-body">
                 <div class="footer-body-left">
-                    <?php
-                        $array_link = explode("/",$actual_link);
-                        if(count($array_link)>4 && $array_link[count($array_link)-1] != ''){
-                    ?>
-                        <img src="../../img/footerlogo.png">
-                    <?php
-                        }else{
-                    ?>
-                        <img src="img/footerlogo.png">
-                    <?php
-                        }
-                    ?>
+                    <div class="footer-icon"></div>
                 </div>
                 <div class="footer-body-mid1">
                     <h3>NGULIKIN</h3>
