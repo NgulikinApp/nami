@@ -2,7 +2,7 @@
     //--------------------------------------------------------------------------
 	// Link to File
 	//--------------------------------------------------------------------------
-    include $_SERVER['DOCUMENT_ROOT'].'/api/model/generatejson.php';
+    include './api/model/generatejson.php';
     
     /*
         Function referred on : all

@@ -24,9 +24,9 @@
             <img src="../img/loader.gif" />
         </div>
         <?php 
-            include $_SERVER['DOCUMENT_ROOT'].'/web/nav/mainMenu.php';
+            include './web/nav/mainMenu.php';
             include 'section_body.php';
-            include $_SERVER['DOCUMENT_ROOT'].'/web/nav/footerMenu.php';
+            include './web/nav/footerMenu.php';
             include 'web/nav/footerFloatMenu.php';
             include 'web/nav/generalInput.php';
         ?>

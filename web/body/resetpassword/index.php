@@ -8,9 +8,9 @@
 		<?php include './web/library.php';?>
     </head>
     <body>
-        <?php include $_SERVER['DOCUMENT_ROOT'].'/web/nav/mainMenu.php';?>
+        <?php include './web/nav/mainMenu.php';?>
 		<?php include 'section_body.php';?>
-		<?php include $_SERVER['DOCUMENT_ROOT'].'/web/nav/footerMenu.php';?>
+		<?php include './web/nav/footerMenu.php';?>
 		<?php include 'web/body/general/init_questioner.php';?>
 		<script src="js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script>

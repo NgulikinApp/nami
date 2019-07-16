@@ -7,7 +7,8 @@
                 - password
     */
     function basic_auth(){
-        $header = @$_SERVER['HTTP_AUTHORIZATION'];
+        $headers = apache_request_headers();
+        $header = $headers["Authorization"];
         $header_arr = explode(' ', $header);
         $basic_token = base64_decode(@$header_arr[1]);
         $basic_token_arr = explode(':', $basic_token);
@@ -23,7 +24,8 @@
         Return data: jwt token
     */
     function bearer_auth(){
-        $header = @$_SERVER['HTTP_AUTHORIZATION'];
+        $headers = apache_request_headers();
+        $header = $headers["Authorization"];
         $header_arr = explode(' ', $header);
         $bearer_token = base64_decode(@$header_arr[1]);
         
