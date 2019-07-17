@@ -76,7 +76,7 @@
                 return invalidKey();
             }
             
-            if($id == 0 || $shop_id == 0||$shop_id == $user_shop_id){
+            if($id == 0 || $shop_id == 0){
                 /*
                     Function location in : functions.php
                 */
@@ -90,7 +90,7 @@
                 emptyComment();
             }
             
-            $stmt = $con->prepare("INSERT INTO product_review(shop_id,user_id,product_review_comment) VALUES(?,?,?)");
+            $stmt = $con->prepare("INSERT INTO product_review(product_id,user_id,product_review_comment) VALUES(?,?,?)");
             
             $stmt->bind_param("iss", $id, $user_id, $comment);
             
@@ -98,7 +98,7 @@
             
             $product_review_id = $con->insert_id;
             
-            $stmt = $con->prepare("UPDATE shop SET product_total_review=product_total_review+1 where product_id=".$id."");
+            $stmt = $con->prepare("UPDATE product SET product_total_review=product_total_review+1 where product_id=".$id."");
             
             $stmt->bind_param("i", $id);
             

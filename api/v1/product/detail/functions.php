@@ -8,7 +8,7 @@
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16, $col17, $col18, $col19, $col20, $col21, $col22, $col23, $col24);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16, $col17, $col18, $col19, $col20, $col21, $col22, $col23, $col24, $col25, $col26, $col27, $col28);
         
         $product_id = 0;
         while ($stmt->fetch()) {
@@ -27,6 +27,14 @@
                 $image = IMAGES_URL.'/'.urlencode(base64_encode($col3.'/product/'.$imageArray[$i]));
                 array_push($product_images,$image);
             }
+            
+            if(isset($_SESSION['user'])){
+                $id = intval($_SESSION['user']["shop_id"]);
+                $canbecommented = (intval($col20) == intval($id)) ? false : true;
+            }else{
+                $canbecommented = false;
+            }
+            
             $data['product_id'] = $product_id;
             $data['user_id'] = $col2;
             $data['username'] = $col3;
@@ -47,10 +55,15 @@
             $data['product_image'] = $product_images;
             $data['product_rate_value'] = $col18;
             $data['shop_id'] = $col20;
-            $data['brand_id'] = $col21;
+            $data['brand_name'] = $col21;
             $data['product_level'] = $col22;
             $data['product_modifydate'] = $col23;
+            $data['canbecommented'] = $canbecommented;
             $data['product_sold'] = $col24;
+            $data['shop_total_brand'] = $col25;
+            $data['product_seen'] = $col26;
+            $data['product_total_discuss'] = $col27;
+            $data['product_total_review'] = $col28;
             
             setMemcached("m_p_".$col14."_".$col4,$cache,$data,86400);
         }

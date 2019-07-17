@@ -22,9 +22,11 @@
     
     //Parameters
     $linkArray = explode('/',$actual_link);
-    $shop_nametemp = array_values(array_slice($linkArray, -1))[0];
-    $shop_nameArray = explode('?',$shop_nametemp);
-    $shop_name = $shop_nameArray[0];
+    $shopname = array_values(array_slice($linkArray, -2))[0];
+    $productname = array_values(array_slice($linkArray, -1))[0];
+    $productname = preg_replace('/-/', ' ', $productname);
+	$productnameArray = explode('?',$productname);
+    $productname = $productnameArray[0];
     $page = param($_GET['page']);
     $pagesize = param($_GET['pagesize']);
     
@@ -112,10 +114,10 @@
 											fullname,
 											product.user_id
                                         FROM
-                                            `shop`
-                                            LEFT JOIN brand ON shop.shop_id = brand.shop_id
-                                            LEFT JOIN `product` ON brand.brand_id = product.brand_id
-                                            LEFT JOIN product_discuss ON product_discuss.product_id = `product`.product_id
+                                            product_discuss
+                                            LEFT JOIN `product` ON `product`.product_id = product_discuss.product_id
+                                            LEFT JOIN brand ON brand.brand_id = `product`.brand_id
+                                            LEFT JOIN `shop` ON `shop`.shop_id = brand.shop_id
                                             LEFT JOIN `user` ON `user`.user_id = product_discuss.user_id
                                         WHERE
                                             shop.shop_name = ?
@@ -125,7 +127,7 @@
                                             product_discuss.product_discuss_id
                                         LIMIT ?");
             
-            $stmt->bind_param("si", $shop_name,$pagesize);
+            $stmt->bind_param("ssi", $shopname,$productname,$pagesize);
             /*
                 Function location in : function.php
             */

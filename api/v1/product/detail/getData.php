@@ -75,10 +75,14 @@
             }
             $sql .= " 
                         shop.shop_id,
-                        product.brand_id,
+                        brand_name,
                         product_level,
                         DATE_FORMAT(product_modifydate, '%d %M %Y') AS product_modifydate,
-                        product_sold
+                        product_sold,
+                        shop_total_brand,
+                        product_seen,
+                        product_total_discuss,
+                        product_total_review
                             FROM 
                                 product
                                 LEFT JOIN brand ON brand.brand_id = product.brand_id
@@ -86,15 +90,16 @@
                                 LEFT JOIN `user` ON `user`.user_id = shop.user_id
                             	LEFT JOIN product_rate ON product.product_id=product_rate.product_id
                             WHERE
-                                product_name = ?
+                                shop_name = ?
                                 AND
-                                shop_name = ?";
+                                product_name = ?
+                                ";
             $stmt = $con->prepare($sql);
             
             if($user_id != ''){
-                $stmt->bind_param("sss", $user_id,$productname,$shopname);
+                $stmt->bind_param("sss", $user_id,$shopname,$productname);
             }else{
-                $stmt->bind_param("ss", $productname,$shopname);
+                $stmt->bind_param("ss",$shopname,$productname);
             }
             /*
                 Function location in : functions.php

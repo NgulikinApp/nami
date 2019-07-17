@@ -20,8 +20,8 @@
     include 'ipaddress.php';
     include 'check_user_agent.php';
     //include 'checkajax.php';
-	include $_SERVER['DOCUMENT_ROOT'].'/api/model/mail/PHPMailerAutoload.php';
-    include $_SERVER['DOCUMENT_ROOT'].'/api/model/general/functions.php';
+	include './api/model/mail/PHPMailerAutoload.php';
+    include './api/model/general/functions.php';
     
     define("INIT_URL", "https://www.ngulikin.com");
     define("IMAGES_URL", "https://www.images.ngulikin.com");
