@@ -189,6 +189,16 @@
 						case 'rate':
 							include('./api/v1/product/rate/rateItem.php');
 						break;
+						case 'related':
+						    switch (@$routes[3]) {
+						        case 'r':
+        							include('./api/v1/product/list/recommendProduct.php');
+        						break;
+						        default: 
+						            include('./api/v1/product/list/othersProduct.php');
+						        break;
+						    }
+						break;
 						case 'review':
 						    switch (@$routes[3]) {
 						        case 'c':

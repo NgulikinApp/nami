@@ -90,7 +90,8 @@
 									MONTH(invoice_paiddate) = MONTH(NOW())
 							GROUP BY 
 									invoice.invoice_id
-						), 0) AS soldCurMonth
+						), 0) AS soldCurMonth,
+						product.brand_id
                     FROM 
                         product
                         LEFT JOIN brand ON brand.brand_id = product.brand_id

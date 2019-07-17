@@ -4631,6 +4631,11 @@ input.radioPaymentOthers:empty ~ label:before{
     margin-left: 5px;
     line-height: 35px;
 }
+.others_product_head{
+    padding: 15px;
+    text-align: center;
+    font-family: proxima_nova_altbold;
+}
 .grid-shop-seller-menu div:hover,.grid-shop-body .grid-shop-body-head .menu:hover{
     color:#74C5FC;
 }

@@ -2,7 +2,10 @@ var rateData = {},
     addtocartSum = {},
     productData = {},
     commentPage = {},
-    commentFlag = {};
+    commentFlag = {},
+    favoriteData = {},
+    cartData = {}
+    relatedData = {};
 
 $( document ).ready(function() {
     initGeneral();
@@ -202,6 +205,11 @@ function detail(){
                             product += '    </div>';
                             product += '</div>';
                         
+                        relatedData.shop_id = data.result.shop_id;
+                        relatedData.brand_id = data.result.brand_id;
+                        relatedData.product_id = data.result.product_id;
+                        othersproduct();
+                        recommendproduct();
                         
                     	productData.id = data.result.product_id;
                     	productData.shop_id = data.result.shop_id;
@@ -330,6 +338,9 @@ function detail(){
                     	        favoriteProduct();
                     	    }
                     	});
+                    }else{
+                        $("#othersProduct").html('Tidak ada data');
+                        $("#recommendProduct").html('Tidak ada data'); 
                     }
                     $('.loaderProgress').addClass('hidden');
                     $('body').removeClass('hiddenoverflow');
@@ -734,6 +745,215 @@ function commentReviewProduct(){
                     
                     var product_total_review = parseInt($("#product_total_review").text())+1;
                     $("#product_total_review").html(product_total_review);
+                }
+            }
+        });
+    }
+}
+
+function othersproduct(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken("othersproduct");
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: PRODUCT_RELATED_API,
+            data: { 
+                brand_id: relatedData.brand_id,
+                product_id: relatedData.product_id
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var listproduct = '';
+                    if(data.result.length){
+                        $.each( data.result, function( key, val ) {
+                            listproduct += '<div class="col-md-9" title="'+val.product_name+'" style="width:200px;">';
+                            listproduct += '   <img src="'+val.product_image+'" style="width: 180px;height:180px;"/>';
+                            listproduct += '   <div class="fn-14" style="color:#807F7F;font-family: proxima_nova;margin-top: 3px;">'+val.product_name+'</div>';
+                            listproduct += '   <div style="margin-top: 5px;color:#E05A36;font-size: 14px;font-family:proxima_nova_altbold;">IDR '+val.product_price+'</div>';
+                            listproduct += '   <div class="rateyo" id="productothersproduct'+val.product_id+'" style="margin: initial;padding: 0px;"></div>';
+                            listproduct += '   <div class="grid-sub-cont9-body-list-hover" style="left:0px;">';
+                            listproduct += '       <i class="fa fa-shopping-cart othersproduct-cart"></i>';
+                            listproduct += '       <i class="fa fa-thumbs-o-up othersproduct-like"></i>';
+                            listproduct += '       <div datainternal-id="'+val.product_id+'~'+val.product_isfavorite+'~'+val.shop_id+'" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">Lihat</div>';
+                            listproduct += '   </div>';
+                            listproduct += '</div>';
+                            
+                        });
+                        $("#othersProduct").html(listproduct);
+                        
+                        $.each( data.result, function(keyproduct , valproduct ) {
+                            $("#productothersproduct"+valproduct.product_id).rateYo({rating: valproduct.product_average_rate,readOnly: true,starWidth : "12px"});
+                        });
+                        
+                        $('#othersProduct').tosrus({
+                    		infinite	: true,
+                    		slides		: {
+                    			visible		: 3
+                    		}
+                    	});
+                    	
+                    	$(".tos-slide").css('width','200px');
+                    	$(".tos-next").css('right','5px');
+                    	
+                    	$('.othersproduct-cart').on('click', function (e) {
+                    	    var productArray = ($(this).next('i').next('div').attr('datainternal-id')).split("~");
+                    	    
+                            cartData.product_id = parseInt(productArray[0]);
+                            cartData.shop_id = parseInt(productArray[2]);
+                            addtocartProduct();
+                        });
+                                        
+                        $('.othersproduct-like').on('click', function (e) {
+                            var productArray = ($(this).next('div').attr('datainternal-id')).split("~");
+                            
+                            if($('.isSignin').val() === ''){
+                        	   notif("error","Harap login terlebih dahulu","right","top");
+                        	}else if(parseInt(productArray[1]) == 1){
+                        	   notif("error","Anda sudah menyimpan produk ini","top");
+                            }else{
+                                favoriteData.product_id = parseInt(productArray[0]);
+                                favoriteProduct();
+                            }
+                        });
+                    	
+                    	mousetosrushome(url);
+                    }else{
+                        $("#othersProduct").html('Tidak ada data');
+                    }
+                }else{
+                    generateToken("othersproduct");
+                }
+            } 
+        });
+    }
+}
+
+function recommendproduct(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken("recommendproduct");
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: PRODUCT_RELATED_API,
+            data: { 
+                shop_id: relatedData.shop_id,
+                product_id: relatedData.product_id
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var listproduct = '';
+                    if(data.result.length){
+                        $.each( data.result, function( key, val ) {
+                            listproduct += '<div class="col-md-9" title="'+val.product_name+'" style="width:200px;">';
+                            listproduct += '   <img src="'+val.product_image+'" style="width: 180px;height:180px;">';
+                            listproduct += '   <div class="fn-14" style="color:#807F7F;font-family: proxima_nova;margin-top: 3px;">'+val.product_name+'</div>';
+                            listproduct += '   <div style="margin-top: 5px;color:#E05A36;font-size: 14px;font-family:proxima_nova_altbold;">IDR '+val.product_price+'</div>';
+                            listproduct += '   <div class="rateyo" id="productrecommendproduct'+val.product_id+'" style="margin: initial;padding: 0px;"></div>';
+                            listproduct += '   <div class="grid-sub-cont9-body-list-hover" style="left:0px;">';
+                            listproduct += '       <i class="fa fa-shopping-cart recommendproduct-cart"></i>';
+                            listproduct += '       <i class="fa fa-thumbs-o-up recommendproduct-like"></i>';
+                            listproduct += '       <div datainternal-id="'+val.product_id+'~'+val.product_isfavorite+'~'+val.shop_id+'" data-shopname="'+val.shop_name+'" data-productname="'+val.product_name+'">Lihat</div>';
+                            listproduct += '   </div>';
+                            listproduct += '</div>';
+                            
+                        });
+                        $("#recommendProduct").html(listproduct);
+                        
+                        $.each( data.result, function(keyproduct , valproduct ) {
+                            $("#productrecommendproduct"+valproduct.product_id).rateYo({rating: valproduct.product_average_rate,readOnly: true,starWidth : "12px"});
+                        });
+                        
+                        $('#recommendProduct').tosrus({
+                    		infinite	: true,
+                    		slides		: {
+                    			visible		: 3
+                    		}
+                    	});
+                    	
+                    	$(".tos-slide").css('width','200px');
+                    	$(".tos-next").css('right','5px');
+                    	
+                    	$('.recommendproduct-cart').on('click', function (e) {
+                    	    var productArray = ($(this).next('i').next('div').attr('datainternal-id')).split("~");
+                    	    
+                            cartData.product_id = parseInt(productArray[0]);
+                            cartData.shop_id = parseInt(productArray[2]);
+                            addtocartProduct();
+                        });
+                                        
+                        $('.recommendproduct-like').on('click', function (e) {
+                            var productArray = ($(this).next('div').attr('datainternal-id')).split("~");
+                            
+                            if($('.isSignin').val() === ''){
+                        	   notif("error","Harap login terlebih dahulu","right","top");
+                        	}else if(parseInt(productArray[1]) == 1){
+                        	   notif("error","Anda sudah menyimpan produk ini","top");
+                            }else{
+                                favoriteData.product_id = parseInt(productArray[0]);
+                                favoriteProduct();
+                            }
+                        });
+                    	
+                    	mousetosrushome(url);
+                    }else{
+                        $("#recommendProduct").html('Tidak ada data');
+                    }
+                }else{
+                    generateToken("recommendproduct");
+                }
+            } 
+        });
+    }
+}
+
+/* Funtion for showing background promo and best-seller product*/
+function mousetosrushome(url){
+    $(".tos-slide .col-md-9").mouseover(function(){
+        $(this).children('.grid-sub-cont9-body-list-hover').show();
+    });
+    $(".tos-slide .col-md-9").mouseout(function(){
+        $(this).children('.grid-sub-cont9-body-list-hover').hide();
+    });
+    $('.grid-sub-cont9-body-list-hover div').on('click', function (e) {
+        var shopname = ($(this).data("shopname")).split(' ').join('-'),
+            productname = ($(this).data("productname")).split(' ').join('-');
+                            
+        location.href = url+"/product/"+shopname+"/"+productname;
+    });
+}
+
+function addtocartProduct(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken("addtocartProduct");
+    }else{
+        $.ajax({
+            type: 'POST',
+            url: PRODUCT_CART_ADD_API,
+            data:JSON.stringify({ 
+                    product_id: cartData.product_id,
+                    shop_id: cartData.shop_id,
+                    sum : 1
+            }),
+            dataType: 'json',
+            beforeSend: function(xhr, settings) { 
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data,status) {
+                if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                    generateToken("addtocartProduct");
+                }else{
+                    $('#iconCartHeader').popover('hide');
+                    bubbleCart();
+                    notif("info","Product Ditambah ke keranjang","center","top");
                 }
             }
         });
