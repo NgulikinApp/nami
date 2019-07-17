@@ -67,13 +67,6 @@
 						category_id,
 						subcategory_id,
                         product_count_rate,
-                       ";
-            if($user_id != ''){
-                $sql .=" (SELECT count(product_rate_id) AS product_rate_id FROM product_rate WHERE product.product_id=product_rate.product_id AND user_id = ?) AS product_israte,";
-            }else{
-                $sql .=" 0 AS product_israte,";
-            }
-            $sql .= " 
                         shop.shop_id,
                         brand_name,
                         product_level,
@@ -82,25 +75,35 @@
                         shop_total_brand,
                         product_seen,
                         product_total_discuss,
-                        product_total_review
-                            FROM 
-                                product
-                                LEFT JOIN brand ON brand.brand_id = product.brand_id
-                                LEFT JOIN shop ON shop.shop_id = brand.shop_id
-                                LEFT JOIN `user` ON `user`.user_id = shop.user_id
-                            	LEFT JOIN product_rate ON product.product_id=product_rate.product_id
-                            WHERE
-                                shop_name = ?
-                                AND
-                                product_name = ?
-                                ";
+                        product_total_review,
+						IFNULL((
+							SELECT 
+									COUNT(invoice.invoice_id) AS soldCurMonth
+							FROM
+									invoice_shop_detail,
+                            		invoice
+							WHERE 
+                            		shop.shop_id=invoice_shop_detail.shop_id
+                            		AND
+                            		invoice.invoice_id=invoice_shop_detail.invoice_id
+                            		AND
+									MONTH(invoice_paiddate) = MONTH(NOW())
+							GROUP BY 
+									invoice.invoice_id
+						), 0) AS soldCurMonth
+                    FROM 
+                        product
+                        LEFT JOIN brand ON brand.brand_id = product.brand_id
+                        LEFT JOIN shop ON shop.shop_id = brand.shop_id
+                        LEFT JOIN `user` ON `user`.user_id = shop.user_id
+                    WHERE
+                        shop_name = ?
+                        AND
+                        product_name = ?
+                    ";
             $stmt = $con->prepare($sql);
             
-            if($user_id != ''){
-                $stmt->bind_param("sss", $user_id,$shopname,$productname);
-            }else{
-                $stmt->bind_param("ss",$shopname,$productname);
-            }
+            $stmt->bind_param("ss",$shopname,$productname);
             /*
                 Function location in : functions.php
             */

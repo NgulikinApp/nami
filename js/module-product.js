@@ -116,8 +116,6 @@ function detail(){
             success: function(data, status) {
                 if(data.status == "OK"){
                     if($.isEmptyObject(data.result) === false){
-                        var israte = data.result.product_israte;
-                        
                         if(data.result.canbecommented)$('.grid-product-body-content-inputComment').removeClass('hidden');
                         
                         var product = '<div class="content">';
@@ -161,7 +159,7 @@ function detail(){
                             product += '            <div class="product_sell product_sellval" style="border-top:1px solid #E0E0DF;border-bottom:1px solid #E0E0DF;">';
                             product += '                <div class="rateyo"></div>';
                             product += '            </div';
-                            product += '            ><div class="product_sell product_sellval" style="border:1px solid #E0E0DF;">150 dalam sebulan</div';
+                            product += '            ><div class="product_sell product_sellval" style="border:1px solid #E0E0DF;">'+data.result.sold_curmonth+' dalam sebulan</div';
                             product += '            ><div class="product_sell product_sellval" style="border-top:1px solid #E0E0DF;border-bottom:1px solid #E0E0DF;">'+data.result.product_stock+'</div>';
                             product += '        </span>';
                             product += '        <span style="margin-top: 20px;">';

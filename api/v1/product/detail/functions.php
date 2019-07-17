@@ -51,19 +51,19 @@
             $data['shop_name'] = $col13;
             $data['product_count_favorite'] = $col14;
             $data['product_average_rate'] = $col15;
-            $data['product_israte'] = $col19;
             $data['product_image'] = $product_images;
             $data['product_rate_value'] = $col18;
-            $data['shop_id'] = $col20;
-            $data['brand_name'] = $col21;
-            $data['product_level'] = $col22;
-            $data['product_modifydate'] = $col23;
+            $data['shop_id'] = $col19;
+            $data['brand_name'] = $col20;
+            $data['product_level'] = $col21;
+            $data['product_modifydate'] = $col22;
             $data['canbecommented'] = $canbecommented;
-            $data['product_sold'] = $col24;
-            $data['shop_total_brand'] = $col25;
-            $data['product_seen'] = $col26;
-            $data['product_total_discuss'] = $col27;
-            $data['product_total_review'] = $col28;
+            $data['product_sold'] = $col23;
+            $data['shop_total_brand'] = $col24;
+            $data['product_seen'] = $col25;
+            $data['product_total_discuss'] = $col26;
+            $data['product_total_review'] = $col27;
+            $data['sold_curmonth'] = $col28;
             
             setMemcached("m_p_".$col14."_".$col4,$cache,$data,86400);
         }

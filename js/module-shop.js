@@ -501,7 +501,7 @@ function discussShop(){
                                 startPage: commentPage.page
                             }).on('page', function (event, page) {
                                 commentPage.page = page;
-                                reviewShop();
+                                discussShop();
                             });
                             
                             $('.loaderProgress').addClass('hidden');
