@@ -3329,17 +3329,17 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
 .grid-shop-body .grid-shop-body-content.discuss,.grid-shop-body .grid-shop-body-content.review{
     display: flow-root;
 }
-.grid-shop-body .grid-shop-body-content.discuss .grid-shop-body-content-listComment-temp,.grid-shop-body .grid-shop-body-content.review .grid-shop-body-content-listComment-temp,.grid-shop-listcomment .grid-shop-body-content-listComment-temp,.grid-shop-body .grid-shop-body-content.discuss .grid-product-body-content-listComment-temp
+.grid-shop-body .grid-shop-body-content.discuss .grid-shop-body-content-listComment-temp,.grid-shop-body .grid-shop-body-content.review .grid-shop-body-content-listComment-temp,.grid-shop-listcomment .grid-shop-body-content-listComment-temp,.grid-shop-body .grid-shop-body-content.discuss .grid-product-body-content-listComment-temp,.grid-shop-body .grid-shop-body-content.review .grid-product-body-content-listComment-temp
 {
     width: 100%;
     border:1px solid #E0E0DF;
     margin-bottom: 5px;
 }
-.grid-shop-body .grid-shop-body-content.discuss .grid-shop-body-content-listComment-temp:nth-child(odd),.grid-shop-body .grid-shop-body-content.review .grid-shop-body-content-listComment-temp:nth-child(odd),.grid-shop-listcomment .grid-shop-body-content-listComment-temp:nth-child(odd),.grid-shop-body .grid-shop-body-content.discuss .grid-product-body-content-listComment-temp:nth-child(odd)
+.grid-shop-body .grid-shop-body-content.discuss .grid-shop-body-content-listComment-temp:nth-child(odd),.grid-shop-body .grid-shop-body-content.review .grid-shop-body-content-listComment-temp:nth-child(odd),.grid-shop-listcomment .grid-shop-body-content-listComment-temp:nth-child(odd),.grid-shop-body .grid-shop-body-content.discuss .grid-product-body-content-listComment-temp:nth-child(odd),.grid-shop-body .grid-shop-body-content.review .grid-product-body-content-listComment-temp:nth-child(odd)
 {
    background-color:#FFFFFF;
 }
-.grid-shop-body .grid-shop-body-content.discuss .grid-shop-body-content-listComment-temp:nth-child(even),.grid-shop-body .grid-shop-body-content.review .grid-shop-body-content-listComment-temp:nth-child(even),.grid-shop-listcomment .grid-shop-body-content-listComment-temp:nth-child(even),.grid-shop-body .grid-shop-body-content.discuss .grid-product-body-content-listComment-temp:nth-child(even)
+.grid-shop-body .grid-shop-body-content.discuss .grid-shop-body-content-listComment-temp:nth-child(even),.grid-shop-body .grid-shop-body-content.review .grid-shop-body-content-listComment-temp:nth-child(even),.grid-shop-listcomment .grid-shop-body-content-listComment-temp:nth-child(even),.grid-shop-body .grid-shop-body-content.discuss .grid-product-body-content-listComment-temp:nth-child(even),.grid-shop-body .grid-shop-body-content.review .grid-product-body-content-listComment-temp:nth-child(even)
 {
    border-right: 5px solid #FEBD18;
 }
@@ -3501,12 +3501,12 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
     background-color: rgb(245, 245, 245);
     padding: 5px;
 }
-.discussShopCommentDate{
+.discussShopCommentDate,.discussProductCommentDate{
     display: inline-block !important;
     margin-right: 10px;
     font-size: 10px;
 }
-.discussShopCommentReply{
+.discussShopCommentReply,.discussProductCommentReply{
     display:inline-block !important;
     cursor: pointer;
 }
