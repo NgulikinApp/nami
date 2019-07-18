@@ -3772,10 +3772,10 @@ Product page
     background-position: 98% bottom;
     color:#817F7F;
 }
-#myaccount,#changepassword,#createshop,#transaction,.btnFilePhoto{
+#myaccount,#orderprocess,#changepassword,#createshop,#transaction,.btnFilePhoto{
     display:none;
 }
-#myaccount.active,#changepassword.active,#createshop.active,#transaction.active{
+#myaccount.active,#orderprocess.active,#changepassword.active,#createshop.active,#transaction.active{
     display:block;
 }
 #changepassword.active{

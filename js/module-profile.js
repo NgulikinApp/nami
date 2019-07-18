@@ -83,6 +83,20 @@ function initProfile(){
         orderprocess();
     });
     
+    $('#filterOrderProcessDate').on( 'change', function( e ){
+        orderprocess();
+    });
+    
+    $('#filterOrderProcessInput').keypress(function(e) {
+	    if(e.which == 13) {
+    	    orderprocess();
+	    }
+	});
+	
+	$('#search-orderprocess').on( 'click', function( e ){
+	    orderprocess();
+	});
+    
     $('#changepasswordtab').on( 'click', function( e ){
         $('.myprofile').removeClass('active');
         $('#changepassword').addClass('active');
