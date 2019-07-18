@@ -23,6 +23,7 @@
 	    <div class="contentProfile">
 	        <?php 
 	            include 'myaaccount/index.php';
+	            include 'section_orderprocess.php';
 	            include 'section_changepassword.php';
 	            include 'section_transaction.php';
 	            if(intval(@$_SESSION['user']["shop_id"]) == 0){

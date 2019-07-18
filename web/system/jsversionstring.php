@@ -2,5 +2,5 @@
     /*
         Function for clearing the cache browser
     */
-    $jsversionstring = "Jul-17-2019 17:52:00";
+    $jsversionstring = "Jul-18-2019 10:00:00";
 ?>

@@ -51,6 +51,9 @@
 					switch (@$routes[2]) {
 					    case 'list':
 					        switch (@$routes[3]) {
+					            case 'to':
+        							include('./api/v1/mypurchases/list/trackorder.php');
+        						break;
 					            default :
 							        include('./api/v1/mypurchases/list/transactions.php');
 					        }

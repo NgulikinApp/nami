@@ -75,8 +75,12 @@ function initProfile(){
     });
     
     $('#trackorderstab').on( 'click', function( e ){
+        $('.myprofile').removeClass('active');
+        $('#orderprocess').addClass('active');
+        
         $('.menuProfile ul li').removeClass('greytab');
         $(this).addClass('greytab');
+        orderprocess();
     });
     
     $('#changepasswordtab').on( 'click', function( e ){
@@ -678,6 +682,72 @@ function doCreateShop(){
             	    notif("success","Silahkan tunggu konfirmasi dari admin","center","top");
                 }
             }
+        });
+    }
+}
+
+function orderprocess(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken("orderprocess");
+    }else{
+        $.ajax({
+            type: 'GET',
+            url: LIST_TRACKORDER_API,
+            data: { 
+                date: $('#filterOrderProcessDate').val(),
+                search: $('#filterOrderProcessInput').val()
+            },
+            dataType: 'json',
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+            },
+            success: function(data, status) {
+                if(data.status == "OK"){
+                    var orderprocess = '';
+                    if(data.result.length > 0){
+                        $.each( data.result, function( key, val ) {
+                            var expired = (val.status_name!=="Kadaluarsa")?'':'expired';
+                            orderprocess += '<div class="listMyprofileTransaction">';
+                            orderprocess += '    <div class="dataTransaction">';
+                            orderprocess += '        <img src="'+val.product_image+'" height="70" width="70"/>';
+                            orderprocess += '    </div>';
+                            orderprocess += '    <div class="dataTransaction">';
+                            orderprocess += '        <div class="header">barang</div>';
+                            orderprocess += '        <div class="detail">'+val.product_name+'</div>';
+                            orderprocess += '    </div>';
+                            orderprocess += '    <div class="dataTransaction">';
+                            orderprocess += '        <div class="header">status pengiriman</div>';
+                            orderprocess += '        <div class="detail statusTransaction '+expired+'">'+val.status_name+'</div>';
+                            orderprocess += '    </div>';
+                            orderprocess += '    <div class="dataTransaction">';
+                            orderprocess += '        <div class="header">tanggal transaksi</div>';
+                            orderprocess += '        <div class="detail">'+val.transaction_date+'</div>';
+                            orderprocess += '    </div>';
+                            orderprocess += '    <div class="dataTransaction">';
+                            orderprocess += '        <div class="header">total tagihan</div>';
+                            orderprocess += '        <div class="detail">'+val.total_price+'</div>';
+                            orderprocess += '    </div>';
+                            orderprocess += '    <div class="dataTransaction viewDetailOrderProcess" datainternal-id="'+val.invoice_no+'">';
+                            orderprocess += '        <i class="fa fa-eye"></i> Lihat';
+                            orderprocess += '    </div>';
+                            orderprocess += '</div>';
+                        });
+                    }else{
+                        orderprocess += '<div class="grid-favorite-body"></div>';
+                        orderprocess += '<div class="grid-favorite-footer">';
+                        orderprocess += '    <div>Tidak ada data pesanan</div>';
+                        orderprocess += '</div>';
+                    }
+                    $(".bodyProfileOrderProcess").html(orderprocess);
+                    
+                    $(".viewDetailOrderProcess").on( 'click', function( e ){
+                        var invoiceno = $(this).attr('datainternal-id');
+                        location.href = url+"/invoice/"+invoiceno;
+                    });
+                }else{
+                    generateToken("orderprocess");
+                }
+            } 
         });
     }
 }
