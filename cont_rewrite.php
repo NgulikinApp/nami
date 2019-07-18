@@ -47,6 +47,10 @@
 				case 'generateToken':
 					include('./api/v1/general/system/generateToken.php');
 				break;
+				
+				case 'historyorder':
+					include('./api/v1/general/system/historyorder.php');
+				break;
 				case 'mypurchases':
 					switch (@$routes[2]) {
 					    case 'list':
@@ -386,6 +390,9 @@
 		break;
 		case 'help':
 			include('web/body/help/index.php');
+		break;
+		case 'historyorder':
+			include('web/body/historyorder/index.php');
 		break;
 		case 'in':
             include('web/body/invoice/print.php');
