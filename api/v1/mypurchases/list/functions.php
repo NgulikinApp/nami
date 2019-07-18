@@ -45,12 +45,13 @@
                 - product_name
                 - product_image
                 - invoice_total_price
+                - no_trans
     */
     function trackorder($stmt){
         $data = array();
         
         $stmt->execute();
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8);
         
         while($stmt->fetch()){
             $image = IMAGES_URL.'/'.urlencode(base64_encode($col6.'/product/'.$col5));
@@ -61,7 +62,8 @@
                     "no_resi" => $col3,
                     "product_name" => $col4,
                     "product_image" => $image,
-                    "total_price" => $col7
+                    "total_price" => $col7,
+                    "no_trans" => $col8
                 );
         }
         

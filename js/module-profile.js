@@ -741,7 +741,7 @@ function orderprocess(){
                             orderprocess += '        <div class="header">total tagihan</div>';
                             orderprocess += '        <div class="detail">'+val.total_price+'</div>';
                             orderprocess += '    </div>';
-                            orderprocess += '    <div class="dataTransaction viewDetailOrderProcess" datainternal-id="'+val.invoice_no+'">';
+                            orderprocess += '    <div class="dataTransaction viewDetailOrderProcess" datainternal-id="'+val.no_trans+'">';
                             orderprocess += '        <i class="fa fa-eye"></i> Lihat';
                             orderprocess += '    </div>';
                             orderprocess += '</div>';
@@ -755,8 +755,8 @@ function orderprocess(){
                     $(".bodyProfileOrderProcess").html(orderprocess);
                     
                     $(".viewDetailOrderProcess").on( 'click', function( e ){
-                        var invoiceno = $(this).attr('datainternal-id');
-                        location.href = url+"/invoice/"+invoiceno;
+                        var transno = $(this).attr('datainternal-id');
+                        location.href = url+"/historyorder/"+transno;
                     });
                 }else{
                     generateToken("orderprocess");
