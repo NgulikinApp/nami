@@ -3785,7 +3785,7 @@ Product page
     padding:5px;
     border-bottom: 1px solid #F5F5F5;
 }
-#search-transaction{
+#search-transaction,#search-orderprocess{
     position: absolute;
     background-image: url(../img/search-icon.png);
     background-repeat: no-repeat;
