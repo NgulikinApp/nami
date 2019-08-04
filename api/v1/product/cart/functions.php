@@ -80,7 +80,7 @@
         if(isset($_SESSION['user'])){
             $stmt->execute();
             
-            $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13);
+            $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14);
             
             while ($stmt->fetch()) {
                 $dataProduct = array();
@@ -93,6 +93,7 @@
                 $product_imagearray = explode('~', $col4);
                 $product_pricearray = explode('~', $col7);
                 $product_weightarray = explode('~', $col13);
+                $product_stockarray = explode('~', $col14);
                 $cart_sumproductarray = explode('~', $col10);
                 $cart_adddatearray = explode('~', $col11);
                 
@@ -109,6 +110,7 @@
                               "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($col5.'/product/'.$product_imagearray[$i])),
                               "product_price" => $product_pricearray[$i],
                               "product_weight" => $product_weightarray[$i],
+                              "product_stock" => intval($product_stockarray[$i]),
                               "cart_sumproduct" => intval($cart_sumproductarray[$i]),
                               "cart_createdate" => $cart_adddatearray[$i]
                             );
@@ -151,6 +153,7 @@
                     $product_imagearray = explode('~', $row["product_images"]);
                     $product_pricearray = explode('~', $row["product_price"]);
                     $product_weightarray = explode('~', $row["product_weight"]);
+                    $product_stockarray = explode('~', $row["product_stock"]);
                     
                     $product_count = count($product_idarray);
                     
@@ -164,6 +167,7 @@
                                   "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($row["username"].'/product/'.$product_imagearray[$i])),
                                   "product_price" => $product_pricearray[$i],
                                   "product_weight" => $product_weightarray[$i],
+                                  "product_stock" => intval($product_stockarray[$i]),
                                   "cart_sumproduct" => intval($dataArray[$i]['sum']),
                                   "cart_createdate" => $dataArray[$i]['date']
                                 );

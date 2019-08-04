@@ -26,7 +26,6 @@ function initProduct(){
         $('.grid-shop-body #descProductSection').removeClass('hidden');
         $('.grid-shop-body #discussProductSection').addClass('hidden');
         $('.grid-shop-body #reviewProductSection').addClass('hidden');
-        $('.grid-shop-body #infoProductSection').addClass('hidden');
     });
     
     $('.grid-shop-body .grid-shop-body-head div:nth-child(2)').on('click', function (e) {
@@ -36,27 +35,15 @@ function initProduct(){
         $('.grid-shop-body #descProductSection').addClass('hidden');
         $('.grid-shop-body #discussProductSection').removeClass('hidden');
         $('.grid-shop-body #reviewProductSection').addClass('hidden');
-        $('.grid-shop-body #infoProductSection').addClass('hidden');
     });
     
-    $('.grid-shop-body .grid-shop-body-head div:nth-child(3)').on('click', function (e) {
+    $('.grid-shop-body .grid-shop-body-head div:last-child').on('click', function (e) {
         $('.grid-shop-body .grid-shop-body-head .menu').removeClass("bluesky").removeClass('border-yellow');
 	    $('.grid-shop-body .grid-shop-body-head .menu:nth-child(3)').addClass("bluesky").addClass('border-yellow');
 	    
         $('.grid-shop-body #descProductSection').addClass('hidden');
         $('.grid-shop-body #discussProductSection').addClass('hidden');
         $('.grid-shop-body #reviewProductSection').removeClass('hidden');
-        $('.grid-shop-body #infoProductSection').addClass('hidden');
-    });
-    
-    $('.grid-shop-body .grid-shop-body-head div:last-child').on('click', function (e) {
-        $('.grid-shop-body .grid-shop-body-head .menu').removeClass("bluesky").removeClass('border-yellow');
-	    $('.grid-shop-body .grid-shop-body-head .menu:last-child').addClass("bluesky").addClass('border-yellow');
-	   
-        $('.grid-shop-body #descProductSection').addClass('hidden');
-        $('.grid-shop-body #discussProductSection').addClass('hidden');
-        $('.grid-shop-body #reviewProductSection').addClass('hidden');
-        $('.grid-shop-body #infoProductSection').removeClass('hidden');
     });
 	
 	$('#buttonDiscussProduct').on( 'click', function( e ){

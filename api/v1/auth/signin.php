@@ -80,6 +80,47 @@
             */
             $verified = account_verify($stmt);
             if($verified[0] == ""){
+                if(intval($manual) == 0){
+                    $passwordSocmed = '';
+                    if($socmed == 'facebook'){
+                        /*
+                            Function location in : functions.php
+                        */
+                        $passwordSocmed = encrypt_hash('Facebook_Ngulikin');
+                    }else if($socmed == 'googleplus'){
+                        /*
+                            Function location in : functions.php
+                        */
+                        $passwordSocmed = encrypt_hash('GooglePlus_Ngulikin');
+                    }
+                    
+                    /*
+                        Function location in : /model/general/functions.php
+                    */
+                    $user_id = getID(16);
+                    
+                    /*
+                        Function location in : /v1/auth/function.php
+                    */
+                    $key = encrypt_hash('ngulik_'.$username.date('Y-m-d H:i:s'));
+                    
+                    $stmt = $con->prepare("INSERT INTO 
+                                                    user(
+                                                        user_id,
+                                                        email,
+                                                        source,
+                                                        user_key,
+                                                        password_".$socmed.",
+                                                        id_".$socmed."
+                                                    ) 
+                                                    VALUES (?, ?, ?, ?, ?, ?)");
+                
+                    $stmt->bind_param("ssssss", $user_id, $auth[0], "web", $key, $passwordSocmed, $id_socmed);
+                    
+                    $stmt->execute();
+                
+                    $stmt->close();
+                }
                 /*
                     Function location in : functions.php
                 */

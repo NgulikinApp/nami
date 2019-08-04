@@ -69,7 +69,8 @@
                         SUBSTRING_INDEX(product_image,',',1) AS product_image,
                         username,
                         (invoice_product_detail_sumproduct * product_price) AS total_price,
-                        invoice_shop_detail_notran
+                        invoice_shop_detail_notran,
+                        invoice_shop_detail.delivery_id
                     FROM
                         invoice
                         LEFT JOIN status ON status.status_id=invoice.invoice_current_status

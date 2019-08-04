@@ -1,2 +1,8 @@
 
 \.htaccess
+
+api/model/middleware\.php
+
+js/module-general\.js
+
+api/model/connection\.php

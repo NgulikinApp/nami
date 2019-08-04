@@ -254,62 +254,68 @@ function detailCart(){
                                 });
                                 
                                 $('#productmaxcart'+keyproduct).on('click', function (e) {
-                                    cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val()) + 1;
+                                    if(parseInt($('#sumProductCart'+keyproduct).val()) < valproduct.product_stock){
+                                        cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val()) + 1;
                                     
-                                    if(cartNgulikin > 123){
-                                        cartNgulikin = 123;
-                                        $(this).val(cartNgulikin);
-                                    }
-                                    
-                                    $('#productmincart'+keyproduct+' button').prop('disabled',false);
-                                    $('#productmincart'+keyproduct+' button').css('opacity','1');
-                                    $('#sumProductCart'+keyproduct).val(cartNgulikin);
-                                    
-                                    var totalsumcart = 0;
-                                    $(".inputSumCartTemp input").each(function(key,val) {
-                                        var sumcartval = parseInt($(this).val()) * parseInt($('#productPriceCart'+key).attr('datainternal-id'));
-                                        totalsumcart = totalsumcart + sumcartval;
-                                    });
-                                    var totalPriceCart = cartNgulikin * parseInt(totalPrice);
-            
-                                    var totalShoppingCart = totalsumcart + senderPriceTotalTemp;
+                                        if(cartNgulikin > 123){
+                                            cartNgulikin = 123;
+                                            $(this).val(cartNgulikin);
+                                        }
                                         
-                                    $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
-                                    $('.totalShoppingCart').html(numberFormat(totalShoppingCart));
-                                    
-                                    updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
-                                    updateProduct.sum = cartNgulikin;
-                                    
-                                    updateCartProduct();
+                                        $('#productmincart'+keyproduct+' button').prop('disabled',false);
+                                        $('#productmincart'+keyproduct+' button').css('opacity','1');
+                                        $('#sumProductCart'+keyproduct).val(cartNgulikin);
+                                        
+                                        var totalsumcart = 0;
+                                        $(".inputSumCartTemp input").each(function(key,val) {
+                                            var sumcartval = parseInt($(this).val()) * parseInt($('#productPriceCart'+key).attr('datainternal-id'));
+                                            totalsumcart = totalsumcart + sumcartval;
+                                        });
+                                        var totalPriceCart = cartNgulikin * parseInt(totalPrice);
+                
+                                        var totalShoppingCart = totalsumcart + senderPriceTotalTemp;
+                                            
+                                        $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
+                                        $('.totalShoppingCart').html(numberFormat(totalShoppingCart));
+                                        
+                                        updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
+                                        updateProduct.sum = cartNgulikin;
+                                        
+                                        updateCartProduct();
+                                    }
                                 });
                                 
                                 $('#sumProductCart'+keyproduct).on('change', function (e) {
-                                    if($(this).val() == ''){
-                                        $(this).val(1);
-                                    }
-                                    
-                                    if(parseInt($(this).val()) > 123){
-                                        $(this).val(123);
-                                    }
-                                    cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val());
-                                    minCart(cartNgulikin);
-                                    
-                                    var totalsumcart = 0;
-                                    $(".inputSumCartTemp input").each(function(key,val) {
-                                        var sumcartval = parseInt($(this).val()) * parseInt($('#productPriceCart'+key).attr('datainternal-id'));
-                                        totalsumcart = totalsumcart + sumcartval;
-                                    });
-                                    var totalPriceCart = cartNgulikin * parseInt(totalPrice);
-            
-                                    var totalShoppingCart = totalsumcart + senderPriceTotalTemp;
+                                    if(parseInt($(this).val()) < valproduct.product_stock){
+                                        if($(this).val() == ''){
+                                            $(this).val(1);
+                                        }
                                         
-                                    $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
-                                    $('.totalShoppingCart').html(numberFormat(totalShoppingCart));
-                                    
-                                    updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
-                                    updateProduct.sum = cartNgulikin;
-                                    
-                                    updateCartProduct();
+                                        if(parseInt($(this).val()) > 123){
+                                            $(this).val(123);
+                                        }
+                                        cartNgulikin = parseInt($('#sumProductCart'+keyproduct).val());
+                                        minCart(cartNgulikin);
+                                        
+                                        var totalsumcart = 0;
+                                        $(".inputSumCartTemp input").each(function(key,val) {
+                                            var sumcartval = parseInt($(this).val()) * parseInt($('#productPriceCart'+key).attr('datainternal-id'));
+                                            totalsumcart = totalsumcart + sumcartval;
+                                        });
+                                        var totalPriceCart = cartNgulikin * parseInt(totalPrice);
+                
+                                        var totalShoppingCart = totalsumcart + senderPriceTotalTemp;
+                                            
+                                        $('.totalPriceCart').html(numberFormat(totalsumcart.toString()));
+                                        $('.totalShoppingCart').html(numberFormat(totalShoppingCart));
+                                        
+                                        updateProduct.product_id = $('#sumProductCart'+keyproduct).attr('datainternal-id');
+                                        updateProduct.sum = cartNgulikin;
+                                        
+                                        updateCartProduct();
+                                    }else{
+                                        $(this).val(valproduct.cart_sumproduct);
+                                    }
                                 });
                                 
                                 $('#sumProductCart'+keyproduct).keydown(function (e) {

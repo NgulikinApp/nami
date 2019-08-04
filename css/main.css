@@ -148,7 +148,7 @@ textarea{
     display:none;
     padding: 5px;
     letter-spacing: 1px;
-    color:red;
+    color:#F37D65;
     font-size: 12px;
 }
 .error_message.green{
@@ -283,8 +283,6 @@ select::-ms-expand {
     height:100%;
     margin:auto;
     border-bottom: 1px solid #d3d3d3;
-    box-shadow: 0 0 10px 0 rgba(0,0,0,.3);
-    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.3);
 }
 .leftHeader{
     margin-top: 7px;
@@ -312,7 +310,6 @@ select::-ms-expand {
     padding-left: 25px;
     padding-right: 25px;
     border-radius: 15px;
-    box-shadow: 2px 2px 5px #888888;
     color: #FFFFFF;
     cursor:pointer;
 }
@@ -321,7 +318,6 @@ select::-ms-expand {
 }
 .menu-category {
     margin:0px auto;
-    font-weight: 900;
 }
 .menu-category li {
     margin:0px;
@@ -344,6 +340,8 @@ select::-ms-expand {
 .menu-category > ul > li {
     display:inline-block;
     position:relative;
+    letter-spacing: 1px;
+    font-family: proxima_nova_altbold;
 }
  
 .menu-category > ul > li > a {
@@ -385,7 +383,6 @@ select::-ms-expand {
     position: absolute;
     background-color: #fff;
     min-width: 110px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 3;
     text-transform: capitalize;
     margin-left: -5px;
@@ -399,7 +396,6 @@ select::-ms-expand {
 .menu-category-items .menu-category-subitems a:hover {
     background-color: #fafafa;
     color: #004E82;
-    font-weight: bold;
 }
 .menu-category-items:hover .menu-category-subitems {
     display: block;
@@ -437,7 +433,6 @@ select::-ms-expand {
     padding: 10px 40px 10px 15px;
     margin-top: 11px;
     font-size: 14px;
-    font-weight: 900;
 }
 #search-general::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 	color: #999999;
@@ -504,13 +499,12 @@ select::-ms-expand {
     padding-left: 50px;
     padding-right: 50px;
     color: #FFFFFF;
-    font-weight: bold;
     background-color: #3FC3FF;
     border-radius: 15px;
-    box-shadow: 3px 3px 5px #888888;
     overflow:hidden;
     outline:none;
     letter-spacing: 1px;
+    font-family: proxima_nova_altbold;
 }
 #menuLogin:hover,#btnSubmitMyprofile:hover,#btnSubmitPassMyprofile:hover,#btnSubmitCreateShop:hover{
     color: #FFFFFF;
@@ -549,7 +543,6 @@ select::-ms-expand {
     border-radius: 5px;
     padding: 3px 20px;
     outline:none;
-    box-shadow: 2px 2px 5px #888888;
 }
 .logoutMainMenu:hover{
     background-color: #d27f6f;
@@ -672,7 +665,6 @@ select::-ms-expand {
 #askUsText{
 	font-size: 10pt;
 	color: #808080;
-	font-weight: bold;
 }
 .questionerBody{
 	padding-left: 20px;
@@ -756,7 +748,6 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 }
 
 .inputfile + label {
-	font-weight: 700;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	cursor: pointer;
@@ -999,7 +990,6 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     color: #FFF;
     font-size: 10pt;
     font-family: proxima_nova_ltsemibold;
-    font-weight: bold;
     border: 2px solid #F5F5F5;
 }
 .grid-cont3-left{
@@ -1016,7 +1006,6 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     background-color:#FFFFFF;
     height: 100%;
     color: #000000;
-    box-shadow: 3px 5px 5px #888888;
     text-align: center;
     padding: 55px;
 }
@@ -1158,7 +1147,6 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     margin: 5px;
     font-family: proxima_nova_ltsemibold;
     letter-spacing: 1px;
-    font-weight: bold;
     position: relative;
 }
 .grid_rightsub_chapter{
@@ -1171,7 +1159,6 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 .grid_rightsub_chapter_left img{
     width: 100px;
     border-radius: 50px;
-    box-shadow: 3px 0px 5px #888888;
 }
 .grid_rightsub_chapter_right{
     float: left;
@@ -1288,7 +1275,6 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     height: 440px;
     font-size: 10pt;
     font-family: proxima_nova_ltthin;
-    font-weight: bold;
     padding-bottom: 70px;
 }
 .grid-sub-cont9{
@@ -1318,7 +1304,6 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
 }
 .grid-sub-cont9-header span:nth-child(2){
     padding-left: 25px;
-    font-weight: lighter;
     color: #DFDFDF;
 }
 .grid-sub-cont9-header span:last-child{
@@ -1334,7 +1319,6 @@ input[class="inputQuestioner"],textarea[class="inputQuestioner"]{
     background-color: #FFFFFF;
     margin: 0px 60px;
     width: 750px;
-    box-shadow: 3px 3px 10px #888888;
     padding: 15px 15px 15px 0px;
 }
 .grid-sub-cont9-body-nav{
@@ -1724,7 +1708,6 @@ section div h1{
 .signinBodySub{
 	height: 35px;
 	padding : 15px 0px 35px 0px;
-	font-size: smaller;
 	position: relative;
 	text-align:left;
 	margin: 0px 80px 0px 80px;
@@ -1736,14 +1719,17 @@ section div h1{
 .signinBodySub.codeVerification,.signinBodySub.resetPass{
     display:none;
 }
-.signinBodyForgot{
+.signinBodyForgot,.signinBodyResend{
     display: inline-block;
     cursor:pointer;
-    margin-right: -260px;
+    margin-right: -145px;
     font-size: 12px;
     font-family: proxima_nova;
 }
-.signinBodyForgot:hover{
+.signinBodyForgot{
+    margin-right: 0;
+}
+.signinBodyForgot:hover,.signinBodyResend:hover{
     text-decoration:underline;
 }
 .signinBodySubHead{
@@ -1766,7 +1752,6 @@ section div h1{
     padding-bottom: 0px;
 }
 .signupBodySub.signupButton{
-    padding-top: 30px;
     text-align:center;
     padding-bottom:40px;
 }
@@ -1805,14 +1790,12 @@ section div h1{
 }
 .signinBodySub.backHomeForgot font{
     color:#3FC3FF;
-    font-weight: bold;
 }
 .signinBodySub.backHome font:hover,.signupConfirmText.confirm font:hover,.signinBodySub.backHomeForgot font:hover{    
     text-decoration:underline;
 }
 .signinHeaderText{
     float:left;
-    font-weight:bold;
 }
 .signinHeaderClose{
     float:right;
@@ -1831,6 +1814,35 @@ section div h1{
     color:#fbbd33;
     letter-spacing: 1px;
     font-family: proxima_nova_ltsemibold;
+}
+.otp-number-input {
+    width: 26.9px;
+    height: 33px;
+    margin: auto;
+    margin-right: 2.3px;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 2px solid rgba(0,0,0,.2);
+    padding: 0;
+    color: rgba(0,0,0,.7);
+    margin-bottom: 0;
+    padding-bottom: 0;
+    font-size: 28px;
+    text-shadow: none;
+    box-shadow: none;
+    text-align: center;
+    background-color: transparent;
+    font-weight: 600;
+    line-height: 0;
+    border-radius: 0;
+    border-image-width: 0;
+}
+.otp-number-input.press{
+    border-color: #004E82;
+}
+#buttonVerifi{
+    
 }
 .signupBanner-head{
     padding-top: 50px;
@@ -1855,7 +1867,6 @@ section div h1{
     cursor: pointer;
     color: #3FC3FF;
     font-family: proxima_nova;
-    box-shadow: 2px 2px 5px #888888;
 }
 .signupBanner-footer div:nth-child(2):hover{
     background:#004E82;
@@ -1869,9 +1880,9 @@ section div h1{
     margin-top: -51px;
     margin-bottom: 50px;
     width: 500px;
-    height: 700px;
-    box-shadow: 3px 3px 5px #888888;
+    min-height: 350px;
     border-radius: 5px;
+    border: 1px solid #DFDFDF;
 }
 .grid-signup-bodyhead{
     background-color: #fbbd33;
@@ -1898,9 +1909,36 @@ section div h1{
     font-size: 12px;
     font-family: proxima_nova_ltsemibold;
     border: 1px solid #E0E0DF;
+    float: left;
 }
 .inputSignup.invalidFormat{
-    border-color:red;
+    border-color:#F37D65;
+}
+#passSignUp{
+    width:80%;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+}
+#passtrength{
+    height: 35px;
+    padding-top: 8px;
+    width: 20%;
+    border-bottom: 1px solid #DFDFDF;
+    border-right: 1px solid #DFDFDF;
+    border-top: 1px solid #DFDFDF;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    font-weight: inherit;
+    font-family: proxima_nova_altbold;
+}
+#passtrength.weak{
+    color:#F97C64;
+}
+#passtrength.medium{
+    color:#FEBD18;
+}
+#passtrength.strong{
+    color:#A4CF66;
 }
 .signupBodySub{
 	height: 35px;
@@ -1911,13 +1949,18 @@ section div h1{
 	margin: 0px 25px 0px 25px;
 	text-align:center;
 }
+.signupBodySub font{
+    font-size: 12px;
+    color:#3FC3FF;
+    cursor:pointer;
+}
 .signupBodySub span{
     font-size: 12px;
     color:#3FC3FF;
     float:left;
 }
 .signupBodySub span[class="invalidFormat"]{
-    color:red;
+    color:#F37D65;
 }
 .signupBodySub .signupBodySubDate{
     float: left;
@@ -1984,9 +2027,12 @@ section div h1{
 .signupSex{
     margin: -1px !important;
 }
+#signup_message{
+    color:#F37D65;
+}
 #alertSignIn,#alertSignUp{
     display:none;
-    color:red;
+    color:#F37D65;
     font-family: proxima_nova;
 }
 .regisOrForgotText{
@@ -2032,9 +2078,8 @@ section div h1{
 .grid-signin-header.forgotpassword h1:last-child{
     color:#808080;
     font-size: 10px;
-    font-weight: unset;
 }
-#buttonSignIn,#buttonSignup,#buttonReset,#buttonForgotSend,#buttonForgotVerified,#buttonForgotChange,#processMysalesButton,#buttonListTransactionIncome,#buttonCartAddress{
+#buttonSignIn,#buttonSignup,#buttonReset,#buttonForgotSend,#buttonForgotVerified,#buttonForgotChange,#processMysalesButton,#buttonListTransactionIncome,#buttonCartAddress,#buttonVerifi,#buttonVerified{
 	background-color: #3FC3FF;
 	border-radius: 3px;
 	border: none;
@@ -2043,14 +2088,21 @@ section div h1{
 	padding: 5px;
 	width: 50%;
 	cursor:pointer;
-	font-weight: bold;
 	outline:none;
 	font-family: proxima_nova_altbold;
-	box-shadow: 3px 3px 5px #888888;
 	letter-spacing: 1px;
 }
-#buttonSignIn:hover,#buttonSignup:hover,#buttonReset:hover,#buttonForgotSend:hover,#buttonForgotVerified:hover,#buttonForgotChange:hover,#processMysalesButton:hover,#buttonListTransactionIncome:hover,#buttonCartAddress:hover{
+#buttonSignIn:hover,#buttonSignup:hover,#buttonReset:hover,#buttonForgotSend:hover,#buttonForgotVerified:hover,#buttonForgotChange:hover,#processMysalesButton:hover,#buttonListTransactionIncome:hover,#buttonCartAddress:hover,#buttonVerifi:hover,#buttonVerified:hover{
     background-color: #007ec1;
+}
+#buttonVerifi.btn-disabled {
+    border: 0;
+    background: rgba(0,0,0,.12);
+    color: rgba(0,0,0,.26);
+    pointer-events: none;
+}
+#buttonVerified[disabled]{
+    opacity: .65;
 }
 #buttonSignIn{
     font-size:15px;
@@ -2116,9 +2168,6 @@ hr{
 	font-size:10pt;
 	position:absolute;
 }
-#signup_message{
-    color:green;
-}
 /* End of SignIn and SignUp Menu*/
 
 /*About us*/
@@ -2172,7 +2221,6 @@ hr{
 .grid-aboutus-body .content .list{
     width:186px;
     float:left;
-    box-shadow: 3px 3px 5px #888888;
     margin: 33px;
 }
 @media screen and (max-width: 1319px){
@@ -2294,7 +2342,7 @@ hr{
     margin-left: -3px;
 }
 .sumManinMenuCart,.sumNotifinMenuCart{
-    color: red;
+    color: #F37D65;
     bottom: 0;
     position: absolute;
     left: 50%;
@@ -2378,7 +2426,6 @@ hr{
     color: #FFF;
     border-radius: 3px;
     padding: 5px;
-    box-shadow: 2px 2px 5px #888888;
     outline:none;
     font-family:proxima_nova_altbold;
 }
@@ -2616,7 +2663,6 @@ hr{
     color: #FFF;
     text-align: center;
     padding: 5px;
-    font-weight: bold;
     letter-spacing: 1px;
     cursor:pointer;
     font-family: proxima_nova_altbold;
@@ -2645,7 +2691,6 @@ hr{
     padding: 5px 35px 5px 45px;
     position: relative;
     font-size: 14px;
-    font-weight: 700;
     line-height: 20px;
     cursor: pointer;
     overflow: visible;
@@ -2727,7 +2772,6 @@ hr{
     color: #FFF;
     display: inline-block;
     text-align: center;
-    box-shadow: 3px 3px 5px #888888;
     font-family: proxima_nova_ltsemibold;
     letter-spacing: 1px;
     cursor:pointer;
@@ -2775,9 +2819,6 @@ hr{
     border-radius: 5px;
     width:182px;
     font-family: proxima_nova;
-}
-.grid-favorite-footer.filled div .result-content-list-data:hover{
-    box-shadow: 2px 2px 2px #888888;
 }
 .grid-favorite-footer.filled div .result-content-list-data .result-content-list-data-head{
     width:180px;
@@ -2844,21 +2885,20 @@ hr{
     margin: auto;
     color: #808080;
     font-family: proxima_nova;
-    box-shadow: 1px 0px 0px 3px #f5f5f5;
     border-radius: 5px;
     width:500px;
     font-family: proxima_nova_altbold;
     padding-bottom:15px;
+    border: 1px solid #DFDFDF;
 }
 .grid-signin-body .signBodyRegis{
     color: #3FC3FF;
-    margin: 10px 80px 15px 0px;
+    margin: 10px 80px 10px 0px;
     float:right;
     font-size: 12px;
     font-family: proxima_nova;
 }
 .grid-signin-body .signBodyRegis font{
-    font-weight:bold;
     cursor:pointer;
 }
 .grid-signin-body .signBodyRegis font:hover{
@@ -3009,9 +3049,6 @@ hr{
     cursor: pointer;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
-}
-.result-content .result-content-list .result-content-list-data:hover{
-    box-shadow: 2px 2px 2px #888888;
 }
 .result-content .result-content-list .result-content-list-data .result-content-list-data-head{
     width:180px;
@@ -3267,6 +3304,9 @@ label .star_0,label .star_1,label .star_2,label .star_3,label .star_4,label .sta
     padding: 10px 5px 10px 0px;
     width: 25%;
     cursor:pointer;
+}
+.grid-productreview-container .menu{
+    width: 33.3% !important;
 }
 .grid-product-container .grid-product-body-head .menu{
     width: 20%;
@@ -4076,7 +4116,6 @@ Product page
     z-index: -1;
     opacity: 0;
     transition: opacity linear 0.15s;
-    box-shadow: 0px 2px 3px rgba(0,0,0,0.2);
     border: 1px solid #F5F5F5;
     margin-top: 13px !important;
     background: #FFFFFF;
@@ -4088,7 +4127,7 @@ Product page
     padding: 2px;
 }
 .notif-filter-sub-menu li:hover{
-    color:red;
+    color:#F37D65;
 }
 .bodyNotif-filter-right{
     float:right;
@@ -4181,7 +4220,6 @@ Product page
 .grid-payment-left #detail-paymentMethod,.grid-cartsum-left #detail-paymentMethodOthers,.grid-cartsum-right #detail-paymentSummary{
     background-color:#FFFFFF;
     border-radius:5px;
-    box-shadow: 1px 1px 5px #888888;
 }
 .grid-payment-left #detail-paymentMethod{
     margin-bottom:15px;
@@ -4310,7 +4348,6 @@ input.radioPayment:checked ~ label:before,input.radioPaymentOthers:checked ~ lab
 }
 .grid-payment-right #detail-paymentSummary{
     font-family: proxima_nova_altbold;
-    box-shadow: 1px 1px 5px #888888;
     margin-bottom: 20px;
 }
 .grid-payment-right #detail-paymentSummary .detail-paymentSummary-header{
@@ -4414,7 +4451,6 @@ input.radioPayment:checked ~ label:before,input.radioPaymentOthers:checked ~ lab
 #detail-paymentMethodOthers{
     font-family: proxima_nova_altbold;
     border-radius: 5px;
-    box-shadow: 1px 1px 5px #888888;
 }
 #detail-paymentMethodOthers .detail-paymentMethodOthers-header{
     padding:15px;
@@ -4564,8 +4600,6 @@ input.radioPaymentOthers:empty ~ label:before{
     padding: 5px;
     border-radius: 5px;
     margin: 20px;
-    box-shadow: 0 0 10px 0 rgba(0,0,0,.3);
-    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.3);
 }
 /*
     End of Greeting after login
@@ -4888,7 +4922,6 @@ input.radioPaymentOthers:empty ~ label:before{
     border-radius: 3px;
     padding: 5px 20px;
     outline:none;
-    box-shadow: 2px 2px 5px #888888;
     font-size: 13px;
     font-family: proxima_nova_altbold;
     letter-spacing: 1px;
@@ -5137,9 +5170,6 @@ input.radioPaymentOthers:empty ~ label:before{
 .editProfileSellerContainer .body .content .right .grid{
     padding:10px;
 }
-.editProfileSellerContainer .body .content .right .grid label{
-    font-weight: unset;
-}
 .editProfileSellerContainer .body .content .right .grid:first-child label{
     margin-right: 38px;
 }
@@ -5225,7 +5255,6 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     outline: none;
     padding: 5px 20px;
     letter-spacing: 1px;
-    box-shadow: 1px 1px 5px #888888;
 }
 .editProfileSellerContainer .footer #cancel,.accountSellerContainer .footer #cancel,.grid-shop-seller-footer #cancel{
     background-color:#848484;
@@ -5322,7 +5351,6 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 }
 #detailProductCont label{
     vertical-align: inherit;
-    font-weight: unset;
 }
 #detailProductCont input[name="productCondLayer"]{
     margin-right: 5px;
@@ -5963,8 +5991,6 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     width: calc(100% - 715px);
     min-width: 394px;
     position: absolute;
-    box-shadow: 2px -1px 15px 0 rgba(0,0,0,.3);
-    -webkit-box-shadow: 2px -1px 15px 0 rgba(0,0,0,.3);
 }
 .filled-invoice .right .content .grid{
     overflow: auto;
@@ -6140,7 +6166,6 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     margin-left: 100px;
 }
 .detail-invoice-footer-detail .grid .right,.detail-invoiceshop-footer-detail .grid .right{
-    box-shadow: none;
     float:right;
     background-color: transparent;
     text-align: center;
@@ -6327,7 +6352,6 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     padding:5px 10px;
     border:0;
     border-radius:5px;
-    box-shadow: 3px 3px 10px #888888;
     width: 200px;
     margin: auto;
 }
@@ -6386,7 +6410,6 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     padding:5px 10px;
     border:0;
     border-radius:5px;
-    box-shadow: 3px 3px 10px #888888;
     width: 200px;
     margin: auto;
     text-transform:uppercase;

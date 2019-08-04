@@ -1,0 +1,9 @@
+<?php $isShowPrivacyMenuContent = $isShowPrivacyMenu ? "block": "none";?>
+<div id="privacyMenu" class="con-content" style="display:<?php echo $isShowPrivacyMenuContent
+;?>">
+    <div class="head">Kebijakan Privasi</div>
+    <div class="body">
+        <span>Privasi Anda sangatlah penting bagi kami di Ngulikin. Untuk melindungi hak-hak Anda dengan lebih baik kami telah menyediakan Kebijakan Privasi Ngulikin untuk menjelaskan praktik privasi kami secara rinci. Silakan baca Kebijakan Privasi untuk memahami bagaimana Shopee mengumpulkan dan menggunakan informasi yang berkaitan dengan Akun Anda dan/atau penggunaan Layanan oleh Anda. Dengan menggunakan Layanan atau memberikan informasi di Situs, Anda menyetujui tindakan Ngulikin untuk mengumpulkan, menggunakan, mengungkapkan dan/atau mengolah Persetujuan dan data pribadi Anda sebagaimana dijelaskan dalam Kebijakan Privasi.</span>
+        <span>Pengguna yang memiliki data pribadi Pengguna lainnya melalui penggunaan Layanan ("Pihak Penerima") dengan ini setuju bahwa, mereka akan (i) mematuhi semua undang-undang perlindungan data pribadi yang berlaku sehubungan dengan data tersebut; (ii) mengizinkan Pengguna yang data pribadinya telah dikumpulkan oleh Pihak Penerima ("Pihak yang Mengungkapkan") untuk menghapus datanya yang telah dikumpulkan dari database Pihak Penerima; dan (iii) mengizinkan Pihak yang Mengungkapkan untuk meninjau informasi apa saja yang telah dikumpulkan tentang mereka oleh Pihak Penerima, dalam setiap kasus (ii) dan (iii) di atas, dilakukan sesuai dengan dan bilamana diwajibkan oleh hukum yang berlaku.</span>
+    </div>
+</div>

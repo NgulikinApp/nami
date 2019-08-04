@@ -296,7 +296,7 @@ function promo(){
                         if($('.isSignin').val() === ''){
                         	notif("error","Harap login terlebih dahulu","right","top");
                         }else if(parseInt(productArray[1]) == 1){
-                    	        notif("error","Anda sudah menyimpan produk ini","top");
+                    	    notif("error","Anda sudah menyimpan produk ini","top");
                         }else{
                             favoriteData.product_id = parseInt(productArray[0]);
                             favoriteProduct();

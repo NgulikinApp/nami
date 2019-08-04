@@ -34,16 +34,8 @@
     /*
         Parameters
     */
-    $username = param($request['username']);
-    $socmed = param($request['socmed']);
-    $name = param($request['name']);
-    $password = param($request['password']);
+    $type = param($request['type']);
     $email = param($request['email']);
-    $nohp = param($request['nohp']);
-    $dob = param($request['dob']);
-    $gender = param($request['gender']);
-    $source = param($request['source']);
-    $id_socmed = param($request['id_socmed']);
     
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
@@ -59,143 +51,204 @@
             
             $data = array();
             $arrayCheck = true;
-            foreach ($request as $key => $value){
-                if($value == "" && $key != 'manual' && $key != 'id_socmed'){
-                    $data[$key] = "empty";
+            
+            /*
+                * type 0 : manual register
+                * type 1 : get code register
+                * type 2 : check code register
+                * type 3 : finishing register
+            */
+            
+            if($type == 0){
+                if($email == ""){
+                    $data = "invalid";
                     $arrayCheck = false;
-                }else if($key == 'username'){
-                    $stmt = $con->prepare("SELECT 1 FROM user WHERE username=?");
-                    $stmt->bind_param("s", $value);
-                    $stmt->execute();
-                    $stmt->store_result();
-                    
-                    if(strlen($value) <= 3){
-                        $data[$key] = "invalid";
-                        $arrayCheck = false;
-                    /*
-                        Function location in : /model/general/functions.php
-                    */
-                    }else if(count_rows($stmt) > 0){
-                        $data[$key] = "exist";
-                        $arrayCheck = false;
-                    }else{
-                        $data[$key] = "valid";
-                    }
-                }else if($key == 'email'){
-                    $stmt = $con->prepare("SELECT 1 FROM user WHERE email=?");
-                    $stmt->bind_param("s", $value);
-                    $stmt->execute();
-                    $stmt->store_result();
-                    
-                    /*
-                        Function location in : /model/general/functions.php
-                    */
-                    if(check_email_address($value) == false){
-                        $data[$key] = "invalid";
-                        $arrayCheck = false;
-                    /*
-                        Function location in : /model/general/functions.php
-                    */
-                    }else if(count_rows($stmt) > 0){
-                        $data[$key] = "exist";
-                        $arrayCheck = false;
-                    }else{
-                        $data[$key] = "valid";
-                    }
-                }else if($key == 'dob' && checkdate(explode("-", $value)[1], explode("-", $value)[2], explode("-", $value)[0]) == false){
-                    $data[$key] = "invalid";
+                }else if(check_email_address($email) == false){
+                    $data = "invalid";
                     $arrayCheck = false;
                 }else{
-                    $data[$key] = "valid";
+                    $stmt = $con->prepare("SELECT user_isactive FROM user WHERE email=?");
+                    $stmt->bind_param("s", $email);
+                    $stmt->execute();
+                    $stmt->bind_result($col1);
+                    
+                    $stmt->fetch();
+                    $user_isactive = $col1;
+                    
+                    /*
+                        Function location in : /model/general/functions.php
+                    */
+                    if(count_rows($stmt)){
+                        $data = "inactive";
+                        $arrayCheck = false;
+                    }else if(intval($user_isactive) == 1){
+                        $data = "exist";
+                        $arrayCheck = false;
+                    }else{
+                        $data = "valid";
+                    }
                 }
-            }
-            
-            if($arrayCheck){
-                /*
-                    Function location in : /v1/auth/function.php
-                */
-                $key = encrypt_hash('ngulik_'.$username.date('Y-m-d H:i:s'));
+                
+                if($arrayCheck){
+                    $source = param($request['source']);
+                    /*
+                        Function location in : /model/general/functions.php
+                    */
+                    $user_id = getID(16);
+                    
+                    /*
+                        Function location in : /model/general/functions.php
+                    */
+                    $code = generateRandomString();
+                    
+                    $user_photo = 'no-photo.jpg';
+                    
+                    $stmt = $con->prepare("INSERT INTO 
+                                                    user(
+                                                        user_id,
+                                                        email,
+                                                        source,
+                                                        user_key
+                                                    ) 
+                                                    VALUES (?, ?, ?, ?)");
+                
+                    $stmt->bind_param("ssss", $user_id, $email, $source, $code);
+                    
+                    $stmt->execute();
+                
+                    $stmt->close();
+                    
+                    /*
+                        Function location in : /model/general/functions.php
+                    */
+                    sendEmail("info@ngulikin.com","Ngulikin",$email,"User","Aktifasi Akun","Peringatan, jangan memberi tahu code berikut untuk menjaga kerahasiaan privasi anda.<br><br>Kode anda adalah <div style='background-color:#004E82;border-radius: 10px;width: 30px;font-weight: bold;padding:8px;color:#FFFFFF;'>".$code."</div>");
+                    
+                    $data = array(
+            			'status' => "OK",
+            			'message' => "The code sended to your email",
+            			'response' => $data
+            		);
+                }else{
+            		$data = array(
+            			'status' => "NO",
+            			'message' => "Invalid format",
+            			'response' => $data
+            		);
+                }
+            }else if($type == 1){
                 /*
                     Function location in : /model/general/functions.php
                 */
-                $user_id = getID(16);
-                $ismanual = intval($request['manual']);
+                $code = generateRandomString();
                 
-                $passwordSocmed = '';
-                $user_isactive = 0;
-                if($socmed == 'facebook'){
-                    $user_isactive = 1;
-                    $passwordSocmed = encrypt_hash('Facebook_Ngulikin');
-                }else if($socmed == 'googleplus'){
-                    $user_isactive = 1;
-                    $passwordSocmed = encrypt_hash('GooglePlus_Ngulikin');
-                }
-                $user_photo = 'no-photo.jpg';
+                $stmt = $con->prepare("UPDATE user SET user_key=? WHERE email=?");
+            
+                $stmt->bind_param("ss", $code, $email);
                 
-                if($source != "web"){
-                    $stmt = $con->prepare("INSERT INTO 
-                                                    user(
-                                                        user_id,
-                                                        username,
-                                                        fullname,
-                                                        password,
-                                                        email,
-                                                        phone,
-                                                        dob,
-                                                        gender,
-                                                        user_key,
-                                                        source,
-                                                        password_".$socmed.",
-                                                        user_isactive,
-                                                        id_".$socmed.",
-                                                        user_photo
-                                                    ) 
-                                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                
-                    $stmt->bind_param("ssssssssssssss", $user_id, $username, $name, $password, $email, $nohp, $dob, $gender, $key, $source, $passwordSocmed, $user_isactive,$id_socmed,$user_photo);
-                }else{
-                    $stmt = $con->prepare("INSERT INTO 
-                                                    user(
-                                                        user_id,
-                                                        username,
-                                                        fullname,
-                                                        password,
-                                                        email,
-                                                        phone,
-                                                        dob,
-                                                        gender,
-                                                        user_key,
-                                                        source,
-                                                        user_isactive,
-                                                        user_photo
-                                                    ) 
-                                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                
-                    $stmt->bind_param("ssssssssssss", $user_id, $username, $name, $password, $email, $nohp, $dob, $gender, $key, $source, $user_isactive,$user_photo);
-                }
-
                 $stmt->execute();
-                
+            
                 $stmt->close();
                 
-                $param = base64_encode($user_id.'~'.$key);
+                /*
+                    Function location in : /model/general/functions.php
+                */
+                sendEmail("info@ngulikin.com","Ngulikin",$email,"User","Aktifasi Akun","Peringatan, jangan memberi tahu code berikut untuk menjaga kerahasiaan privasi anda.<br><br>Kode anda adalah <div style='background-color:#004E82;border-radius: 10px;width: 30px;font-weight: bold;padding:8px;color:#FFFFFF;'>".$code."</div>");
+            
+                $data = array(
+            			'status' => "OK",
+            			'message' => "The code sended to your email",
+            			'response' => $data
+            	);
+            }else if($type == 2){
+                $code = param($request['code']);
                 
-                if($user_isactive == 0){
-                    /*
-                        Function location in : /model/general/functions.php
-                    */
-                    sendEmail("info@ngulikin.com","Ngulikin",$email,$name,"Aktifasi Akun","Klik tombol aktif dibawah ini, untuk mengaktifkan akun anda.<br><br><a href='".INIT_URL."/v1/activeAccount?q=".$param."'><div style='background-color:#004E82;border-radius: 10px;width: 30px;font-weight: bold;padding:8px;color:#FFFFFF;'>Aktif</div></a>");
+                $stmt = $con->prepare("SELECT 1 FROM user WHERE email=? AND user_key=?");
+                $stmt->bind_param("ss", $email, $code);
+                $stmt->execute();
+                $stmt->store_result();
+                
+                /*
+                    Function location in : /model/general/functions.php
+                */
+                $countrow = count_rows($stmt);
+                if($countrow){
+                    $data = array(
+                			'status' => "OK",
+                			'message' => "The code was verified",
+                			'response' => $data
+                	);
                 }else{
-                    sessionCart($user_id,$con);
+                    $data = array(
+                			'status' => "NO",
+                			'message' => "The code was wrong",
+                			'response' => $data
+                	);
+                }
+            }else{
+                $username = param($request['username']);
+                $name = param($request['name']);
+                $password = param($request['password']);
+                $email = param($request['email']);
+                $nohp = param($request['nohp']);
                 
+                $data = array();
+                $arrayCheck = true;
+                foreach ($request as $key => $value){
+                     if($value == "" && $key != 'socmed' && $key != 'id_socmed' && $key != 'email'){
+                        $data[$key] = "empty";
+                        $arrayCheck = false;
+                    }else if($key == 'username'){
+                        $stmt = $con->prepare("SELECT 1 FROM user WHERE username=?");
+                        $stmt->bind_param("s", $username);
+                        $stmt->execute();
+                        $stmt->store_result();
+                        
+                        if(preg_match('/^[a-z0-9]{3,100}$/i',$username) == false){
+                            $data[$key] = "invalid";
+                            $arrayCheck = false;
+                        /*
+                            Function location in : /model/general/functions.php
+                        */
+                        }else if(count_rows($stmt)){
+                            $data[$key] = "exist";
+                            $arrayCheck = false;
+                        }else{
+                            $data[$key] = "valid";
+                        }
+                    }else{
+                        $data[$key] = "valid";
+                    }
+                }
+                
+                if($arrayCheck){
+                    /*
+                        Function location in : /v1/auth/function.php
+                    */
+                    $key = encrypt_hash('ngulik_'.$username.date('Y-m-d H:i:s'));
+                    $user_photo = 'no-photo.jpg';
+                    
+                    $stmt = $con->prepare("UPDATE user SET user_key=?,username=?,fullname=?,password=?,phone=? WHERE email=?");
+            
+                    $stmt->bind_param("ssssss", $key, $username, $name, $password, $nohp, $email);
+                    
+                    $stmt->execute();
+                
+                    $stmt->close();
+                    
+                    $stmt = $con->prepare("SELECT user_id FROM user WHERE username=?");
+                    $stmt->bind_param("s", $username);
+                    $stmt->execute();
+                    $stmt->bind_result($col1, $col2);
+                    $stmt->fetch();
+                    
                     $result = array(
-                                    "user_id"=>$user_id,
+                                    "user_id"=>$col1,
                                     "username"=>$username,
                                     "fullname"=>$name,
                                     "email"=>$email,
                                     "nohp"=>$nohp,
-                                    "dob"=>$dob,
-                                    "gender"=>$gender,
+                                    "dob"=>'',
+                                    "gender"=>'male',
                                     "key"=>$key,
                                     "user_photo"=>INIT_URL."/img/".$user_photo,
                                     "user_seller"=>'0',
@@ -214,53 +267,53 @@
                     
                     session_regenerate_id();
                     session_regenerate_id(true);
+                    
+                    $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username;
+                    mkdir($path, 0700, true);
+                    
+                    $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/temp';
+                    mkdir($path, 0700, true);
+                    
+                    $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop';
+                    mkdir($path, 0700, true);
+                    
+                    $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop/icon';
+                    mkdir($path, 0700, true);
+                    
+                    $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop/banner';
+                    mkdir($path, 0700, true);
+                    
+                    $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/product';
+                    mkdir($path, 0700, true);
+                    
+                    $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/brand';
+                    mkdir($path, 0700, true);
+                    
+                    $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop/notes';
+                    mkdir($path, 0700, true);
+                    
+                    $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/seller';
+                    mkdir($path, 0700, true);
+                    
+                    $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/seller/card';
+                    mkdir($path, 0700, true);
+                    
+                    $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/seller/selfie';
+                    mkdir($path, 0700, true);
+                    
+                    $data = array(
+            			'status' => "OK",
+            			'message' => "Signup successfully",
+            			'response' => $data,
+            			'data'=>(object)array()
+            		);
+                }else{
+            		$data = array(
+            			'status' => "NO",
+            			'message' => "Invalid format",
+            			'response' => $data
+            		);
                 }
-                
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username;
-                mkdir($path, 0700, true);
-                
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/temp';
-                mkdir($path, 0700, true);
-                
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop';
-                mkdir($path, 0700, true);
-                
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop/icon';
-                mkdir($path, 0700, true);
-                
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop/banner';
-                mkdir($path, 0700, true);
-                
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/product';
-                mkdir($path, 0700, true);
-                
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/brand';
-                mkdir($path, 0700, true);
-                
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/shop/notes';
-                mkdir($path, 0700, true);
-                
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/seller';
-                mkdir($path, 0700, true);
-                
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/seller/card';
-                mkdir($path, 0700, true);
-                
-                $path = dirname($_SERVER["DOCUMENT_ROOT"]).'/public_html/images/'.$username.'/seller/selfie';
-                mkdir($path, 0700, true);
-                
-                $data = array(
-        			'status' => "OK",
-        			'message' => "Signup successfully",
-        			'response' => $data,
-        			'data'=>(object)array()
-        		);
-            }else{
-        		$data = array(
-        			'status' => "NO",
-        			'message' => "Invalid format",
-        			'response' => $data
-        		);
             }
             
             /*

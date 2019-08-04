@@ -828,7 +828,7 @@ function productShop(){
                             listProduct += '    <span class="brand-name">';
                             listProduct += '        <span class="product-name">'+val.product_name+'</span>';
                             listProduct += '        <span class="product-price">IDR '+val.product_price+'</span>';
-                            listProduct += '        <div class="rateyo product-rate" id="product'+val.product_id+'">IDR '+val.product_price+'</div>';
+                            listProduct += '        <div class="rateyo product-rate" id="product'+val.product_id+'"></div>';
                             listProduct += '    </span>';
                             listProduct += '    <div class="hover">';
                             listProduct += '        <img src="/img/edit-pencil.png" height="20" width="20"/>';
