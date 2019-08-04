@@ -177,7 +177,7 @@ function resendCode(){
             if(result.message === 'Invalid credential' || result.message === 'Token expired'){
                 generateToken("resendCode");
             }else{
-                notif("info","Kode sudah terkirim","top");
+                notif("info","Kode sudah terkirim","center","top");
             }
         }
     });
@@ -329,10 +329,10 @@ function signUp(){
                     }else if(result.status == 'NO'){
                         if(result.response.username == 'invalid'){
                             $('#usernameSignUp').addClass('invalidFormat');
-                            $('#usernameSignUp').parent().next().next().html('Username hanya boleh terdiri angka dan huruf dan minimal 3 karakter').addClass('invalidFormat');
+                            $('#usernameSignUp').next().next().html('Username hanya boleh terdiri angka dan huruf dan minimal 3 karakter').addClass('invalidFormat');
                         }else if(result.response.username == 'exist'){
                             $('#usernameSignUp').addClass('invalidFormat');
-                            $('#usernameSignUp').parent().next().next().html('Username sudah ada').addClass('invalidFormat');
+                            $('#usernameSignUp').next().next().html('Username sudah ada').addClass('invalidFormat');
                         }
                     }else{
                         sessionStorage.setItem('loginNgulikin',1);

@@ -37,8 +37,6 @@
     $type = param($request['type']);
     $email = param($request['email']);
     
-    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
-    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php
@@ -188,7 +186,6 @@
                 $username = param($request['username']);
                 $name = param($request['name']);
                 $password = param($request['password']);
-                $email = param($request['email']);
                 $nohp = param($request['nohp']);
                 
                 $data = array();

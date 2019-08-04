@@ -72,6 +72,13 @@ div.hasDatepicker {
 .ui-datepicker select.ui-datepicker-month,
 .ui-datepicker select.ui-datepicker-year {
 	width: 49%;
+	padding: 3px;
+    margin-top: 5px;
+    border-radius: 3px;
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+    -ms-appearance: menulist;
+    appearance: menulist;
 }
 .ui-datepicker table {
 	width: 100%;
