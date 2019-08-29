@@ -16,6 +16,7 @@
 <link rel="stylesheet" type="text/css" media="all" href="css/dropzone.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="css/timepicker.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="css/jquery-confirm.css?jsr=<?php echo $jsversionstring; ?>">
+<link rel="stylesheet" type="text/css" media="all" href="css/puzzleCAPTCHA.css?jsr=<?php echo $jsversionstring; ?>">
 <link rel="stylesheet" type="text/css" media="all" href="css/main.css?jsr=<?php echo $jsversionstring; ?>">
 
 <!--JS Library-->
@@ -37,6 +38,7 @@
 <script src="js/library/jquery.rateyo.js?jsr=<?php echo $jsversionstring; ?>"></script>
 <script src="js/library/jquery.smartuploader.js?jsr=<?php echo $jsversionstring; ?>"></script>
 <script src="js/library/timepicker.js?jsr=<?php echo $jsversionstring; ?>"></script>
+<script src="js/library/puzzleCAPTCHA.js?jsr=<?php echo $jsversionstring; ?>"></script>
 <script src="js/library/jquery-confirm.js?jsr=<?php echo $jsversionstring; ?>"></script>
 <script src="js/general-api.js?jsr=<?php echo $jsversionstring; ?>"></script>
 <script>

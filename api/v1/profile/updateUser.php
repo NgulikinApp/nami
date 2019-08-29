@@ -39,8 +39,6 @@
     $phone = param($request['phone']);
     $status = param($request['status']);
     
-    $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
-    
     if($token == ''){
         /*
             Function location in : /model/general/functions.php

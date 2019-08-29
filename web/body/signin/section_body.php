@@ -23,13 +23,13 @@
             	<span class="error_message"></span>
             	<span class="signBodyRegis">
             		Belum punya akun ngulikin? 
-            		<font id="regisPopUpSignin">Register disini</font>
+            		<font id="regisPopUpSignin">Daftar disini</font>
             	</span>
             	<p>
-                    <input type="button" id="buttonSignIn" value="MASUK"/>
+                    <input type="button" id="buttonSignIn" value="MASUK" style="width:338px;"/>
             	</p>
             	<p>
-            		<span class="signinBodyForgot">Lupa Password?</span>
+            		<span class="signinBodyForgot">Lupa Password?</span> | <span class="signinBodyResend">User belum aktif?</span>
             	</p>
             	<div class="signinBodySub line">
             		<hr />

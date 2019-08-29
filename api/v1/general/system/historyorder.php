@@ -22,7 +22,8 @@
     /*
         Get parameter with from ajax form
         list parameter:
-        1. file
+        1. noresi
+        1. courier
     */
     
     $noresi = param($_GET['noresi']);

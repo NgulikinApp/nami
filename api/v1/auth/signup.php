@@ -182,7 +182,7 @@
                 			'response' => $data
                 	);
                 }
-            }else{
+            }else if($type == 3){
                 $username = param($request['username']);
                 $name = param($request['name']);
                 $password = param($request['password']);
@@ -224,7 +224,7 @@
                     $key = encrypt_hash('ngulik_'.$username.date('Y-m-d H:i:s'));
                     $user_photo = 'no-photo.jpg';
                     
-                    $stmt = $con->prepare("UPDATE user SET user_key=?,username=?,fullname=?,password=?,phone=? WHERE email=?");
+                    $stmt = $con->prepare("UPDATE user SET user_key=?,username=?,fullname=?,password=?,phone=?,user_isactive=1 WHERE email=?");
             
                     $stmt->bind_param("ssssss", $key, $username, $name, $password, $nohp, $email);
                     
@@ -303,6 +303,65 @@
             			'message' => "Signup successfully",
             			'response' => $data,
             			'data'=>(object)array()
+            		);
+                }else{
+            		$data = array(
+            			'status' => "NO",
+            			'message' => "Invalid format",
+            			'response' => $data
+            		);
+                }
+            }else{
+                if($email == ""){
+                    $data = "invalid";
+                    $arrayCheck = false;
+                }else if(check_email_address($email) == false){
+                    $data = "invalid";
+                    $arrayCheck = false;
+                }else{
+                    $stmt = $con->prepare("SELECT user_isactive FROM user WHERE email=? ");
+                    $stmt->bind_param("s", $email);
+                    $stmt->execute();
+                    $stmt->bind_result($col1);
+                    
+                    $stmt->fetch();
+                    $user_isactive = $col1;
+                    
+                    /*
+                        Function location in : /model/general/functions.php
+                    */
+                    if(count_rows($stmt) && intval($user_isactive) == 0){
+                        $data = "valid";
+                    }else{
+                        
+                        $data = "exist";
+                        $arrayCheck = false;
+                    }
+                }
+                
+                if($arrayCheck){
+                    /*
+                        Function location in : /model/general/functions.php
+                    */
+                    $code = generateRandomString();
+                    
+                    $stmt = $con->prepare("UPDATE user SET user_key=? WHERE email=?");
+            
+                    $stmt->bind_param("ss", $code, $email);
+                    
+                    $stmt->execute();
+                
+                    $stmt->close();
+                    
+                    /*
+                        Function location in : /model/general/functions.php
+                    */
+                    sendEmail("info@ngulikin.com","Ngulikin",$email,"User","Aktifasi Akun","Peringatan, jangan memberi tahu code berikut untuk menjaga kerahasiaan privasi anda.<br><br>Kode anda adalah <div style='background-color:#004E82;border-radius: 10px;width: 30px;font-weight: bold;padding:8px;color:#FFFFFF;'>".$code."</div>");
+                    
+                    $data = array(
+            			'status' => "OK",
+            			'message' => "The code sended to your email",
+            			'response' => $data
             		);
                 }else{
             		$data = array(

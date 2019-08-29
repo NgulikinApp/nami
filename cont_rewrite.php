@@ -183,6 +183,15 @@
         						case 'cp':
         							include('./api/v1/product/invoice/changepayment.php');
         						break;
+        						case 'cr':
+        							include('./api/v1/product/invoice/countrated.php');
+        						break;
+        						case 'ir':
+        							include('./api/v1/product/invoice/israted.php');
+        						break;
+        						case 'ri':
+        							include('./api/v1/product/invoice/rateItem.php');
+        						break;
 						        case 'ss':
         							include('./api/v1/product/invoice/sendStatusProduct.php');
         						break;
@@ -379,6 +388,9 @@
 		case 'cart':
 			include('web/body/cart/index.php');
 		break;
+		case 'emailresend':
+			include('web/body/emailresend/index.php');
+		break;
 		case 'faq':
 			include('web/body/rules/index.php');
 		break;
@@ -414,6 +426,9 @@
 		break;
 		case 'profile':
 			include('web/body/profile/index.php');
+		break;
+		case 'rate':
+			include('web/body/rate/index.php');
 		break;
 		case 'resend_request_email':
 			include('web/body/resendrequestemail.php');

@@ -17,9 +17,6 @@ function initSignup(){
 	$('.ui-loader').remove();
     
     /*signup button on header menu action*/
-	$('#regisPopUpSignin').on( 'click', function( e ){
-	   location.href = url+"/signup";
-	});
 	$('#buttonSignup').on( 'click', function( e ){
 	    buttonSignup();
 	});
@@ -56,8 +53,7 @@ function buttonSignup(){
                 type: 'POST',
                 data: JSON.stringify({ 
 	                        "email": emailSignUp,
-	                        "type": 0,
-	                        "source" : "web"
+	                        "type": 4
 	                    }),
                 crossDomain: true,
                 async: true,
@@ -74,15 +70,12 @@ function buttonSignup(){
                         if(result.response === 'invalid'){
                             $('#emailSignUp').addClass('invalidFormat');
                             $('#emailSignUp').parent().next().next().html('Format email tidak benar').addClass('invalidFormat');
-                        }else if(result.response === 'exist'){
-                            $('#emailSignUp').addClass('invalidFormat');
-                            $('#emailSignUp').parent().next().next().html('Email sudah ada').addClass('invalidFormat');
                         }else{
                             $('#emailSignUp').addClass('invalidFormat');
-                            $('#emailSignUp').parent().next().next().html('User belum aktif').addClass('invalidFormat');
+                            $('#emailSignUp').parent().next().next().html('User sudah aktif').addClass('invalidFormat');
                         }
                     }else{
-                        var element = '<div class="grid-signup-bodyhead">registrasi</div>';
+                        var element = '<div class="grid-signup-bodyhead">kirim ulang email</div>';
                             element += '<div class="grid-signup-bodyfooter fn-15">Kode verifikasi telah dikirimkan melalui email ke <strong>'+emailSignUp+'</strong></div>';
                             element += '<div class="signupBodySub">Kode Verifikasi</div>';
                             element += '<div class="signupBodySub">';
@@ -251,18 +244,8 @@ function verifiedForm(){
 	});
 	
 	$("#PuzzleCaptcha").PuzzleCAPTCHA({
-		rows:3,
-		imageURL:randomImage(),
 		targetButton:'#buttonVerified'
 	});
-}
-
-function randomImage(){
-	var images =["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg", "9.jpg", "10.jpg"];
-
-	var random = images[Math.floor(Math.random() * images.length)];
-	
-	return 'img/'+random;
 }
 
 function checkPasswordStrength() {

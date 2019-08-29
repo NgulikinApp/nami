@@ -1,7 +1,7 @@
 <div class="home_container">
     <div id="signupBanner">
         <p class="signupBanner-head">ngulikin</p>
-		<p class="signupBanner-body">registrasi di ngulikin</p>
+		<p class="signupBanner-body">User belum aktif?</p>
 		<div class="signupBanner-footer fn-13">
 		    <div>Sudah punya akun Ngulikin masuk</div>
 		    <div>disini</div>
@@ -10,7 +10,7 @@
 	<section class="container">
 		<div class="grid-signup-body">
 			<div class="grid-signup-bodyhead">
-			    registrasi
+			    kirim ulang email
 			</div>
 			<div class="grid-signup-bodyfooter fn-15">
 			    Dengan memiliki akun Ngulikin.com, Anda dapat melakukan transaksi. Jangan khawatir data anda akan aman bersama kami.
@@ -24,7 +24,7 @@
         	    <input type="hidden" id="socmedSignUp" value="ngulikin"/>
         	    <input type="hidden" id="idsocmedSignUp" value=""/>
         	    <div id="signup_message" class="green"></div>
-        		<button type="button" id="buttonSignup">DAFTAR</button> 
+        		<button type="button" id="buttonSignup">KIRIM</button> 
         	</div>
         	<div class="signupBodySub">
         		<span class="signupConfirmText confirm">

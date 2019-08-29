@@ -45,6 +45,10 @@ function initSignin(){
 	$('.signinBodyForgot').on( 'click', function( e ){
 	   location.href = url+'/forgotpassword';
 	});
+	
+	$('.signinBodyResend').on( 'click', function( e ){
+	   location.href = url+'/emailresend';
+	});
 }
 
 function ajax_auth(){

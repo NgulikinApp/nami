@@ -52,7 +52,7 @@
 	            </div>
 	        </div>
 	    </div>
-	    <div class="grid-shop-body">
+	    <div class="grid-shop-body grid-productreview-container">
 	        <div class="grid-shop-body-head">
 	            <div class="menu bluesky border-yellow">
 	                <div>Deskripsi Produk</div>
@@ -69,14 +69,10 @@
 	                    <span id="product_total_review">0</span>
 	                </div>
 	            </div>
-	            <div class="menu">
-	                <div>Info Ekspedisi</div>
-	           </div>
 	        </div>
 	        <?php include 'section_desc.php';?>
 	        <?php include 'section_discuss.php';?>
 	        <?php include 'section_review.php';?>
-	        <?php include 'section_info.php';?>
 	    </div>
 	    <div class="grid-product-container">
 	        <?php include 'section_othersproduct.php';?>

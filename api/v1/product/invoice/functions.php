@@ -112,4 +112,70 @@
         */        
         generateJSON($dataout);
     }
+    
+    /*
+        Function referred on : israted.php
+        Used for showing callback the list data of rated invoice
+    */
+    function israted($stmt){
+        $stmt->execute();
+        
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5);
+        
+        $data = array();
+        
+        while ($stmt->fetch()) {
+            $data[] = array(
+                          "invoice_id" => $col1,
+                          "shop_name" => $col2,
+                          "brand_name" => $col3,
+                          "product_name" => $col4,
+                          "product_image" => $col5,
+                          "product_id" => $col6
+                        );
+        }
+        
+        /*
+            Function location in : /model/generatejson.php
+        */        
+        generateJSON($data);
+    }
+    
+    /*
+        Function referred on : rateItem.php
+        Used for calling the json data that invoice already rate
+        Return data:
+                - status 
+                - message
+    */
+    function rateItem(){
+        $dataout = array(
+                "status" => 'YES',
+                "message" => 'Invoice rated'
+        );
+        
+        /*
+            Function location in : /model/generatejson.php
+        */        
+        generateJSON($dataout);
+    }
+    
+    /*
+        Function referred on : countrated.php
+        Used for showing callback the sum data of rated invoice
+    */
+    function countrated($stmt){
+        $stmt->execute();
+        
+        $stmt->bind_result($col1);
+        
+        $stmt->fetch();
+        
+        $data = array("count_rate" => intval($col1));
+        
+        /*
+            Function location in : /model/generatejson.php
+        */        
+        generateJSON($data);
+    }
 ?>

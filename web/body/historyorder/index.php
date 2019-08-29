@@ -2,13 +2,13 @@
     include 'web/system/checkDevice.php';
     session_start();
     if(!isset($_SESSION['user'])){
-        header("Location: .");
+        header("Location: ..");
     }
     include 'web/system/minify.php';
     include 'web/system/getUrl.php';
     $actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $currurl = substr($actual_link, strrpos($actual_link, '/') + 1);
-    $noinvoice = str_replace("-"," ",$currurl);
+    $notrans = explode('?',str_replace("-"," ",$currurl));
 ?>
 <!DOCTYPE html>
 <html class="qp-ui">
@@ -29,6 +29,8 @@
 		      include 'web/nav/footerFloatMenu.php';
 		      include 'web/nav/generalInput.php';
 		?>
+		<input type="hidden" id="notrans" value="<?php echo $notrans[0];?>"/>
+		<input type="hidden" id="delivery_id" value="<?php echo $_GET['delivery'];?>"/>
 		<script src="../js/module-general.js?jsr=<?php echo $jsversionstring; ?>"></script>
 		<script src="../js/module-historyorder.js?jsr=<?php echo $jsversionstring; ?>"></script>
 	</body>
