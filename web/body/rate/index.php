@@ -17,12 +17,12 @@
 		<title>Rate | Ngulikin</title>
     </head>
     <body>
+        <div class="loaderProgress">
+            <img src="../img/loader.gif" />
+        </div>
         <input type="hidden" id="ratePage" value="1"/>
         <?php 
-            include './web/nav/mainMenu.php';
             include 'section_body.php';
-            include './web/nav/footerMenu.php';
-            include 'web/nav/footerFloatMenu.php';
             include 'web/nav/generalInput.php';
             
             if(isset($_SESSION['user'])){

@@ -120,7 +120,7 @@
     function israted($stmt){
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12);
         
         $data = array();
         
@@ -130,15 +130,20 @@
                           "shop_name" => $col2,
                           "brand_name" => $col3,
                           "product_name" => $col4,
-                          "product_image" => $col5,
-                          "product_id" => $col6
+                          "product_image" => IMAGES_URL.'/'.urlencode(base64_encode($col7.'/product/'.$col5)),
+                          "product_id" => $col6,
+                          "invoice_no" => $col8,
+                          "invoice_createdate" => $col9,
+                          "notrans" => $col10,
+                          "delivery_name" => $col11,
+                          "payment_name" => strtoupper($col12)
                         );
         }
         
         /*
             Function location in : /model/generatejson.php
         */        
-        generateJSON($data);
+        credentialVerified($data);
     }
     
     /*

@@ -2079,7 +2079,7 @@ section div h1{
     color:#808080;
     font-size: 10px;
 }
-#buttonSignIn,#buttonSignup,#buttonReset,#buttonForgotSend,#buttonForgotVerified,#buttonForgotChange,#processMysalesButton,#buttonListTransactionIncome,#buttonCartAddress,#buttonVerifi,#buttonVerified{
+#buttonSignIn,#buttonSignup,#buttonReset,#buttonForgotSend,#buttonForgotVerified,#buttonForgotChange,#processMysalesButton,#buttonListTransactionIncome,#buttonCartAddress,#buttonVerifi,#buttonVerified,#buttonRate{
 	background-color: #3FC3FF;
 	border-radius: 3px;
 	border: none;
@@ -2092,7 +2092,7 @@ section div h1{
 	font-family: proxima_nova_altbold;
 	letter-spacing: 1px;
 }
-#buttonSignIn:hover,#buttonSignup:hover,#buttonReset:hover,#buttonForgotSend:hover,#buttonForgotVerified:hover,#buttonForgotChange:hover,#processMysalesButton:hover,#buttonListTransactionIncome:hover,#buttonCartAddress:hover,#buttonVerifi:hover,#buttonVerified:hover{
+#buttonSignIn:hover,#buttonSignup:hover,#buttonReset:hover,#buttonForgotSend:hover,#buttonForgotVerified:hover,#buttonForgotChange:hover,#processMysalesButton:hover,#buttonListTransactionIncome:hover,#buttonCartAddress:hover,#buttonVerifi:hover,#buttonVerified:hover,#buttonRate:hover{
     background-color: #007ec1;
 }
 #buttonVerifi.btn-disabled {
@@ -4621,7 +4621,7 @@ input.radioPaymentOthers:empty ~ label:before{
     padding: 0px;
 }
 
-.grid-profile-head,.grid-shop-seller-head,.grid-notif-head{
+.grid-profile-head,.grid-shop-seller-head,.grid-notif-head,.grid-rate-head{
     background-color:#FEBD18;
     font-size:32px;
     text-align:center;
@@ -5501,6 +5501,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     margin: 5px 15px 0px 0px;
     vertical-align: inherit;
     width: 30px;
+    height: 30px;
     border-radius: 25px;
 }
 .mysales-name{
@@ -6418,6 +6419,12 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 /*
     End of Account Page
 */
+/*
+    Rate Page
+*/
+.rateimg{
+    border-radius:25px;
+}
 /*
     Pagination
 */

@@ -58,7 +58,13 @@
                                 brand_name,
                                 product_name,
                                 SUBSTRING_INDEX(product_image,',',1) AS product_image,
-                                invoice_product_detail.product_id
+                                invoice_product_detail.product_id,
+                                username,
+                                invoice_no,
+                                DATE_FORMAT(invoice_createdate, '%d-%m-%Y') AS invoice_createdate,
+                                invoice_shop_detail_notran,
+                                delivery_name,
+                                payment_name
                             FROM
                                 invoice
 								LEFT JOIN invoice_shop_detail ON invoice_shop_detail.invoice_id = invoice.invoice_id
@@ -67,6 +73,9 @@
 								LEFT JOIN brand ON brand.brand_id = invoice_brand_detail.brand_id
 								LEFT JOIN invoice_product_detail ON invoice_product_detail.invoice_brand_detail_id = invoice_brand_detail.invoice_brand_detail_id
 								LEFT JOIN product ON product.product_id = invoice_product_detail.product_id
+								LEFT JOIN user ON user.user_id = product.user_id
+								LEFT JOIN delivery ON delivery.delivery_id=invoice_shop_detail.delivery_id
+								LEFT JOIN payment ON payment.payment_id=invoice.payment_id
                             WHERE
                                 invoice.user_id = ?
                                 AND

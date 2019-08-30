@@ -9,7 +9,13 @@ $( document ).ready(function() {
 function initHome(){
     var logoutsession = sessionStorage.getItem('logoutNgulikin'),
         paymentfailedsession = sessionStorage.getItem('paymentFailedNgulikin'),
-        loginsession = sessionStorage.getItem('loginNgulikin');
+        loginsession = sessionStorage.getItem('loginNgulikin'),
+        ratesession = sessionStorage.getItem('rateNgulikin');
+    
+    if(ratesession !== null){
+        notif("info","Terima kasih atas waktunya","center","center");
+        sessionStorage.removeItem('rateNgulikin');
+    }
     
     if(loginsession !== null){
         var greeting = '<div class="layerPopup">';

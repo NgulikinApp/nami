@@ -1,15 +1,15 @@
 <?php
     /*
-        This API used in ngulikin.com/js/module-product.js
+        This API used in ngulikin.com/js/module-rate.js
     */
     
     //--------------------------------------------------------------------------
 	// Link to File
 	//--------------------------------------------------------------------------
     include './api/model/general/get_auth.php';
+    include './api/model/general/postraw.php';
     include './api/model/beanoflink.php';
     include 'functions.php';
-    
     /*
         Function location in : /model/jwt.php
     */
@@ -33,9 +33,6 @@
     /*
         Parameters
     */
-    $listinvoice_id = param($request['listinvoice_id']);
-    $listproduct_id = param($request['listproduct_id']);
-    $listrate = param($request['listrate']);
     
     $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
     
@@ -63,33 +60,30 @@
                 return invalidKey();
             }
             
-            $count_invoice = count($listinvoice_id);
+            $count_invoice = count($request);
             
             for($i=0;$i<$count_invoice;$i++){
                 $sql = "UPDATE 
-                            invoice 
-                            SET invoice_product_detail_israted='1'
-                        FROM
                             invoice
-    						LEFT JOIN invoice_shop_detail ON invoice_shop_detail.invoice_id = invoice.invoice_id
+                            LEFT JOIN invoice_shop_detail ON invoice_shop_detail.invoice_id = invoice.invoice_id
     						LEFT JOIN shop ON shop.shop_id = invoice_shop_detail.shop_id
     						LEFT JOIN delivery ON delivery.delivery_id = invoice_shop_detail.delivery_id
     						LEFT JOIN invoice_brand_detail ON invoice_brand_detail.invoice_shop_detail_id = invoice_shop_detail.invoice_shop_detail_id
     						LEFT JOIN brand ON brand.brand_id = invoice_brand_detail.brand_id
-    						LEFT JOIN invoice_product_detail ON invoice_product_detail.invoice_brand_detail_id = invoice_brand_detail.invoice_brand_detail_id
+    						LEFT JOIN invoice_product_detail ON invoice_product_detail.invoice_brand_detail_id = invoice_brand_detail.invoice_brand_detail_id 
+                            SET invoice_product_detail_israted='1'
     					WHERE
-                            invoice.invoice_id = ?
-                           ";
-                
+                            invoice.invoice_id = ?";
+               
                 $stmt = $con->prepare($sql);
-                $stmt->bind_param("i", $listinvoice_id[$i]);
+                $stmt->bind_param("i", $request[$i]['invoice_id']);
                 $stmt->execute();
                 $stmt->close();
                 
                 $sql = "INSERT INTO product_rate(product_id,user_id,product_rate_value) VALUES(?,?,?)";
                 
                 $stmt = $con->prepare($sql);
-                $stmt->bind_param("isi", $listproduct_id[$i],$user_id,$listrate[$i]);
+                $stmt->bind_param("isi", $request[$i]['product_id'],$user_id,$request[$i]['rate']);
                 $stmt->execute();
                 $stmt->close();
                 
@@ -104,10 +98,13 @@
                             user_id=?";
                 
                 $stmt = $con->prepare($sql);
-                $stmt->bind_param("is", $listproduct_id[$i],$user_id);
+                $stmt->bind_param("is", $request[$i]['product_id'],$user_id);
                 $stmt->execute();
                 $stmt->bind_result($col1, $col2);
                 $stmt->fetch();
+                
+                $average_rate = $col1;
+                $count_rate = $col2;
                 
                 $stmt->close();
                 
@@ -121,7 +118,7 @@
                            ";
                 
                 $stmt = $con->prepare($sql);
-                $stmt->bind_param("iii", $col1,$col2,$listproduct_id[$i]);
+                $stmt->bind_param("iii", $average_rate,$count_rate,$request[$i]['product_id']);
                 $stmt->execute();
                 $stmt->close();
             }
