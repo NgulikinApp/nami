@@ -87,6 +87,8 @@
             $fullname = $col3;
             $user_id = $col4;
             
+            $stmt->close();
+            
             $status = ($action =="confirm")?3:7;
             $type = 1;
             $title = ($action =="confirm")?"Pesanan anda dikonfirmasi":"Pesanan anda dibatalkan";

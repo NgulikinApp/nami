@@ -88,6 +88,9 @@
             
             $brand_namearraycount = count($brand_namearray);
             
+            $totalproduct = 0;
+            $totalproduct_price = 0;
+            $totaldelivery_price = 0;
             for($i=0;$i<$brand_namearraycount;$i++){
                 $product_price = $product_pricearray[$i] * $invoice_product_detail_sumproductarray[$i];
                 
@@ -185,6 +188,19 @@
                     "status" => $col8
                 );
         }
+        /*
+            Function location in : /model/general/functions.php
+        */
+        credentialVerified($data);
+    }
+    
+    /*
+        Function referred on : actionorder.php
+        Used for returning array data
+    */
+    function actionorder($invoice_id,$action){
+        $data = array("action" => $action,
+                    "invoice_id" => $invoice_id);
         /*
             Function location in : /model/general/functions.php
         */

@@ -87,13 +87,14 @@
             $fullname = $col3;
             $user_id = $col4;
             
+            $stmt->close();
+            
             $status = 4;
             $type = 1;
-            $title = ($action =="confirm")?"Pesanan anda dikonfirmasi":"Pesanan anda dibatalkan";
             
             $stmt = $con->prepare("UPDATE invoice SET invoice_current_status=? WHERE invoice_id=?");   
                 
-            $stmt->bind_param("ii", $noresi,$invoice_id);
+            $stmt->bind_param("ii", $status,$invoice_id);
                 
             $stmt->execute();
             
@@ -101,12 +102,13 @@
             
             $stmt = $con->prepare("UPDATE invoice_shop_detail SET invoice_shop_detail_noresi=? WHERE invoice_id=?");   
                 
-            $stmt->bind_param("si", $status,$invoice_id);
+            $stmt->bind_param("si", $noresi,$invoice_id);
                 
             $stmt->execute();
             
             $stmt->close();
             
+            $title = "Pesanan anda telah diproses";
             $desc = "No. Tagihan #".$invoice_no." telah dikirim oleh penjual";
             $stmt = $con->prepare("INSERT INTO notifications(user_id,link_id,notifications_type,notifications_title,notifications_desc) VALUES(?,?,?,?,?)");   
                 
@@ -120,6 +122,8 @@
                     Function location in : /model/general/functions.php
             */
             sendEmail("info@ngulikin.com","Ngulikin",$email,$fullname,$title,$desc);
+            
+            $action = "process";
             
             /*
                 Function location in : functions.php

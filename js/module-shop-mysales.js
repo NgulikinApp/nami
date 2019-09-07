@@ -250,7 +250,7 @@ function neworder(){
                             neworder += '<div class="footer">';
                             neworder += '   <div class="grid" data-invoiceid="'+val.invoice_id+'">';
                             neworder += '       <button class="newordercancel grey" >Batalkan pesanan</button>';
-                            neworder += '       <button class="newordersave blueskyback">Proses pesanan</button>';
+                            neworder += '       <button class="newordersave blueskyback">Konfirmasi pesanan</button>';
                             neworder += '   </div>';
                             neworder += '</div>';
                         });
@@ -288,17 +288,18 @@ function neworder(){
                     });
                     
                     $('.newordersave').on( 'click', function( e ){
+                        var invoiceid = $( this ).parent().data( "invoiceid" );
                         $.confirm({
                             title: 'Konfirmasi',
                             icon: 'fa fa-warning',
                             animation: 'top',
                             animateFromElement: false,
                             type: 'dark',
-                            content: 'Yakin ingin diproses?',
+                            content: 'Yakin ingin dikonfirmasi?',
                             buttons: {
                                 ya: function () {
                                     neworderData.action = "confirm";
-                                    neworderData.invoiceid = $( this ).parent().data( "invoiceid" );
+                                    neworderData.invoiceid = invoiceid;
                                     actionneworder();
                                 },
                                     tidak: function () {
@@ -464,6 +465,7 @@ function actionneworder(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken("actionneworder");
     }else{
+        $('.order-container').html('<img src="../img/loader.gif" class="loaderImg"/>');
         $.ajax({
             type: 'POST',
             url: MYSALES_ACTIONNEWORDER_API,
@@ -576,11 +578,25 @@ function confirmorder(){
                         var noresiconfirm = $( this ).attr( "datainternal-id" ),
                             invoiceidconfirm = $( this ).parent().data( "invoiceid" );;
                         if(noresiconfirm === ''){
-                            notif("error","No. resi harus diinput","center","center");
+                            notif("error","No. resi harus diinput, klik detail untuk menginput","center","center");
                         }else{
-                            confirmorderData.invoiceid = invoiceidconfirm;
-                            confirmorderData.noresi = noresiconfirm;
-                            actionconfirmorder();
+                            $.confirm({
+                                title: 'Konfirmasi',
+                                icon: 'fa fa-warning',
+                                animation: 'top',
+                                animateFromElement: false,
+                                type: 'dark',
+                                content: 'Yakin ingin diproses?',
+                                buttons: {
+                                    ya: function () {
+                                        confirmorderData.invoiceid = invoiceidconfirm;
+                                        confirmorderData.noresi = noresiconfirm;
+                                        actionconfirmorder();
+                                    },
+                                        tidak: function () {
+                                    }
+                                }
+                            });
                         }
                     });
                 }else{
@@ -751,6 +767,7 @@ function actionconfirmorder(){
     if(sessionStorage.getItem('tokenNgulikin') === null){
         generateToken("actionconfirmorder");
     }else{
+        $('.confirm-container').html('<img src="../img/loader.gif" class="loaderImg"/>');
         $.ajax({
             type: 'POST',
             url: MYSALES_ACTIONCONFIRMORDER_API,
@@ -767,7 +784,7 @@ function actionconfirmorder(){
                     generateToken("actionconfirmorder");
                 }else{
                     confirmorder();
-                    notif("info","Tagihan telah dikonfirmasi","center","center");
+                    notif("info","Tagihan telah diproses","center","center");
                 }
             } 
         });
