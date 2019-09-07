@@ -257,28 +257,29 @@ function neworder(){
                     }else{
                         $('.newordersum').addClass('hidden');
                         neworder += '<div id="cart-emptylist">';
-                        neworder += '    <div class="grid-cart-header">Detail Invoice</div>';
+                        neworder += '    <div class="grid-cart-header">Detail Pesanan Baru</div>';
                         neworder += '    <div class="grid-cart-body"></div>';
                         neworder += '    <div class="grid-cart-footer">';
-                        neworder += '        <div>Invoice kosong</div>';
+                        neworder += '        <div>Pesanan Baru Kosong</div>';
                         neworder += '    </div>';
                         neworder += '</div>';
                     }
                     
                     $('.order-container').html(neworder);
                     
-                    var invoiceid_ordertemp = 0;
+                    var invoiceid_ordertemp = [];
                     $('.detail-neworder').on( 'click', function( e ){
                         var invoiceidcur = $( this ).data( "invoiceid" );
                         
-                        if(invoiceid_ordertemp !== invoiceidcur){
-                            invoiceid_ordertemp = invoiceidcur;
-                            invoiceid_order.invoiceid = invoiceid_ordertemp;
+                        if(invoiceid_ordertemp.includes(invoiceidcur) === false){
+                            invoiceid_ordertemp.push(invoiceidcur);
+                            invoiceid_order.invoiceid = invoiceidcur;
                             curr_order = $( this );
                             
                         	detailneworder();
                         }else{
-                            invoiceid_ordertemp = 0;
+                            var index = invoiceid_ordertemp.indexOf(invoiceidcur);
+                            invoiceid_ordertemp.splice(index, 1);
                             $( this ).find( 'img' ).attr('src','/img/down.png');
                             $( this ).parent().next().remove();
                             $( this ).parent().parent().find('.list-order').remove();
@@ -522,8 +523,8 @@ function confirmorder(){
                             confirmorder += '       </div>';
                             confirmorder += '   </div>';
                             confirmorder += '   <div class="detail">';
-                            confirmorder += '       <div class="head">NOMOR TAGIHAN</div>';
-                            confirmorder += '       <div class="body bluesky">'+val.invoice_no+'</div>';
+                            confirmorder += '       <div class="head">NOMOR TRANSAKSI</div>';
+                            confirmorder += '       <div class="body bluesky">'+val.notrans+'</div>';
                             confirmorder += '   </div>';
                             confirmorder += '   <div class="detail">';
                             confirmorder += '       <div class="head">TANGGAL TRANSAKSI</div>';
@@ -541,28 +542,29 @@ function confirmorder(){
                         });
                     }else{
                         confirmorder += '<div id="cart-emptylist">';
-                        confirmorder += '    <div class="grid-cart-header">Detail Invoice</div>';
+                        confirmorder += '    <div class="grid-cart-header">Detail Konfirmasi Pengiriman</div>';
                         confirmorder += '    <div class="grid-cart-body"></div>';
                         confirmorder += '    <div class="grid-cart-footer">';
-                        confirmorder += '        <div>Invoice kosong</div>';
+                        confirmorder += '        <div>Konfirmasi Pengiriman Kosong</div>';
                         confirmorder += '    </div>';
                         confirmorder += '</div>';
                     }
                     
                     $('.confirm-container').html(confirmorder);
                     
-                    var invoiceid_confirmtemp = 0;
+                    var invoiceid_confirmtemp = [];
                     $('.detail-confirmorder').on( 'click', function( e ){
                         var invoiceidcur = $( this ).data( "invoiceid" );
                         
-                        if(invoiceid_confirmtemp !== invoiceidcur){
-                            invoiceid_confirmtemp = invoiceidcur;
-                            invoiceid_confirm.invoiceid = invoiceid_confirmtemp;
+                        if(invoiceid_confirmtemp.includes(invoiceidcur) === false){
+                            invoiceid_confirmtemp.push(invoiceidcur);
+                            invoiceid_confirm.invoiceid = invoiceidcur;
                             curr_confirm = $( this );
                             
                         	detailconfirmorder();
                         }else{
-                            invoiceid_confirmtemp = 0;
+                            var index = invoiceid_confirmtemp.indexOf(invoiceidcur);
+                            invoiceid_confirmtemp.splice(index, 1);
                             $( this ).find( 'img' ).attr('src','/img/down.png');
                             $( this ).parent().next().remove();
                             $( this ).parent().parent().find('.list-confirm').remove();
@@ -823,28 +825,29 @@ function statussending(){
                         });
                     }else{
                         statussending += '<div id="cart-emptylist">';
-                        statussending += '    <div class="grid-cart-header">Detail Invoice</div>';
+                        statussending += '    <div class="grid-cart-header">Detail Status Pengiriman</div>';
                         statussending += '    <div class="grid-cart-body"></div>';
                         statussending += '    <div class="grid-cart-footer">';
-                        statussending += '        <div>Invoice kosong</div>';
+                        statussending += '        <div>Status Pengiriman Kosong</div>';
                         statussending += '    </div>';
                         statussending += '</div>';
                     }
                     
                     $('.status-container').html(statussending);
                     
-                    var notrans_statustemp = '';
+                    var notrans_statustemp = [];
                     $('.detail-statussending').on( 'click', function( e ){
                         var notranscur = $( this ).data( "notrans" );
                         
-                        if(notrans_statustemp !== notranscur){
-                            notrans_statustemp = notranscur;
-                            notrans_status.notrans = notrans_statustemp;
+                        if(notrans_statustemp.includes(notranscur) === false){
+                            notrans_statustemp.push(notranscur);
+                            notrans_status.notrans = notranscur;
                             curr_status = $( this );
                             
                         	detailstatussending();
                         }else{
-                            notrans_statustemp = '';
+                            var index = notrans_statustemp.indexOf(notranscur);
+                            notrans_statustemp.splice(index, 1);
                             $( this ).find( 'img' ).attr('src','/img/down.png');
                             $( this ).parent().next().remove();
                             $( this ).parent().parent().find('.list-status').remove();
@@ -970,47 +973,54 @@ function transaction(){
                             transaction += '</div>';
                             if(val.status === 7){
                                 transaction += '<div class="footer canceledtrans">';
-                                transaction += '   <div class="grid" data-invoiceid="'+val.invoice_id+'">';
+                                transaction += '   <div class="grid">';
                                 transaction += '       <img src="/img/warningred.png"/>';
                                 transaction += '       <span>TRANSAKSI DIBATALKAN</span>';
-                                transaction += '       <button class="printTrans redyoung">Cetak Invoice</button>';
+                                transaction += '       <button class="printTrans redyoung" data-notran="'+val.notran+'">Cetak Invoice</button>';
                                 transaction += '   </div>';
                                 transaction += '</div>';
                             }else{
                                 transaction += '<div class="footer">';
-                                transaction += '   <div class="grid" data-invoiceid="'+val.invoice_id+'">';
-                                transaction += '       <button class="printTrans blueskyback">Cetak Invoice</button>';
+                                transaction += '   <div class="grid">';
+                                transaction += '       <button class="printTrans blueskyback" data-notran="'+val.notran+'">Cetak Invoice</button>';
                                 transaction += '   </div>';
                                 transaction += '</div>';
                             }
                         });
                     }else{
                         transaction += '<div id="cart-emptylist">';
-                        transaction += '    <div class="grid-cart-header">Detail Invoice</div>';
+                        transaction += '    <div class="grid-cart-header">Detail Daftar Transaksi</div>';
                         transaction += '    <div class="grid-cart-body"></div>';
                         transaction += '    <div class="grid-cart-footer">';
-                        transaction += '        <div>Invoice kosong</div>';
+                        transaction += '        <div>Daftar Transaksi Kosong</div>';
                         transaction += '    </div>';
                         transaction += '</div>';
                     }
                     
                     $('.transaction-container').html(transaction);
                     
-                    var invoiceid_transtemp = 0;
+                    var invoiceid_transtemp = [];
                     $('.detail-transaction').on( 'click', function( e ){
                         var invoiceidcur = $( this ).data( "invoiceid" );
                             
-                        if(invoiceid_transtemp !== invoiceidcur){
-                            invoiceid_transtemp = invoiceidcur;
-                            invoiceid_transaction.invoiceid = invoiceid_transtemp;
+                        if(invoiceid_transtemp.includes(invoiceidcur) === false){
+                            invoiceid_transtemp.push(invoiceidcur);
+                            invoiceid_transaction.invoiceid = invoiceidcur;
                             curr_transaction = $( this );
                                 
                             detailtransaction();
                         }else{
-                            invoiceid_transtemp = 0;
+                            var index = invoiceid_transtemp.indexOf(invoiceidcur);
+                            invoiceid_transtemp.splice(index, 1);
                             $( this ).find( 'img' ).attr('src','/img/down.png');
-                            $( this ).parent().parent().find('.list-transaction').remove();
+                            $( this ).parent().next('.list-transaction').remove();
                         }
+                    });
+                    
+                    $('.printTrans').on( 'click', function( e ){
+                        var notran = $( this ).data( "notran" );
+                        
+                        window.open(url+'/in/'+notran, '_blank');
                     });
                 }else{
                     generateToken("transaction");

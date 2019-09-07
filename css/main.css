@@ -5358,21 +5358,21 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .order-container,.order-container .grid .detail.address{
     float:left;
 }
-.order-container .grid.content,.confirm-container .grid.content,.transaction-container .grid.content{
+.order-container .grid.content,.confirm-container .grid.content,.transaction-container .grid.content,.rate-container .grid.content{
     border:0;
 }
-.order-container .list-order,.confirm-container .list-confirm{
+.order-container .list-order,.confirm-container .list-confirm,.rate-container .list-confirm{
     background:#004E81;
 }
-.order-container .list-order img,.confirm-container .list-confirm img{
+.order-container .list-order img,.confirm-container .list-confirm img,.rate-container .list-confirm img{
     width: 50px;
     height: 50px;
     border-radius: 0;
 }
-.order-container .list-order .head,.confirm-container .list-confirm .head{
+.order-container .list-order .head,.confirm-container .list-confirm .head,.rate-container .list-confirm .head{
     color:#FFF !important;
 }
-.order-container .list-order .body,.confirm-container .list-confirm .body{
+.order-container .list-order .body,.confirm-container .list-confirm .body,.rate-container .list-confirm .body{
     color:#FEBD18;
 }
 .order-container.left{
@@ -5390,7 +5390,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     padding: 20px;
     text-align: center;
 }
-.order-container .grid .detail .head,.confirm-container .grid .head,.status-container .grid .detail .head,.transaction-container .grid .detail .head{
+.order-container .grid .detail .head,.confirm-container .grid .head,.status-container .grid .detail .head,.transaction-container .grid .detail .head,.rate-container .grid .head{
     color : #807F7F;
 }
 .order-container.left .grid.third .detail{
@@ -5405,7 +5405,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     background: #004E81;
     color:#FFF;
 }
-.order-container .grid .detail,.order-container .grid .detail .left,.order-container .grid .detail .right,.confirm-container .grid .detail,.confirm-container .grid .detail .left,.confirm-container .grid .detail .right,.status-container .grid .detail,.status-container .grid .detail .left,.status-container .grid .detail .right,.transaction-container .grid .detail,.transaction-container .grid .detail .left,.transaction-container .grid .detail .right{
+.order-container .grid .detail,.order-container .grid .detail .left,.order-container .grid .detail .right,.confirm-container .grid .detail,.confirm-container .grid .detail .left,.confirm-container .grid .detail .right,.status-container .grid .detail,.status-container .grid .detail .left,.status-container .grid .detail .right,.transaction-container .grid .detail,.transaction-container .grid .detail .left,.transaction-container .grid .detail .right,.rate-container .grid .detail,.rate-container .grid .detail .left,.rate-container .grid .detail .right{
     display:inline-block;
     position: relative;
 }
@@ -5415,7 +5415,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .order-container.right .grid:first-child{
     padding:20px;
 }
-.order-container.right .grid:first-child .detail:last-child .head:hover,.confirm-container .grid:last-child .left .detail:hover{
+.order-container.right .grid:first-child .detail:last-child .head:hover,.confirm-container .grid:last-child .left .detail:hover,.rate-container .grid:last-child .left .detail:hover{
     color:#FEBD18 !important;
     cursor:pointer;
 }
@@ -5447,20 +5447,20 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 .order-container{
     width:100%;
 }
-.order-container .grid .detail,.confirm-container .grid .detail,.transaction-container .grid .detail{
+.order-container .grid .detail,.confirm-container .grid .detail,.transaction-container .grid .detail,.rate-container .grid .detail{
     width: 25%;
     padding: 10px 35px;
     border-right: 1px solid #DFDFDF;
     float: left;
 }
-.order-container .grid .detail:last-child,.confirm-container .grid .detail:last-child,.status-container .grid .detail:last-child,.transaction-container .grid .detail:last-child{
+.order-container .grid .detail:last-child,.confirm-container .grid .detail:last-child,.status-container .grid .detail:last-child,.transaction-container .grid .detail:last-child,.rate-container .grid .detail:last-child{
     border:0px;
     cursor:pointer;
 }
-.order-container .grid .detail.bluesky,.confirm-container .grid .detail.bluesky,.transaction-container .grid .detail.bluesky{
+.order-container .grid .detail.bluesky,.confirm-container .grid .detail.bluesky,.transaction-container .grid .detail.bluesky,.rate-container .grid .detail.bluesky{
     margin-top: 10px;
 }
-.order-container,.confirm-container,.status-container,.transaction-container{
+.order-container,.confirm-container,.status-container,.transaction-container,.rate-container{
     min-height: 250px;
     position: inherit;
 }
@@ -5470,22 +5470,22 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     right: 0;
     position: absolute;
 }
-.order-container .grid,.confirm-container .grid,.status-container .grid,.transaction-container .grid{
+.order-container .grid,.confirm-container .grid,.status-container .grid,.transaction-container .grid,.rate-container .grid{
     border-bottom: 1px solid #dfdfdf;
     overflow: auto;
     display: block;
     padding: 5px 0px;
 }
-.order-container .footer,.confirm-container .footer,.transaction-container .footer{
+.order-container .footer,.confirm-container .footer,.transaction-container .footer,.rate-container .footer{
     padding: 0px;
 }
-.order-container .loaderImg,.confirm-container .loaderImg,.status-container .loaderImg,.transaction-container .loaderImg{
+.order-container .loaderImg,.confirm-container .loaderImg,.status-container .loaderImg,.transaction-container .loaderImg,.rate-container .loaderImg{
     height: 247px;
     width: 292px;
     margin: auto;
     display: block;
 }
-.order-container .grid button,.confirm-container .grid button,.transaction-container .grid button{
+.order-container .grid button,.confirm-container .grid button,.transaction-container .grid button,.rate-container .grid button{
     color: #FFF;
     float: right;
     border-radius: 5px;
@@ -5497,7 +5497,13 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     font-family: proxima_nova_altbold;
     font-size: 13px;
 }
-.order-container img,.confirm-container img,.status-container img,.transaction-container img{
+.order-container img,.confirm-container img,.status-container img,.transaction-container img,.rate-container img{
+    margin: 5px 15px 0px 0px;
+    vertical-align: inherit;
+    width: 30px;
+    border-radius: 25px;
+}
+.rate-container img{
     margin: 5px 15px 0px 0px;
     vertical-align: inherit;
     width: 30px;
@@ -5644,6 +5650,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 */
 .grid-shop-seller-body .title.mysales{
     text-align: left;
+    border-bottom: 1px solid #DFDFDF;
 }
 .filterMysales{
     display:inline-block;
@@ -5716,7 +5723,7 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
     width: 10px;
     height: 10px;
 }
-#confirmallConfirmMysales div,.confirm-container .grid .leftCont,.confirm-container .grid .midCont,.confirm-container .grid .rightCont,.confirm-container .grid .midCont .left,.confirm-container .grid .midCont .right{
+#confirmallConfirmMysales div,.confirm-container .grid .leftCont,.confirm-container .grid .midCont,.confirm-container .grid .rightCont,.confirm-container .grid .midCont .left,.confirm-container .grid .midCont .right,.confirm-container .grid .leftCont,.confirm-container .grid .midCont,.confirm-container .grid .rightCont,.confirm-container .grid .midCont .left,.confirm-container .grid .midCont .right,.rate-container .grid .leftCont,.rate-container .grid .midCont,.rate-container .grid .rightCont,.rate-container .grid .midCont .left,.rate-container .grid .midCont .right,.rate-container .grid .leftCont,.rate-container .grid .midCont,.rate-container .grid .rightCont,.rate-container .grid .midCont .left,.rate-container .grid .midCont .right{
     display:inline-block;
     font-size: 13px;
     font-family: proxima_nova;
@@ -5727,34 +5734,34 @@ label[for="filesBrand"],label[for="filesProduct"],label[for="filesShop"]{
 #confirmallConfirmMysales:hover{
     color:#FEBD18;
 }
-.confirm-container:nth-child(2){
+.confirm-container:nth-child(2),.rate-container:nth-child(2){
     border-top: 1px solid #DFDFDF;
     border-bottom: 1px solid #DFDFDF;
 }
-.confirm-container .grid .midCont .left,.confirm-container .grid .midCont .right{
+.confirm-container .grid .midCont .left,.confirm-container .grid .midCont .right,.rate-container .grid .midCont .right{
     width:49%
 }
-.confirm-container .grid .leftCont{
+.confirm-container .grid .leftCont,.rate-container .grid .leftCont{
     width:20%;
 }
-.confirm-container .grid:first-child .leftCont{
+.confirm-container .grid:first-child .leftCont,.rate-container .grid:first-child .leftCont{
     padding: 15px 0px 15px 35px;
 }
-.confirm-container .grid .midCont{
+.confirm-container .grid .midCont,.rate-container .grid .midCont{
     border-left: 1px solid #DFDFDF;
     border-right: 1px solid #DFDFDF;
     padding: 0px 25px;
     width:50%;
 }
-.confirm-container .grid .midCont .right{
+.confirm-container .grid .midCont .right,.rate-container .grid .midCont .right{
     overflow: auto;
     padding-left: 20px;
 }
-.confirm-container .grid .rightCont{
+.confirm-container .grid .rightCont,.rate-container .grid .rightCont{
     width:29%;
     padding: 0px 25px;
 }
-.confirm-container .grid:last-child .left .detail{
+.confirm-container .grid:last-child .left .detail,.rate-container .grid:last-child .left .detail{
     width: 49%;
     display: inline-block;
     text-align: center;

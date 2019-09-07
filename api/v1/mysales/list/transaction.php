@@ -67,7 +67,8 @@
                         username,
                         user_photo,
                         delivery_name,
-                        invoice_current_status
+                        invoice_current_status,
+                        invoice_shop_detail_notran
                     FROM
                         shop
                         LEFT JOIN invoice_shop_detail ON invoice_shop_detail.shop_id=shop.shop_id

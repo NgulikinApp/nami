@@ -59,7 +59,7 @@
             }
             $data[] = array(
                     "invoice_id" => $col1,
-                    "invoice_no" => $col2,
+                    "notrans" => $col2,
                     "invoice_createdate" => $date,
                     "fullname" => $col4,
                     "user_photo" => $user_photo
@@ -116,7 +116,7 @@
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9);
     
         while($stmt->fetch()){
             $datearray = explode('-', $col3);
@@ -134,7 +134,8 @@
                     "fullname" => $col4,
                     "user_photo" => $user_photo,
                     "delivery_name" => $col7,
-                    "status" => $col8
+                    "status" => $col8,
+                    "notran" => $col9
                 );
         }
         /*
