@@ -25,6 +25,10 @@ function initInvoice(){
     });
     
     detailInvoice();
+    
+    $("#btn_uploadpayment").change(function(){
+        uploadPayment();
+    });
 }
 
 function detailInvoice(){
@@ -181,4 +185,53 @@ function countDown(last_paiddate){
             document.getElementById("countdown_invoice").innerHTML = "KADALUARSA";
         }
     }, 1000);
+}
+
+function uploadPayment(){
+    if(sessionStorage.getItem('tokenNgulikin') === null){
+        generateToken("uploadPayment");
+    }else{
+        var currurl = window.location.href,
+            invoiceno = currurl.substr(currurl.lastIndexOf('/') + 1);
+        
+        var data = new FormData(),
+            filePath = $('#btn_uploadpayment').val(),
+            fileExt = (filePath.substr(filePath.lastIndexOf('\\') + 1).split('.')[1]).toLowerCase(),
+            filePhoto = $('#btn_uploadpayment')[0].files[0],
+            fileSize = filePhoto.size/ 1024 / 1024;
+        
+        data.append('invoiceno', invoiceno);
+        data.append('file', filePhoto);
+        
+        if(fileSize < 2){
+            if(fileExt === 'jpg' || fileExt === 'png'){
+                $('.loaderProgress').removeClass('hidden');
+                $.ajax({
+                    type: 'POST',
+                    url: PRODUCT_INVOICE_SENDPROOF_API,
+                    data: data,
+                    async: true,
+                    contentType: false, 
+                    processData: false,
+                    dataType: 'json',
+                    beforeSend: function(xhr, settings) { 
+                        xhr.setRequestHeader('Authorization','Bearer ' + btoa(sessionStorage.getItem('tokenNgulikin')));
+                    },
+                    success: function(result){
+                        if(data.message == 'Invalid credential' || data.message == 'Token expired'){
+                            generateToken("uploadPayment");
+                        }else{
+                            $('.loaderProgress').addClass('hidden');
+                            notif("success","Bukti pembayaran berhasil diupload, tunggu konfirmasi kami paling lambat 1 hari","center","top");
+                        }
+                        
+                    }
+                });
+            }else{
+                notif("error","Format file hanya boleh jpg atau png","center","top");
+            }
+        }else{
+            notif("error","File tidak boleh lebih dari 2 MB","center","top");
+        }
+    }
 }

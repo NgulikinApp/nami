@@ -50,10 +50,14 @@
             <hr class="line_invoice"/>
         </div>
         <div class="footer">
-            <div id="status_invoice" class="fn-13">MENUNGGU PEMBAYARAN</div>
+            <div id="text_invoice" class="fn-13">WAKTU UPLOAD BUKTI PEMBAYARAN</div>
             <div id="countdown_invoice" class="fn-32"></div>
-            <div class="fn-13" style="color:#FFF;">Batas Waktu Pembayaran</div>
-            <div class="fn-13" >Paling lambat <span id="invoice_last_paiddate"></span></div>
+            <div class="fn-13">Batas Waktu Pembayaran</div>
+            <div class="fn-13" style="font-family: proxima_nova_altbold;">Paling lambat <span id="invoice_last_paiddate"></span></div>
+            <label for="btn_uploadpayment" class="fn-13 btn_uploadproof">
+                UPLOAD BUKTI TRANSFER
+            </label>
+            <input type="file" id="btn_uploadpayment"/>
         </div>
     </div>
 </div>

@@ -125,6 +125,14 @@
             
             $action = "process";
             
+            $stmt = $con->prepare("INSERT INTO invoice_status_detail(invoice_id,status_id) VALUES(?,?)");   
+                
+            $stmt->bind_param("ii", $invoice_id,$status);
+                    
+            $stmt->execute();
+                
+            $stmt->close();
+            
             /*
                 Function location in : functions.php
             */

@@ -192,6 +192,9 @@
         						case 'ri':
         							include('./api/v1/product/invoice/rateItem.php');
         						break;
+        						case 'sp':
+        							include('./api/v1/product/invoice/sendProof.php');
+        						break;
 						        case 'ss':
         							include('./api/v1/product/invoice/sendStatusProduct.php');
         						break;

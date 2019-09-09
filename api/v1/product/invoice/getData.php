@@ -93,13 +93,15 @@
                             WHERE
                                 invoice.invoice_no = ?
                                 AND
+								invoice.user_id=?
+                                AND
 								priority='1'
 								AND
 								user_address_isactive=1
                        ";
             
             $stmt = $con->prepare($sql);
-            $stmt->bind_param("s", $noinvoice);
+            $stmt->bind_param("ss", $noinvoice,$user_id);
             /*
                 Function location in : functions.php
             */
