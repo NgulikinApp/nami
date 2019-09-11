@@ -11,11 +11,12 @@
         $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9);
         $sumRead = 0;
         while ($stmt->fetch()) {
+            $notifications_photo=($col7=='1')?IMAGES_URL.'/'.urlencode(base64_encode($col5.'/shop/icon/'.$col3)):IMAGES_URL.'/'.urlencode(base64_encode($col5.'/announcement/'.$col3));
             $list[] = array(
                       "notifications_id" => $col1,
                       "link_id" => $col6,
                       "notifications_desc" => $col2,
-                      "notifications_photo" => IMAGES_URL.'/'.urlencode(base64_encode($col5.'/shop/icon/'.$col3)),
+                      "notifications_photo" => $notifications_photo,
                       "notifications_createdate" => $col4,
                       "notifications_type" => $col7,
                       "notifications_title" => $col8,

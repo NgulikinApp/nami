@@ -60,9 +60,9 @@
             $sql = "SELECT 
                         notifications_id, 
                         notifications_desc,
-                        shop_icon,
+                        IFNULL(shop_icon,notification_photo) AS notifications_icon,
                         DATE_FORMAT(notifications_createdate, '%W, %d %M %Y') AS notifications_createdate,
-                        username,
+                        IFNULL(username,'admin'),
 						link_id,
 						notifications_type,
 						notifications_title,
