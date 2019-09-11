@@ -10,7 +10,7 @@
         
         $stmt->execute();
         
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16, $col17, $col18, $col19, $col20, $col21, $col22, $col23);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9, $col10, $col11, $col12, $col13, $col14, $col15, $col16, $col17, $col18, $col19, $col20, $col21, $col22, $col23, $col24);
         
         while ($stmt->fetch()) {
             if($invoiceflag == 0){
@@ -44,6 +44,7 @@
                             "delivery_price" => $col12,
                             "notes" => $col13,
                             "noresi" => $col14,
+                            "notrans" => $col24,
                             "products" => array()
                         );
                 $data["shops"][$i]["products"][] = array(

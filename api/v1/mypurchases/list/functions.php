@@ -41,30 +41,36 @@
         Function referred on : trackorder.php
         Used for returning the list data trackorder
         Return data:
-                - transaction_date
-                - no_resi
+                - shop_name
                 - product_name
+                - notes
+                - sum_products
                 - product_image
-                - invoice_total_price
-                - no_trans
+                - delivery_price
+                - total_price
+                - total
     */
     function trackorder($stmt){
         $data = array();
         
         $stmt->execute();
-        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8);
+        $stmt->bind_result($col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8, $col9);
         
         while($stmt->fetch()){
-            $image = IMAGES_URL.'/'.urlencode(base64_encode($col6.'/product/'.$col5));
+            $image = IMAGES_URL.'/'.urlencode(base64_encode($col4.'/product/'.$col3));
+            
+            $total = $col7 + $col8;
             
             $data[] = array(
-                    "invoice_no" => $col1,
-                    "transaction_date" => $col2,
-                    "no_resi" => $col3,
-                    "product_name" => $col4,
+                    "shop_name" => $col1,
+                    "product_name" => $col2,
+                    "notes" => $col5,
+                    "sum_products" => $col6,
                     "product_image" => $image,
-                    "total_price" => $col7,
-                    "no_trans" => $col8
+                    "delivery_price" => 'Rp '.number_format($col7, 0, '.', '.'),
+                    "total_price" => 'Rp '.number_format($col8, 0, '.', '.'),
+                    "total" => 'Rp '.number_format($total, 0, '.', '.'),
+                    "notrans" => $col9
                 );
         }
         

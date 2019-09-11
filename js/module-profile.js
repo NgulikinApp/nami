@@ -720,30 +720,76 @@ function orderprocess(){
                     var orderprocess = '';
                     if(data.result.length > 0){
                         $.each( data.result, function( key, val ) {
-                            var expired = (val.status_name!=="Kadaluarsa")?'':'expired';
-                            orderprocess += '<div class="listMyprofileTransaction">';
-                            orderprocess += '    <div class="dataTransaction">';
-                            orderprocess += '        <img src="'+val.product_image+'" height="70" width="70"/>';
+                            orderprocess += '<div>';
+                            orderprocess += '    <div class="orderprocess_head">';
+                            orderprocess += '        <div class="detail-shopping-icon">';
+                            orderprocess += '           <i class="fa fa-shopping-cart"></i>';
+                            orderprocess += '        </div>';
+                            orderprocess += '        <div style="width: 420px;margin-left: 50px;">'+val.shop_name+'</div>';
+                            orderprocess += '        <div><img src="/img/bubble.png"/></div>';
+                            orderprocess += '        <div style="width: 325px;">Tanya Pembeli</div>';
+                            orderprocess += '        <div><img src="/img/truck.png"/></div>';
+                            orderprocess += '        <div>Dikirim</div>';
                             orderprocess += '    </div>';
-                            orderprocess += '    <div class="dataTransaction">';
-                            orderprocess += '        <div class="header">barang</div>';
-                            orderprocess += '        <div class="detail">'+val.product_name+'</div>';
-                            orderprocess += '    </div>';
-                            orderprocess += '    <div class="dataTransaction">';
-                            orderprocess += '        <div class="header">status pengiriman</div>';
-                            orderprocess += '        <div class="detail statusTransaction '+expired+'">'+val.status_name+'</div>';
-                            orderprocess += '    </div>';
-                            orderprocess += '    <div class="dataTransaction">';
-                            orderprocess += '        <div class="header">tanggal transaksi</div>';
-                            orderprocess += '        <div class="detail">'+val.transaction_date+'</div>';
-                            orderprocess += '    </div>';
-                            orderprocess += '    <div class="dataTransaction">';
-                            orderprocess += '        <div class="header">total tagihan</div>';
-                            orderprocess += '        <div class="detail">'+val.total_price+'</div>';
-                            orderprocess += '    </div>';
-                            orderprocess += '    <div class="dataTransaction viewDetailOrderProcess" datainternal-id="'+val.no_trans+'" data-delivery="'+val.delivery_id+'">';
-                            orderprocess += '        <i class="fa fa-eye"></i> Lihat';
-                            orderprocess += '    </div>';
+                            orderprocess += '    <div class="orderprocess_body">';
+                            orderprocess += '        <div class="orderprocess_left">';
+                            orderprocess += '           <div class="orderprocess_grid">';
+                            orderprocess += '               <div class="left" style="margin-right: 40px;">';
+                            orderprocess += '                   <img src="'+val.product_image+'">';
+                            orderprocess += '               </div>';
+                            orderprocess += '               <div class="right">';
+                            orderprocess += '                   <div class="head" style="margin-top: 5px;">BARANG</div>';
+                            orderprocess += '                   <div>'+val.product_name+'</div>';
+                            orderprocess += '               </div>';
+                            orderprocess += '           </div>';
+                            orderprocess += '           <div class="orderprocess_grid" style="margin-top: 10px;">';
+                            orderprocess += '               <div class="head">CATATAN UNTUK PENJUAL</div>';
+                            orderprocess += '               <div>'+val.notes+'</div>';
+                            orderprocess += '           </div>';
+                            orderprocess += '       </div>';
+                            orderprocess += '       <div class="orderprocess_right">';
+                            orderprocess += '           <div class="orderprocess_grid">';
+                            orderprocess += '               <div class="left" style="margin-right: 40px;">';
+                            orderprocess += '                   <div class="head">JUMLAH</div>';
+                            orderprocess += '                   <div>'+val.sum_products+'</div>';
+                            orderprocess += '               </div>';
+                            orderprocess += '               <div class="right" style="float: right;">';
+                            orderprocess += '                   <div class="head">TOTAL TAGIHAN</div>';
+                            orderprocess += '                   <div style="text-align: right;">'+val.total_price+'</div>';
+                            orderprocess += '               </div>';
+                            orderprocess += '           </div>';
+                            orderprocess += '           <div class="orderprocess_grid" style="border-bottom: 1px solid #F5F5F5;">';
+                            orderprocess += '               <div class="left" style="margin-right: 40px;">';
+                            orderprocess += '                   <div class="head">Biaya Pengiriman</div>';
+                            orderprocess += '                   <div class="bluesky">JNE</div>';
+                            orderprocess += '               </div>';
+                            orderprocess += '               <div class="right" style="float: right;">';
+                            orderprocess += '                   <div>'+val.delivery_price+'</div>';
+                            orderprocess += '               </div>';
+                            orderprocess += '           </div>';
+                            orderprocess += '           <div class="orderprocess_grid">';
+                            orderprocess += '               <div class="left" style="margin-right: 40px;">';
+                            orderprocess += '                   <div>Total Pesanan</div>';
+                            orderprocess += '               </div>';
+                            orderprocess += '               <div class="right" style="float: right;">';
+                            orderprocess += '                   <div style="text-align: right;">'+val.total+'</div>';
+                            orderprocess += '               </div>';
+                            orderprocess += '           </div>';
+                            orderprocess += '           <div class="orderprocess_grid">';
+                            orderprocess += '               <div class="left" style="margin-right: 40px;">';
+                            orderprocess += '                   <div>Pembayaran</div>';
+                            orderprocess += '               </div>';
+                            orderprocess += '               <div class="right" style="float: right;">';
+                            orderprocess += '                   <div class="bluesky" style="text-align: right;">Manual - Transfer BCA</div>';
+                            orderprocess += '               </div>';
+                            orderprocess += '           </div>';
+                            orderprocess += '       </div>';
+                            orderprocess += '   </div>';
+                            orderprocess += '   <div class="orderprocess_footer">';
+                            orderprocess += '       <div>';
+                            orderprocess += '           <button class="btn_trackorder" data-notrans="'+val.notrans+'">Lacak Pesanan</button>';
+                            orderprocess += '       </div>';
+                            orderprocess += '   </div>';
                             orderprocess += '</div>';
                         });
                     }else{
@@ -754,11 +800,10 @@ function orderprocess(){
                     }
                     $(".bodyProfileOrderProcess").html(orderprocess);
                     
-                    $(".viewDetailOrderProcess").on( 'click', function( e ){
-                        var transno = $(this).attr('datainternal-id'),
-                            delivery = $(this).data( "delivery" );
+                    $(".btn_trackorder").on( 'click', function( e ){
+                        var notrans = $(this).data( "notrans" );
                             
-                        location.href = url+"/historyorder/"+transno+"?delivery="+delivery;
+                        location.href = url+"/shippinghistory/"+notrans;
                     });
                 }else{
                     generateToken("orderprocess");

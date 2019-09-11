@@ -4012,6 +4012,84 @@ Product page
     display: block;
 }
 
+.myprofile .bodyMyprofile.bodyProfileOrderProcess{
+    padding:0px;
+}
+
+.orderprocess_head,.orderprocess_body,.orderprocess_footer{
+    color:#56C0ED;
+    border-bottom: 1px solid #F5F5F5;
+    padding: 0px 30px;
+    font-family: proxima_nova_ltsemibold;
+    overflow: auto;
+}
+
+.orderprocess_head div{
+    display:inline-block;
+}
+
+.orderprocess_head .detail-shopping-icon{
+    border: 1px solid rgb(224,224,223);
+    padding: 5px 10px;
+    color: #838484;
+}
+
+.orderprocess_body{
+    color: #424242;
+    font-family: proxima_nova;
+}
+
+.orderprocess_left{
+    border-right: 1px solid #F5F5F5;
+    width: 50%;
+    padding: 10px 0px;
+    float: left;
+    min-height: 29vh;
+}
+
+.orderprocess_right{
+    width: 50%;
+    padding: 10px 0px 10px 30px;
+    float: left;
+}
+
+.orderprocess_grid{
+    width: 100%;
+    overflow: auto;
+    padding: 5px 0px;
+}
+
+.orderprocess_grid .head{
+    border-bottom: 0px !important;
+}
+
+.orderprocess_grid img{
+    width: 50px;
+    height: 50px;
+}
+
+.orderprocess_grid .left,.orderprocess_grid .right{
+    float: left;
+}
+
+.orderprocess_footer{
+    padding: 10px 30px;
+}
+
+.btn_trackorder{
+    background-color: #3FC3FF;
+    color: #FFF;
+    padding: 5px 40px;
+    float: right;
+    font-family: proxima_nova_altbold;
+    border: 0;
+    border-radius: 5px;
+}
+
+.btn_trackorder:hover{
+    background-color: #007ec1;
+}
+
 @media screen and (max-width:1277px){
     body .header{
         width:1277px;

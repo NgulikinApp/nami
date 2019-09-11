@@ -21,12 +21,6 @@
     $con = conn();
     
     /*
-        Parameters
-    */
-    $date = param(@$_GET['date']);
-    $search = param(@$_GET['search']);
-    
-    /*
         Function location in : /model/general/get_auth.php
     */
     $token = bearer_auth();
@@ -58,70 +52,33 @@
                 return invalidKey();
             }
             
-            $a_param_type = array();
-            $a_bind_params = array();
-            
-            $sql = "SELECT 
-						invoice_no,
-                        IFNULL(DATE_FORMAT(invoice_createdate, '%d %M %Y'),'') AS transaction_date,
-                        invoice_shop_detail_noresi as no_resi,
+            $sql = "SELECT
+                        shop_name,
                         product_name,
-                        SUBSTRING_INDEX(product_image,',',1) AS product_image,
+						SUBSTRING_INDEX(product_image,',',1) AS product_image,
                         username,
-                        (invoice_product_detail_sumproduct * product_price) AS total_price,
-                        invoice_shop_detail_notran,
-                        invoice_shop_detail.delivery_id
+                        invoice_shop_detail_notes,
+                        COUNT(invoice_product_detail_sumproduct) AS sum_products,
+                        invoice_shop_detail_delivery_price,
+                        SUM((invoice_product_detail_sumproduct * product_price)) AS total_price,
+                        invoice_shop_detail_notran
                     FROM
                         invoice
-                        LEFT JOIN status ON status.status_id=invoice.invoice_current_status
                         LEFT JOIN invoice_shop_detail ON invoice_shop_detail.invoice_id = invoice.invoice_id
 						LEFT JOIN invoice_brand_detail ON invoice_brand_detail.invoice_shop_detail_id = invoice_shop_detail.invoice_shop_detail_id
 						LEFT JOIN invoice_product_detail ON invoice_product_detail.invoice_brand_detail_id = invoice_brand_detail.invoice_brand_detail_id
                         LEFT JOIN product ON product.product_id=invoice_product_detail.product_id
-                        LEFT JOIN `user` ON `user`.user_id=product.user_id
+                        LEFT JOIN `shop` ON `shop`.shop_id=invoice_shop_detail.shop_id
+                        LEFT JOIN `user` ON `user`.user_id=shop.user_id
                     WHERE
                         invoice.user_id = ?
                         AND
-                        invoice_current_status BETWEEN 4 AND 5";
-                                    
-            array_push($a_param_type,"s");
-            array_push($a_bind_params,$user_id);
+                        invoice_current_status BETWEEN 4 AND 5
+                    GROUP BY 
+                        invoice_shop_detail_notran";
             
-            if($search != ''){
-                $sql .= " AND invoice.invoice_id = ?";
-                
-                array_push($a_param_type,"i");
-                array_push($a_bind_params,$search);
-            }
-            
-            if($date != ''){
-                $sql .= " AND invoice.invoice_createdate = ?";
-                
-                array_push($a_param_type,"s");
-                array_push($a_bind_params,$date);
-            }
-            
-            $a_params = array();
- 
-            $param_type = '';
-            $n = count($a_param_type);
-            for($i = 0; $i < $n; $i++) {
-              $param_type .= $a_param_type[$i];
-            }
-             
-            /* with call_user_func_array, array params must be passed by reference */
-            $a_params[] = & $param_type;
-             
-            for($i = 0; $i < $n; $i++) {
-              /* with call_user_func_array, array params must be passed by reference */
-              $a_params[] = & $a_bind_params[$i];
-            }
-             
-            /* Prepare statement */
             $stmt = $con->prepare($sql);
-             
-            /* use call_user_func_array, as $stmt->bind_param('s', $param); does not accept params array */
-            call_user_func_array(array($stmt, 'bind_param'), $a_params);
+            $stmt->bind_param("s", $user_id);
             
             /*
                 Function location in : functions.php

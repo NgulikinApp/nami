@@ -78,7 +78,8 @@
                                 product_average_rate,
                                 product_price,
                                 product_weight,
-								address
+								address,
+                                invoice_shop_detail_notran
                             FROM
                                 invoice
 								LEFT JOIN invoice_shop_detail ON invoice_shop_detail.invoice_id = invoice.invoice_id
